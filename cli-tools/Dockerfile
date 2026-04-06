@@ -30,8 +30,8 @@ RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
 # Clone and build OpenCode CLI
 RUN git clone https://github.com/anomalyco/opencode.git /tmp/opencode && \
     cd /tmp/opencode && \
-    npm install && \
-    npm run build && \
+    /root/.bun/bin/bun install && \
+    /root/.bun/bin/bun run build && \
     cp dist/opencode-darwin-x64/bin/opencode /usr/local/bin/opencode && \
     chmod +x /usr/local/bin/opencode && \
     rm -rf /tmp/opencode
