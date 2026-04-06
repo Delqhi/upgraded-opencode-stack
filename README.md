@@ -118,6 +118,57 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | `sin-zeus-hermes` | Hermes Dispatch Payloads generieren |
 | `sin-zeus-status` | Zeus Control-Plane Status |
 
+## Vanilla OpenCode vs. Oh-My-OpenCode vs. Dein Custom Stack
+
+### Was OpenCode nativ kann (ohne Plugins)
+
+| Feature | Vanilla OpenCode |
+|---------|-----------------|
+| Agent Management | ✅ `opencode agent create/list` |
+| Session Export/Import | ✅ `opencode export/import` |
+| LSP Tools | ✅ Integriert |
+| MCP Management | ✅ `opencode mcp` |
+| Hooks | ✅ Eigenes Hook-System |
+| Plugins | ✅ `opencode plugin` |
+| GitHub Integration | ✅ `opencode github`, `opencode pr` |
+| Subagent Delegation | ✅ `task()` Tool |
+| Ralph/Ultrawork Loop | ✅ `/ulw-loop`, `/ralph-loop` |
+| Provider-Config | ✅ `opencode providers` |
+| Model-Listing | ✅ `opencode models` |
+| Token Stats | ✅ `opencode stats` |
+
+### Was Oh-My-OpenCode (OMO) zusätzlich bringt
+
+| Feature | OMO | Vanilla |
+|---------|-----|---------|
+| **Curated Agent-Teams** (Oracle, Librarian, Explore, Sisyphus) | ✅ Vorkonfiguriert | ❌ Manuell |
+| **Sisyphus Ultraworker** | ✅ Endlos-Schleife bis Task fertig | ❌ |
+| **Todo Continuation Enforcer** | ✅ Zwingt Agent weiterzuarbeiten | ❌ |
+| **Comment Checker** | ✅ Verhindert AI-Kommentar-Spam | ❌ |
+| **Curated MCPs** (Exa, Context7, Grep.app) | ✅ Vorkonfiguriert | ❌ |
+| **Google OAuth Auth** | ✅ Eingebaut | ❌ |
+| **Claude Code Compatibility** | ✅ Commands, Agents, Skills, Hooks | ❌ |
+| **Tmux Integration** | ✅ | ❌ |
+| **JSONC Config Support** | ✅ | ❌ |
+
+### Was NUR dein Custom Stack hat (nicht in OMO!)
+
+| Feature | Dein Stack | OMO |
+|---------|-----------|-----|
+| **OMOC Swarm** (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ 5-Agenten-Schwarm | ❌ Nur Sisyphus |
+| **SIN-Zeus** (Fleet Commander) | ✅ | ❌ |
+| **SIN-Terminal Orchestration** | ✅ 4 Commands | ❌ |
+| **28 Custom Skills** | ✅ | ❌ (hat 0) |
+| **Antigravity Auth Plugin** | ✅ Token-Rotation | ❌ (eigenes Google Auth) |
+| **OpenRouter Auth (lokal)** | ✅ Mit Proxy | ❌ |
+| **11 sin-* CLI Tools** | ✅ | ❌ |
+| **17 Scripts** (Sync, Rotation, PR-Watcher, etc.) | ✅ | ❌ |
+| **n8n Integration** | ✅ sin-n8n CLI | ❌ |
+| **Telegram Bot Integration** | ✅ | ❌ |
+| **Agent Instructions** (37 Dateien) | ✅ | ❌ |
+| **Vendor Dependencies** | ✅ 1633 Dateien | ❌ |
+| **sin-sync** (Mac → OCI VM) | ✅ | ❌ |
+
 ## Post-Install
 
 ```bash
