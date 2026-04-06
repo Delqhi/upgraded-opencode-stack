@@ -1,0 +1,798 @@
+#!/usr/bin/env python3
+"""
+sin-n8n — A2A CLI for creating, listing, activating, running and deleting n8n workflows.
+
+A2A agents use this to self-build reusable n8n workflows for any repetitive task
+instead of executing the same steps manually every time.
+
+Usage:
+  sin-n8n create <template> [--name "My Workflow"] [--vars KEY=VALUE ...]
+  sin-n8n list [--active-only]
+  sin-n8n activate <id-or-name>
+  sin-n8n deactivate <id-or-name>
+  sin-n8n run <id-or-name> [--data '{"key":"val"}'] [--wait]
+  sin-n8n delete <id-or-name>
+  sin-n8n logs <id-or-name> [--limit N]
+  sin-n8n templates
+  sin-n8n get <id-or-name>
+
+Env:
+  N8N_HOST     default: http://92.5.60.87:5678
+  N8N_API_KEY  default: from ~/.config/opencode/n8n.env or hardcoded fallback
+"""
+
+import argparse
+import json
+import os
+import sys
+import urllib.request
+import urllib.error
+import copy
+from typing import Optional
+
+# ── Config ────────────────────────────────────────────────────────────────────
+DEFAULT_HOST = "http://92.5.60.87:5678"
+DEFAULT_API_KEY = ""  # Must be read from n8n.env
+ALLOWED_CREATE_FIELDS = {
+    "name",
+    "nodes",
+    "connections",
+    "settings",
+    "staticData",
+    "pinData",
+}
+
+
+def get_config():
+    host = os.environ.get("N8N_HOST", DEFAULT_HOST).rstrip("/")
+    key = os.environ.get("N8N_API_KEY", "")
+    # Try reading from env file
+    env_file = os.path.expanduser("~/.config/opencode/n8n.env")
+    if not key and os.path.exists(env_file):
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("N8N_API_KEY="):
+                    key = line.split("=", 1)[1].strip().strip('"')
+                elif line.startswith("N8N_HOST="):
+                    host = line.split("=", 1)[1].strip().strip('"').rstrip("/")
+    if not key:
+        key = DEFAULT_API_KEY
+    return host, key
+
+
+# ── HTTP helpers ───────────────────────────────────────────────────────────────
+def _req(host, key, method, path, body=None):
+    url = f"{host}/api/v1{path}"
+    headers = {"X-N8N-API-KEY": key, "Content-Type": "application/json"}
+    data = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    try:
+        resp = urllib.request.urlopen(req)
+        raw = resp.read().decode()
+        return json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as e:
+        body_txt = e.read().decode()
+        print(f"ERROR {e.code} {method} {path}: {body_txt[:400]}", file=sys.stderr)
+        sys.exit(1)
+
+
+def get_all_workflows(host, key):
+    result = _req(host, key, "GET", "/workflows?limit=250")
+    return result.get("data", [])
+
+
+def resolve_workflow(host, key, id_or_name: str):
+    """Return workflow dict by id or name (case-insensitive)."""
+    workflows = get_all_workflows(host, key)
+    # Exact id match
+    for wf in workflows:
+        if wf["id"] == id_or_name:
+            return wf
+    # Name match (case-insensitive)
+    needle = id_or_name.lower()
+    matches = [wf for wf in workflows if wf["name"].lower() == needle]
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        print(
+            f"Ambiguous name '{id_or_name}' matches {len(matches)} workflows. Use id.",
+            file=sys.stderr,
+        )
+        for m in matches:
+            print(f"  id={m['id']} name={m['name']}", file=sys.stderr)
+        sys.exit(1)
+    # Partial name
+    matches = [wf for wf in workflows if needle in wf["name"].lower()]
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        print(
+            f"Ambiguous partial name '{id_or_name}'. Use full name or id.",
+            file=sys.stderr,
+        )
+        for m in matches:
+            print(f"  id={m['id']} name={m['name']}", file=sys.stderr)
+        sys.exit(1)
+    print(f"Workflow not found: {id_or_name}", file=sys.stderr)
+    sys.exit(1)
+
+
+# ── Built-in Templates ────────────────────────────────────────────────────────
+TEMPLATES = {
+    "http-poller": {
+        "_description": "Poll an HTTP URL on a schedule, process response, store to Sheets or log.",
+        "_vars": ["POLL_URL", "CRON_EXPR", "WEBHOOK_NOTIFY_URL"],
+        "name": "HTTP Poller",
+        "nodes": [
+            {
+                "id": "cron-1",
+                "name": "Schedule",
+                "type": "n8n-nodes-base.scheduleTrigger",
+                "typeVersion": 1.1,
+                "position": [200, 300],
+                "parameters": {
+                    "rule": {
+                        "interval": [
+                            {"field": "cronExpression", "expression": "{{CRON_EXPR}}"}
+                        ]
+                    }
+                },
+            },
+            {
+                "id": "http-1",
+                "name": "HTTP Request",
+                "type": "n8n-nodes-base.httpRequest",
+                "typeVersion": 4.1,
+                "position": [440, 300],
+                "parameters": {"method": "GET", "url": "{{POLL_URL}}", "options": {}},
+            },
+            {
+                "id": "set-1",
+                "name": "Process Response",
+                "type": "n8n-nodes-base.set",
+                "typeVersion": 3.2,
+                "position": [680, 300],
+                "parameters": {
+                    "assignments": {
+                        "assignments": [
+                            {
+                                "id": "field-1",
+                                "name": "result",
+                                "value": "={{ $json }}",
+                                "type": "object",
+                            }
+                        ]
+                    },
+                    "options": {},
+                },
+            },
+        ],
+        "connections": {
+            "Schedule": {
+                "main": [[{"node": "HTTP Request", "type": "main", "index": 0}]]
+            },
+            "HTTP Request": {
+                "main": [[{"node": "Process Response", "type": "main", "index": 0}]]
+            },
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "google-sheets-rw": {
+        "_description": "Read rows from Google Sheets, process, write results back.",
+        "_vars": ["SHEET_ID", "READ_RANGE", "WRITE_RANGE"],
+        "name": "Google Sheets Read/Write",
+        "nodes": [
+            {
+                "id": "trigger-1",
+                "name": "Webhook Trigger",
+                "type": "n8n-nodes-base.webhook",
+                "typeVersion": 2,
+                "position": [200, 300],
+                "parameters": {
+                    "httpMethod": "POST",
+                    "path": "sheets-rw",
+                    "responseMode": "onReceived",
+                },
+            },
+            {
+                "id": "sheets-read",
+                "name": "Read Rows",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.4,
+                "position": [440, 300],
+                "parameters": {
+                    "operation": "read",
+                    "documentId": {"__rl": True, "value": "{{SHEET_ID}}", "mode": "id"},
+                    "sheetName": {"__rl": True, "value": "Sheet1", "mode": "name"},
+                    "filtersUI": {},
+                    "options": {"headerRow": 1},
+                },
+            },
+            {
+                "id": "sheets-write",
+                "name": "Write Results",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.4,
+                "position": [680, 300],
+                "parameters": {
+                    "operation": "append",
+                    "documentId": {"__rl": True, "value": "{{SHEET_ID}}", "mode": "id"},
+                    "sheetName": {"__rl": True, "value": "Results", "mode": "name"},
+                    "columns": {"mappingMode": "autoMapInputData", "value": {}},
+                    "options": {},
+                },
+            },
+        ],
+        "connections": {
+            "Webhook Trigger": {
+                "main": [[{"node": "Read Rows", "type": "main", "index": 0}]]
+            },
+            "Read Rows": {
+                "main": [[{"node": "Write Results", "type": "main", "index": 0}]]
+            },
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "gmail-send": {
+        "_description": "Send a Gmail message when triggered via webhook.",
+        "_vars": ["GMAIL_FROM", "RECIPIENT_EMAIL", "SUBJECT"],
+        "name": "Gmail Send",
+        "nodes": [
+            {
+                "id": "trigger-1",
+                "name": "Webhook Trigger",
+                "type": "n8n-nodes-base.webhook",
+                "typeVersion": 2,
+                "position": [200, 300],
+                "parameters": {
+                    "httpMethod": "POST",
+                    "path": "gmail-send",
+                    "responseMode": "onReceived",
+                },
+            },
+            {
+                "id": "gmail-1",
+                "name": "Send Email",
+                "type": "n8n-nodes-base.gmail",
+                "typeVersion": 2.1,
+                "position": [440, 300],
+                "parameters": {
+                    "sendTo": "{{RECIPIENT_EMAIL}}",
+                    "subject": "={{$json.subject || '{{SUBJECT}}'}}",
+                    "emailType": "text",
+                    "message": "={{$json.body || 'Message from SIN A2A fleet'}}",
+                    "options": {},
+                },
+            },
+        ],
+        "connections": {
+            "Webhook Trigger": {
+                "main": [[{"node": "Send Email", "type": "main", "index": 0}]]
+            }
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "telegram-notify": {
+        "_description": "Send a Telegram message when triggered via webhook.",
+        "_vars": ["TELEGRAM_CHAT_ID"],
+        "name": "Telegram Notify",
+        "nodes": [
+            {
+                "id": "trigger-1",
+                "name": "Webhook Trigger",
+                "type": "n8n-nodes-base.webhook",
+                "typeVersion": 2,
+                "position": [200, 300],
+                "parameters": {
+                    "httpMethod": "POST",
+                    "path": "telegram-notify",
+                    "responseMode": "onReceived",
+                },
+            },
+            {
+                "id": "telegram-1",
+                "name": "Telegram",
+                "type": "n8n-nodes-base.telegram",
+                "typeVersion": 1.2,
+                "position": [440, 300],
+                "parameters": {
+                    "chatId": "{{TELEGRAM_CHAT_ID}}",
+                    "text": "={{$json.message || $json.text || 'SIN A2A notification'}}",
+                    "additionalFields": {"parse_mode": "Markdown"},
+                },
+            },
+        ],
+        "connections": {
+            "Webhook Trigger": {
+                "main": [[{"node": "Telegram", "type": "main", "index": 0}]]
+            }
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "search-scrape": {
+        "_description": "HTTP search → normalize results → create GitHub issue (inbound-work pattern).",
+        "_vars": ["SEARCH_URL", "GITHUB_REPO", "ISSUE_LABEL"],
+        "name": "Search & Scrape to Issue",
+        "nodes": [
+            {
+                "id": "cron-1",
+                "name": "Schedule",
+                "type": "n8n-nodes-base.scheduleTrigger",
+                "typeVersion": 1.1,
+                "position": [200, 300],
+                "parameters": {
+                    "rule": {"interval": [{"field": "hours", "hoursInterval": 1}]}
+                },
+            },
+            {
+                "id": "http-1",
+                "name": "Search Request",
+                "type": "n8n-nodes-base.httpRequest",
+                "typeVersion": 4.1,
+                "position": [440, 300],
+                "parameters": {"method": "GET", "url": "{{SEARCH_URL}}", "options": {}},
+            },
+            {
+                "id": "github-1",
+                "name": "Create Issue",
+                "type": "n8n-nodes-base.github",
+                "typeVersion": 1,
+                "position": [680, 300],
+                "parameters": {
+                    "owner": "SIN-Solver",
+                    "repository": "{{GITHUB_REPO}}",
+                    "resource": "issue",
+                    "operation": "create",
+                    "title": "=[inbound] {{ $json.title || 'New work item' }}",
+                    "body": "={{ JSON.stringify($json, null, 2) }}",
+                    "labels": '={{"inbound-work,{{ISSUE_LABEL}}"}}',
+                },
+            },
+        ],
+        "connections": {
+            "Schedule": {
+                "main": [[{"node": "Search Request", "type": "main", "index": 0}]]
+            },
+            "Search Request": {
+                "main": [[{"node": "Create Issue", "type": "main", "index": 0}]]
+            },
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "survey-fill": {
+        "_description": "Trigger-based survey fill: receive survey data via webhook → process → POST answer.",
+        "_vars": ["SURVEY_SUBMIT_URL"],
+        "name": "Survey Fill",
+        "nodes": [
+            {
+                "id": "trigger-1",
+                "name": "Webhook Trigger",
+                "type": "n8n-nodes-base.webhook",
+                "typeVersion": 2,
+                "position": [200, 300],
+                "parameters": {
+                    "httpMethod": "POST",
+                    "path": "survey-fill",
+                    "responseMode": "onReceived",
+                },
+            },
+            {
+                "id": "set-1",
+                "name": "Build Answers",
+                "type": "n8n-nodes-base.set",
+                "typeVersion": 3.2,
+                "position": [440, 300],
+                "parameters": {
+                    "assignments": {
+                        "assignments": [
+                            {
+                                "id": "f1",
+                                "name": "answers",
+                                "value": "={{ $json.answers }}",
+                                "type": "object",
+                            }
+                        ]
+                    },
+                    "options": {},
+                },
+            },
+            {
+                "id": "http-submit",
+                "name": "Submit Answers",
+                "type": "n8n-nodes-base.httpRequest",
+                "typeVersion": 4.1,
+                "position": [680, 300],
+                "parameters": {
+                    "method": "POST",
+                    "url": "{{SURVEY_SUBMIT_URL}}",
+                    "sendBody": True,
+                    "bodyParameters": {
+                        "parameters": [
+                            {"name": "answers", "value": "={{ $json.answers }}"}
+                        ]
+                    },
+                    "options": {},
+                },
+            },
+        ],
+        "connections": {
+            "Webhook Trigger": {
+                "main": [[{"node": "Build Answers", "type": "main", "index": 0}]]
+            },
+            "Build Answers": {
+                "main": [[{"node": "Submit Answers", "type": "main", "index": 0}]]
+            },
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+    "full-survey-flow": {
+        "_description": "Full money-earning survey flow: search → find surveys → fill → log to Sheets → notify.",
+        "_vars": ["SEARCH_URL", "SHEET_ID", "TELEGRAM_CHAT_ID"],
+        "name": "Full Survey Flow",
+        "nodes": [
+            {
+                "id": "cron-1",
+                "name": "Schedule",
+                "type": "n8n-nodes-base.scheduleTrigger",
+                "typeVersion": 1.1,
+                "position": [200, 300],
+                "parameters": {
+                    "rule": {"interval": [{"field": "hours", "hoursInterval": 2}]}
+                },
+            },
+            {
+                "id": "http-search",
+                "name": "Find Surveys",
+                "type": "n8n-nodes-base.httpRequest",
+                "typeVersion": 4.1,
+                "position": [440, 300],
+                "parameters": {"method": "GET", "url": "{{SEARCH_URL}}", "options": {}},
+            },
+            {
+                "id": "set-normalize",
+                "name": "Normalize",
+                "type": "n8n-nodes-base.set",
+                "typeVersion": 3.2,
+                "position": [680, 300],
+                "parameters": {
+                    "assignments": {
+                        "assignments": [
+                            {
+                                "id": "f1",
+                                "name": "survey_id",
+                                "value": "={{ $json.id }}",
+                                "type": "string",
+                            },
+                            {
+                                "id": "f2",
+                                "name": "reward",
+                                "value": "={{ $json.reward }}",
+                                "type": "string",
+                            },
+                            {
+                                "id": "f3",
+                                "name": "status",
+                                "value": "found",
+                                "type": "string",
+                            },
+                        ]
+                    },
+                    "options": {},
+                },
+            },
+            {
+                "id": "sheets-log",
+                "name": "Log to Sheets",
+                "type": "n8n-nodes-base.googleSheets",
+                "typeVersion": 4.4,
+                "position": [920, 300],
+                "parameters": {
+                    "operation": "append",
+                    "documentId": {"__rl": True, "value": "{{SHEET_ID}}", "mode": "id"},
+                    "sheetName": {"__rl": True, "value": "SurveyLog", "mode": "name"},
+                    "columns": {"mappingMode": "autoMapInputData", "value": {}},
+                    "options": {},
+                },
+            },
+            {
+                "id": "telegram-1",
+                "name": "Notify",
+                "type": "n8n-nodes-base.telegram",
+                "typeVersion": 1.2,
+                "position": [1160, 300],
+                "parameters": {
+                    "chatId": "{{TELEGRAM_CHAT_ID}}",
+                    "text": "=Survey found: {{ $json.survey_id }} | Reward: {{ $json.reward }}",
+                    "additionalFields": {},
+                },
+            },
+        ],
+        "connections": {
+            "Schedule": {
+                "main": [[{"node": "Find Surveys", "type": "main", "index": 0}]]
+            },
+            "Find Surveys": {
+                "main": [[{"node": "Normalize", "type": "main", "index": 0}]]
+            },
+            "Normalize": {
+                "main": [[{"node": "Log to Sheets", "type": "main", "index": 0}]]
+            },
+            "Log to Sheets": {
+                "main": [[{"node": "Notify", "type": "main", "index": 0}]]
+            },
+        },
+        "settings": {"executionOrder": "v1"},
+    },
+}
+
+
+# ── Commands ──────────────────────────────────────────────────────────────────
+def cmd_templates(args, host, key):
+    print("Available templates:\n")
+    for name, tpl in TEMPLATES.items():
+        print(f"  {name}")
+        print(f"    {tpl['_description']}")
+        vars_needed = tpl.get("_vars", [])
+        if vars_needed:
+            print(f"    vars: {', '.join(vars_needed)}")
+        print()
+
+
+def cmd_list(args, host, key):
+    workflows = get_all_workflows(host, key)
+    if args.active_only:
+        workflows = [w for w in workflows if w.get("active")]
+    if not workflows:
+        print("No workflows found.")
+        return
+    print(f"{'ID':<22} {'ACTIVE':<8} {'NAME'}")
+    print("-" * 70)
+    for wf in workflows:
+        active = "✅" if wf.get("active") else "  "
+        print(f"{wf['id']:<22} {active:<8} {wf['name']}")
+
+
+def cmd_get(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    print(json.dumps(wf, indent=2))
+
+
+def cmd_create(args, host, key):
+    template_name = args.template
+    if template_name not in TEMPLATES:
+        print(
+            f"Unknown template '{template_name}'. Run `sin-n8n templates` to list available.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    tpl = copy.deepcopy(TEMPLATES[template_name])
+    # Strip meta keys
+    workflow = {k: v for k, v in tpl.items() if not k.startswith("_")}
+
+    # Apply --name
+    if args.name:
+        workflow["name"] = args.name
+
+    # Apply --vars substitutions (replace {{VAR}} in JSON string)
+    wf_str = json.dumps(workflow)
+    if args.vars:
+        for pair in args.vars:
+            if "=" not in pair:
+                print(
+                    f"Bad --vars format: '{pair}' — expected KEY=VALUE", file=sys.stderr
+                )
+                sys.exit(1)
+            k, v = pair.split("=", 1)
+            wf_str = wf_str.replace(f"{{{{{k}}}}}", v)
+    workflow = json.loads(wf_str)
+
+    # Only send allowed fields
+    clean = {k: v for k, v in workflow.items() if k in ALLOWED_CREATE_FIELDS}
+    if "settings" not in clean:
+        clean["settings"] = {"executionOrder": "v1"}
+
+    result = _req(host, key, "POST", "/workflows", clean)
+    print(f"✅ Created workflow '{result['name']}' id={result['id']}")
+    print(f"   Activate: sin-n8n activate {result['id']}")
+    return result["id"]
+
+
+def cmd_activate(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    result = _req(host, key, "POST", f"/workflows/{wf['id']}/activate", {})
+    print(
+        f"✅ Activated '{result['name']}' (id={result['id']}) active={result.get('active')}"
+    )
+
+
+def cmd_deactivate(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    result = _req(host, key, "POST", f"/workflows/{wf['id']}/deactivate", {})
+    print(
+        f"⏸  Deactivated '{result['name']}' (id={result['id']}) active={result.get('active')}"
+    )
+
+
+def cmd_delete(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    if not args.force:
+        confirm = (
+            input(f"Delete '{wf['name']}' (id={wf['id']})? [y/N] ").strip().lower()
+        )
+        if confirm != "y":
+            print("Cancelled.")
+            return
+    _req(host, key, "DELETE", f"/workflows/{wf['id']}")
+    print(f"🗑  Deleted '{wf['name']}' (id={wf['id']})")
+
+
+def cmd_run(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    payload = {}
+    if args.data:
+        try:
+            payload = json.loads(args.data)
+        except json.JSONDecodeError as e:
+            print(f"Bad --data JSON: {e}", file=sys.stderr)
+            sys.exit(1)
+    result = _req(
+        host,
+        key,
+        "POST",
+        f"/workflows/{wf['id']}/run",
+        {"workflowData": wf, "runData": payload},
+    )
+    exec_id = result.get("executionId") or result.get("id") or "?"
+    print(f"▶  Execution started: id={exec_id}")
+    if args.wait:
+        import time
+
+        print("   Waiting for completion...", end="", flush=True)
+        for _ in range(60):
+            time.sleep(2)
+            ex = _req(host, key, "GET", f"/executions/{exec_id}")
+            status = ex.get("status", "unknown")
+            if status in ("success", "error", "crashed", "canceled"):
+                print(f" {status}")
+                if ex.get("data", {}).get("resultData", {}).get("error"):
+                    print("  Error:", ex["data"]["resultData"]["error"].get("message"))
+                return
+            print(".", end="", flush=True)
+        print(" timeout")
+
+
+def cmd_logs(args, host, key):
+    wf = resolve_workflow(host, key, args.id_or_name)
+    limit = args.limit or 10
+    result = _req(host, key, "GET", f"/executions?workflowId={wf['id']}&limit={limit}")
+    executions = result.get("data", [])
+    if not executions:
+        print(f"No executions found for '{wf['name']}'.")
+        return
+    print(f"Last {len(executions)} executions for '{wf['name']}' (id={wf['id']}):\n")
+    print(f"{'EXEC ID':<28} {'STATUS':<12} {'STARTED':<28} {'DURATION'}")
+    print("-" * 90)
+    for ex in executions:
+        status = ex.get("status", "?")
+        started = ex.get("startedAt", "?")
+        duration_ms = ex.get("stoppedAt") and ex.get("startedAt") and "?"
+        print(
+            f"{ex.get('id', '?'):<28} {status:<12} {started:<28} {duration_ms or '?'}"
+        )
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+def main():
+    parser = argparse.ArgumentParser(
+        prog="sin-n8n",
+        description="A2A CLI for n8n workflow automation on OCI",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  sin-n8n templates
+  sin-n8n create http-poller --name "HackerOne Poller" --vars POLL_URL=https://api.hackerone.com CRON_EXPR="0 * * * *"
+  sin-n8n list --active-only
+  sin-n8n activate my-workflow
+  sin-n8n run my-workflow --data '{"param":"value"}' --wait
+  sin-n8n logs my-workflow --limit 5
+  sin-n8n delete my-workflow --force
+""",
+    )
+    parser.add_argument("--host", help="n8n host (overrides N8N_HOST env)")
+    parser.add_argument("--key", help="n8n API key (overrides N8N_API_KEY env)")
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # templates
+    subparsers.add_parser("templates", help="List built-in workflow templates")
+
+    # list
+    p_list = subparsers.add_parser("list", help="List workflows")
+    p_list.add_argument(
+        "--active-only", action="store_true", help="Only show active workflows"
+    )
+
+    # get
+    p_get = subparsers.add_parser("get", help="Get workflow JSON by id or name")
+    p_get.add_argument("id_or_name")
+
+    # create
+    p_create = subparsers.add_parser("create", help="Create workflow from a template")
+    p_create.add_argument("template", help="Template name (see `sin-n8n templates`)")
+    p_create.add_argument("--name", help="Workflow name override")
+    p_create.add_argument(
+        "--vars", nargs="*", metavar="KEY=VALUE", help="Template variable substitutions"
+    )
+    p_create.add_argument(
+        "--activate", action="store_true", help="Activate immediately after creation"
+    )
+
+    # activate
+    p_act = subparsers.add_parser("activate", help="Activate a workflow")
+    p_act.add_argument("id_or_name")
+
+    # deactivate
+    p_deact = subparsers.add_parser("deactivate", help="Deactivate a workflow")
+    p_deact.add_argument("id_or_name")
+
+    # delete
+    p_del = subparsers.add_parser("delete", help="Delete a workflow")
+    p_del.add_argument("id_or_name")
+    p_del.add_argument("--force", action="store_true", help="Skip confirmation prompt")
+
+    # run
+    p_run = subparsers.add_parser("run", help="Execute a workflow")
+    p_run.add_argument("id_or_name")
+    p_run.add_argument("--data", help="JSON data to pass as runData")
+    p_run.add_argument(
+        "--wait", action="store_true", help="Wait for execution to complete"
+    )
+
+    # logs
+    p_logs = subparsers.add_parser("logs", help="Show recent executions for a workflow")
+    p_logs.add_argument("id_or_name")
+    p_logs.add_argument(
+        "--limit", type=int, default=10, help="Number of executions (default: 10)"
+    )
+
+    args = parser.parse_args()
+
+    host, key = get_config()
+    if args.host:
+        host = args.host.rstrip("/")
+    if args.key:
+        key = args.key
+
+    dispatch = {
+        "templates": cmd_templates,
+        "list": cmd_list,
+        "get": cmd_get,
+        "create": cmd_create,
+        "activate": cmd_activate,
+        "deactivate": cmd_deactivate,
+        "delete": cmd_delete,
+        "run": cmd_run,
+        "logs": cmd_logs,
+    }
+
+    fn = dispatch.get(args.command)
+    if fn:
+        fn(args, host, key)
+        # post-create auto-activate
+        if args.command == "create" and getattr(args, "activate", False):
+            # Re-run activate with the newly created id
+            # (cmd_create printed the id; we need to call activate)
+            wfs = get_all_workflows(host, key)
+            name = args.name or TEMPLATES[args.template]["name"]
+            new_wf = next((w for w in wfs if w["name"] == name), None)
+            if new_wf:
+                _req(host, key, "POST", f"/workflows/{new_wf['id']}/activate", {})
+                print(f"✅ Activated immediately.")
+    else:
+        parser.print_help()
+
+
+if __name__ == "__main__":
+    main()

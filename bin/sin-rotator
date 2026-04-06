@@ -1,0 +1,17 @@
+#!/bin/bash
+# ---------------------------------------------------------
+# SIN-ROTATOR BLACKBOX - System Level Executable
+# ---------------------------------------------------------
+echo "🔒 Starte isolierte SIN-ROTATOR Blackbox-Pipeline..."
+
+cd ~/.local/share/sin-rotator-core || { echo "Core not found"; exit 1; }
+
+# Sicherstellen, dass keine alten Chrome-Leichen den Port 9334 blockieren
+pkill -f "remote-debugging-port=9334" > /dev/null 2>&1 || true
+
+echo "🌐 Starte unsichtbaren Browser-Prozess..."
+python3 connect_micro.py > /dev/null 2>&1 &
+sleep 5
+
+echo "⚡ Starte rasanten Micro-Step Runner..."
+python3 fast_runner.py "$@"

@@ -1,0 +1,19 @@
+{
+  "name": "SIN-Agent",
+  "description": "SIN A2A Agent",
+  "url": "https://localhost/a2a/v1",
+  "protocol": "A2A",
+  "version": "1.0.0",
+  "capabilities": ["chat", "task", "help"],
+  "commands": [
+    {"name": "agent.help", "description": "Show available commands"},
+    {"name": "agent.health", "description": "Check agent health"},
+    {"name": "agent.card", "description": "Show agent card"}
+  ],
+  "endpoints": {
+    "a2a": "/a2a/v1",
+    "health": "/health",
+    "card": "/.well-known/agent-card.json"
+  },
+  "status": "active"
+}

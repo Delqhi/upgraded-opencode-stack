@@ -1,0 +1,133 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "🚀 Starte OpenCode Fleet Synchronization (Mac -> Target VMs)..."
+echo ""
+echo "⚠️  AUTH ISOLATION POLICY:"
+echo "   Jede Maschine hat IHREN EIGENEN OpenCode Zen Auth Account!"
+echo "   auth.json, opencode.db und alle Auth-Dateien werden NIEMALS synchronisiert."
+echo "   Mac 1 = Auth Account #1 | Mac 2 = Auth Account #2 | HF VM 1 = Auth Account #3 | etc."
+echo ""
+
+# Target machines
+TARGETS_HOSTS=("ubuntu@92.5.60.87")
+TARGETS_LABELS=("OCI VM (Primary)")
+
+# Add HF VMs if they have SSH access
+# ["ubuntu@hf-vm-1.hf.space"]="HF VM 1"
+# ["ubuntu@hf-vm-2.hf.space"]="HF VM 2"
+
+# Files that MUST NEVER be synced (Auth isolation)
+EXCLUSIONS=(
+  # OpenCode Zen Auth
+  'auth.json'
+  'antigravity-accounts.json'
+  'token.json'
+  'telegram_config.json'
+  
+  # Database files (contain auth state)
+  '*.db'
+  '*.sqlite*'
+  'opencode.db'
+  'zen-auth.db'
+  
+  # Browser profiles (contain cookies/sessions)
+  'browser-profiles/'
+  'chrome-profiles/'
+  'firefox-profiles/'
+  'Default/'
+  'Geschäftlich/'
+  
+  # Cache and temp files
+  'logs/'
+  'tmp/'
+  '.cache/'
+  '*.log'
+  '*.tmp'
+  
+  # Local state files
+  'state.json'
+  'session.json'
+  'last-login.json'
+  
+  # HF pull scripts (may contain machine-specific tokens)
+  'hf_pull_script.py'
+  'hf-bootstrap.json'
+  
+  # Room13 worktrees (local dev state)
+  '.room13-worktrees/'
+)
+
+# Build rsync exclude arguments
+EXCLUDE_ARGS=""
+for exc in "${EXCLUSIONS[@]}"; do
+  EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude '$exc'"
+done
+
+SYNC_COUNT=0
+FAIL_COUNT=0
+
+for i in "${!TARGETS_HOSTS[@]}"; do
+  HOST="${TARGETS_HOSTS[$i]}"
+  LABEL="${TARGETS_LABELS[$i]}"
+  TARGET_DIR="~/.config/opencode/"
+  
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "📡 Syncing to: $LABEL ($HOST)"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  
+  # Test connection
+  if ! ssh -o ConnectTimeout=10 -o BatchMode=yes $HOST "echo '✅ Connected'" 2>/dev/null; then
+    echo "❌ Cannot connect to $LABEL ($HOST) - skipping"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+    continue
+  fi
+  
+  # Ensure target directory exists
+  ssh -o ConnectTimeout=10 $HOST "mkdir -p $TARGET_DIR"
+  
+  # Sync with ALL exclusions
+  eval rsync -avz --delete $EXCLUDE_ARGS \
+    ~/.config/opencode/ "$HOST:$TARGET_DIR"
+  
+  if [ $? -eq 0 ]; then
+    echo "✅ Sync to $LABEL completed successfully"
+    SYNC_COUNT=$((SYNC_COUNT + 1))
+    
+    # Verify auth isolation on target
+    echo "🔍 Verifying auth isolation on $LABEL..."
+    ssh -o ConnectTimeout=10 $HOST "
+      echo '  Checking auth files on target...'
+      if [ -f ~/.config/opencode/auth.json ]; then
+        echo '  ⚠️  WARNING: auth.json exists on target (should be machine-specific!)'
+      else
+        echo '  ✅ auth.json correctly excluded'
+      fi
+      if [ -f ~/.config/opencode/opencode.db ]; then
+        echo '  ⚠️  WARNING: opencode.db exists on target (should be machine-specific!)'
+      else
+        echo '  ✅ opencode.db correctly excluded'
+      fi
+      if [ -f ~/.config/opencode/antigravity-accounts.json ]; then
+        echo '  ⚠️  WARNING: antigravity-accounts.json exists on target'
+      else
+        echo '  ✅ antigravity-accounts.json correctly excluded'
+      fi
+    "
+  else
+    echo "❌ Sync to $LABEL failed"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+  fi
+  echo ""
+done
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "📊 Sync Summary:"
+echo "   ✅ Successful: $SYNC_COUNT"
+echo "   ❌ Failed: $FAIL_COUNT"
+echo "   🔒 Auth isolation: ENFORCED"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "⚠️  REMINDER: Each machine MUST have its own OpenCode Zen Auth account!"
+echo "   Do NOT copy auth.json, opencode.db, or antigravity-accounts.json between machines."
+echo "   Each machine authenticates independently with its own credentials."

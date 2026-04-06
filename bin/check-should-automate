@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+"""
+check-should-automate — A2A Inefficiency Detector
+
+A2A agents call this before executing repetitive tasks.
+If the pattern matches known automatable flows, it prints a warning
+and suggests the appropriate `sin-n8n create <template>` command.
+
+Usage:
+  check-should-automate <task_description>
+  check-should-automate --json <task_description>     # machine-readable output
+  check-should-automate --strict <task_description>   # exit 1 when should automate
+
+Exit codes:
+  0 = no automation recommended (proceed manually)
+  2 = automation strongly recommended (--strict causes exit 1)
+"""
+
+import sys
+import json
+import re
+import argparse
+
+PATTERNS = [
+    {
+        "id": "http-poll",
+        "keywords": [
+            "poll",
+            "fetch",
+            "check url",
+            "scrape url",
+            "call api",
+            "http get",
+            "http request",
+            "every hour",
+            "every day",
+            "every minute",
+            "schedule",
+            "cron",
+            "periodic",
+            "repeated fetch",
+        ],
+        "description": "Periodic HTTP polling / scheduled API call",
+        "template": "http-poller",
+        "example_vars": "POLL_URL=https://api.example.com CRON_EXPR='0 * * * *'",
+        "reason": "Polling a URL repeatedly is a classic n8n schedule+http-request pattern.",
+    },
+    {
+        "id": "google-sheets",
+        "keywords": [
+            "google sheet",
+            "spreadsheet",
+            "read sheet",
+            "write sheet",
+            "append sheet",
+            "update sheet",
+            "sheets row",
+            "gsheet",
+        ],
+        "description": "Google Sheets read/write",
+        "template": "google-sheets-rw",
+        "example_vars": "SHEET_ID=1abc... READ_RANGE=Sheet1!A:Z",
+        "reason": "Sheets I/O is a single n8n node — no manual Python/API loop needed.",
+    },
+    {
+        "id": "gmail",
+        "keywords": [
+            "send email",
+            "send gmail",
+            "email to",
+            "gmail send",
+            "compose email",
+            "mail to",
+            "smtp",
+            "notify via email",
+        ],
+        "description": "Sending email via Gmail",
+        "template": "gmail-send",
+        "example_vars": "RECIPIENT_EMAIL=user@example.com SUBJECT='Alert'",
+        "reason": "Gmail sends should be a reusable webhook-triggered n8n node, not inline code.",
+    },
+    {
+        "id": "telegram",
+        "keywords": [
+            "telegram notify",
+            "send telegram",
+            "telegram message",
+            "telegram alert",
+            "notify telegram",
+            "telegram bot send",
+        ],
+        "description": "Telegram notification",
+        "template": "telegram-notify",
+        "example_vars": "TELEGRAM_CHAT_ID=123456789",
+        "reason": "Telegram notifications are a one-liner n8n node — build once, reuse everywhere.",
+    },
+    {
+        "id": "search-scrape",
+        "keywords": [
+            "search platform",
+            "search website",
+            "scrape listings",
+            "find jobs",
+            "find surveys",
+            "scan platform",
+            "search and",
+            "scrape and create issue",
+            "search freelancer",
+            "search upwork",
+            "search hackerone",
+            "search bugcrowd",
+            "scan for jobs",
+            "look for opportunities",
+        ],
+        "description": "Platform search/scrape → normalize → create GitHub issue",
+        "template": "search-scrape",
+        "example_vars": "SEARCH_URL=https://api.platform.com/search GITHUB_REPO=jobs ISSUE_LABEL=intake.platform",
+        "reason": "Search-scrape-to-issue is the canonical SIN intake pattern. Use the workflow.",
+    },
+    {
+        "id": "survey-fill",
+        "keywords": [
+            "fill survey",
+            "complete survey",
+            "submit survey",
+            "answer survey",
+            "fill form",
+            "submit form",
+            "answer questions",
+            "prolific",
+            "outlier",
+            "survey platform",
+            "fill out",
+        ],
+        "description": "Survey/form fill automation",
+        "template": "survey-fill",
+        "example_vars": "SURVEY_SUBMIT_URL=https://platform.com/api/submit",
+        "reason": "Survey fill is a webhook-triggered sequence. Build it once as a reusable workflow.",
+    },
+    {
+        "id": "full-survey-flow",
+        "keywords": [
+            "find survey",
+            "search survey",
+            "look for survey",
+            "search and fill",
+            "find and complete",
+            "earn money survey",
+            "survey income",
+            "survey loop",
+            "find surveys and fill",
+            "survey automation",
+        ],
+        "description": "Full survey money-earning flow: search → fill → log → notify",
+        "template": "full-survey-flow",
+        "example_vars": "SEARCH_URL=https://api.prolific.com/api/v1/studies SHEET_ID=1abc... TELEGRAM_CHAT_ID=123",
+        "reason": "This is the complete money-earning survey pipeline. Build it once in n8n.",
+    },
+    {
+        "id": "repeated-action",
+        "keywords": [
+            "again",
+            "same as before",
+            "repeat",
+            "do it again",
+            "run again",
+            "same steps",
+            "same process",
+            "like last time",
+            "same workflow",
+            "i already did this",
+            "we already did this",
+        ],
+        "description": "Repeated manual action detected",
+        "template": "http-poller",
+        "example_vars": "",
+        "reason": "You are about to repeat something you already did manually. This should be a workflow.",
+    },
+]
+
+
+def score_text(text: str, keywords: list) -> int:
+    text_lower = text.lower()
+    return sum(1 for kw in keywords if kw in text_lower)
+
+
+def detect(task_description: str) -> list:
+    results = []
+    for pattern in PATTERNS:
+        score = score_text(task_description, pattern["keywords"])
+        if score > 0:
+            results.append({**pattern, "score": score})
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results
+
+
+def fmt_warning(match: dict) -> str:
+    lines = [
+        f"\n⚠️  AUTOMATE THIS — A2A INEFFICIENCY DETECTED",
+        f"   Pattern : {match['description']}",
+        f"   Reason  : {match['reason']}",
+        f'   Template: sin-n8n create {match["template"]} --name "My Workflow"',
+    ]
+    if match["example_vars"]:
+        lines.append(f"   Vars    : --vars {match['example_vars']}")
+    lines += [
+        f"",
+        f"   ➜ Run: sin-n8n create {match['template']} --activate",
+        f"   ➜ Then: sin-n8n list --active-only",
+        f"",
+        f"   If you MUST run this manually, proceed — but create the workflow afterwards.",
+    ]
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="check-should-automate",
+        description="A2A Inefficiency Detector — warns when a task should be a reusable n8n workflow.",
+    )
+    parser.add_argument("task", nargs="+", help="Task description (natural language)")
+    parser.add_argument(
+        "--json",
+        dest="as_json",
+        action="store_true",
+        help="Output machine-readable JSON",
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit code 1 when automation is recommended",
+    )
+    args = parser.parse_args()
+
+    task_description = " ".join(args.task)
+    matches = detect(task_description)
+
+    if args.as_json:
+        print(
+            json.dumps(
+                {
+                    "task": task_description,
+                    "should_automate": len(matches) > 0,
+                    "top_match": matches[0] if matches else None,
+                    "all_matches": matches,
+                },
+                indent=2,
+            )
+        )
+        sys.exit(2 if matches and args.strict else 0)
+
+    if not matches:
+        print("✅ No automation pattern detected. Proceed manually.")
+        sys.exit(0)
+
+    top = matches[0]
+    print(fmt_warning(top))
+
+    if len(matches) > 1:
+        print(f"   Also matched: {', '.join(m['description'] for m in matches[1:3])}")
+
+    sys.exit(2 if args.strict else 0)
+
+
+if __name__ == "__main__":
+    main()

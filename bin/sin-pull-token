@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+import json
+import os
+import urllib.request
+from pathlib import Path
+
+ENV_PATH = Path.home() / ".local" / "share" / "sin-rotator-core" / ".env"
+AUTH_JSON_PATH = Path.home() / ".local" / "share" / "opencode" / "auth.json"
+
+def get_env_var(var_name):
+    if not ENV_PATH.exists(): return None
+    for line in ENV_PATH.read_text().splitlines():
+        if line.startswith(var_name + "="): return line.split("=", 1)[1].strip()
+    return None
+
+def pull_fresh_token():
+    url = get_env_var("SUPABASE_URL")
+    key = get_env_var("SUPABASE_SERVICE_ROLE_KEY")
+    if not url or not key:
+        print("❌ FEHLER: Supabase Credentials fehlen in", ENV_PATH)
+        return
+
+    endpoint = f"{url}/rest/v1/openai_tokens?is_active=eq.true&select=id,access_token,refresh_token&order=created_at.desc&limit=1"
+    req = urllib.request.Request(endpoint, headers={"apikey": key, "Authorization": f"Bearer {key}", "User-Agent": "curl/7.68.0"})
+
+    try:
+        with urllib.request.urlopen(req, timeout=10) as response:
+            data = json.loads(response.read().decode("utf-8"))
+            if not data:
+                print("❌ FEHLER: Keine aktiven Tokens! Bitte sin-rotator starten.")
+                return
+            
+            token_id = data[0]["id"]
+            refresh_token = data[0].get("refresh_token") or "dummy_refresh_so_opencode_wont_crash"
+            
+            auth_data = {}
+            if AUTH_JSON_PATH.exists():
+                try: auth_data = json.loads(AUTH_JSON_PATH.read_text())
+                except: pass
+            
+            # WICHTIG: Korrektes Schema, damit OpenCode NICHT mit TypeError abstuerzt!
+            auth_data["openai"] = {
+                "type": "oauth",
+                "refresh": refresh_token
+            }
+            AUTH_JSON_PATH.write_text(json.dumps(auth_data, indent=2))
+            print(f"✅ ERFOLG: OpenCode auth.json repariert! Token {token_id[:8]} geladen.")
+    except Exception as e:
+        print(f"❌ FEHLER: {e}")
+
+if __name__ == "__main__":
+    pull_fresh_token()

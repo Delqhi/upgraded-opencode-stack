@@ -1,0 +1,29 @@
+#!/bin/bash
+# sin-rotate: Manual rotation trigger for OpenAI and Antigravity rotators
+
+case "$1" in
+    openai)
+        echo "Triggering OpenAI token swap from pool..."
+        python3 -c "
+import sys
+sys.path.insert(0, '/Users/jeremy/.open-auth-rotator/openai/watcher-core')
+from swap_token import main as swap_main
+swap_main()
+"
+        ;;
+    antigravity)
+        echo "Triggering Antigravity account rotation..."
+        python3 -c "
+import sys, asyncio
+sys.path.insert(0, '/Users/jeremy/.open-auth-rotator/antigravity')
+from core.main_rotate import rotate_account
+asyncio.run(rotate_account())
+"
+        ;;
+    *)
+        echo "Usage: sin-rotate {openai|antigravity}"
+        echo "  openai      - Swap to a fresh token from the pool"
+        echo " antigravity - Rotate to a fresh Google Workspace account"
+        exit 1
+        ;;
+esac

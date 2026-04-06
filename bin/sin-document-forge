@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+import sys, argparse, os, json
+from docx import Document
+from docx.shared import Inches, Pt
+from pathlib import Path
+
+def create_docx(args):
+    try:
+        doc = Document()
+        title = args.title or "Unbenanntes Dokument"
+        doc.add_heading(title, 0)
+        
+        md_text = ""
+        if args.markdown_file and os.path.exists(args.markdown_file):
+            md_text = Path(args.markdown_file).read_text(encoding='utf-8')
+        elif args.markdown_text:
+            md_text = args.markdown_text
+            
+        def add_md_section(d, text):
+            for line in text.split('\n'):
+                line = line.strip()
+                if not line: continue
+                if line.startswith('## '):
+                    d.add_heading(line[3:], level=2)
+                elif line.startswith('### '):
+                    d.add_heading(line[4:], level=3)
+                elif line.startswith('# '):
+                    d.add_heading(line[2:], level=1)
+                elif line.startswith('**') and line.endswith('**'):
+                    p = d.add_paragraph()
+                    r = p.add_run(line[2:-2])
+                    r.bold = True
+                elif line.startswith('- '):
+                    d.add_paragraph(line[2:], style='List Bullet')
+                else:
+                    d.add_paragraph(line)
+
+        add_md_section(doc, md_text)
+        
+        # Falls ein Orderpfad übergeben wird (z.B. Google Drive Offline Folder)
+        if args.output_dir:
+            out_path = Path(args.output_dir) / f"{title}.docx"
+        else:
+            out_path = Path(args.output)
+            
+        # Ensure dir exists
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        doc.save(str(out_path))
+        
+        print(json.dumps({"ok": True, "path": str(out_path)}))
+    except Exception as e:
+        print(json.dumps({"ok": False, "error": str(e)}))
+
+def main():
+    parser = argparse.ArgumentParser(prog="sin-document-forge")
+    sub = parser.add_subparsers(required=True)
+    
+    p = sub.add_parser("create-docx")
+    p.add_argument("--title", help="Titel des Dokuments", default="SIN-Dokument")
+    p.add_argument("--markdown-file", help="Pfad zu Markdown Datei")
+    p.add_argument("--markdown-text", help="Direkter Markdown Text")
+    p.add_argument("--output", help="Direkter Ausgabepfad", default="output.docx")
+    p.add_argument("--output-dir", help="Ordner für Ausgabe (Titel als Dateiname)")
+    p.set_defaults(func=create_docx)
+
+    args = parser.parse_args()
+    args.func(args)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,46 @@
+# Secrets — NEVER commit
+.env
+*.key
+*.pem
+*.json.bak
+antigravity-accounts.json*
+token.json
+auth.json
+telegram_config.json
+*_cookies.json
+gitlab_logcenter.env
+n8n-credentials.json
+n8n.env
+qwen-auth-accounts.json
+burned_tokens.txt
+oci_circuit_breaker.json
+rotator_idx.txt
+swap_token.lock
+machine_id.txt
+
+# Build artifacts
+node_modules/
+dist/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+opencode-local.db
+
+# Lock files
+*.lock
+
+# Logs
+logs/
+*.log
+
+# Backups
+backups/
+archive/

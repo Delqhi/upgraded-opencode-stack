@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+"""SIN Metrics Exporter - Prometheus endpoint for both rotators."""
+
+import json
+import os
+import time
+import sqlite3
+from pathlib import Path
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from functools import lru_cache
+
+AUTH_JSON = Path.home() / ".local/share/opencode/auth.json"
+ACCOUNTS_FILE = Path.home() / ".config/opencode/antigravity-accounts.json"
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").strip()
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+WATCHER_STATE = Path.home() / ".config/openAntigravity-auth-rotator/watcher_state.json"
+
+
+def get_openai_pool_size():
+    try:
+        import sys
+
+        if "/Users/jeremy/.open-auth-rotator/openai/watcher-core" not in sys.path:
+            sys.path.insert(0, "/Users/jeremy/.open-auth-rotator/openai/watcher-core")
+        from token_pool import count_active
+
+        return count_active()
+    except Exception:
+        pass
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        return 0
+    try:
+        import urllib.request
+
+        req = urllib.request.Request(
+            f"{SUPABASE_URL}/rest/v1/openai_tokens?is_active=eq.true&select=id",
+            headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            import json as _json
+
+            return len(_json.loads(resp.read()))
+    except Exception:
+        pass
+    return 0
+
+
+def get_antigravity_pool_size():
+    try:
+        data = json.loads(ACCOUNTS_FILE.read_text())
+        return len(data.get("accounts", []))
+    except Exception:
+        return 0
+
+
+def get_openai_token_expiry():
+    try:
+        data = json.loads(AUTH_JSON.read_text())
+        exp = data.get("openai", {}).get("expires", 0)
+        if exp:
+            return exp / 1000
+    except Exception:
+        pass
+    return 0
+
+
+def get_google_token_expiry():
+    try:
+        data = json.loads(AUTH_JSON.read_text())
+        exp = data.get("google", {}).get("expires", 0)
+        if exp:
+            return exp / 1000
+    except Exception:
+        pass
+    return 0
+
+
+def get_watcher_stats():
+    stats = {
+        "openai_swaps": 0,
+        "openai_rate_limits": 0,
+        "antigravity_swaps": 0,
+        "antigravity_rate_limits": 0,
+    }
+    try:
+        if WATCHER_STATE.exists():
+            data = json.loads(WATCHER_STATE.read_text())
+            stats.update(data)
+    except Exception:
+        pass
+    return stats
+
+
+class MetricsHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == "/metrics":
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; version=0.0.4")
+            self.end_headers()
+
+            openai_pool = get_openai_pool_size()
+            antigravity_pool = get_antigravity_pool_size()
+            stats = get_watcher_stats()
+
+            now = time.time()
+            openai_exp = get_openai_token_expiry()
+            google_exp = get_google_token_expiry()
+
+            metrics = f"""# HELP openai_pool_size Number of active OpenAI tokens in pool
+# TYPE openai_pool_size gauge
+openai_pool_size {openai_pool}
+
+# HELP openai_token_expires Unix timestamp when current OpenAI token expires
+# TYPE openai_token_expires gauge
+openai_token_expires {openai_exp}
+
+# HELP openai_swaps_total Total number of token swaps performed
+# TYPE openai_swaps_total counter
+openai_swaps_total {stats.get("openai_swaps", 0)}
+
+# HELP openai_rate_limits_detected_total Total number of rate limits detected
+# TYPE openai_rate_limits_detected_total counter
+openai_rate_limits_detected_total {stats.get("openai_rate_limits", 0)}
+
+# HELP antigravity_pool_size Number of active Antigravity accounts
+# TYPE antigravity_pool_size gauge
+antigravity_pool_size {antigravity_pool}
+
+# HELP antigravity_token_expires Unix timestamp when current Google token expires
+# TYPE antigravity_token_expires gauge
+antigravity_token_expires {google_exp}
+
+# HELP antigravity_swaps_total Total number of account rotations performed
+# TYPE antigravity_swaps_total counter
+antigravity_swaps_total {stats.get("antigravity_swaps", 0)}
+
+# HELP antigravity_rate_limits_detected_total Total number of rate limits detected
+# TYPE antigravity_rate_limits_detected_total counter
+antigravity_rate_limits_detected_total {stats.get("antigravity_rate_limits", 0)}
+
+# HELP sin_up Whether the exporter is up
+# TYPE sin_up gauge
+sin_up 1
+"""
+            self.wfile.write(metrics.encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
+
+    def log_message(self, format, *args):
+        pass
+
+
+if __name__ == "__main__":
+    server = HTTPServer(("0.0.0.0", 7657), MetricsHandler)
+    print("SIN Metrics exporter running on http://0.0.0.0:7657/metrics")
+    server.serve_forever()

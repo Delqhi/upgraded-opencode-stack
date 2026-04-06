@@ -1,0 +1,67 @@
+#!/bin/bash
+echo "=== SIN-SOLVER HEALTH CHECK ==="
+echo ""
+echo "[OpenAI Rotator]"
+pid_openai=$(pgrep -f "watcher.py" | grep -v "grep" | head -1)
+if [ -n "$pid_openai" ]; then
+    echo "✅ Watcher is running (PID: $pid_openai)"
+else
+    echo "❌ Watcher is NOT running!"
+fi
+
+# FIX: Query Supabase for pool size instead of local directory
+pool_size=$(python3 -c "
+import sys
+sys.path.insert(0, '/Users/jeremy/.open-auth-rotator/openai/watcher-core')
+from token_pool import count_active
+print(count_active())
+" 2>/dev/null || echo "0")
+
+if [ "$pool_size" -ge 20 ]; then
+    echo "✅ Pool size: $pool_size tokens"
+else
+    echo "⚠️ Pool size low: $pool_size tokens (threshold: 20)"
+fi
+
+auth_age=$(stat -f %m ~/.local/share/opencode/auth.json 2>/dev/null)
+now=$(date +%s)
+diff=$((now - auth_age))
+echo "ℹ️ auth.json updated $diff seconds ago"
+
+echo ""
+echo "[Antigravity Rotator]"
+pid_ag=$(pgrep -f "watcher_runner.py" | grep -v "grep" | head -1)
+if [ -n "$pid_ag" ]; then
+    echo "✅ Watcher is running (PID: $pid_ag)"
+else
+    echo "❌ Watcher is NOT running!"
+fi
+fail_state=$(cat ~/.config/openAntigravity-auth-rotator/fail_state.json 2>/dev/null)
+if [[ "$fail_state" == *"cooldown"* ]]; then
+    count=$(echo "$fail_state" | grep -o '"count": [0-9]*' | grep -o '[0-9]*')
+    cd=$(echo "$fail_state" | grep -o '"cooldown_until": [0-9]*\.[0-9]*' | grep -o '[0-9\.]*')
+    if [ "$count" -gt 0 ]; then
+        if [ $(echo "$cd > $now" | bc -l) -eq 1 ]; then
+            remain=$(echo "$cd - $now" | bc | cut -d'.' -f1)
+            echo "❌ Rotator is in FLOOD COOLDOWN! ($remain seconds remaining, $count fails)"
+        else
+            echo "⚠️ Rotator has $count previous failures, but cooldown is clear."
+        fi
+    else
+        echo "✅ Rotator state is clean (0 failures)."
+    fi
+else
+    echo "✅ Rotator state is clean."
+fi
+active_user=$(python3 -c "import json,os; d=json.load(open(os.path.expanduser('~/.config/opencode/antigravity-accounts.json'))); print(d['accounts'][0]['email'])" 2>/dev/null)
+if [ -n "$active_user" ]; then
+    echo "✅ Active Workspace User: $active_user"
+else
+    echo "❌ No active Workspace user found in config!"
+fi
+
+echo ""
+echo "=== SYSTEM STATUS ==="
+echo "Memory / Load:"
+uptime
+echo "Done."

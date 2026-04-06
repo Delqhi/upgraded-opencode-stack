@@ -1,0 +1,14 @@
+{
+  "name": "a2a-sin-agent-base",
+  "version": "1.0.0",
+  "description": "SIN A2A Agent Base Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "echo 'No build step needed'"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

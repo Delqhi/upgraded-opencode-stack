@@ -1,0 +1,13 @@
+{
+  "name": "upgraded-opencode-stack",
+  "version": "1.0.0",
+  "description": "Complete custom OpenCode CLI enhancement stack",
+  "private": true,
+  "scripts": {
+    "install": "./install.sh",
+    "install:dry-run": "./install.sh --dry-run",
+    "verify": "echo 'Verifying OpenCode config...' && ls ~/.config/opencode/skills/ | wc -l && echo 'skills installed'"
+  },
+  "keywords": ["opencode", "cli", "ai", "agents", "skills", "plugins"],
+  "license": "MIT"
+}
