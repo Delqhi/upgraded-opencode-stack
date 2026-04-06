@@ -31,10 +31,8 @@ RUN npm install -g wrangler @google/gemini-cli
 RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
 
-# Clone upgraded-opencode-stack repo and install dependencies
-RUN git clone https://github.com/Delqhi/upgraded-opencode-stack.git /opt/upgraded-opencode-stack && \
-    cd /opt/upgraded-opencode-stack && \
-    npm install
+# Clone upgraded-opencode-stack repo
+RUN git clone https://github.com/Delqhi/upgraded-opencode-stack.git /opt/upgraded-opencode-stack
 
 # Set environment
 ENV PATH="/root/.bun/bin:/usr/local/bin:$PATH"
