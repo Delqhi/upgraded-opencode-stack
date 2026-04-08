@@ -11,7 +11,8 @@
     "google": {
       "options": {
         "timeout": false,
-        "chunkTimeout": 999999999
+        "chunkTimeout": 999999999,
+        "soft_quota_threshold_percent": 100
       },
       "models": {
         "antigravity-claude-sonnet-4-6": {
@@ -29,7 +30,8 @@
             "output": [
               "text"
             ]
-          }
+          },
+          "context": 256000
         },
         "antigravity-claude-opus-4-6-thinking": {
           "name": "Claude Opus 4.6 Thinking (Antigravity)",
@@ -58,7 +60,8 @@
                 "thinkingBudget": 32768
               }
             }
-          }
+          },
+          "context": 256000
         },
         "antigravity-gemini-3.1-pro": {
           "name": "Gemini 3.1 Pro (Antigravity)",
