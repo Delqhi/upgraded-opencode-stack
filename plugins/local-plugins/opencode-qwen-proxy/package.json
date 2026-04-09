@@ -5,7 +5,6 @@
   "module": "index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-
   "type": "module",
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node --format esm && bun build ./src/cli.ts --outdir ./dist --target node --format esm",
@@ -48,5 +47,8 @@
   ],
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "oc-plugin": [
+    "tui"
+  ]
 }
