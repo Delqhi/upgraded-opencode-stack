@@ -61,15 +61,6 @@ if [ "$SKIP_NPM" = false ]; then
       log_ok "$plugin installiert"
     fi
   done
-  # Special install for opencode-qwen-proxy from GitHub
-  plugin="opencode-qwen-proxy"
-  if npm ls -g "$plugin" 2>/dev/null | grep -q "$plugin"; then
-    log_skip "$plugin"
-  else
-    [ "$DRY_RUN" = false ] && npm install -g github:RunMintOn/OpenCode-Qwen-Proxy 2>&1 | tail -1
-    log_ok "$plugin installiert"
-  fi
-  # Local openrouter auth
   if [ -d "plugins/local-plugins/opencode-openrouter-auth" ]; then
     if npm ls -g "opencode-openrouter-auth" 2>/dev/null | grep -q "opencode-openrouter-auth"; then
       log_skip "opencode-openrouter-auth"
