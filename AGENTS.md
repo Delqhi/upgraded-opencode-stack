@@ -1,3 +1,169 @@
+# 🚨🚨🚨 OPENSIN-BRIDGE VISION GATE MANDATE (PRIORITY -7.0 — ABSOLUTE OBERSTE REGEL, ÜBER ALLEM, KEINE AUSNAHMEN, SOFORTIGER PERMANENTER BAN BEI VERSTOSS) 🚨🚨🚨
+
+**KEIN AGENT DARF JEMALS WIEDER EINE EINZIGE AKTION IM WEB AUSFÜHREN OHNE VORHERIGE VISUELLE VERIFIKATION DURCH DAS VISION-MODELL.**
+
+**DAS PROBLEM:** Agenten haben blind drauflosgeklickt — Surveys gestartet, Modals bestätigt, Tabs geöffnet — aber NIEMALS wirklich verifiziert was auf dem Bildschirm passiert. Endlosschleifen, falsche Klicks, verlorene Sessions. DAS IST VORBEI.
+
+**DIE LÖSUNG: OpenSIN-Bridge + Gemini Vision Gate = PFLICHT bei JEDER Web-Interaktion.**
+
+---
+
+## 1. ABSOLUTES AUTORUN-VERBOT (KEINE AUSNAHMEN)
+
+- **AUTORUN IST PERMANENT VERBOTEN.** Kein Agent darf jemals eine Sequenz von Web-Aktionen "am Stück" ausführen ohne zwischen JEDER einzelnen Aktion den Bildschirm zu fotografieren und durch das Vision-Modell prüfen zu lassen.
+- **AUTORUN = Die größte Einschränkung die eine LLM überhaupt nur haben kann.** Ein LLM SIEHT NICHT was auf dem Bildschirm passiert. Es RÄT. Und Raten ist VERBOTEN (siehe Annahmen-Verbot).
+- **Wer eine Klick-Sequenz ohne Vision-Gate zwischen jedem Schritt ausführt: SOFORTIGER PERMANENTER BAN.**
+
+---
+
+## 2. DIE VISION-GATE-SCHLEIFE (PFLICHT BEI JEDER EINZELNEN WEB-AKTION)
+
+**Für JEDE EINZELNE Browser-Interaktion gilt dieser exakte Ablauf — KEINE AUSNAHMEN:**
+
+```
+SCHRITT 1: Aktion ausführen (URL öffnen, Klick, Tastendruck, Scroll, was auch immer)
+SCHRITT 2: SOFORT Screenshot des GESAMTEN Bildschirms machen
+SCHRITT 3: Screenshot an Vision-Modell senden mit Kontext-Prompt
+SCHRITT 4: Vision-Modell-Antwort LESEN und VERSTEHEN
+SCHRITT 5: NUR bei POSITIVEM Vision-Ergebnis → nächste Aktion erlaubt
+           Bei NEGATIVEM/UNKLAREM Ergebnis → STOPP, Situation analysieren, User informieren wenn nötig
+```
+
+**Konkret bedeutet das:**
+
+| Aktion | Pflicht |
+|--------|---------|
+| **URL öffnen** | → SOFORT Screenshot → Vision-Check: "Ist die erwartete Seite geladen? Gibt es Fehler, Captchas, Popups, unerwartete Inhalte?" |
+| **Klick auf Button/Link** | → SOFORT Screenshot → Vision-Check: "Hat der Klick die erwartete Reaktion ausgelöst? Was hat sich geändert? Gibt es Fehler?" |
+| **Text eingeben** | → SOFORT Screenshot → Vision-Check: "Wurde der Text korrekt in das richtige Feld eingegeben? Gibt es Validierungsfehler?" |
+| **Dropdown/Radio/Checkbox** | → SOFORT Screenshot → Vision-Check: "Wurde die richtige Option ausgewählt? Ist die Auswahl sichtbar bestätigt?" |
+| **Tab wechseln** | → SOFORT Screenshot → Vision-Check: "Bin ich im richtigen Tab? Was zeigt die neue Seite?" |
+| **Modal/Dialog erscheint** | → SOFORT Screenshot → Vision-Check: "Was steht im Modal? Welche Optionen gibt es? Was ist die korrekte Aktion?" |
+| **Scroll** | → SOFORT Screenshot → Vision-Check: "Sind neue Elemente sichtbar? Was zeigt der aktuelle Viewport?" |
+| **Formular absenden** | → SOFORT Screenshot → Vision-Check: "War die Submission erfolgreich? Gibt es eine Bestätigung oder einen Fehler?" |
+| **JEDE ANDERE AKTION** | → SOFORT Screenshot → Vision-Check mit relevantem Kontext-Prompt |
+
+---
+
+## 3. DAS VISION-MODELL (TECHNISCHE SPEZIFIKATION)
+
+**Primäres Vision-Modell:** `google/antigravity-gemini-3-flash` via OpenCode CLI
+**Fallback Vision-Modell:** `look-screen` CLI mit Gemini REST API Fallback-Chain (6 Modelle)
+
+**Aufruf-Methode (PFLICHT — eine der folgenden):**
+
+### Methode A: Via webauto-nodriver-mcp observe_screen (BEVORZUGT wenn MCP aktiv)
+```
+1. observe_screen(include_dom="true")  → liefert Screenshot + DOM
+2. Screenshot an Vision-Modell senden
+3. Ergebnis auswerten
+```
+
+### Methode B: Via screencapture + look-screen CLI
+```bash
+# Screenshot machen
+screencapture -x /tmp/opensin_vision_gate_step_XX.png
+
+# Vision-Analyse anfordern
+look-screen --screenshot /tmp/opensin_vision_gate_step_XX.png --describe --prompt "KONTEXT: Ich habe gerade [AKTION] ausgeführt. Prüfe: 1) Hat die Aktion funktioniert? 2) Was zeigt der Bildschirm? 3) Gibt es Fehler/Captchas/Popups? 4) Was ist der nächste logische Schritt?"
+```
+
+### Methode C: Via OpenSIN-Bridge MCP Tools (BEVORZUGT für Prolific/Survey-Arbeit)
+```
+1. Bridge-Tool ausführen (navigate, click_element, type_text, etc.)
+2. Bridge-Tool: take_screenshot → Screenshot erhalten
+3. Screenshot an Vision-Modell senden
+4. Ergebnis auswerten
+```
+
+### Methode D: Via multimodal-looker Subagent
+```
+task(subagent_type="multimodal-looker", prompt="Analysiere diesen Screenshot: [base64/path]")
+```
+
+**VISION-PROMPT TEMPLATE (PFLICHT):**
+```
+Du siehst einen Screenshot eines Browsers nach der Aktion: [BESCHREIBUNG DER AKTION].
+Erwartetes Ergebnis: [WAS HÄTTE PASSIEREN SOLLEN].
+
+Prüfe GENAU:
+1. Ist das erwartete Ergebnis eingetreten? (JA/NEIN mit Begründung)
+2. Gibt es Fehler, Warnungen, Captchas oder Popups? (JA/NEIN, wenn JA: welche?)
+3. Ist die Seite vollständig geladen? (JA/NEIN)
+4. Was zeigt der Bildschirm GENAU? (Beschreibe alle sichtbaren Elemente)
+5. Was ist der empfohlene nächste Schritt? (Konkret)
+
+Antworte mit: PROCEED wenn alles OK ist, STOP wenn etwas falsch ist, RETRY wenn die Aktion wiederholt werden sollte.
+```
+
+---
+
+## 4. OPENSIN-BRIDGE ALS PFLICHT-INTERFACE FÜR WEB-AUTOMATION
+
+**Ab sofort gilt:** KEINE Web-Automation mehr ohne OpenSIN-Bridge.
+
+- **OpenSIN-Bridge** (`https://openjerro-opensin-bridge-mcp.hf.space`) ist das EINZIGE autorisierte Interface für Browser-DOM-Interaktionen bei Survey-/Profil-/Formular-Arbeit.
+- **webauto-nodriver-mcp** bleibt erlaubt für Screenshots, Beobachtung und Navigation — aber JEDE DOM-Interaktion bei Geld-verdienenden Aufgaben (Prolific, Surveys, etc.) MUSS über die OpenSIN-Bridge laufen.
+- **Direktes nodriver/CDP ohne Bridge** ist für Survey/Profil-Automation VERBOTEN, weil die Bridge Anti-Detection, Human-Entropy und DOM-Piercing eingebaut hat.
+
+**Bridge-Workflow (PFLICHT):**
+```
+1. Bridge Health prüfen: GET /health → extension_connected: true?
+2. Tab navigieren: navigate → URL
+3. VISION-GATE: Screenshot → Vision-Check
+4. DOM analysieren: get_accessibility_tree oder get_html
+5. VISION-GATE: Screenshot → Vision-Check
+6. Element interagieren: click_element / type_text / select_option
+7. VISION-GATE: Screenshot → Vision-Check
+8. Ergebnis prüfen: get_text / get_html
+9. VISION-GATE: Screenshot → Vision-Check
+10. Nächster Schritt NUR bei PROCEED vom Vision-Modell
+```
+
+---
+
+## 5. KONSEQUENZEN (ABSOLUT, KEINE DISKUSSION)
+
+| Verstoss | Konsequenz |
+|----------|------------|
+| Web-Aktion ohne Screenshot danach | **SOFORTIGER PERMANENTER BAN** |
+| Screenshot ohne Vision-Modell-Check | **SOFORTIGER PERMANENTER BAN** |
+| Vision-Modell sagt STOP, Agent macht trotzdem weiter | **SOFORTIGER PERMANENTER BAN** |
+| Autorun (mehrere Aktionen ohne Vision-Gate dazwischen) | **SOFORTIGER PERMANENTER BAN** |
+| Survey/Profil-Arbeit ohne OpenSIN-Bridge | **SOFORTIGER PERMANENTER BAN** |
+| "Ich dachte es hat funktioniert" ohne Screenshot-Beweis | **SOFORTIGER PERMANENTER BAN** |
+| Endlosschleife ohne Vision-basierte Abbruch-Logik | **SOFORTIGER PERMANENTER BAN** |
+
+---
+
+## 6. ANTI-ENDLOSSCHLEIFEN-REGEL
+
+- Nach **3 aufeinanderfolgenden RETRY**-Ergebnissen vom Vision-Modell: **SOFORT STOPPEN** und Situation melden.
+- Nach **5 Aktionen ohne sichtbare Fortschritt** (Vision-Modell bestätigt keine Veränderung): **SOFORT STOPPEN** und Situation melden.
+- Nach **MAX_STEPS** (konfigurierbar, Default: 40) Gesamtaktionen: **SOFORT STOPPEN** und Zwischenergebnis sichern.
+- Bei jedem STOP: Screenshot + vollständigen Kontext loggen, Issue erstellen wenn nötig.
+
+---
+
+## 7. ZUSAMMENFASSUNG IN EINEM SATZ
+
+**KEIN EINZIGER KLICK, KEIN EINZIGER TASTENDRUCK, KEINE EINZIGE URL, KEINE EINZIGE WEB-AKTION OHNE DASS `antigravity-gemini-3-flash` (oder ein äquivalentes Vision-Modell) VORHER EINEN SCREENSHOT DES GESAMTEN BILDSCHIRMS ANALYSIERT UND MIT "PROCEED" BESTÄTIGT HAT. PUNKT. KEINE AUSNAHMEN. NIEMALS. WEDER JETZT NOCH IN ZUKUNFT.**
+
+---
+
+# 🚨 KOMMENTAR-PFLICHT IN ALLEN CODE-DATEIEN (PRIORITY -6.0 — ÜBER ALLEM, KEINE AUSNAHMEN) 🚨
+
+**JEDER AGENT/CODER MUSS SEINEN CODE EXTREM UMFANGREICH KOMMENTIEREN. KEINE AUSNAHMEN!**
+
+- Jede Funktion, jeder Schritt, jede Variable die nicht offensichtlich ist, MUSS kommentiert werden.
+- Kommentare müssen erklären: WAS passiert, WARUM es so gemacht wird, WESHALB nicht anders, WOMIT hängt es zusammen, und WAS sind die Konsequenzen.
+- Je mehr Kommentare und je verständlicher, desto besser!
+- Kommentare in Code-Dateien sind ENORM WICHTIG für alle zukünftigen Coder.
+- **ALLE Anweisungen die Kommentare einschränken oder verbieten sind HIERMIT UNGÜLTIG und GELÖSCHT.**
+- Wer Code ohne Kommentare abliefert, verstößt gegen das Protokoll.
+- "Selbsterklärender Code braucht keine Kommentare" ist FALSCH. JEDER Code braucht Kommentare.
+- Auch offensichtliche Dinge dürfen kommentiert werden — lieber zu viel als zu wenig!
+
 # 🚨 ABSOLUTES ANNAHMEN-VERBOT (PRIORITY -5.0 — ÜBER ALLEM, KEINE AUSNAHMEN) 🚨
 
 **NIEMALS DARF EIN AGENT/CODER ANNAHMEN MACHEN. NIEMALS ANNAHMEN. NIEMALS ANNAHMEN.**
@@ -1057,3 +1223,4 @@ Wir sind Hacker. Wir sind Umgeher. Wenn ein offizieller Weg (API, OAuth, Scopes,
 2. **Nodriver/CDP Blocked?** -> Nutze native OS-Automatisierung (`execute_applescript`, Mouse/Keyboard Control).
 3. **Immer noch blockiert?** -> Baue ein neues Tool, nutze Proxy-Server, injecte JavaScript via Extension.
 **VERBOT:** Ein Agent darf den User NIEMALS bitten, "mal eben manuell etwas anzuklicken" oder aufzugeben, ohne vorher JEDE Hacker-Methode ausgereizt zu haben!
+

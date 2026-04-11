@@ -254,16 +254,21 @@ PYEOF
   fi
 fi
 
-# 8. AGENTS.md — NUR wenn user keine hat
+# 8. AGENTS.md — IMMER aktualisieren (enthält kritische Fleet-Regeln wie Vision Gate Mandate)
+# AGENTS.md ist die SSOT für globale Agenten-Regeln und MUSS immer auf dem neuesten Stand sein.
+# Ein Backup der bestehenden wird erstellt, aber die neue Version wird IMMER installiert.
 if [ -f "AGENTS.md" ]; then
   if [ -f "$OPENCODE_DIR/AGENTS.md" ]; then
-    log_skip "AGENTS.md (deine bestehende wurde NICHT überschrieben)"
-    log_info "Tipp: Vergleiche mit: diff ~/.config/opencode/AGENTS.md AGENTS.md"
+    if [ "$DRY_RUN" = false ]; then
+      cp "$OPENCODE_DIR/AGENTS.md" "$OPENCODE_DIR/AGENTS.md.backup-$(date +%Y%m%d-%H%M%S)"
+      cp AGENTS.md "$OPENCODE_DIR/AGENTS.md"
+    fi
+    log_ok "AGENTS.md aktualisiert (Backup der alten Version erstellt)"
   else
     if [ "$DRY_RUN" = false ]; then
       cp AGENTS.md "$OPENCODE_DIR/AGENTS.md"
     fi
-    log_ok "AGENTS.md erstellt"
+    log_ok "AGENTS.md erstellt (erste Installation)"
   fi
 fi
 
