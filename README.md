@@ -16,13 +16,8 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 
 | Kategorie | Anzahl | Zielverzeichnis |
 |-----------|--------|-----------------|
-<<<<<<< HEAD
 | **Skills** | 29 | `~/.config/opencode/skills/` |
-| **Plugins** | 4 | Global via npm + `~/.config/opencode/plugins/` |
-=======
-| **Skills** | 28 | `~/.config/opencode/skills/` |
 | **Plugins** | 5 | Global via npm + `~/.config/opencode/plugins/` |
->>>>>>> 4be94dd (PURGE: Remove gemini-api provider (forbidden direct Google API))
 | **Agents** | 21 | `~/.config/opencode/agents/` |
 | **Agent Instructions** | 37 | `~/.config/opencode/agents-instructions/` |
 | **Commands** | 13 | `~/.config/opencode/commands/` |
@@ -215,13 +210,8 @@ upgraded-opencode-stack/
 ├── AGENTS.md               # Globale Agent-Regeln
 ├── .env.example            # API Key Template
 ├── bin/                    # 11 echte CLI Tools
-<<<<<<< HEAD
 ├── skills/                 # 29 Skills
-├── plugins/                # 4 Plugins (1 lokal)
-=======
-├── skills/                 # 28 Skills
 ├── plugins/                # 5 Plugins (2 lokal)
->>>>>>> 4be94dd (PURGE: Remove gemini-api provider (forbidden direct Google API))
 ├── agents/                 # Agent-Definitionen
 ├── agents-instructions/    # 37 Agent-Instruktionen
 ├── commands/               # 13 Custom Commands
