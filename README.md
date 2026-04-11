@@ -16,8 +16,13 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 
 | Kategorie | Anzahl | Zielverzeichnis |
 |-----------|--------|-----------------|
+<<<<<<< HEAD
 | **Skills** | 29 | `~/.config/opencode/skills/` |
 | **Plugins** | 4 | Global via npm + `~/.config/opencode/plugins/` |
+=======
+| **Skills** | 28 | `~/.config/opencode/skills/` |
+| **Plugins** | 5 | Global via npm + `~/.config/opencode/plugins/` |
+>>>>>>> 4be94dd (PURGE: Remove gemini-api provider (forbidden direct Google API))
 | **Agents** | 21 | `~/.config/opencode/agents/` |
 | **Agent Instructions** | 37 | `~/.config/opencode/agents-instructions/` |
 | **Commands** | 13 | `~/.config/opencode/commands/` |
@@ -66,13 +71,13 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | `nvidia-video-forge` | Video-Generierung via NVIDIA |
 | `sora` | Sora Video-Generierung |
 
-## Plugins (4)
+## Plugins (5)
 
 | Plugin | Zweck |
 |--------|-------|
 | `opencode-antigravity-auth` | Antigravity OAuth — Token-Rotation für Claude/Gemini |
 | `oh-my-opencode` | Oh-My-OpenCode Framework — Commands, Hooks, Orchestration |
-| `opencode-qwen-proxy` | OpenCode-Qwen-Proxy (Qwen OAuth with throttling, jitter, header alignment) |
+| `opencode-qwen-auth` | Qwen OAuth Auth via `/connect` |
 | `opencode-openrouter-auth` | OpenRouter Auth mit lokalem Proxy (local source included) |
 
 ## CLI Tools (11)
@@ -97,7 +102,6 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 |----------|---------|
 | **google** (Antigravity) | `antigravity-claude-sonnet-4-6`, `antigravity-claude-opus-4-6-thinking`, `antigravity-gemini-3.1-pro`, `antigravity-gemini-3-flash` |
 | **nvidia-nim** | `qwen-3.5-122b`, `qwen-3.5-397b` |
-| **gemini-api** | `gemini-3.1-pro-preview`, `gemini-3-flash-preview`, `gemini-2.5-pro`, `gemini-2.5-flash` |
 | **openai** | `gpt-5.4` |
 | **openrouter** | 7 Free-Modelle (DeepSeek, Gemini, Llama, Phi) |
 | **qwen-code** | Qwen 3.6 Plus, Qwen 3.6 Vision Plus (OAuth, free up to 2000/day) |
@@ -211,8 +215,13 @@ upgraded-opencode-stack/
 ├── AGENTS.md               # Globale Agent-Regeln
 ├── .env.example            # API Key Template
 ├── bin/                    # 11 echte CLI Tools
+<<<<<<< HEAD
 ├── skills/                 # 29 Skills
 ├── plugins/                # 4 Plugins (1 lokal)
+=======
+├── skills/                 # 28 Skills
+├── plugins/                # 5 Plugins (2 lokal)
+>>>>>>> 4be94dd (PURGE: Remove gemini-api provider (forbidden direct Google API))
 ├── agents/                 # Agent-Definitionen
 ├── agents-instructions/    # 37 Agent-Instruktionen
 ├── commands/               # 13 Custom Commands
