@@ -197,80 +197,83 @@ for p in tgt_plugins + src_plugins:
     if pkg_name not in seen: all_plugins.append(p); seen.add(pkg_name)
 tgt["plugin"] = all_plugins
 
-      # Merge providers — kanonische Model-Metadaten updaten, Benutzer-Overrides bewahren
-      src_providers = src.get("provider", {})
-      tgt_providers = tgt.get("provider", {})
-      for name, prov in src_providers.items():
-          if name not in tgt_providers:
-              tgt_providers[name] = prov
-          else:
-              # Modelle: kanonische Felder updaten
-              src_models = prov.get("models", {})
-              tgt_models = tgt_providers[name].get("models", {})
-              for mname, src_mconf in src_models.items():
-                  if mname not in tgt_models:
-                      # Neues Modell
-                      tgt_models[mname] = src_mconf
-                  else:
-                      # Existierendes Modell: Kanonische Felder updaten, andere erhalten
-                      tgt_mconf = tgt_models[mname]
-                      # name
-                      if "name" in src_mconf:
-                          tgt_mconf["name"] = src_mconf["name"]
-                      # limit (context, output)
-                      if "limit" in src_mconf and isinstance(src_mconf["limit"], dict):
-                          if "limit" not in tgt_mconf or not isinstance(tgt_mconf.get("limit"), dict):
-                              tgt_mconf["limit"] = {}
-                          for k, v in src_mconf["limit"].items():
-                              tgt_mconf["limit"][k] = v
-                      # modalities
-                      if "modalities" in src_mconf:
-                          tgt_mconf["modalities"] = src_mconf["modalities"]
-                      # attachment
-                      if "attachment" in src_mconf:
-                          tgt_mconf["attachment"] = src_mconf["attachment"]
-                      # Weitere kanonische Felder können hier hinzugefügt werden
-              tgt_providers[name]["models"] = tgt_models
-              # Provider-Optionen: kanonische Felder (baseURL, apiKey) updaten
-              src_opts = prov.get("options", {})
-              tgt_opts = tgt_providers[name].get("options", {})
-              
-              # Force sync critical options from source for modal provider
-              if name == "modal":
-                  for k, v in src_opts.items():
-                      tgt_opts[k] = v
-              else:
-                  # For others, only add new options
-                  for k, v in src_opts.items():
-                      if k not in tgt_opts:
-                          tgt_opts[k] = v
-              
-              tgt_providers[name]["options"] = tgt_opts
-              if "npm" in prov and "npm" not in tgt_providers[name]:
-                  tgt_providers[name]["npm"] = prov["npm"]
-      tgt["provider"] = tgt_providers
+# Merge providers — kanonische Model-Metadaten updaten, Benutzer-Overrides bewahren
+src_providers = src.get("provider", {})
+tgt_providers = tgt.get("provider", {})
+for name, prov in src_providers.items():
+    if name not in tgt_providers:
+        tgt_providers[name] = prov
+    else:
+        # Modelle: kanonische Felder updaten
+        src_models = prov.get("models", {})
+        tgt_models = tgt_providers[name].get("models", {})
+        for mname, src_mconf in src_models.items():
+            if mname not in tgt_models:
+                # Neues Modell
+                tgt_models[mname] = src_mconf
+            else:
+                # Existierendes Modell: Kanonische Felder updaten, andere erhalten
+                tgt_mconf = tgt_models[mname]
+                # name
+                if "name" in src_mconf:
+                    tgt_mconf["name"] = src_mconf["name"]
+                # id
+                if "id" in src_mconf:
+                    tgt_mconf["id"] = src_mconf["id"]
+                # limit (context, output)
+                if "limit" in src_mconf and isinstance(src_mconf["limit"], dict):
+                    if "limit" not in tgt_mconf or not isinstance(tgt_mconf.get("limit"), dict):
+                        tgt_mconf["limit"] = {}
+                    for k, v in src_mconf["limit"].items():
+                        tgt_mconf["limit"][k] = v
+                # modalities
+                if "modalities" in src_mconf:
+                    tgt_mconf["modalities"] = src_mconf["modalities"]
+                # attachment
+                if "attachment" in src_mconf:
+                    tgt_mconf["attachment"] = src_mconf["attachment"]
+        tgt_providers[name]["models"] = tgt_models
+        # Provider-Optionen: kanonische Felder (baseURL, apiKey) updaten
+        src_opts = prov.get("options", {})
+        tgt_opts = tgt_providers[name].get("options", {})
+        
+        # Force sync critical options from source for modal provider
+        if name == "modal":
+            for k, v in src_opts.items():
+                tgt_opts[k] = v
+        else:
+            # For others, only add new options
+            for k, v in src_opts.items():
+                if k not in tgt_opts:
+                    tgt_opts[k] = v
+        
+        tgt_providers[name]["options"] = tgt_opts
+        if "npm" in prov and "npm" not in tgt_providers[name]:
+            tgt_providers[name]["npm"] = prov["npm"]
+tgt["provider"] = tgt_providers
 
-              src_agents = src.get("agent", {})
-              tgt_agents = tgt.get("agent", {})
-              for aname, src_aconf in src_agents.items():
-                  if aname not in tgt_agents:
-                      tgt_agents[aname] = src_aconf
-                  else:
-                      if "model" in src_aconf:
-                          tgt_agents[aname]["model"] = src_aconf["model"]
-                      if "description" in src_aconf:
-                          tgt_agents[aname]["description"] = src_aconf["description"]
-                      if "fallback" in src_aconf:
-                          tgt_agents[aname]["fallback"] = src_aconf["fallback"]
-              tgt["agent"] = tgt_agents
+# Merge agents
+src_agents = src.get("agent", {})
+tgt_agents = tgt.get("agent", {})
+for aname, src_aconf in src_agents.items():
+    if aname not in tgt_agents:
+        tgt_agents[aname] = src_aconf
+    else:
+        if "model" in src_aconf:
+            tgt_agents[aname]["model"] = src_aconf["model"]
+        if "description" in src_aconf:
+            tgt_agents[aname]["description"] = src_aconf["description"]
+        if "fallback" in src_aconf:
+            tgt_agents[aname]["fallback"] = src_aconf["fallback"]
+tgt["agent"] = tgt_agents
 
-              # Merge commands — NUR neue
-              src_cmds = src.get("command", {})
-              tgt_cmds = tgt.get("command", {})
-              for name, cconf in src_cmds.items():
-                  if name not in tgt_cmds:
-                      tgt_cmds[name] = cconf
-              tgt["command"] = tgt_cmds
+# Merge commands — NUR neue
+src_cmds = src.get("command", {})
+tgt_cmds = tgt.get("command", {})
+for name, cconf in src_cmds.items():
+    if name not in tgt_cmds:
+        tgt_cmds[name] = cconf
+tgt["command"] = tgt_cmds
 
 # User's model choice BEWAHREN — NIEMALS überschreiben
 # User's $schema BEWAHREN
