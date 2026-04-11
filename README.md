@@ -160,7 +160,7 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | **OMOC Swarm** (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ 5-Agenten-Schwarm | ❌ Nur Sisyphus |
 | **SIN-Zeus** (Fleet Commander) | ✅ | ❌ |
 | **SIN-Terminal Orchestration** | ✅ 4 Commands | ❌ |
-| **28 Custom Skills** | ✅ | ❌ (hat 0) |
+| **29 Custom Skills** | ✅ | ❌ (hat 0) |
 | **Antigravity Auth Plugin** | ✅ Token-Rotation | ❌ (eigenes Google Auth) |
 | **OpenRouter Auth (lokal)** | ✅ Mit Proxy | ❌ |
 | **11 sin-* CLI Tools** | ✅ | ❌ |
@@ -211,7 +211,7 @@ upgraded-opencode-stack/
 ├── AGENTS.md               # Globale Agent-Regeln
 ├── .env.example            # API Key Template
 ├── bin/                    # 11 echte CLI Tools
-├── skills/                 # 28 Skills
+├── skills/                 # 29 Skills
 ├── plugins/                # 4 Plugins (1 lokal)
 ├── agents/                 # Agent-Definitionen
 ├── agents-instructions/    # 37 Agent-Instruktionen
