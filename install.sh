@@ -294,6 +294,109 @@ PYEOF
   fi
 fi
 
+# ============================================================================
+# 7b. 🚨 ANTIGRAVITY PLUGIN ENFORCEMENT — OBERSTE SCHUTZREGEL
+# ============================================================================
+# WARUM: Der Python-Merge oben (Schritt 7) dedupliziert Plugins korrekt, aber
+# er garantiert NICHT die Reihenfolge. opencode-antigravity-auth MUSS immer
+# als ERSTES Plugin in der Liste stehen, weil opencode Plugins in Array-Reihenfolge
+# lädt. Wenn ein anderes Plugin zuerst geladen wird und Google OAuth versucht,
+# schlägt es fehl — weil der Antigravity-Token noch nicht injiziert wurde.
+#
+# KONSEQUENZ OHNE DIESE REGEL:
+# - Google OAuth für Claude Sonnet/Opus/Gemini funktioniert NICHT
+# - Alle antigravity-* Modelle sind nicht verfügbar
+# - Der gesamte Fleet-Betrieb bricht zusammen
+#
+# DIESE REGEL DARF NIEMALS ENTFERNT WERDEN.
+# Referenz: AGENTS.md Priority -10.0 — Antigravity Plugin Verbot
+# ============================================================================
+log_info "🚨 Enforcing antigravity plugin protection (Priority -10.0)..."
+if [ -f "opencode.json" ] || [ -f "$OPENCODE_DIR/opencode.json" ]; then
+  if [ "$DRY_RUN" = false ]; then
+    python3 << 'PYEOF'
+import json, sys, os
+
+# Pfad zur globalen opencode.json — das ist die SSOT (Single Source of Truth)
+# Diese Datei steuert ALLE Modelle, Plugins und Provider für den gesamten Fleet
+target = os.path.expanduser("~/.config/opencode/opencode.json")
+
+# Das Plugin das IMMER als ERSTES in der Plugin-Liste stehen MUSS.
+# Es stellt Google OAuth für alle antigravity-Modelle bereit.
+# Ohne diesen Plugin-Eintrag: kein Claude, kein Gemini — NICHTS.
+# ACHTUNG: Beim Update auf neue Versionen muss dieser String angepasst werden!
+ANTIGRAVITY_PLUGIN = "opencode-antigravity-auth@1.6.5-beta.0"
+# Package-Name-Präfix zum Suchen/Erkennen (versionsunabhängig)
+ANTIGRAVITY_PKG = "opencode-antigravity-auth"
+
+# Sicherheitscheck: Existiert die Zieldatei?
+if not os.path.exists(target):
+    print(f"  ⚠️  opencode.json nicht gefunden unter {target} — überspringe Enforcement")
+    sys.exit(0)
+
+# Config laden
+with open(target, "r") as f:
+    cfg = json.load(f)
+
+# Plugin-Array auslesen (kann auch fehlen bei frischer Installation)
+plugins = cfg.get("plugin", [])
+
+# Prüfen ob antigravity bereits als ERSTES Element in der Liste steht
+if plugins and plugins[0].startswith(ANTIGRAVITY_PKG):
+    # ✅ Alles korrekt — kein Eingriff nötig
+    print(f"  ✅ Antigravity plugin ist bereits an Position 0: {plugins[0]}")
+else:
+    # 🚨 EINGRIFF NÖTIG: Plugin fehlt oder ist nicht an Position 0
+    old_first = plugins[0] if plugins else "(leer)"
+
+    # Alle bestehenden antigravity-Einträge entfernen (könnten an falscher Stelle sein)
+    # Wir entfernen sie zunächst alle und fügen dann den korrekten an Position 0 ein
+    plugins_without_antigravity = [p for p in plugins if not p.startswith(ANTIGRAVITY_PKG)]
+
+    # Antigravity-Plugin ZWINGEND an Index 0 einfügen — niemals anders
+    plugins_fixed = [ANTIGRAVITY_PLUGIN] + plugins_without_antigravity
+
+    # Gefixte Plugin-Liste zurückschreiben
+    cfg["plugin"] = plugins_fixed
+
+    # Config-Datei atomar überschreiben (json.dump schreibt vollständig oder gar nicht)
+    with open(target, "w") as f:
+        json.dump(cfg, f, indent=2)
+
+    # Laute Warnung ausgeben damit der User informiert ist
+    print(f"  🚨🚨🚨 ANTIGRAVITY PLUGIN ENFORCEMENT AUSGELÖST 🚨🚨🚨")
+    print(f"  🚨 Vorheriges erstes Plugin war: {old_first}")
+    print(f"  🚨 opencode-antigravity-auth wurde an Position 0 gesetzt!")
+    print(f"  ✅ Plugin-Array jetzt (erste 3): {plugins_fixed[:3]}")
+
+# ----------------------------------------------------------------
+# ZUSÄTZLICHE SICHERHEITSPRÜFUNG: Google Provider Konfiguration
+# ----------------------------------------------------------------
+# Der 'google' Provider DARF KEINEN direkten apiKey in options haben!
+# Wenn ein apiKey vorhanden ist, wird der Antigravity OAuth-Flow umgangen
+# und Anfragen gehen direkt an generativelanguage.googleapis.com — VERBOTEN!
+# Die einzige erlaubte Methode ist OAuth via das opencode-antigravity-auth Plugin.
+providers = cfg.get("provider", {})
+
+if "google" not in providers:
+    # Kein Google-Provider = keine antigravity-Modelle verfügbar
+    print(f"  ⚠️  WARNUNG: 'google' Provider fehlt in opencode.json!")
+    print(f"  ⚠️  Antigravity-Modelle (Claude/Gemini) werden NICHT verfügbar sein!")
+elif "apiKey" in providers.get("google", {}).get("options", {}):
+    # apiKey im google-Provider = direkter API-Zugriff = VERBOTEN (PRIORITY -10.0)
+    print(f"  🚨 KRITISCH: google Provider hat apiKey in options — Antigravity-OAuth wird UMGANGEN!")
+    print(f"  🚨 PERMANENT VERBOTEN: generativelanguage.googleapis.com direkt nutzen!")
+    print(f"  🚨 Bitte apiKey aus google.options entfernen und nur das Antigravity Plugin nutzen!")
+else:
+    # ✅ Korrekt konfiguriert: kein direkter apiKey, OAuth wird vom Plugin bereitgestellt
+    print(f"  ✅ Google Provider korrekt konfiguriert (kein direkter apiKey, verwendet OAuth Plugin)")
+PYEOF
+    log_ok "Antigravity Plugin Protection enforced (Priority -10.0)"
+  else
+    log_info "[DRY-RUN] Würde Antigravity Plugin Protection erzwingen"
+  fi
+fi
+
 # 8. AGENTS.md — IMMER aktualisieren (enthält kritische Fleet-Regeln wie Vision Gate Mandate)
 # AGENTS.md ist die SSOT für globale Agenten-Regeln und MUSS immer auf dem neuesten Stand sein.
 # Ein Backup der bestehenden wird erstellt, aber die neue Version wird IMMER installiert.
