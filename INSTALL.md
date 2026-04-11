@@ -14,7 +14,7 @@ cd upgraded-opencode-stack
 
 | Category | Count | Description |
 |----------|-------|-------------|
-| **Skills** | 28 | Custom workflows for A2A creation, deployment, debugging, browser automation |
+| **Skills** | 29 | Custom workflows for A2A creation, deployment, debugging, browser automation, and thumbnail A/B testing |
 | **Plugins** | 4 | Auth plugins for Antigravity, Qwen, OpenRouter |
 | **Agents** | 21 | Custom agents including SIN-Zeus, OMOC swarm, and multimodal tools |
 | **Commands** | 13 | Custom CLI commands for swarm orchestration, terminal management, Zeus control |
@@ -40,7 +40,7 @@ upgraded-opencode-stack/
 ├── install.sh              # Main installer
 ├── opencode.json           # OpenCode configuration (sanitized)
 ├── AGENTS.md               # Global agent rules
-├── skills/                 # 28 custom skills
+├── skills/                 # 29 custom skills
 ├── plugins/                # Custom auth plugins
 │   └── local-plugins/      # Local plugin source
 ├── commands/               # 13 custom commands
