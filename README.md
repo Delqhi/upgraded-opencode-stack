@@ -2,6 +2,36 @@
 
 > **1:1 Kopie** deines kompletten custom OpenCode CLI Setups. Klonen, installieren, fertig — identisch auf jedem MacBook.
 
+## 🧠 Core Architecture: Global-Brain & Local-Brain (DPMA v4)
+
+**DAS ALLERWICHTIGSTE FEATURE DIESES STACKS:** Jeder Agent in diesem Setup ist an das **Global-Brain (DPMA v4)** gekoppelt. Das bedeutet das Ende der "Amnesie" für Coding-Agenten.
+
+Wenn du in diesem Stack ein neues Projekt startest, hat dein Agent nicht nur ein leeres Textfenster. Er bekommt durch unsere `beforeRun` und `afterRun` Hooks automatisch:
+1. **Das Global-Brain:** Alles, was Agenten jemals über all deine Projekte hinweg gelernt haben (globale Architekturregeln, gerettete Bugs, "Niemals X tun" Vorgaben).
+2. **Das Local-Brain (Project):** Projekt-spezifische Pläne, `forbidden` Strategien, die sich als falsch erwiesen haben, und den detaillierten History-Graph des aktuellen Repos.
+
+### 🚀 Wie du ein neues Projekt an das Brain anschließt:
+Kopiere diesen Prompt als **allererste Anweisung** an deinen Agenten, wenn du ein neues Verzeichnis öffnest:
+
+```markdown
+🚨 OBERSTE PRIORITÄT: GLOBAL-BRAIN INITIALISIERUNG 🚨
+
+Bevor du mit der eigentlichen Aufgabe beginnst oder Code schreibst, MUSST du dieses Projekt an unser "Global-Brain" (DPMA v4) ankoppeln. 
+
+Führe den folgenden Befehl im Terminal (im Root-Verzeichnis dieses Projekts) aus. Der Befehl installiert die notwendigen OpenCode-Hooks und verbindet das Projekt mit dem Global-Brain.
+
+\`\`\`bash
+node /Users/jeremy/dev/global-brain/src/cli.js setup-hooks \
+  --project $(basename "$PWD") \
+  --project-root "$PWD" \
+  --agents-directive
+\`\`\`
+
+REGEL: Führe diesen Terminal-Befehl aus. Bestätige mir kurz, dass die Hooks erfolgreich registriert wurden, und beginne ERST DANACH mit der eigentlichen Aufgabe.
+```
+
+Sobald das passiert ist, hat dein Projekt einen `.pcpm/` Ordner und teilt sein Gedächtnis mit der gesamten Flotte!
+
 ## Quick Start
 
 ```bash
@@ -156,6 +186,8 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 
 | Feature | Dein Stack | OMO |
 |---------|-----------|-----|
+| **Global-Brain (DPMA v4)** | ✅ Multi-Project Memory + Auto-Invalidation | ❌ (Vergisst alles) |
+| **Local-Brain / GraphRAG** | ✅ Projekt-basiertes Plan-Gedächtnis | ❌ |
 | **OMOC Swarm** (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ 5-Agenten-Schwarm | ❌ Nur Sisyphus |
 | **SIN-Zeus** (Fleet Commander) | ✅ | ❌ |
 | **SIN-Terminal Orchestration** | ✅ 4 Commands | ❌ |
