@@ -4,8 +4,7 @@
     "opencode-antigravity-auth@1.6.5-beta.0",
     "oh-my-opencode@3.11.2",
     "opencode-openrouter-auth",
-    "opencode-qwen-auth",
-    "/Users/jeremy/dev/glm-rotator/opencode-modal-pool-auth"
+    "opencode-qwen-auth"
   ],
   "model": "qwen/coder-model",
   "provider": {
@@ -301,15 +300,15 @@
       }
     },
     "modal": {
-      "npm": "@ai-sdk/openai",
+      "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://92.5.60.87:4100/modal/v1",
-        "apiKey": "sk-sin-fleet-master"
+        "baseURL": "https://api.us-west-2.modal.direct/v1",
+        "apiKey": "modalresearch_kCkiHCa0GiY8byjM59lG6myK0KS9ACaKVsnHPSErm5Y"
       },
       "models": {
         "glm-5.1-fp8": {
           "id": "zai-org/GLM-5.1-FP8",
-          "name": "GLM 5.1 FP8 (Modal Pool Proxy)",
+          "name": "GLM 5.1 FP8 (Modal Direct)",
           "limit": {
             "context": 204800,
             "output": 131072
