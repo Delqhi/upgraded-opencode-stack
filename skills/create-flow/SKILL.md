@@ -42,6 +42,7 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 ├── brain.md
 ├── flow.md
 ├── state.json
+├── agent_workflow_master.json   ← Dual-Logger merged output
 ├── evidence/
 │   └── <step-id>/
 │       ├── screenshot.png
@@ -58,6 +59,8 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 - `sin-flow step` — execute one action + screenshot + vision + brain log
 - `sin-flow keyshot` — screenshot + vision only, writes the same analysis artifacts
 - `sin-flow record` — interactive one-action-at-a-time builder
+- `sin-flow record-dual` — Dual-Logger recording (OS + browser event capture)
+- `sin-flow replay` — replay a recorded workflow with anti-bot countermeasures
 - `sin-flow batch` — run a file of single-action steps
 - `sin-flow status` — inspect promotion state
 - `sin-flow brain` — rebuild the brain from evidence
@@ -69,6 +72,52 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 - `--fast` skips the Vision "Stop & Verify" pause to enable fluid execution (e.g. `Mousedown -> Mouseup -> Click`) for strict bot protections.
 - **CDP Helper**: Import `flow_cdp_utils` inside your `nodriver` script for robust float-scaling on Retina, exact mouse event dispatching, and Context-ID logic for incognito windows.
 - **Canonical Guard**: `guard_create_flow.py` detects and blocks divergent `create-flow` runtime files in non-canonical repos.
+
+### Dual-Logger Architecture (Human-to-Agent Recording)
+
+The Dual-Logger captures real human workflows and replays them as agent actions with anti-bot countermeasures.
+
+**Components:**
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| OS Logger | `dual_logger/os_logger.py` | pynput + NSWorkspace: mouse, keyboard, window focus |
+| Browser Logger | `dual_logger/browser_logger.js` | Tampermonkey/JS: DOM clicks, inputs, selectors, scrolls |
+| Merge Server | `dual_logger/agent_logger.py` | Flask on :5000: merges OS+browser events chronologically |
+| Executor | `dual_logger/executor.py` | Replays with Bézier curves, jitter, CDP/pyautogui/hybrid modes |
+
+**Recording:**
+
+```bash
+# 1. Start the Dual-Logger recording session
+sin-flow record-dual "My Workflow" --root .
+
+# 2. Install browser_logger.js as a Tampermonkey userscript (or inject via nodriver/CDP)
+
+# 3. Perform your human workflow
+
+# 4. Press Ctrl+C to stop — produces agent_workflow_master.json
+```
+
+**Replaying:**
+
+```bash
+# Hybrid mode (CDP for browser, pyautogui for native apps)
+sin-flow replay "My Workflow" --mode hybrid --speed 1.0
+
+# CDP-only (browser events)
+sin-flow replay "My Workflow" --mode cdp --cdp-port 9335
+
+# pyautogui-only (native app events)
+sin-flow replay "My Workflow" --mode pyautogui --speed 2.0
+```
+
+**Anti-bot countermeasures in the executor:**
+- Bézier curve mouse movement (not linear — mimics human hand tremor)
+- Timestamp-based inter-event delays (preserves original human timing)
+- Random jitter on coordinates (±2px) and delays (±50ms Gaussian)
+- Gaussian-distributed typing speed variation
+- Ghost-cursor-style mouse trail with overshoot on long distances
 
 ### API
 - `sin-flowd` — local HTTP daemon
@@ -94,6 +143,8 @@ No automatic fallback chain is used by default. If the flash path fails, the ste
 ```bash
 python3 ~/.config/opencode/skills/create-flow/scripts/create-flow.py "My Flow" --root .
 python3 ~/.config/opencode/skills/create-flow/scripts/sin-flow.py step "My Flow" --action 'tell application "System Events" to key code 48' --expected 'Tab lands on the target'
+python3 ~/.config/opencode/skills/create-flow/scripts/sin-flow.py record-dual "My Flow" --root .
+python3 ~/.config/opencode/skills/create-flow/scripts/sin-flow.py replay "My Flow" --mode hybrid --speed 1.0
 python3 ~/.config/opencode/skills/create-flow/scripts/sin-flowd.py --port 8787 --root .
 ```
 

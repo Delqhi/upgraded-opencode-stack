@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import os
+import subprocess
 import sys
+import threading
+import time
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+DUAL_LOGGER_DIR = SCRIPT_DIR / "dual_logger"
 sys.path.insert(0, str(SCRIPT_DIR))
 
 import argparse
@@ -19,6 +24,7 @@ from sin_flow_runtime import (
     run_keyshot,
     status_text,
 )
+from _flow_common import resolve_root, slugify, flow_base
 
 
 def _print_step(result: dict) -> None:
@@ -204,6 +210,118 @@ def cmd_batch(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_record_dual(args: argparse.Namespace) -> int:
+    """Launch the Dual-Logger recording session: starts the Flask merge server and the OS logger simultaneously, then waits for Ctrl+C to stop."""
+    root = resolve_root(args.root)
+    slug = slugify(args.flow)
+    base = flow_base(root, slug)
+    base.mkdir(parents=True, exist_ok=True)
+
+    output_path = base / "agent_workflow_master.json"
+    port = args.port
+
+    server_cmd = [
+        sys.executable,
+        "-m",
+        "dual_logger.agent_logger",
+        "--port",
+        str(port),
+        "--output",
+        str(output_path),
+    ]
+    server_proc = subprocess.Popen(
+        server_cmd,
+        cwd=str(SCRIPT_DIR),
+        env={**os.environ, "PYTHONPATH": str(SCRIPT_DIR)},
+    )
+
+    import requests as req
+
+    for _ in range(20):
+        try:
+            resp = req.get(f"http://localhost:{port}/status", timeout=1)
+            if resp.status_code == 200:
+                break
+        except Exception:
+            pass
+        time.sleep(0.3)
+
+    os_logger_cmd = [
+        sys.executable,
+        "-m",
+        "dual_logger.os_logger",
+        "--server",
+        f"http://localhost:{port}",
+    ]
+    os_proc = subprocess.Popen(
+        os_logger_cmd,
+        cwd=str(SCRIPT_DIR),
+        env={**os.environ, "PYTHONPATH": str(SCRIPT_DIR)},
+    )
+
+    print(f"[record-dual] Merge server on :{port}  |  Output → {output_path}")
+    print(
+        f"[record-dual] OS logger active  |  Install browser_logger.js for DOM capture"
+    )
+    print("[record-dual] Press Ctrl+C to stop recording")
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print("[record-dual] Stopping...")
+        try:
+            req.post(f"http://localhost:{port}/stop", timeout=3)
+        except Exception:
+            pass
+        os_proc.terminate()
+        server_proc.terminate()
+        os_proc.wait(timeout=5)
+        server_proc.wait(timeout=5)
+        print(f"[record-dual] Workflow saved → {output_path}")
+
+    return 0
+
+
+def cmd_replay(args: argparse.Namespace) -> int:
+    """Replay a recorded workflow JSON using the Dual-Logger execution engine."""
+    workflow_path = Path(args.workflow)
+    if not workflow_path.exists():
+        root = resolve_root(args.root)
+        slug = slugify(args.flow)
+        candidate = flow_base(root, slug) / "agent_workflow_master.json"
+        if candidate.exists():
+            workflow_path = candidate
+        else:
+            print(f"Error: workflow not found at {workflow_path} or {candidate}")
+            return 1
+
+    replay_cmd = [
+        sys.executable,
+        "-m",
+        "dual_logger.executor",
+        "--workflow",
+        str(workflow_path),
+        "--mode",
+        args.mode,
+        "--speed",
+        str(args.speed),
+    ]
+    if args.cdp_port:
+        replay_cmd.extend(["--cdp-port", str(args.cdp_port)])
+    if args.filter_type:
+        replay_cmd.extend(["--filter-type", args.filter_type])
+
+    result = subprocess.run(
+        replay_cmd,
+        cwd=str(SCRIPT_DIR),
+        env={**os.environ, "PYTHONPATH": str(SCRIPT_DIR)},
+    )
+    return result.returncode
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="sin-flow", description="Blitz-fast flow builder"
@@ -270,6 +388,33 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("init", parents=[shared], help="create flow workspace")
     p.set_defaults(func=cmd_init)
+
+    p = sub.add_parser(
+        "record-dual",
+        parents=[shared],
+        help="record with Dual-Logger (OS + browser event capture)",
+    )
+    p.add_argument("--port", type=int, default=5000, help="Flask merge server port")
+    p.set_defaults(func=cmd_record_dual)
+
+    p = sub.add_parser(
+        "replay",
+        parents=[shared],
+        help="replay a recorded workflow with anti-bot countermeasures",
+    )
+    p.add_argument("--workflow", default="", help="Path to agent_workflow_master.json")
+    p.add_argument(
+        "--mode",
+        default="hybrid",
+        choices=["cdp", "pyautogui", "hybrid"],
+        help="Replay mode (default: hybrid)",
+    )
+    p.add_argument("--speed", type=float, default=1.0, help="Playback speed multiplier")
+    p.add_argument("--cdp-port", type=int, default=9335, help="CDP port for nodriver")
+    p.add_argument(
+        "--filter-type", default=None, help="Only replay events of this type"
+    )
+    p.set_defaults(func=cmd_replay)
 
     return parser
 
