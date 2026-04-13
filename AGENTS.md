@@ -1254,3 +1254,5 @@ Wir sind Hacker. Wir sind Umgeher. Wenn ein offizieller Weg (API, OAuth, Scopes,
 - **Modell-ID:** Das Modell muss lokal als `modal/glm-5.1-fp8` (oder mit der `id`: `zai-org/GLM-5.1-FP8` in der options.models Konfiguration) aufgerufen werden.
 - Der OCI-Proxy auf Port 4100 validiert den Gateway-Key und leitet die Anfrage an den `modal_proxy` (Port 8091) weiter, welcher sich wiederum einen rotierenden Key aus dem `pool_service` (Port 8090) holt.
 - Wer `opencode.json` auf direkte Modal-Keys ändert, zerstört die Fleet-Synchronisation und begeht einen Protokollverstoß.
+
+
