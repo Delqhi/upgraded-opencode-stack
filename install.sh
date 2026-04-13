@@ -102,9 +102,24 @@ sync_dir_additive() {
   fi
 }
 
+
+sync_dir_overlay() {
+  local src="$1" dst="$2" label="$3"
+  if [ ! -d "$src" ] || [ ! "$(ls -A "$src" 2>/dev/null)" ]; then
+    return
+  fi
+  if [ "$DRY_RUN" = false ]; then
+    mkdir -p "$dst"
+    rsync -a "$src/" "$dst/"
+  fi
+  log_ok "$label: kanonische Dateien nach $dst aktualisiert"
+}
+
 # 5. Install ALL directories — rein additiv, kein overwrite
 log_info "Installing skills..."
 sync_dir_additive "skills" "$OPENCODE_DIR/skills" "Skills"
+log_info "Enforcing canonical create-flow..."
+sync_dir_overlay "skills/create-flow" "$OPENCODE_DIR/skills/create-flow" "create-flow"
 
 log_info "Installing commands..."
 sync_dir_additive "commands" "$OPENCODE_DIR/commands" "Commands"
