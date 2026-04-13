@@ -260,12 +260,13 @@
     },
     "qwen": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Qwen Code",
-      "options": {
-        "baseURL": "https://portal.qwen.ai/v1"
-      },
+        "name": "Qwen Code",
+        "options": {
+          "baseURL": "https://portal.qwen.ai/v1"
+        },
       "models": {
         "coder-model": {
+          "id": "qwen3-coder-plus",
           "name": "Qwen 3.6 Plus",
           "limit": {
             "context": 1048576,
@@ -281,6 +282,7 @@
           }
         },
         "vision-model": {
+          "id": "qwen3-vl-plus",
           "name": "Qwen 3.6 Vision Plus",
           "limit": {
             "context": 131072,

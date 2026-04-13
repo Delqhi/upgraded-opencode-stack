@@ -14,6 +14,12 @@ const logger = createLogger("plugin");
 // Once Qwen marks a refresh token invalid, the only real recovery is a fresh
 // `providers login` flow, so a long cooldown prevents endless reuse loops.
 const INVALID_AUTH_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const UNSUPPORTED_QWEN_REQUEST_FIELDS = [
+    "allowAll",
+    "autoAccept",
+    "confirm",
+    "fallback",
+];
 function normalizeUrl(value, fallback) {
     if (typeof value !== "string") {
         return fallback;
@@ -150,6 +156,16 @@ function getBackoffMs(reason, consecutiveFailures) {
 }
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+function stripUnsupportedQwenRequestFields(payload) {
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+        return payload;
+    }
+    const cleaned = { ...payload };
+    for (const key of UNSUPPORTED_QWEN_REQUEST_FIELDS) {
+        delete cleaned[key];
+    }
+    return cleaned;
 }
 function isInvalidRefreshCode(code) {
     return code === "invalid_grant" || code === "invalid_request";
@@ -346,21 +362,24 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                             }
                             // Sanitize malformed URLs (e.g., "undefined/path")
                             rawUrl = sanitizeMalformedUrl(rawUrl);
-                            let requestInit = init ??
-                                (input instanceof Request
-                                    ? {
-                                        method: input.method,
-                                        headers: input.headers,
-                                        body: input.body,
-                                        signal: input.signal,
-                                    }
-                                    : undefined);
-                            if (!requestInit && !(input instanceof Request)) {
-                                requestInit = {};
+                            let requestInit = init ? { ...init } : {};
+                            if (input instanceof Request) {
+                                requestInit = {
+                                    method: requestInit.method ?? input.method,
+                                    headers: requestInit.headers ?? input.headers,
+                                    body: requestInit.body ?? input.body,
+                                    signal: requestInit.signal ?? input.signal,
+                                    duplex: requestInit.duplex,
+                                };
                             }
                             if (requestInit && !requestInit.headers) {
                                 requestInit.headers = {};
                             }
+                            logger.debug("Request init snapshot", {
+                                inputType: input instanceof Request ? "request" : typeof input,
+                                hasBody: !!requestInit?.body,
+                                bodyType: requestInit?.body?.constructor?.name ?? typeof requestInit?.body,
+                            });
                             const headers = new Headers(requestInit?.headers);
                             if (activeAuth.access) {
                                 headers.set("Authorization", `Bearer ${activeAuth.access}`);
@@ -392,7 +411,10 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                             headers.set("X-DashScope-UserAgent", "QwenCode/0.11.1 (darwin; arm64)");
                             if (finalInit.body) {
                                 try {
-                                    const parsed = JSON.parse(typeof finalInit.body === "string" ? finalInit.body : new TextDecoder().decode(finalInit.body));
+                                    const bodyText = typeof finalInit.body === "string"
+                                        ? finalInit.body
+                                        : await new Response(finalInit.body).text();
+                                    const parsed = stripUnsupportedQwenRequestFields(JSON.parse(bodyText));
                                     const msgs = parsed.messages || [];
                                     const magicSystemMsg = "You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.";
                                     if (!msgs.some(m => m.role === "system" && m.content.includes("You are Qwen Code"))) {
@@ -401,8 +423,17 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                     if (parsed.max_tokens && parsed.max_tokens > 8192) {
                                         parsed.max_tokens = 8192;
                                     }
+                                    logger.debug("Prepared request body", {
+                                        model: parsed.model,
+                                        keys: Object.keys(parsed),
+                                    });
                                     finalInit.body = JSON.stringify(parsed);
-                                } catch (e) {}
+                                }
+                                catch (error) {
+                                    logger.debug("Request body normalization skipped", {
+                                        error: error instanceof Error ? error.message : String(error),
+                                    });
+                                }
                             }
                             logger.debug("Sending request", {
                                 url: finalUrl,

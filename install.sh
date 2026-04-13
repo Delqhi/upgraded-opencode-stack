@@ -162,6 +162,7 @@ sync_dir_additive "vendor" "$OPENCODE_DIR/vendor" "Vendor"
 
 log_info "Installing local qwen plugin copy..."
 sync_dir_overlay "local-plugins/opencode-qwen-auth" "$OPENCODE_DIR/local-plugins/opencode-qwen-auth" "Qwen Plugin"
+sync_dir_overlay "local-plugins/opencode-qwen-auth" "$HOME/.cache/opencode/node_modules/opencode-qwen-auth" "Qwen Plugin Cache"
 
 log_info "Installing nodriver-profiles..."
 sync_dir_additive "nodriver-profiles" "$OPENCODE_DIR/nodriver-profiles" "Nodriver Profiles"

@@ -13,11 +13,13 @@ const DEFAULT_PROVIDER_CONFIG = {
         },
         models: {
             "coder-model": {
+                id: "qwen3-coder-plus",
                 name: "Qwen 3.6 Plus",
                 limit: { context: 1048576, output: 65536 },
                 modalities: { input: ["text"], output: ["text"] },
             },
             "vision-model": {
+                id: "qwen3-vl-plus",
                 name: "Qwen 3.6 Vision Plus",
                 limit: { context: 131072, output: 32768 },
                 modalities: { input: ["text", "image"], output: ["text"] },
