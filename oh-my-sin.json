@@ -1,0 +1,141 @@
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║            OH-MY-SIN.json — ZENTRALES A2A TEAM REGISTER         ║
+// ╠══════════════════════════════════════════════════════════════════╣
+// ║  WAS IST DAS?                                                    ║
+// ║  Das zentrale Register ALLER A2A SIN Teams.                      ║
+// ║  Hier wird klassifiziert:                                        ║
+// ║    • Welche Teams gibt es?                                       ║
+// ║    • Wer ist der Team-Manager?                                   ║
+// ║    • Welche Config-Datei nutzt das Team?                         ║
+// ║    • Welche Modelle nutzen die Team-Agenten?                     ║
+// ║                                                                  ║
+// ║  UNTERSCHIED ZU oh-my-openagent.json:                            ║
+// ║    oh-my-openagent.json  → Lokale Subagenten (explore, librarian)║
+// ║    oh-my-sin.json        → ALLE Cloud-Teams + deren Agenten      ║
+// ║                                                                  ║
+// ║  TEAM-CONFIG DATEIEN:                                            ║
+// ║    my-sin-team-code.json         → Team Coding Agenten           ║
+// ║    my-sin-team-worker.json       → Team Worker Agenten           ║
+// ║    my-sin-team-infrastructure.json → Team Infra Agenten          ║
+// ╚══════════════════════════════════════════════════════════════════╝
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+
+  // ═══════════════════════════════════════════════════════════
+  // ZENTRALES TEAM REGISTER — Alle A2A SIN Teams
+  // ═══════════════════════════════════════════════════════════
+  "teams": {
+
+    // TEAM CODING — Die Entwickler-Flotte
+    // Zuständig fuer: Code schreiben, refactoren, testen, deployen
+    "team-code": {
+      "name": "Team Coding",
+      "description": "Elite-Coder-Flotte fuer Implementation, Testing, Deployment",
+      "manager": "A2A-SIN-Zeus",
+      "config_file": "my-sin-team-code.json",
+      "members": [
+        "A2A-SIN-Simone-MCP",
+        "A2A-SIN-Frontend",
+        "A2A-SIN-Backend",
+        "A2A-SIN-Fullstack"
+      ],
+      "primary_model": "google/antigravity-claude-sonnet-4-6",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model",
+        "google/antigravity-gemini-3.1-pro"
+      ]
+    },
+
+    // TEAM WORKER — Die autonome Arbeits-Flotte
+    // Zuständig fuer: Surveys, Prolific, Freelancing, Monetarisierung
+    "team-worker": {
+      "name": "Team Worker",
+      "description": "Autonome Worker fuer Surveys, Freelancing, Monetarisierung",
+      "manager": "A2A-SIN-Team-Worker",
+      "config_file": "my-sin-team-worker.json",
+      "members": [
+        "A2A-SIN-Worker-Prolific",
+        "A2A-SIN-Worker-Freelancer",
+        "A2A-SIN-Worker-Survey"
+      ],
+      "primary_model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
+      ]
+    },
+
+    // TEAM INFRASTRUCTURE — Die DevOps-Flotte
+    // Zuständig fuer: Deployment, CI/CD, Monitoring, Infrastructure
+    "team-infrastructure": {
+      "name": "Team Infrastructure",
+      "description": "DevOps-Flotte fuer Deployment, CI/CD, Monitoring, Infrastructure",
+      "manager": "A2A-SIN-Team-Infrastructure",
+      "config_file": "my-sin-team-infrastructure.json",
+      "members": [
+        "A2A-SIN-Deploy",
+        "A2A-SIN-Monitoring",
+        "A2A-SIN-Security"
+      ],
+      "primary_model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model",
+        "google/antigravity-gemini-3.1-pro"
+      ]
+    },
+
+    // TEAM GOOGLE APPS — Die Google-Integration
+    // Zuständig fuer: Google Docs, Sheets, Drive, Gmail Automation
+    "team-google-apps": {
+      "name": "Team Google Apps",
+      "description": "Google Workspace Integration — Docs, Sheets, Drive, Gmail",
+      "manager": "A2A-SIN-Google-Apps",
+      "config_file": "my-sin-team-google-apps.json",
+      "members": [
+        "A2A-SIN-Google-Docs",
+        "A2A-SIN-Google-Sheets",
+        "A2A-SIN-Google-Drive"
+      ],
+      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model",
+        "google/antigravity-claude-sonnet-4-6"
+      ]
+    },
+
+    // TEAM APPLE APPS — Die Apple-Integration
+    // Zuständig fuer: macOS Automation, iOS, Apple Shortcuts
+    "team-apple-apps": {
+      "name": "Team Apple Apps",
+      "description": "Apple Ecosystem — macOS Automation, iOS, Shortcuts",
+      "manager": "A2A-SIN-Apple-Apps",
+      "config_file": "my-sin-team-apple-apps.json",
+      "members": [
+        "A2A-SIN-Apple-Shortcuts",
+        "A2A-SIN-Apple-macOS"
+      ],
+      "primary_model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-gemini-3-flash",
+        "qwen/coder-model"
+      ]
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // GLOBALE DEFAULTS — Fuer Teams ohne eigene Config
+  // ═══════════════════════════════════════════════════════════
+  "defaults": {
+    "explore_model": "nvidia-nim/stepfun-ai/step-3.5-flash",
+    "librarian_model": "nvidia-nim/stepfun-ai/step-3.5-flash",
+    "fallback_models": [
+      "google/antigravity-gemini-3-flash",
+      "openai/gpt-5.4",
+      "qwen/coder-model"
+    ]
+  }
+}

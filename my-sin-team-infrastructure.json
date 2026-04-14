@@ -1,0 +1,101 @@
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  MY-SIN-TEAM-INFRASTRUCTURE.json — TEAM INFRA AGENTEN+MODELLE   ║
+// ╠══════════════════════════════════════════════════════════════════╣
+// ║  TEAM: Team Infrastructure                                       ║
+// ║  MANAGER: A2A-SIN-Team-Infrastructure                            ║
+// ║  ZWECK: Deployment, CI/CD, Monitoring, Infrastructure, Security  ║
+// ╚══════════════════════════════════════════════════════════════════╝
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+
+  // Team-Info
+  "team": {
+    "name": "Team Infrastructure",
+    "manager": "A2A-SIN-Team-Infrastructure",
+    "description": "DevOps-Flotte fuer Deployment, CI/CD, Monitoring, Infrastructure"
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // TEAM AGENTEN — Spezifische Modelle pro Team-Mitglied
+  // ═══════════════════════════════════════════════════════════
+  "agents": {
+
+    // DEPLOY AGENT — Deployment Automation
+    // Vercel, Cloudflare, HF Spaces, OCI VM
+    "deploy": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model"
+      ],
+      "role": "deployment-specialist",
+      "description": "Deployment Automation — Vercel, Cloudflare, HF Spaces, OCI"
+    },
+
+    // MONITORING AGENT — System Monitoring
+    // Health Checks, Alerts, Performance
+    "monitoring": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
+      ],
+      "role": "monitoring-specialist",
+      "description": "Health Checks, Alerts, Performance-Monitoring"
+    },
+
+    // SECURITY AGENT — Security Audits
+    // Vulnerability Scanning, Secret Detection
+    "security": {
+      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "openai/gpt-5.4"
+      ],
+      "role": "security-specialist",
+      "description": "Vulnerability Scanning, Secret Detection, Security Audits"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // TEAM KATEGORIEN — Modell-Auswahl nach Task-Typ
+  // ═══════════════════════════════════════════════════════════
+  "categories": {
+
+    // Infrastructure Setup — Server, Services einrichten
+    "setup": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model"
+      ]
+    },
+
+    // Deployment — Code deployen
+    "deployment": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model"
+      ]
+    },
+
+    // Monitoring — System ueberwachen
+    "monitoring": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro"
+      ]
+    },
+
+    // Security — Security Audits
+    "security": {
+      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "openai/gpt-5.4"
+      ]
+    }
+  }
+}

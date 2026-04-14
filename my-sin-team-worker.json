@@ -1,0 +1,93 @@
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║   MY-SIN-TEAM-WORKER.json — TEAM WORKER AGENTEN + MODELLE       ║
+// ╠══════════════════════════════════════════════════════════════════╣
+// ║  TEAM: Team Worker                                               ║
+// ║  MANAGER: A2A-SIN-Team-Worker                                    ║
+// ║  ZWECK: Surveys, Freelancing, Monetarisierung, Autonomous Work   ║
+// ╚══════════════════════════════════════════════════════════════════╝
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+
+  // Team-Info
+  "team": {
+    "name": "Team Worker",
+    "manager": "A2A-SIN-Team-Worker",
+    "description": "Autonome Worker fuer Surveys, Freelancing, Monetarisierung"
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // TEAM AGENTEN — Spezifische Modelle pro Team-Mitglied
+  // ═══════════════════════════════════════════════════════════
+  "agents": {
+
+    // PROLIFIC WORKER — Survey Automation
+    // Autonome Survey-Teilnahme auf Prolific
+    "prolific": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
+      ],
+      "role": "survey-worker",
+      "description": "Autonome Survey-Teilnahme auf Prolific"
+    },
+
+    // FREELANCER WORKER — Freelancing Automation
+    // Bewerbungen auf Freelancer-Plattformen
+    "freelancer": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
+      ],
+      "role": "freelancer",
+      "description": "Freelancing-Automation — Bewerbungen, Kommunikation"
+    },
+
+    // SURVEY WORKER — Allgemeine Survey Automation
+    // Multi-Platform Survey Worker
+    "survey": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
+      ],
+      "role": "survey-generalist",
+      "description": "Allgemeine Survey Automation — Multi-Platform"
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // TEAM KATEGORIEN — Modell-Auswahl nach Task-Typ
+  // ═══════════════════════════════════════════════════════════
+  "categories": {
+
+    // Survey Discovery — Surveys finden
+    "discovery": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
+      ]
+    },
+
+    // Survey Completion — Surveys ausfuellen
+    "completion": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "openai/gpt-5.4"
+      ]
+    },
+
+    // Communication — Emails, Nachrichten schreiben
+    "communication": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-gemini-3.1-pro",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

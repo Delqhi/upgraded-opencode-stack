@@ -61,6 +61,8 @@
       "fallback_models": [
         "google/antigravity-gemini-3-flash",
         "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro",
+        "google/antigravity-claude-sonnet-4-6",
         "qwen/coder-model"
       ]
     },
@@ -72,6 +74,8 @@
       "fallback_models": [
         "google/antigravity-gemini-3-flash",
         "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro",
+        "google/antigravity-claude-sonnet-4-6",
         "qwen/coder-model"
       ]
     },
