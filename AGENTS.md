@@ -191,6 +191,47 @@ Antworte mit: PROCEED wenn alles OK ist, STOP wenn etwas falsch ist, RETRY wenn 
 - Wenn ein Agent bei einem früheren Durchlauf eine Annahme gemacht hat, die sich als falsch herausgestellt hat, MUSS er diese Annahme sofort löschen und von den echten Fakten neu aufbauen.
 - Wer Annahmen macht statt Fakten zu prüfen, fliegt SOFORT und PERMANENT aus dem Netzwerk.
 
+# 🚨 PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5 — ABSOLUT, KEINE AUSNAHMEN) 🚨
+
+**BEI CODEBASE-ANALYSE MUSS IMMER PARALLEL EXPLORED WERDEN — NIE EINZELN!**
+
+**DAS PROBLEM:** Ein einzelner `task(subagent_type="explore")` liefert bei grossen Projekten nur ~20% Abdeckung. Entscheidungen basieren auf 80% fehlendem Wissen → falsche Architektur-Entscheidungen.
+
+**DIE LOESUNG: IMMER 5-10 explore + 5-10 librarian-Agenten PARALLEL starten!**
+
+```
+✅ PFLICHT — IMMER SO:
+// ALLE task() calls im SELBEN Block = sie laufen PARALLEL
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find APIs", prompt="[CONTEXT]: Grosse Codebase. [GOAL]: Alle API-Endpunkte in src/api/. [REQUEST]: Dateipfade + Beschreibung.")
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find Services", prompt="[CONTEXT]: Grosse Codebase. [GOAL]: Alle Services in src/services/. [REQUEST]: Dateipfade + oeffentliche Methoden + Dependencies.")
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find Models", prompt="[CONTEXT]: Grosse Codebase. [GOAL]: Alle Daten-Modelle/Schemas. [REQUEST]: Dateipfade + Felder + Beziehungen.")
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find Middleware", prompt="[CONTEXT]: Grosse Codebase. [GOAL]: Alle Middleware. [REQUEST]: Dateipfade + Zweck + Reihenfolge.")
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find Utils", prompt="[CONTEXT]: Grosse Codebase. [GOAL]: Alle Utility-Funktionen. [REQUEST]: Dateipfade + Zweck + Aufrufer.")
+task(subagent_type="librarian", run_in_background=true, load_skills=[], description="Framework Docs", prompt="[GOAL]: Offizielle Doku des Frameworks. [REQUEST]: Best Practices, Patterns, Pitfalls.")
+task(subagent_type="librarian", run_in_background=true, load_skills=[], description="DB Practices", prompt="[GOAL]: Datenbank-Best-Practices. [REQUEST]: Query-Optimierung, Connection-Pooling.")
+task(subagent_type="librarian", run_in_background=true, load_skills=[], description="Auth Patterns", prompt="[GOAL]: Auth-Best-Practices. [REQUEST]: OAuth2, JWT, Security-Headers.")
+```
+
+**ANZAHL AGENTEN NACH PROJEKT-GROESSE:**
+- Klein (< 50 Dateien): 3 explore + 2 librarian = 5 parallel
+- Mittel (50-500 Dateien): 5 explore + 3 librarian = 8 parallel
+- Gross (500-2000 Dateien): 7 explore + 5 librarian = 12 parallel
+- Enterprise (2000+ Dateien): 10 explore + 10 librarian = 20 parallel
+
+**HARTE REGELN — KEINE AUSNAHMEN:**
+1. `run_in_background=true` ist PFLICHT — NIE `false` bei explore/librarian
+2. `load_skills=[]` ist PFLICHT — NIE skills bei explore/librarian laden
+3. Jeder explore-Agent MUSS einen spezifischen Fokus haben (NICHT "erkunde das Projekt")
+4. Prompt MUSS enthalten: `[CONTEXT]`, `[GOAL]`, `[REQUEST]`
+5. WARTEN bis ALLE background-Agenten fertig sind bevor mit Implementation begonnen wird
+6. Ergebnisse deduplizieren und zusammenfuehren bevor Entscheidungen getroffen werden
+
+**VERBOTEN:**
+- ❌ Einzelner explore-Agent fuer ganzes Projekt
+- ❌ Generischer Prompt "erkunde die Codebase"
+- ❌ Sequentielle explores (run_in_background=false)
+- ❌ Ergebnisse nutzen bevor alle Agenten fertig sind
+
 # 🚨 IMMEDATE BUG REGISTRY & ISSUE PROTOCOL (PRIORITY -4.0 — ABSOLUT, KEINE AUSNAHMEN) 🚨
 
 **1. JEDER BUG MUSS SOFORT INS REPO (ALS GITHUB ISSUE)**
