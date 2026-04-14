@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Microsoft",
+    "manager": "A2A-SIN-Microsoft",
+    "description": "Microsoft 365 \u2014 Teams, Outlook, OneDrive, Excel, Word, PowerPoint"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

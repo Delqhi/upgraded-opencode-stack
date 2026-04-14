@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Coding Frontend",
+    "manager": "A2A-SIN-Code-Frontend",
+    "description": "Frontend Specialists \u2014 Accessibility, App-Shell, Commerce-UI, Design-Systems"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "google/antigravity-claude-sonnet-4-6",
+        "openai/gpt-5.4"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Research",
+    "manager": "A2A-SIN-Research",
+    "description": "Deep Research Agent"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-claude-opus-4-6-thinking"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

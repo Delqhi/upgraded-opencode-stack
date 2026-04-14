@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Google",
+    "manager": "A2A-SIN-Google",
+    "description": "Google Workspace \u2014 Google-Apps, Google-Chat, Opal"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

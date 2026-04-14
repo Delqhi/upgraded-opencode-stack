@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Apple",
+    "manager": "A2A-SIN-Apple",
+    "description": "macOS/iOS Automation \u2014 Mail, Notes, Calendar, FaceTime, Safari, etc."
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "openai/gpt-5.4",
+      "fallback_models": [
+        "google/antigravity-gemini-3-flash",
+        "qwen/coder-model"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

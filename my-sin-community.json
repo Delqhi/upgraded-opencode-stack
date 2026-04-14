@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Community",
+    "manager": "A2A-SIN-Community",
+    "description": "Community Management \u2014 Discord, WhatsApp, Telegram, YouTube Community"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

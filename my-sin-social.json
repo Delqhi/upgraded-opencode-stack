@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Social",
+    "manager": "A2A-SIN-Social",
+    "description": "Social Media Automation \u2014 TikTok, Instagram, X, LinkedIn, Facebook, YouTube"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

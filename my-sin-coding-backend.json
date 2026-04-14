@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Coding Backend",
+    "manager": "A2A-SIN-Code-Backend",
+    "description": "Backend Specialists \u2014 Server, OracleCloud, Passwordmanager"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-claude-sonnet-4-6",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "team": {
+    "name": "Team Media Music",
+    "manager": "A2A-SIN-Media-Music",
+    "description": "Music Production \u2014 Beats, Producer, Singer, Songwriter, Videogen"
+  },
+  "agents": {},
+  "categories": {
+    "implementation": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
+      ]
+    },
+    "research": {
+      "model": "google/antigravity-gemini-3.1-pro",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    },
+    "quick": {
+      "model": "google/antigravity-gemini-3-flash",
+      "fallback_models": [
+        "openai/gpt-5.4",
+        "qwen/coder-model"
+      ]
+    }
+  }
+}
