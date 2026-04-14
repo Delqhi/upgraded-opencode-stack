@@ -16,6 +16,27 @@
 // ║    oh-my-openagent.json → SUBAGENTEN (die im Hintergrund ║
 // ║                           arbeiten wenn delegiert wird)  ║
 // ╚══════════════════════════════════════════════════════════╝
+//
+// ╔══════════════════════════════════════════════════════════╗
+// ║  🚨 PARALLEL-EXPLORATION PROTOCOL (ENTERPRISE)           ║
+// ╠══════════════════════════════════════════════════════════╣
+// ║  BEI GROSSEN CODEBASES (100k+ Zeilen, 1000+ Dateien):   ║
+// ║  EIN einzelner explore-Agent liefert nur ~20% Abdeckung! ║
+// ║                                                          ║
+// ║  LOESUNG: IMMER 5-10 explore + 5-10 librarian-Agenten   ║
+// ║  PARALLEL starten (run_in_background=true)!              ║
+// ║                                                          ║
+// ║  Beispiel (7 parallele explores):                        ║
+// ║    task(subagent_type="explore", run_in_background=true, ║
+// ║      load_skills=[], description="Find APIs",            ║
+// ║      prompt="[CONTEXT]: Gross. [GOAL]: Alle APIs...")    ║
+// ║    task(subagent_type="explore", run_in_background=true, ║
+// ║      load_skills=[], description="Find Services",        ║
+// ║      prompt="[CONTEXT]: Gross. [GOAL]: Alle Services...")║
+// ║    ... (5 weitere parallele Agenten)                     ║
+// ║                                                          ║
+// ║  Siehe: skills/enterprise-parallel-exploration/SKILL.md  ║
+// ╚══════════════════════════════════════════════════════════╝
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
 
