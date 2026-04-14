@@ -1,10 +1,10 @@
 {
-  "name": "SIN-Team Worker - Intake & Dispatch",
+  "name": "SIN-Team Google - Intake & Dispatch",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "team-worker-intake",
+        "path": "team-google-intake",
         "responseMode": "lastNode",
         "options": {}
       },
@@ -16,11 +16,11 @@
         300
       ],
       "id": "webhook-node",
-      "webhookId": "team-worker-intake"
+      "webhookId": "team-google-intake"
     },
     {
       "parameters": {
-        "jsCode": "return $input.all().map(item => ({json: {work_item: {id: 'wi-' + Date.now(), team: 'Team Worker', source: item.json.source || 'webhook', priority: item.json.priority || 'medium', type: item.json.type || 'task', description: item.json.description || '', created_at: new Date().toISOString(), status: 'queued'}}});"
+        "jsCode": "return $input.all().map(item => ({json: {work_item: {id: 'wi-' + Date.now(), team: 'Team Google', source: item.json.source || 'webhook', priority: item.json.priority || 'medium', type: item.json.type || 'task', description: item.json.description || '', created_at: new Date().toISOString(), status: 'queued'}}});"
       },
       "name": "Normalize Work Item",
       "type": "n8n-nodes-base.code",
@@ -103,7 +103,7 @@
           "parameters": [
             {
               "name": "team",
-              "value": "Team Worker"
+              "value": "Team Google"
             },
             {
               "name": "issue_url",
