@@ -81,7 +81,7 @@
 | **13 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
 | **5 Provider Configs** | Google Antigravity, OpenAI, NVIDIA NIM, OpenRouter, Qwen | ✅ |
 | **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
-| **GitLab Storage** | Infinite storage via auto-rotating GitLab repos (10GB free each) | ✅ |
+| **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
 
 <details>
 <summary>Full Tool Surface — Alle Komponenten im Detail</summary>
@@ -123,7 +123,7 @@ flowchart TB
     end
 
     subgraph Storage["Storage"]
-        GL[GitLab Storage]
+        BO[Box.com Storage]
         DP[DPMA v4 Brain]
     end
 
@@ -140,7 +140,7 @@ flowchart TB
     HTTP --> CFG
     CFG --> PLG
     CFG --> AGT
-    PLG --> GL
+    PLG --> BO
     AGT --> DP
     CFG --> SYNC[sin-sync]
     SYNC --> MAC
@@ -352,9 +352,14 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 
 ## Changelog
 
+### v2.2.1 (2026-04-14)
+- **Box.com Storage** — Replaced deprecated GitLab LogCenter with A2A-SIN-Box-Storage service
+- Updated storage default globally in AGENTS.md (Box Storage Mandate)
+- Added `box_storage.py` compatibility layer, deprecated `gitlab_logcenter.py`
+- Updated Infra-SIN-Docker-Empire: `room-09-box-storage` added, `room-07-gitlab-storage` removed
+- All agents must migrate to Box Storage API before 2026-05-01
+
 ### v2.2.0 (2026-04-14)
-- **oh-my-sin.json** — Zentrales A2A Team Register (alle Teams klassifiziert)
-- **Per-Team Configs** — my-sin-team-code.json, worker.json, infrastructure.json
 - **Step 3.5 Flash** — explore/librarian nutzen jetzt nvidia-nim/stepfun-ai/step-3.5-flash
 - **PARALLEL-EXPLORATION MANDATE** — 5-10 parallele explores fuer grosse Codebases
 - **Full Fallback Chains** — restored fuer explore/librarian (6 Modelle pro Agent)
@@ -362,7 +367,7 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 
 ### v2.1.0 (2026-04-14)
 - Enterprise Visual README overhaul (badges, diagrams, llms.txt)
-- GitLab Storage skill added (infinite storage via auto-rotating repos)
+- GitLab Storage skill added (infinite storage via auto-rotating repos) - NOW DEPRECATED
 - OCI VM architecture documented
 - .so temp file leak root cause fixed + systemd timer added
 - Vision model removed from Qwen config (no longer supported)
