@@ -16,8 +16,8 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 
 | Kategorie | Anzahl | Zielverzeichnis |
 |-----------|--------|-----------------|
-| **Skills** | 29 | `~/.config/opencode/skills/` |
-| **Plugins** | 5 | Global via npm + `~/.config/opencode/plugins/` |
+| **Skills** | 44 | `~/.config/opencode/skills/` |
+| **Plugins** | 4 | Global via npm + `~/.config/opencode/plugins/` |
 | **Agents** | 21 | `~/.config/opencode/agents/` |
 | **Agent Instructions** | 37 | `~/.config/opencode/agents-instructions/` |
 | **Commands** | 13 | `~/.config/opencode/commands/` |
@@ -32,7 +32,7 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | **Backups** | 52 | `~/.config/opencode/backups/` |
 | **Config** | 1 | `~/.config/opencode/opencode.json` (intelligent gemerged) |
 
-## Skills (29)
+## Skills (44)
 
 | Skill | Zweck |
 |-------|-------|
@@ -66,7 +66,7 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | `nvidia-video-forge` | Video-Generierung via NVIDIA |
 | `sora` | Sora Video-Generierung |
 
-## Plugins (5)
+## Plugins (4)
 
 | Plugin | Zweck |
 |--------|-------|
@@ -159,7 +159,7 @@ Das war's. Danach `.env` mit deinen API Keys befüllen und du hast **exakt dasse
 | **OMOC Swarm** (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ 5-Agenten-Schwarm | ❌ Nur Sisyphus |
 | **SIN-Zeus** (Fleet Commander) | ✅ | ❌ |
 | **SIN-Terminal Orchestration** | ✅ 4 Commands | ❌ |
-| **29 Custom Skills** | ✅ | ❌ (hat 0) |
+| **44 Custom Skills** | ✅ | ❌ (hat 0) |
 | **Antigravity Auth Plugin** | ✅ Token-Rotation | ❌ (eigenes Google Auth) |
 | **OpenRouter Auth (lokal)** | ✅ Mit Proxy | ❌ |
 | **11 sin-* CLI Tools** | ✅ | ❌ |
@@ -179,7 +179,7 @@ cp .env.example .env
 
 # 2. Verifizieren
 opencode --version
-ls ~/.config/opencode/skills/ | wc -l  # Sollte 29+ zeigen
+ls ~/.config/opencode/skills/ | wc -l  # Sollte 44+ zeigen
 
 # 3. Sync zu OCI VM (optional)
 sin-sync
@@ -210,11 +210,11 @@ upgraded-opencode-stack/
 ├── AGENTS.md               # Globale Agent-Regeln
 ├── .env.example            # API Key Template
 ├── bin/                    # 11 echte CLI Tools
-├── skills/                 # 29 Skills
-├── plugins/                # 5 Plugins (2 lokal)
+├── skills/                 # 44 Skills
+├── plugins/                # 4 Plugins (1 lokal)
 ├── agents/                 # Agent-Definitionen
 ├── agents-instructions/    # 37 Agent-Instruktionen
-├── commands/               # 13 Custom Commands
+├── commands/               # 12 Custom Commands
 ├── scripts/                # 17 Scripts
 ├── hooks/                  # Git Hooks
 ├── templates/              # JSON Schemas
