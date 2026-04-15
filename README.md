@@ -75,25 +75,25 @@
 | **Local-Brain / GraphRAG** | Projekt-basiertes Plan-Gedächtnis mit Auto-Invalidation | ✅ |
 | **OMOC Swarm** | 5-Agenten-Schwarm (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ |
 | **SIN-Zeus Fleet Commander** | GitHub Projects, Issues, Branches + Hermes Dispatch | ✅ |
-| **29+ Custom Skills** | A2A Agent Builder, Deploy, Debug, Browser Automation, Image/Video Gen | ✅ |
-| **5 Auth Plugins** | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework | ✅ |
-| **11 CLI Tools** | sin-sync, sin-n8n, sin-telegrambot, sin-rotate, sin-health, ... | ✅ |
-| **13 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
-| **5 Provider Configs** | Google Antigravity, OpenAI, NVIDIA NIM, OpenRouter, Qwen | ✅ |
+| **44 Skills** | A2A Agent Builder, Deploy, Debug, Browser Automation, Image/Video Gen | ✅ |
+| **4 Plugins** | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework | ✅ |
+| **27 MCP Servers** | sin-telegrambot, sin-google-apps, sin-terminal, webauto-nodriver, ... | ✅ |
+| **12 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
+| **5 Provider** | Google Antigravity, OpenAI, OpenRouter, Qwen, Modal (GLM-5.1) | ✅ |
 | **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
 | **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
 
 <details>
 <summary>Full Tool Surface — Alle Komponenten im Detail</summary>
 
-### Skills (29)
-`create-a2a`, `create-a2a-mcp`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `new-google-login`, `create-telegrambot`, `create-github-account`, `create-github-app`, `create-hf-space-vm`, `cloudflare-deploy`, `vercel-deploy`, `sin-bridge`, `sin-vision-colab`, `enterprise-deep-debug`, `omoc-plan-swarm`, `check-plan-done`, `self-healer`, `sovereign-repo-governance`, `sovereign-research`, `opencode-subagent-delegation`, `anonymous`, `browser-crashtest-lab`, `doc`, `pdf`, `imagegen`, `gen-thumbnail`, `nvidia-3d-forge`, `nvidia-video-forge`, `sora`
+### Skills (44)
+`anonymous`, `awesome-opensin-design`, `browser-crashtest-lab`, `check-my-dev-in-web`, `check-plan-done`, `cloudflare-deploy`, `create-a2a`, `create-a2a-mcp`, `create-a2a-sin-agent`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `create-github-account`, `create-github-app`, `create-telegrambot`, `doc`, `enterprise-deep-debug`, `enterprise-parallel-exploration`, `gen-image`, `gen-thumb`, `gen-thumbnail`, `gen-veo`, `gitlab-storage`, `imagegen`, `new-google-login`, `nvidia-3d-forge`, `nvidia-video-forge`, `omoc-plan-swarm`, `opencode-subagent-delegation`, `pdf`, `plan`, `preview`, `self-healer`, `seo-import`, `sin-bridge`, `sin-vision-colab`, `sora`, `sovereign-repo-governance`, `sovereign-research`, `thumbnail-optimizer`, `undelete-login-google`, `vercel-deploy`, `visual-repo`
 
-### Plugins (5)
-`opencode-antigravity-auth` (Token Rotation), `oh-my-opencode` (Framework), `opencode-qwen-auth` (Qwen OAuth), `opencode-openrouter-auth` (OpenRouter Proxy), `gitlab-storage` (Infinite Storage)
+### Plugins (4)
+`opencode-antigravity-auth` (Token Rotation), `oh-my-opencode` (Framework), `opencode-qwen-auth` (Qwen OAuth), `opencode-openrouter-auth` (OpenRouter Proxy)
 
-### CLI Tools (11)
-`sin-document-forge`, `sin-google-docs`, `sin-health`, `sin-metrics`, `sin-n8n`, `sin-pull-token`, `sin-rotate`, `sin-rotator`, `sin-sync`, `sin-telegrambot`, `check-should-automate`
+### MCP Servers (27)
+`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-google-apps`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `webauto-nodriver`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`
 
 </details>
 
@@ -225,13 +225,11 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 ---
 
 ## Providers
-
 | Provider | Modelle |
 |----------|---------|
 | **google** (Antigravity) | `antigravity-claude-sonnet-4-6`, `antigravity-claude-opus-4-6-thinking`, `antigravity-gemini-3.1-pro`, `antigravity-gemini-3-flash` |
-| **openai** | `gpt-5.4`, `gpt-5.4-mini` via OCI Proxy |
-| **nvidia-nim** | `qwen-3.5-122b`, `qwen-3.5-397b`, `qwen-3.5-flash` |
-| **openrouter** | 8 Free-Modelle (Qwen 3.6 Plus, DeepSeek V3/R1, Gemini 2.5 Flash, Llama 4 Maverick, Phi-4) |
+| **openai** | `gpt-5.4`, `gpt-5.4-mini` via OCI Proxy (92.5.60.87:4100) |
+| **openrouter** | Qwen 3.6 Plus, DeepSeek V3/R1, Gemini 2.5 Flash, Llama 4 Maverick, Phi-4 (free) |
 | **qwen** | `qwen/coder-model` — Qwen 3.6 Plus (OAuth, 2000/day free) |
 | **modal** | `glm-5.1-fp8` — GLM 5.1 FP8 (via OCI Token Pool) |
 
