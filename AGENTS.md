@@ -1159,13 +1159,13 @@ Format-Vorlage:
 - When filling team tables, populate every approved column and only use explicit placeholders such as `pending formal MCP entry` or `pending dedicated child-tab` when that surface truly does not exist yet.
 - Before completion, verify build, A2A health/card/rpc, MCP smoke, repo gates, OpenCode integration, and docs synchronization.
 - Hard completion checks are mandatory:
-  - `npm --prefix <agent-root> run build`
-  - `node <agent-root>/dist/src/cli.js print-card`
-  - `node <agent-root>/dist/src/cli.js run-action '{"action":"agent.help"}'`
-  - `node <agent-root>/dist/src/cli.js run-action '{"action":"<namespace>.health"}'` using the real health skill from the agent card
-  - `serve-mcp` stays reachable with open stdin
-  - `npm run test:a2a:fleet`
-  - `npm run test:a2a:live -- --agent <slug>`
+- `bun --prefix <agent-root> run build`
+- `node <agent-root>/dist/src/cli.js print-card`
+- `node <agent-root>/dist/src/cli.js run-action '{"action":"agent.help"}'`
+- `node <agent-root>/dist/src/cli.js run-action '{"action":"<namespace>.health"}'` using the real health skill from the agent card
+- `serve-mcp` stays reachable with open stdin
+- `bun run test:a2a:fleet`
+- `bun run test:a2a:live -- --agent <slug>`
   - landing / `publicPageUrl` returns `200`
   - runtime host is actually provisioned on the intended VM/Space/tunnel target
   - `/.well-known/agent-card.json` returns `200`
