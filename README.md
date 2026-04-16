@@ -67,6 +67,84 @@
 
 ---
 
+## Using Qwen Provider
+
+Qwen OAuth (via `opencode-qwen-auth` plugin) provides free daily quota (~1000 requests) and multi-account rotation.
+
+### Quick Setup (for members)
+
+1. **Ensure plugin is installed** (the installer does this automatically):
+   ```bash
+   opencode providers list | grep qwen
+   # Should show: qwen (oauth) with 0 credentials initially
+   ```
+
+2. **Add your Qwen account**:
+   ```bash
+   opencode /connect
+   ```
+   - Select **Provider:** `qwen`
+   - Select **Method:** `Qwen OAuth`
+   - Follow device flow: open https://chat.qwen.ai/ ... enter device code
+   - Complete authorization
+
+3. **Verify account added**:
+   ```bash
+   opencode providers list | grep qwen -A5
+   # Should show: X credentials
+   ```
+
+4. **Select Qwen model**:
+   ```
+   /model qwen/coder-model
+   ```
+
+5. **Start coding** — plugin automatically rotates accounts on rate limits/quota exhaustion.
+
+### Managing Multiple Accounts
+
+Add more accounts by repeating `/connect`. The plugin supports:
+- **Hybrid rotation** (default): Smart selection based on health scores, token bucket, and LRU freshness
+- **Round-robin**: `qwen.json: {"rotation_strategy": "round-robin"}`
+- **Sequential**: Uses one account until rate limited, then switches
+
+**Configuration file** (`.opencode/qwen.json` or `~/.config/opencode/qwen.json`):
+```json
+{
+  "rotation_strategy": "hybrid",
+  "proactive_refresh": true,
+  "max_rate_limit_wait_seconds": 300,
+  "quiet_mode": true
+}
+```
+
+### Troubleshooting
+
+**"Qwen not responding" / empty responses:**
+- Check quota exhaustion: `insufficient_quota` means free tier depleted (resets at UTC midnight)
+- Plugin now correctly treats quota errors as failures (BUG-QWEN-003 fixed)
+- If you added a new account via `/connect` but it's not visible to the plugin, run:
+  ```bash
+  python3 /Users/jeremy/dev/docs/opencode/sync-qwen-credentials.py --verbose
+  ```
+
+**View active account:**
+```bash
+cat ~/.config/opencode/qwen-auth-accounts.json | grep email
+```
+
+**Reset plugin state:**
+```bash
+rm ~/.config/opencode/qwen-auth-accounts.json
+# Then re-add accounts via /connect
+```
+
+For full documentation, see the plugin README:  
+`/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/README.md`
+
+---
+
+
 ## Features
 
 | Capability | Description | Status |
@@ -187,7 +265,7 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 | `imagegen` | Bild-Generierung via Gemini |
 | `nvidia-video-forge` | Video-Generierung via NVIDIA |
 
-*Vollständige Liste: 29 Skills installiert*
+*Vollständige Liste: 44 Skills verfügbar*
 
 ---
 
@@ -292,7 +370,7 @@ upgraded-opencode-stack/
 ├── SECURITY.md             # Security policy
 ├── SUPPORT.md              # Where to get help
 ├── bin/                    # 11 CLI Tools
-├── skills/                 # 29 Skills
+├── skills/ # 44 Skills
 ├── plugins/                # 5+ Plugins (lokal)
 ├── agents/                 # Agent-Definitionen
 ├── commands/               # 13 Custom Commands

@@ -72,6 +72,76 @@ bun run scripts/system-directive-watcher.js --log=/tmp/oh-my-opencode.log
 bun run scripts/system-directive-watcher.js --interval=5000
 ```
 
+### Daemon Setup (Terminal/iTerm2)
+
+```bash
+# Daemon starten im Hintergrund:
+nohup /opt/homebrew/bin/bun run /Users/jeremy/.config/opencode/scripts/system-directive-watcher.js --daemon > /tmp/opencode-directive-watcher.out 2> /tmp/opencode-directive-watcher.err &
+disown
+
+# Status pruefen:
+cat /var/folders/*/T/opensin-directive-watcher.pid 2>/dev/null && echo "RUNNING" || echo "NOT_RUNNING"
+cat /tmp/opencode-directive-watcher.out
+
+# Daemon stoppen:
+kill $(cat /var/folders/*/T/opensin-directive-watcher.pid 2>/dev/null) 2>/dev/null
+```
+
+### LaunchAgent (Auto-Start beim Login)
+
+LaunchAgent plist location:
+```
+~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
+```
+
+Plist Inhalt:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.opencode.system-directive-watcher</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/bun</string>
+    <string>/Users/jeremy/.config/opencode/scripts/system-directive-watcher.js</string>
+    <string>--daemon</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+  <key>StandardErrorPath</key>
+  <string>/tmp/opencode-directive-watcher.err</string>
+  <key>StandardOutPath</key>
+  <string>/tmp/opencode-directive-watcher.out</string>
+</dict>
+</plist>
+```
+
+```bash
+# LaunchAgent laden (falls launchctl funktioniert):
+launchctl load ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
+
+# Alternative: Terminal-basierter Daemon (empfohlen da launchctl OOM-Killed):
+nohup /opt/homebrew/bin/bun run ~/.config/opencode/scripts/system-directive-watcher.js --daemon &
+disown
+```
+
+### Global Installierte Pfade
+
+Der Watcher ist global installiert fuer JEDES Projekt:
+```
+~/.config/opencode/scripts/system-directive-watcher.js  ← Haupt-Watcher
+~/.config/opencode/scripts/brain-sync-enforcer.js       ← Brain Sync Enforcer (Hook-Modul)
+~/.config/opencode/scripts/launch-watcher.sh            ← Launch-Helper Script
+~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist  ← Auto-Start
+```
+
 ### Konfiguration
 
 Die `DIRECTIVE_ACTIONS` Map im Script definiert welche Todos pro Directive erstellt werden:
