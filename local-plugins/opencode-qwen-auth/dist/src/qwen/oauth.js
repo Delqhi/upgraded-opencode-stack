@@ -4,6 +4,21 @@ import { calculateTokenExpiry } from "../plugin/auth";
 function createOAuthBody(entries) {
     return new URLSearchParams(entries);
 }
+function parseJsonResponseText(responseText, context, response) {
+    const text = typeof responseText === "string" ? responseText : "";
+    try {
+        return JSON.parse(text);
+    }
+    catch (error) {
+        const preview = text.trim().replace(/\s+/g, " ").slice(0, 240);
+        const contentType = response.headers.get("content-type") ?? "unknown content-type";
+        const details = preview
+            ? `${response.status} ${response.statusText} (${contentType}) — ${preview}`
+            : `${response.status} ${response.statusText} (${contentType})`;
+        const message = `${context}: expected JSON but received non-JSON response (${details})`;
+        throw new Error(message, { cause: error });
+    }
+}
 function resolveOAuthUrl(base, endpoint) {
     const normalized = typeof base === "string" && base.trim() ? base : QWEN_OAUTH_BASE_URL;
     try {
@@ -49,7 +64,8 @@ export async function authorizeQwenDevice(options) {
         const message = await response.text();
         throw new Error(message || "Failed to start Qwen device flow");
     }
-    const payload = (await response.json());
+    const responseText = await response.text();
+    const payload = parseJsonResponseText(responseText, "Qwen device authorization", response);
     const expiresAt = calculateTokenExpiry(Date.now(), payload.expires_in);
     const intervalSeconds = payload.interval ?? 5;
     return {
@@ -81,7 +97,8 @@ export async function pollQwenDeviceToken(options, deviceCode, intervalSeconds, 
             }),
         });
         if (response.ok) {
-            const payload = (await response.json());
+            const responseText = await response.text();
+            const payload = parseJsonResponseText(responseText, "Qwen token polling", response);
             if (!payload.refresh_token) {
                 return { type: "failed", error: "Missing refresh token" };
             }
@@ -93,9 +110,14 @@ export async function pollQwenDeviceToken(options, deviceCode, intervalSeconds, 
                 resourceUrl: payload.resource_url,
             };
         }
-        const errorPayload = (await response
-            .json()
-            .catch(() => ({})));
+        const errorText = await response.text();
+        let errorPayload = {};
+        try {
+            errorPayload = JSON.parse(errorText);
+        }
+        catch {
+            errorPayload = {};
+        }
         const code = errorPayload.error;
         if (code === "authorization_pending") {
             await sleep(currentInterval * 1000);
@@ -130,16 +152,22 @@ export async function refreshQwenToken(options, refreshToken) {
         }),
     });
     if (!response.ok) {
-        const errorPayload = (await response
-            .json()
-            .catch(() => ({})));
+        const errorText = await response.text();
+        let errorPayload = {};
+        try {
+            errorPayload = JSON.parse(errorText);
+        }
+        catch {
+            errorPayload = {};
+        }
         return {
             type: "failed",
             error: errorPayload.error_description ?? "Failed to refresh token",
             code: errorPayload.error,
         };
     }
-    const payload = (await response.json());
+    const responseText = await response.text();
+    const payload = parseJsonResponseText(responseText, "Qwen token refresh", response);
     return {
         type: "success",
         access: payload.access_token,
