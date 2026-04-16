@@ -159,6 +159,7 @@ For full documentation, see the plugin README:
 | **12 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
 | **5 Provider** | Google Antigravity, OpenAI, OpenRouter, Qwen, Modal (GLM-5.1) | ✅ |
 | **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
+| **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start | ✅ |
 | **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
 
 <details>
@@ -239,6 +240,10 @@ flowchart TB
 ```
 
 For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/oci-vm-architecture.md), [FIXES_2026-04-11.md](FIXES_2026-04-11.md), and [docs/operations/system-directives-guide.md](docs/operations/system-directives-guide.md) (System Directives & Brain Sync Enforcer).
+
+> [!IMPORTANT]
+> Der Canonical Watcher-Stack läuft über `~/.config/opencode/scripts/launch-watcher.sh` und `~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist`.
+> Der Antigravity-Rotator bleibt absichtlich **nicht** auto-startend (`RunAtLoad=false`, `KeepAlive=false`).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -427,6 +432,11 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 ---
 
 ## Changelog
+
+### v2.2.2 (2026-04-16)
+- **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification
+- **Rotator Safety** — `com.antigravity.rotator.plist` kept non-autostarting on purpose; no automatic trigger path
+- **Docs Sync** — README + system-directives guide aligned with the current global watcher runtime
 
 ### v2.2.1 (2026-04-14)
 - **Box.com Storage** — Replaced deprecated GitLab LogCenter with A2A-SIN-Box-Storage service

@@ -22,6 +22,7 @@ Nachrichtentext...
 | `BOULDER CONTINUATION` | Boulder-Plan mit offenen Tasks | `boulder-continuation` Hook |
 | `DELEGATION REQUIRED` | Aufgabe muss delegiert werden | `sisyphus-junior-notepad` Hook |
 | `SINGLE TASK ONLY` | Nur eine Aufgabe bearbeiten | `sisyphus-junior-notepad` Hook |
+| `WORK STOP BRAIN CHECK` | Arbeit stoppen, Brain-/Todo-State final prüfen | `brain-sync-enforcer` Hook |
 | `COMPACTION CONTEXT` | Nach Context-Kompaktierung | `context-window-monitor` Hook |
 | `CONTEXT WINDOW MONITOR` | Context-Fenster > 70% voll | `context-window-monitor` Hook |
 | `PROMETHEUS READ-ONLY` | Prometheus Planner Modus | `start-work` Hook |
@@ -53,38 +54,37 @@ Der **System Directive Watcher** ist ein eigenständiger Background-Prozess der 
 ### Dateilocation
 
 ```
-scripts/system-directive-watcher.js
+~/.config/opencode/scripts/system-directive-watcher.js
 ```
 
 ### Starten
 
 ```bash
 # Vordergrund (einmalig):
-bun run scripts/system-directive-watcher.js
+bun run ~/.config/opencode/scripts/system-directive-watcher.js
 
 # Als Daemon (persistent im Hintergrund):
-bun run scripts/system-directive-watcher.js --daemon
+bun run ~/.config/opencode/scripts/system-directive-watcher.js --daemon
 
 # Mit Log-File Tailing (statt Polling):
-bun run scripts/system-directive-watcher.js --log=/tmp/oh-my-opencode.log
+bun run ~/.config/opencode/scripts/system-directive-watcher.js --log=/tmp/oh-my-opencode.log
 
 # Custom Poll-Interval (in ms):
-bun run scripts/system-directive-watcher.js --interval=5000
+bun run ~/.config/opencode/scripts/system-directive-watcher.js --interval=5000
 ```
 
 ### Daemon Setup (Terminal/iTerm2)
 
 ```bash
 # Daemon starten im Hintergrund:
-nohup /opt/homebrew/bin/bun run /Users/jeremy/.config/opencode/scripts/system-directive-watcher.js --daemon > /tmp/opencode-directive-watcher.out 2> /tmp/opencode-directive-watcher.err &
-disown
+bash /Users/jeremy/.config/opencode/scripts/launch-watcher.sh
 
 # Status pruefen:
-cat /var/folders/*/T/opensin-directive-watcher.pid 2>/dev/null && echo "RUNNING" || echo "NOT_RUNNING"
+cat /tmp/opensin-directive-watcher.pid 2>/dev/null && echo "RUNNING" || echo "NOT_RUNNING"
 cat /tmp/opencode-directive-watcher.out
 
 # Daemon stoppen:
-kill $(cat /var/folders/*/T/opensin-directive-watcher.pid 2>/dev/null) 2>/dev/null
+kill $(cat /tmp/opensin-directive-watcher.pid 2>/dev/null) 2>/dev/null
 ```
 
 ### LaunchAgent (Auto-Start beim Login)
@@ -104,32 +104,35 @@ Plist Inhalt:
   <string>org.opencode.system-directive-watcher</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/opt/homebrew/bin/bun</string>
-    <string>/Users/jeremy/.config/opencode/scripts/system-directive-watcher.js</string>
-    <string>--daemon</string>
+    <string>/Users/jeremy/.config/opencode/scripts/launch-watcher.sh</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
-  <dict>
-    <key>SuccessfulExit</key>
-    <false/>
-  </dict>
+  <false/>
   <key>StandardErrorPath</key>
   <string>/tmp/opencode-directive-watcher.err</string>
   <key>StandardOutPath</key>
   <string>/tmp/opencode-directive-watcher.out</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/jeremy</string>
+  </dict>
+  <key>Nice</key>
+  <integer>10</integer>
 </dict>
 </plist>
 ```
 
 ```bash
-# LaunchAgent laden (falls launchctl funktioniert):
-launchctl load ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
+# LaunchAgent laden (kanonischer Weg):
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
 
-# Alternative: Terminal-basierter Daemon (empfohlen da launchctl OOM-Killed):
-nohup /opt/homebrew/bin/bun run ~/.config/opencode/scripts/system-directive-watcher.js --daemon &
-disown
+# Alternative: Direkt über den Wrapper starten:
+bash /Users/jeremy/.config/opencode/scripts/launch-watcher.sh
 ```
 
 ### Global Installierte Pfade
@@ -137,10 +140,19 @@ disown
 Der Watcher ist global installiert fuer JEDES Projekt:
 ```
 ~/.config/opencode/scripts/system-directive-watcher.js  ← Haupt-Watcher
-~/.config/opencode/scripts/brain-sync-enforcer.js       ← Brain Sync Enforcer (Hook-Modul)
 ~/.config/opencode/scripts/launch-watcher.sh            ← Launch-Helper Script
 ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist  ← Auto-Start
 ```
+
+### Rotator Safety
+
+Der Antigravity-Rotator bleibt absichtlich manuell/aufrufgesteuert:
+
+- `~/Library/LaunchAgents/com.antigravity.rotator.plist`
+- `RunAtLoad=false`
+- `KeepAlive=false`
+
+Er darf **nicht** vom Watcher oder irgendeinem Auto-Start-Pfad getriggert werden.
 
 ### Konfiguration
 
@@ -152,6 +164,10 @@ const DIRECTIVE_ACTIONS = {
     { content: "Global Brain aktualisieren (.pcpm/ sync)", priority: "high" },
     { content: "Local Brain aktualisieren (project context)", priority: "high" },
     { content: "Todo-Liste pruefen und aktualisieren", priority: "medium" },
+  ],
+  "WORK STOP BRAIN CHECK": [
+    { content: "Brain Sync final prüfen", priority: "high" },
+    { content: "Todo-Status vor Stopp validieren", priority: "high" },
   ],
   "BRAIN SYNC ENFORCER": [
     { content: "Brain Sync: Global Brain + Local Brain", priority: "high" },
