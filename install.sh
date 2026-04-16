@@ -3,10 +3,10 @@ set -euo pipefail
 
 # Upgraded OpenCode Stack Installer
 # PURELY ADDITIVE — überschreibt NIEMALS bestehende Configs
-# Usage: ./install.sh [--dry-run] [--skip-npm]
+# Usage: ./install.sh [--dry-run] [--skip-bun]
 
 DRY_RUN=false
-SKIP_NPM=false
+SKIP_BUN=false
 OPENCODE_DIR="$HOME/.config/opencode"
 BIN_DIR="$HOME/.local/bin"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -25,7 +25,7 @@ log_skip()  { echo -e "${YELLOW}[SKIP]${NC}  $1 (bereits vorhanden)"; }
 for arg in "$@"; do
   case $arg in
     --dry-run) DRY_RUN=true; log_info "Dry run mode" ;;
-    --skip-npm) SKIP_NPM=true ;;
+    --skip-bun) SKIP_BUN=true ;;
   esac
 done
 
@@ -41,8 +41,8 @@ command -v opencode &>/dev/null || { log_error "OpenCode CLI nicht gefunden. Ers
 log_ok "OpenCode CLI: $(which opencode)"
 command -v node &>/dev/null || { log_error "Node.js nicht gefunden"; exit 1; }
 log_ok "Node.js: $(node --version)"
-command -v npm &>/dev/null || { log_error "npm nicht gefunden"; exit 1; }
-log_ok "npm: $(npm --version)"
+command -v bun &>/dev/null || { log_error "bun nicht gefunden"; exit 1; }
+log_ok "bun: $(bun --version)"
 echo ""
 
 # 2. Create directories
@@ -50,33 +50,33 @@ mkdir -p "$OPENCODE_DIR" "$BIN_DIR"
 log_ok "Verzeichnisse bereit"
 echo ""
 
-# 3. Install npm plugins (global — betrifft nur diese Machine)
-if [ "$SKIP_NPM" = false ]; then
-  log_info "Installing npm plugins..."
-  for plugin in "opencode-antigravity-auth@1.6.5-beta.0" "oh-my-opencode@3.11.2"; do
-    if npm ls -g "$plugin" 2>/dev/null | grep -q "$plugin"; then
+# 3. Install bun plugins (global — betrifft nur diese Machine)
+if [ "$SKIP_BUN" = false ]; then
+log_info "Installing bun plugins..."
+for plugin in "opencode-antigravity-auth@1.6.5-beta.0" "oh-my-opencode@3.11.2"; do
+    if bun pm ls -g 2>/dev/null | grep -q "$plugin"; then
       log_skip "$plugin"
     else
-      [ "$DRY_RUN" = false ] && npm install -g "$plugin" 2>&1 | tail -1
+      [ "$DRY_RUN" = false ] && bun add -g "$plugin" 2>&1 | tail -1
       log_ok "$plugin installiert"
     fi
   done
   if [ -d "plugins/local-plugins/opencode-openrouter-auth" ]; then
-    if npm ls -g "opencode-openrouter-auth" 2>/dev/null | grep -q "opencode-openrouter-auth"; then
+    if bun pm ls -g 2>/dev/null | grep -q "opencode-openrouter-auth"; then
       log_skip "opencode-openrouter-auth"
     else
-      [ "$DRY_RUN" = false ] && cd "plugins/local-plugins/opencode-openrouter-auth" && npm install -g . 2>&1 | tail -1 && cd "$SCRIPT_DIR"
-      log_ok "opencode-openrouter-auth installiert"
-    fi
-  fi
-  if [ -d "local-plugins/opencode-qwen-auth" ]; then
-    # Qwen auth is shipped from this repository itself, so reinstalling it keeps
-    # the runtime plugin aligned with the repo's canonical bug fixes.
-    [ "$DRY_RUN" = false ] && cd "local-plugins/opencode-qwen-auth" && npm install -g . 2>&1 | tail -1 && cd "$SCRIPT_DIR"
-    log_ok "opencode-qwen-auth aktualisiert"
-  fi
+[ "$DRY_RUN" = false ] && cd "plugins/local-plugins/opencode-openrouter-auth" && bun add -g . 2>&1 | tail -1 && cd "$SCRIPT_DIR"
+log_ok "opencode-openrouter-auth installiert"
+fi
+fi
+if [ -d "local-plugins/opencode-qwen-auth" ]; then
+# Qwen auth is shipped from this repository itself, so reinstalling it keeps
+# the runtime plugin aligned with the repo's canonical bug fixes.
+[ "$DRY_RUN" = false ] && cd "local-plugins/opencode-qwen-auth" && bun add -g . 2>&1 | tail -1 && cd "$SCRIPT_DIR"
+log_ok "opencode-qwen-auth aktualisiert"
+fi
 else
-  log_info "Skipping npm installs"
+log_info "Skipping bun plugin installs"
 fi
 echo ""
 
