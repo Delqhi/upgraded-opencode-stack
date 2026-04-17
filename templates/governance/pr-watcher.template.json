@@ -1,0 +1,33 @@
+{
+  "$comment": "Concrete template instance — copy this file to governance/pr-watcher.json in any A2A repo and replace {{REPO_SLUG}}.",
+  "$schema": "https://opencode.local/templates/pr-watcher.schema.json",
+  "enabled": true,
+  "repo": "OpenSIN-AI/{{REPO_SLUG}}",
+  "prSource": "all",
+  "ignoreAuthors": [],
+  "ignoreBots": false,
+  "noisePrefixes": ["chore(deps):", "ci:"],
+  "noiseSubstrings": ["bump version", "auto-generated"],
+  "watcherScript": "scripts/watch-pr-feedback.sh",
+  "followupCommand": "gh pr review --approve",
+  "stateDir": ".pr-watcher-state",
+  "summaryFile": ".pr-watcher-state/summary.json",
+  "logFile": ".pr-watcher-state/watcher.log",
+  "reviewPolicy": {
+    "autoReviewEnabled": true,
+    "autoReviewModel": "opencode run --format json",
+    "credentialScanEnabled": true,
+    "credentialPatterns": [
+      "GOOGLE_API_KEY", "OPENAI_API_KEY", "A2A_FLEET_TOKEN",
+      "sk-", "ghp_", "gho_", "Bearer ", "password", "secret"
+    ],
+    "requiredFilesCheckEnabled": true,
+    "requiredFilesManifest": "required-files.manifest.json"
+  },
+  "escalation": {
+    "staleAfterHours": 48,
+    "abandonedAfterDays": 7,
+    "telegramBot": "sin-telegrambot",
+    "telegramChannel": "fleet-alerts"
+  }
+}

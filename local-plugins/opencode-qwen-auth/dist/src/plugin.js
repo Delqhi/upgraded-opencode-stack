@@ -331,6 +331,20 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                     proactive: config.proactive_refresh,
                                 });
                                 try {
+                                    // Multi-session concurrency fix: Check if another session already
+                                    // refreshed this account while we were preparing to refresh. 
+                                    // If the refresh token on disk has changed, we just grab the new 
+                                    // tokens and retry instead of burning a single-use token twice.
+                                    const freshStorage = await loadAccounts();
+                                    const freshAccount = freshStorage?.accounts[accountIndex];
+                                    if (freshAccount && freshAccount.refreshToken !== selectedAuth.refresh) {
+                                        logger.debug("Another session already refreshed this token proactively. Retrying.", {
+                                            accountIndex
+                                        });
+                                        accountStorage = freshStorage;
+                                        continue;
+                                    }
+
                                     const refreshed = await refreshAccessToken(selectedAuth, oauthOptions, client, providerId);
                                     if (!refreshed) {
                                         throw new Error("Token refresh failed");
@@ -480,6 +494,24 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                 const canForceRefresh = !!refreshKey && !forcedRefreshTokens.has(refreshKey);
                                 if (canForceRefresh) {
                                     forcedRefreshTokens.add(refreshKey);
+                                    
+                                    // Multi-session concurrency fix: Check if another session already
+                                    // refreshed this account while we were failing. If the refresh
+                                    // token on disk has changed, we just grab the new tokens and retry
+                                    // the API call instead of burning a single-use refresh token twice.
+                                    const freshStorage = await loadAccounts();
+                                    const freshAccount = freshStorage?.accounts[accountIndex];
+                                    if (freshAccount && freshAccount.refreshToken !== refreshKey) {
+                                        logger.debug("Another session already refreshed this token. Retrying API with new tokens.", {
+                                            accountIndex
+                                        });
+                                        activeAuth.refresh = freshAccount.refreshToken;
+                                        activeAuth.access = freshAccount.accessToken;
+                                        activeAuth.expires = freshAccount.expires;
+                                        accountStorage = freshStorage;
+                                        continue;
+                                    }
+
                                     try {
                                         const recovered = await refreshAccessToken(activeAuth, oauthOptions, client, providerId);
                                         if (recovered) {

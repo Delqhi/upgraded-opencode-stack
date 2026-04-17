@@ -1,0 +1,55 @@
+{
+  "$schema": "https://github.com/Delqhi/upgraded-opencode-stack/blob/main/schemas/team-config.schema.json",
+  "team_id": "team-coding-agents",
+  "name": "Team Coding Agents (6 dedicated repos)",
+  "description": "6 dedicated A2A Coder Agents with individual GitHub repos — split from monolithic OpenSIN-Code for isolated deployments, independent versioning, and crash-storm protection. Established after BUG-OCI-001 (OCI VM disk-full incident, 2026-04-16).",
+  "manager": "A2A-SIN-Zeus",
+  "primary_model": "google/antigravity-claude-sonnet-4-6",
+  "fallback_models": [
+    "openai/gpt-5.4",
+    "google/antigravity-gemini-3.1-pro",
+    "qwen/coder-model"
+  ],
+  "established": "2026-04-17",
+  "bug_references": [
+    "BUG-OCI-001"
+  ],
+  "members": {
+    "A2A-SIN-Code-Backend": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Backend",
+      "port": 7863,
+      "purpose": "Backend specialists — Server, OracleCloud, APIs",
+      "specialization": "backend-api-server"
+    },
+    "A2A-SIN-Code-Command": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Command",
+      "port": 7861,
+      "purpose": "Command/CLI agents — shell, automation, scripting",
+      "specialization": "cli-automation"
+    },
+    "A2A-SIN-Code-Frontend": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Frontend",
+      "port": 7865,
+      "purpose": "Frontend specialists — UI/UX, React, CSS",
+      "specialization": "frontend-ui-ux"
+    },
+    "A2A-SIN-Code-Fullstack": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Fullstack",
+      "port": 7864,
+      "purpose": "Fullstack specialists — end-to-end implementations",
+      "specialization": "fullstack-end-to-end"
+    },
+    "A2A-SIN-Code-Plugin": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Plugin",
+      "port": 7860,
+      "purpose": "Plugin developers — MCPs, integrations, auth",
+      "specialization": "plugins-mcps-integrations"
+    },
+    "A2A-SIN-Code-Tool": {
+      "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Tool",
+      "port": 7862,
+      "purpose": "Tool builders — CLI utilities, external integrations",
+      "specialization": "cli-utilities-external-tools"
+    }
+  }
+}

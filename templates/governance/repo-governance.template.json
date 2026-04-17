@@ -1,0 +1,31 @@
+{
+  "$comment": "Concrete template instance — copy this file to governance/repo-governance.json in any A2A repo and replace {{REPO_SLUG}}.",
+  "$schema": "https://opencode.local/templates/repo-governance.schema.json",
+  "repo": "{{REPO_SLUG}}",
+  "issueFirstRequired": true,
+  "prWatcherRequired": true,
+  "strictDispatchMatrixRequired": false,
+  "platformRegistryRef": "platforms/registry.json",
+  "prWatcherConfigRef": "governance/pr-watcher.json",
+  "coderDispatchMatrixRef": null,
+  "workItemSchemaRef": "https://opencode.local/templates/work-item.schema.json",
+  "defaultLabels": ["inbound", "a2a"],
+  "automationFlow": [
+    "1. External platform sends work via webhook/poller",
+    "2. n8n normalizes payload to work_item schema",
+    "3. GitHub issue created/updated in target repo",
+    "4. Agent picks up issue, creates branch + PR",
+    "5. PR Watcher validates: required files, credential scan, build check",
+    "6. On approval: squash merge, auto-delete branch",
+    "7. Post-merge verification: build, agent card, fleet validator"
+  ],
+  "failClosedRules": [
+    "Unregistered platforms are blocked — no implicit access",
+    "Missing webhook auth blocks intake",
+    "Missing critical required files blocks merge",
+    "Credential leak in PR diff blocks merge immediately",
+    "Unknown check result blocks merge (fail-closed default)",
+    "CI runner timeout blocks merge"
+  ],
+  "trackingIssue": null
+}
