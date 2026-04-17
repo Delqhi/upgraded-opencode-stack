@@ -51,17 +51,7 @@ async function withFileLock(path, fn) {
     }
 }
 function normalizeStorage(storage) {
-    const MAX_CONSECUTIVE_FAILURES = 20;
-    const now = Date.now();
-    const accounts = storage.accounts.filter((account) => {
-if (!account?.refreshToken) return false;
-    if ((account.health?.consecutiveFailures ?? 0) > MAX_CONSECUTIVE_FAILURES) return false;
-    const hasExpiredToken = !account.accessToken && (!account.expires || account.expires < now);
-    const hasHighFailures = (account.health?.failureCount ?? 0) > 50;
-    if (hasExpiredToken && hasHighFailures) return false;
-    if (!account.accessToken && account.expires === 0) return false;
-    return true;
-    });
+    const accounts = storage.accounts.filter((account) => account?.refreshToken);
     const activeIndex = accounts.length > 0
         ? Math.min(Math.max(storage.activeIndex, 0), accounts.length - 1)
         : 0;
@@ -293,5 +283,51 @@ export function recordFailure(storage, index) {
 }
 export function isAccountUsable(account, threshold = 0.2) {
     return calculateHealthScore(account) >= threshold;
+}
+// ─── ATOMIC FILE-LOCKED ACCOUNT SELECTION ───────────────────────────
+// Prevents the multi-session race condition where 12+ OpenCode
+// sessions sharing qwen-auth-accounts.json all read the same
+// activeIndex, select the same account, and burn single-use
+// refresh tokens. This function ensures only ONE session at a time
+// can select+claim an account:
+//   1. Acquire file lock
+//   2. Load FRESH state from disk (not stale in-memory copy)
+//   3. Run selectAccount() on fresh data
+//   4. Write updated state (activeIndex, lastUsed) while holding lock
+//   5. Release lock
+//   6. Return { account, index, storage } or null
+//
+// After this returns, the calling session "owns" the selected account
+// for the duration of its request. Other sessions will see the updated
+// activeIndex and skip to the next account.
+export async function lockedSelectAndSave(strategy, now, options) {
+    const path = getStoragePath();
+    return await withFileLock(path, async () => {
+        // Always load FRESH state from disk — the caller's in-memory
+        // accountStorage may be stale if another session saved changes
+        // since the last load.
+        const freshStorage = await loadAccounts();
+        if (!freshStorage || freshStorage.accounts.length === 0) {
+            return null;
+        }
+        // Run normal selection logic on the fresh data
+        const result = selectAccount(freshStorage, strategy, now, options);
+        if (!result) {
+            return null;
+        }
+        // Write the updated state (new activeIndex + lastUsed timestamp)
+        // directly to disk while we still hold the lock. We CANNOT call
+        // saveAccounts() here because it internally calls withFileLock()
+        // again, which would deadlock (proper-lockfile is NOT reentrant).
+        const tempPath = `${path}.${randomBytes(6).toString("hex")}.tmp`;
+        await fs.mkdir(dirname(path), { recursive: true, mode: 0o700 });
+        await fs.writeFile(tempPath, JSON.stringify(result.storage, null, 2), {
+            encoding: "utf-8",
+            mode: 0o600,
+        });
+        await fs.rename(tempPath, path);
+        await fs.chmod(path, 0o600);
+        return result;
+    });
 }
 //# sourceMappingURL=account.js.map

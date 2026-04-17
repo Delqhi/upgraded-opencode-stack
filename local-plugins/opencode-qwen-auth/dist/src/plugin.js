@@ -1,5 +1,5 @@
 import { QWEN_DEFAULT_SCOPES, QWEN_OAUTH_BASE_URL } from "./constants";
-import { getMinRateLimitWait, loadAccounts, markRateLimited, recordFailure, recordSuccess, saveAccounts, selectAccount, updateAccount, upsertAccount, } from "./plugin/account";
+import { getMinRateLimitWait, loadAccounts, lockedSelectAndSave, markRateLimited, recordFailure, recordSuccess, saveAccounts, selectAccount, updateAccount, upsertAccount, } from "./plugin/account";
 import { accessTokenExpired, isOAuthAuth } from "./plugin/auth";
 import { loadConfig } from "./plugin/config";
 import { createLogger, initDebugFromEnv, setLoggerQuietMode, } from "./plugin/logger";
@@ -288,8 +288,16 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                         };
                         while (true) {
                             const now = Date.now();
-                            const selection = selectAccount(accountStorage, config.rotation_strategy, now, selectOptions);
+                            // Atomic file-locked selection: loads fresh state from
+                            // disk, selects an account, writes the updated activeIndex
+                            // back — all under a single file lock. This prevents 12+
+                            // concurrent sessions from picking the same account and
+                            // burning single-use refresh tokens.
+                            const selection = await lockedSelectAndSave(config.rotation_strategy, now, selectOptions);
                             if (!selection) {
+                                // Reload fresh state for rate-limit wait calculation
+                                const freshState = await loadAccounts();
+                                if (freshState) accountStorage = freshState;
                                 const waitMs = getMinRateLimitWait(accountStorage, now);
                                 if (!waitMs) {
                                     throw new Error("No available Qwen OAuth accounts. Re-authenticate to continue.");
