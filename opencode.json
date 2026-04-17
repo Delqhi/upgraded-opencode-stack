@@ -497,6 +497,18 @@
       ],
       "enabled": true
     },
+    "sin-box-storage": {
+      "type": "local",
+      "command": [
+        "python3",
+        "/Users/jeremy/dev/A2A-SIN-Box-Storage/scripts/mcp-box-storage.py"
+      ],
+      "environment": {
+        "BOX_STORAGE_URL": "http://room-09-box-storage:3000",
+        "BOX_STORAGE_API_KEY": "${BOX_STORAGE_API_KEY}"
+      },
+      "enabled": true
+    },
     "webauto-nodriver": {
       "type": "local",
       "command": [
