@@ -1,0 +1,3 @@
+display_name: SIN A2A Agent Forge
+short_description: Build or normalize SIN A2A agents from the canonical template and fleet rules.
+default_prompt: Create or standardize a SIN A2A agent using the template, private repo provisioning, registry ownership, docs-tab sync, and fleet validation.
