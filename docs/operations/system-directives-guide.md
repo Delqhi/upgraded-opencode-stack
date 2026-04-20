@@ -144,11 +144,11 @@ Der Watcher ist global installiert fuer JEDES Projekt:
 ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist  ← Auto-Start
 ```
 
-### Rotator Safety
+### Token-Refresh-Service Safety
 
-Der Antigravity-Rotator bleibt absichtlich manuell/aufrufgesteuert:
+Der Antigravity-Token-Refresh-Service bleibt absichtlich manuell/aufrufgesteuert:
 
-- `~/Library/LaunchAgents/com.antigravity.rotator.plist`
+- `~/Library/LaunchAgents/com.antigravity.Token-Refresh-Service.plist`
 - `RunAtLoad=false`
 - `KeepAlive=false`
 

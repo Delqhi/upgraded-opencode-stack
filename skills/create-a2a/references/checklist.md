@@ -102,7 +102,7 @@ For daemon/local-service agents also require:
 - `scripts/hf_pull_script.py` present (injected via setup_consumer_auth.sh macro)
 - HF VM deployment uses `SUPABASE_URL` & `SUPABASE_SERVICE_ROLE_KEY`
 - NO local Chrome profile setups on the HF VM
-- NO local temp-mail rotator setups on the HF VM
+- NO local temp-mail Token-Refresh-Service setups on the HF VM
 - `scripts/complete-install.sh` present and idempotent
 - `agent.json` contains control-plane / capability / consumer-auth metadata
 - `npm run sync:a2a:control-plane-projection` executed after registry changes

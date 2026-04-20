@@ -54,7 +54,7 @@
 | `zukunftsorientierte.energie@gmail.com` | Privat | Default |
 | `info@zukunftsorientierte-energie.de` | Workspace/Business | Geschäftlich |
 | `kundenservice@zukunftsorientierte-energie.info` | Kundenservice | Default |
-| `rotator-1774475475@zukunftsorientierte-energie.de` | Primary Rotator | Default |
+| `Token-Refresh-Service-1774475475@zukunftsorientierte-energie.de` | Primary Token-Refresh-Service | Default |
 
 ---
 

@@ -9,8 +9,8 @@ Automatisierte Wiederherstellung gelöschter Google Workspace Accounts und Login
 
 ## KRITISCHE INFOS
 - Google Workspace Domain: `zukunftsorientierte-energie.de`
-- Rotator Passwort: `ZOE.jerry2024`
-- Chrome Port für Rotator: `7656`
+- Token-Refresh-Service Passwort: `ZOE.jerry2024`
+- Chrome Port für Token-Refresh-Service: `7656`
 - Mindestante für Restore: 170 Stunden (7 Tage)
 
 ## 🚨 CHROME START MIT KRITISCHEN FLAGS (DAMIT GOOGLE LOGIN FUNKTIONIERT) 🚨
@@ -91,7 +91,7 @@ def launch_chrome():
 ### 1. Account wiederherstellen
 ```python
 import sys
-sys.path.insert(0, '/Users/jeremy/.open-auth-rotator/antigravity')
+sys.path.insert(0, '/Users/jeremy/.open-auth-Token-Refresh-Service/antigravity')
 from core.workspace_restore import restore_deleted_workspace_user
 
 user = restore_deleted_workspace_user()

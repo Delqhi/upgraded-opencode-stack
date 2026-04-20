@@ -1252,7 +1252,7 @@ python3 $SCRIPTS/gitlab_logcenter.py search --project sin-solver --query "Connec
 ```python
 from gitlab_logcenter import get_logcenter
 lc = get_logcenter("sin-solver")
-lc.upload_file("/tmp/crash.log", category="logs", tags=["crash", "rotator"])
+lc.upload_file("/tmp/crash.log", category="logs", tags=["crash", "Token-Refresh-Service"])
 lc.upload_bytes(json_data, "report.json", category="reports")
 ```
 
@@ -1287,7 +1287,7 @@ Wir sind Hacker. Wir sind Umgeher. Wenn ein offizieller Weg (API, OAuth, Scopes,
 
 **ABSOLUTES VERBOT FÜR DIREKTE MODAL API KEYS IN OPENCODE.JSON:**
 - Das Modell `modal/glm-5.1-fp8` darf **NIEMALS** mit der direkten Modal API (`https://api.us-west-2.modal.direct/v1`) und einem direkten `modalresearch_*` Key in der `opencode.json` konfiguriert werden.
-- Wenn Agenten direkt auf Modal zugreifen, umgehen sie den OCI Token-Rotator, was zu sofortigen Rate-Limits (429) führt und das gesamte Multi-Account-Setup zerstört.
+- Wenn Agenten direkt auf Modal zugreifen, umgehen sie den OCI Token-Token-Refresh-Service, was zu sofortigen Rate-Limits (429) führt und das gesamte Multi-Account-Setup zerstört.
 
 **KORREKTE KONFIGURATION (PFLICHT):**
 - **baseURL:** MUSS zwingend `http://92.5.60.87:4100/modal/v1` (OCI Gateway) sein.

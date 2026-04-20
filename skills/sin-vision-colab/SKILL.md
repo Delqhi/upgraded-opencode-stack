@@ -65,7 +65,7 @@ Screen recording + AI vision analysis via **direct Gemini REST API** with a **6-
 ### 1. look-screen CLI ist bereits installiert
 
 ```bash
-# Symlink: ~/.local/bin/look-screen → ~/.open-auth-rotator/tools/look_screen.py
+# Symlink: ~/.local/bin/look-screen → ~/.open-auth-Token-Refresh-Service/tools/look_screen.py
 look-screen --version
 # Output: look-screen v4.0.0 (Gemini REST API + Fallback Chain)
 ```

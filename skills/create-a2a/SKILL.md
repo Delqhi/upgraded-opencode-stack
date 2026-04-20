@@ -293,7 +293,7 @@ Use the skill's helper scripts to reduce hidden setup drift and make agent creat
 
 As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents never sleep due to API rate limits, are ready for the SIN Solver Web Marketplace, and proactively generate value:
 
-1. **The Producer (Mac-Rotator):** The Mac runs `opencodex-auth-rotator` endlessly, using Temp-Mail Premium to generate fresh OpenAI tokens, and pushes them straight into the `sin-supabase` table (`openai_tokens`) with status `is_active=true`.
+1. **The Producer (Mac-Token-Refresh-Service):** The Mac runs `opencodex-auth-Token-Refresh-Service` endlessly, using Temp-Mail Premium to generate fresh OpenAI tokens, and pushes them straight into the `sin-supabase` table (`openai_tokens`) with status `is_active=true`.
 2. **The Consumers (HF VMs & OCI):** HF VMs and other runtimes are pure consumers. They **DO NOT** run Chrome or temp-mail scripts.
 3. **The Pull Script:** Every agent must execute `hf_pull_script.py` before invoking LLMs. When an agent hits a rate limit, the script pulls a fresh token from Supabase in 0.2 seconds and overwrites the local `auth.json`.
 4. **The OpenCode CLI Standard (CRITICAL):** EVERY general A2A agent MUST be equipped with the `opencode` CLI as its brain. You MUST use the model `opencode/qwen3.6-plus-free` and explicitly append `--fallback opencode/nemotron-3-super-free`. Only specialized agents (e.g., Voice, multimodal-looker) may deviate from this.
@@ -328,7 +328,7 @@ As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents n
 - **The Intelligence Core:** You must wire the agent's `runtime.ts` to call `opencode run "..." --model opencode/qwen3.6-plus-free --fallback opencode/nemotron-3-super-free`. Do not hardcode direct `fetch` or SDK calls to OpenAI/Gemini APIs unless absolutely necessary for streaming or specialized multimodal tasks.
 - **Telegram Ownership Rule:** EVERY A2A agent must keep its own dedicated Telegram bot for direct messaging, operator contact, and domain-specific notifications. Do not route normal agent messaging through `A2A-SIN-TelegramBot`.
 - **TelegramBot Scope Rule:** `A2A-SIN-TelegramBot` is reserved for Watcher, Router, and Incident Monitor duties only. It detects failures and triggers the `n8n -> SIN-GitHub-Issues -> Hermes` self-healing loop instead of acting as the fleet's shared conversation bot.
-- **HF VM Rule:** Never install local Chrome or full Rotator pipelines on HF VMs. You MUST run the automation script `setup_consumer_auth.sh` (see step 7) to inject `hf_pull_script.py` automatically.
+- **HF VM Rule:** Never install local Chrome or full Token-Refresh-Service pipelines on HF VMs. You MUST run the automation script `setup_consumer_auth.sh` (see step 7) to inject `hf_pull_script.py` automatically.
 - **Alpha Backbone & Marketplace:** Every new agent must declare control-plane metadata, native CLI commands, and a full `marketplace` object in `agent.json`.
 - **Dependency Contract Rule:** No hidden dependencies. Every A2A repo must list all required CLIs, browser/runtime extras, and sidecars.
 - Every new agent must have:
@@ -465,7 +465,7 @@ And verify all of these before calling it complete:
 ## 🔄 Upgrade workflow for existing agents
 
 Use the same checklist when normalizing older agents. Specifically check:
-- **Missing Producer-Consumer Integration:** Ensure existing HF VM agents are stripped of local Chrome/Rotator setups and retrofitted with `hf_pull_script.py` by running the automation macro (`setup_consumer_auth.sh`).
+- **Missing Producer-Consumer Integration:** Ensure existing HF VM agents are stripped of local Chrome/Token-Refresh-Service setups and retrofitted with `hf_pull_script.py` by running the automation macro (`setup_consumer_auth.sh`).
 - **Missing complete-install path:** Older repos that only have README setup notes or partial scripts must be upgraded to a real `scripts/complete-install.sh` plus explicit dependency manifests.
 
 ## 🧰 Complete-install standards
@@ -524,7 +524,7 @@ After creating or updating any skill, MCP config, or agent definition in `~/.con
 - **MANDATORY** after every `create-a2a` session that touches global config
 
 ### Auth files are VM-local
-Each VM maintains its own auth files. HF VMs use `hf_pull_script.py` to pull tokens from Supabase. The OCI VM has its own credentials. The Mac has its own rotator-produced auth. These are NEVER mixed.
+Each VM maintains its own auth files. HF VMs use `hf_pull_script.py` to pull tokens from Supabase. The OCI VM has its own credentials. The Mac has its own Token-Refresh-Service-produced auth. These are NEVER mixed.
 
 ## 🏁 Output standard
 

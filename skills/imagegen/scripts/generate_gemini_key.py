@@ -14,13 +14,13 @@ from pathlib import Path
 from websockets.sync.client import connect
 
 
-ROTATOR_ACCOUNTS_PATH = Path("/Users/jeremy/.config/opencode/antigravity-accounts.json")
-ROTATOR_ADMIN_TOKEN_PATH = Path(
-    "/Users/jeremy/.config/openAntigravity-auth-rotator/token.json"
+TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH = Path("/Users/jeremy/.config/opencode/antigravity-accounts.json")
+TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH = Path(
+    "/Users/jeremy/.config/openAntigravity-auth-Token-Refresh-Service/token.json"
 )
 OPENCODE_AUTH_PATH = Path("/Users/jeremy/.local/share/opencode/auth.json")
 KEY_FILE = Path(
-    "~/.config/opencode/skills/imagegen/gemini_rotator_key.txt"
+    "~/.config/opencode/skills/imagegen/gemini_Token-Refresh-Service_key.txt"
 ).expanduser()
 
 ANTIGRAVITY_CLIENT_ID = (
@@ -30,7 +30,7 @@ ANTIGRAVITY_CLIENT_SECRET = "GOCSPX-YOUR_GOOGLE_CLIENT_SECRET"
 
 CHROME_BINARY = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 DEBUG_PORT = 9476
-DEBUG_PROFILE_DIR = Path("/tmp/skill-sin-imagegen-rotator-profile")
+DEBUG_PROFILE_DIR = Path("/tmp/skill-sin-imagegen-Token-Refresh-Service-profile")
 
 
 def _mask(value: str) -> str:
@@ -79,20 +79,20 @@ def _load_admin_creds(scopes: list[str]):
     from google.auth.transport.requests import Request
     from google.oauth2.credentials import Credentials
 
-    if not ROTATOR_ADMIN_TOKEN_PATH.exists():
-        raise RuntimeError(f"Missing admin token: {ROTATOR_ADMIN_TOKEN_PATH}")
+    if not TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH.exists():
+        raise RuntimeError(f"Missing admin token: {TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH}")
 
     creds = Credentials.from_authorized_user_info(
-        json.loads(ROTATOR_ADMIN_TOKEN_PATH.read_text(encoding="utf-8")), scopes
+        json.loads(TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH.read_text(encoding="utf-8")), scopes
     )
     if creds.expired and creds.refresh_token:
         creds.refresh(Request())
-        ROTATOR_ADMIN_TOKEN_PATH.write_text(creds.to_json(), encoding="utf-8")
+        TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH.write_text(creds.to_json(), encoding="utf-8")
     return creds
 
 
-def _load_workspace_rotator_emails() -> set[str]:
-    if not ROTATOR_ADMIN_TOKEN_PATH.exists():
+def _load_workspace_Token-Refresh-Service_emails() -> set[str]:
+    if not TOKEN_REFRESH_SERVICE_ADMIN_TOKEN_PATH.exists():
         return set()
 
     from googleapiclient.discovery import build
@@ -106,7 +106,7 @@ def _load_workspace_rotator_emails() -> set[str]:
     service = build("admin", "directory_v1", credentials=creds, cache_discovery=False)
     response = (
         service.users()
-        .list(customer="my_customer", query="email:rotator-*", maxResults=100)
+        .list(customer="my_customer", query="email:Token-Refresh-Service-*", maxResults=100)
         .execute()
     )
     return {u["primaryEmail"] for u in response.get("users", [])}
@@ -165,7 +165,7 @@ def _find_deleted_workspace_user_id(email: str) -> str:
 
 
 def _ensure_workspace_user_active(email: str) -> None:
-    live_emails = _load_workspace_rotator_emails()
+    live_emails = _load_workspace_Token-Refresh-Service_emails()
     if email in live_emails:
         return
 
@@ -186,16 +186,16 @@ def _ensure_workspace_user_active(email: str) -> None:
     ).execute()
 
 
-def _load_live_rotator_account() -> dict:
-    if not ROTATOR_ACCOUNTS_PATH.exists():
-        raise RuntimeError(f"Missing rotator accounts file: {ROTATOR_ACCOUNTS_PATH}")
+def _load_live_Token-Refresh-Service_account() -> dict:
+    if not TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH.exists():
+        raise RuntimeError(f"Missing Token-Refresh-Service accounts file: {TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH}")
 
-    payload = json.loads(ROTATOR_ACCOUNTS_PATH.read_text(encoding="utf-8"))
+    payload = json.loads(TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH.read_text(encoding="utf-8"))
     accounts = payload.get("accounts") or []
     if not accounts:
-        raise RuntimeError("No rotator accounts found in antigravity-accounts.json")
+        raise RuntimeError("No Token-Refresh-Service accounts found in antigravity-accounts.json")
 
-    live_emails = _load_workspace_rotator_emails()
+    live_emails = _load_workspace_Token-Refresh-Service_emails()
     live_accounts = [a for a in accounts if a.get("email") in live_emails]
     active_index = payload.get("activeIndex")
     chosen = None
@@ -211,13 +211,13 @@ def _load_live_rotator_account() -> dict:
         chosen = max(accounts, key=lambda a: a.get("addedAt", ""))
 
     email = chosen.get("email", "")
-    if not email.startswith("rotator-"):
-        raise RuntimeError(f"Selected account is not a rotator account: {email}")
+    if not email.startswith("Token-Refresh-Service-"):
+        raise RuntimeError(f"Selected account is not a Token-Refresh-Service account: {email}")
 
     if not chosen.get("refreshToken"):
-        raise RuntimeError("Selected rotator account has no refreshToken")
+        raise RuntimeError("Selected Token-Refresh-Service account has no refreshToken")
     if not chosen.get("managedProjectId"):
-        raise RuntimeError("Selected rotator account has no managedProjectId")
+        raise RuntimeError("Selected Token-Refresh-Service account has no managedProjectId")
 
     return chosen
 
@@ -240,12 +240,12 @@ def _load_opencode_google_auth() -> dict | None:
     }
 
 
-def _persist_rotator_account_token(
+def _persist_Token-Refresh-Service_account_token(
     email: str, refresh_token: str, project_id: str
 ) -> None:
-    if not ROTATOR_ACCOUNTS_PATH.exists():
+    if not TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH.exists():
         return
-    payload = json.loads(ROTATOR_ACCOUNTS_PATH.read_text(encoding="utf-8"))
+    payload = json.loads(TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH.read_text(encoding="utf-8"))
     changed = False
     for account in payload.get("accounts") or []:
         if account.get("email") != email:
@@ -257,7 +257,7 @@ def _persist_rotator_account_token(
             account["managedProjectId"] = project_id
             changed = True
     if changed:
-        ROTATOR_ACCOUNTS_PATH.write_text(
+        TOKEN_REFRESH_SERVICE_ACCOUNTS_PATH.write_text(
             json.dumps(payload, indent=2) + "\n", encoding="utf-8"
         )
 
@@ -352,7 +352,7 @@ def _wait_operation(
 
 
 def _create_api_key(access_token: str, project_id: str, account_email: str) -> str:
-    key_id = f"rotator-{int(time.time())}"
+    key_id = f"Token-Refresh-Service-{int(time.time())}"
     create_resp = _http_json(
         "POST",
         f"https://apikeys.googleapis.com/v2/projects/{project_id}/locations/global/keys?keyId={urllib.parse.quote(key_id)}",
@@ -1125,9 +1125,9 @@ def _activate_required_apis_via_browser(
 
 def _prepare_browser_password(email: str) -> str:
     _ensure_workspace_user_active(email)
-    password = os.environ.get("SKILL_SIN_IMAGEGEN_ROTATOR_PASSWORD", "").strip()
+    password = os.environ.get("SKILL_SIN_IMAGEGEN_TOKEN_REFRESH_SERVICE_PASSWORD", "").strip()
     if password:
-        print("Using provided rotator browser password without password reset.")
+        print("Using provided Token-Refresh-Service browser password without password reset.")
     else:
         password = f"SinImageGen!{int(time.time())}Auto"
         print(f"Setting temporary browser password for {email}.")
@@ -1150,10 +1150,10 @@ def _should_use_browser_fallback(exc: Exception) -> bool:
 
 
 def main() -> int:
-    account = _load_live_rotator_account()
+    account = _load_live_Token-Refresh-Service_account()
     email = account["email"]
     project_id = account["managedProjectId"]
-    print(f"Using newest rotator account: {email}")
+    print(f"Using newest Token-Refresh-Service account: {email}")
     print(f"Managed project: {project_id}")
 
     access_token = None
@@ -1171,14 +1171,14 @@ def main() -> int:
         if fallback_auth["managedProjectId"]:
             project_id = fallback_auth["managedProjectId"]
         print(
-            f"Primary rotator refresh token failed ({exc}); using auth.json fallback."
+            f"Primary Token-Refresh-Service refresh token failed ({exc}); using auth.json fallback."
         )
-        _persist_rotator_account_token(email, fallback_auth["refreshToken"], project_id)
+        _persist_Token-Refresh-Service_account_token(email, fallback_auth["refreshToken"], project_id)
 
     print(f"Refreshed OAuth token: {_mask(access_token)}")
 
     _verify_identity(access_token, email)
-    print("Verified token identity against rotator account.")
+    print("Verified token identity against Token-Refresh-Service account.")
 
     onboard_project = _onboard_user(access_token)
     if onboard_project and onboard_project != project_id:
@@ -1211,7 +1211,7 @@ def main() -> int:
             key_string = _create_key_via_ai_studio(email, browser_password)
 
     _validate_key(key_string)
-    print(f"Created and validated rotator API key: {_mask(key_string)}")
+    print(f"Created and validated Token-Refresh-Service API key: {_mask(key_string)}")
 
     KEY_FILE.parent.mkdir(parents=True, exist_ok=True)
     KEY_FILE.write_text(key_string, encoding="utf-8")

@@ -243,7 +243,7 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 
 > [!IMPORTANT]
 > Der Canonical Watcher-Stack läuft über `~/.config/opencode/scripts/launch-watcher.sh` und `~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist`.
-> Der Antigravity-Rotator bleibt absichtlich **nicht** auto-startend (`RunAtLoad=false`, `KeepAlive=false`).
+> Der Antigravity-Token-Refresh-Service bleibt absichtlich **nicht** auto-startend (`RunAtLoad=false`, `KeepAlive=false`).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -435,7 +435,7 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 
 ### v2.2.2 (2026-04-16)
 - **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification
-- **Rotator Safety** — `com.antigravity.rotator.plist` kept non-autostarting on purpose; no automatic trigger path
+- **Token-Refresh-Service Safety** — `com.antigravity.Token-Refresh-Service.plist` kept non-autostarting on purpose; no automatic trigger path
 - **Docs Sync** — README + system-directives guide aligned with the current global watcher runtime
 
 ### v2.2.1 (2026-04-14)

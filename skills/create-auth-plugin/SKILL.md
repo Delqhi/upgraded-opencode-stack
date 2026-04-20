@@ -253,11 +253,11 @@ To enable automatic token swap on rate limit (like Antigravity/Qwen):
 ### 1. Create Token Pool
 
 ```
-~/.open-auth-rotator/<provider>/
+~/.open-auth-Token-Refresh-Service/<provider>/
 ├── pool.json         # Token pool with multiple accounts
 ├── swap_token.py     # Atomic swap script
 ├── state.json        # Swap count tracking
-└── rotator.log       # Swap history
+└── Token-Refresh-Service.log       # Swap history
 ```
 
 **pool.json format:**
@@ -288,7 +288,7 @@ The swap script must atomically update BOTH:
 import json, os, shutil, tempfile
 
 AUTH_JSON = os.path.expanduser("~/.local/share/opencode/auth.json")
-POOL_JSON = os.path.expanduser("~/.open-auth-rotator/<provider>/pool.json")
+POOL_JSON = os.path.expanduser("~/.open-auth-Token-Refresh-Service/<provider>/pool.json")
 PROVIDER_ID = "<provider-id>"  # Must match auth.json key
 
 def atomic_write(path, data):
@@ -325,7 +325,7 @@ def swap():
 
 ### 3. Watcher Integration
 
-Add rate limit detection to `~/.open-auth-rotator/antigravity/core/watcher_log_scan.py`:
+Add rate limit detection to `~/.open-auth-Token-Refresh-Service/antigravity/core/watcher_log_scan.py`:
 
 ```python
 import re
@@ -343,10 +343,10 @@ def _scan_logs_provider(log_lines: list[str]) -> bool:
     return False
 ```
 
-Add swap trigger to `~/.open-auth-rotator/antigravity/core/watcher_loop.py`:
+Add swap trigger to `~/.open-auth-Token-Refresh-Service/antigravity/core/watcher_loop.py`:
 
 ```python
-_PROVIDER_SWAP_SCRIPT = os.path.expanduser("~/.open-auth-rotator/<provider>/swap_token.py")
+_PROVIDER_SWAP_SCRIPT = os.path.expanduser("~/.open-auth-Token-Refresh-Service/<provider>/swap_token.py")
 _PROVIDER_COOLDOWN_SECS = 30
 _last_provider_swap = 0
 
@@ -429,10 +429,10 @@ grep -i "${PROVIDER}" ~/.local/share/opencode/log/<latest>.log
 ### Phase 5: Token Rotation (Optional)
 
 ```bash
-mkdir -p ~/.open-auth-rotator/${PROVIDER}
+mkdir -p ~/.open-auth-Token-Refresh-Service/${PROVIDER}
 # Create pool.json, swap_token.py, state.json
 # Add watcher integration (scan pattern + swap trigger)
-# Create CLI symlink: ln -sf ~/.open-auth-rotator/${PROVIDER}/swap_token.py ~/.local/bin/${PROVIDER}-swap
+# Create CLI symlink: ln -sf ~/.open-auth-Token-Refresh-Service/${PROVIDER}/swap_token.py ~/.local/bin/${PROVIDER}-swap
 # Restart watcher: launchctl kickstart -k gui/$(id -u)/com.openantigravity.ratelimit-watcher
 ```
 

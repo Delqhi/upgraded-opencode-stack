@@ -1,4 +1,4 @@
-"""Google Chrome Login Helper for the Antigravity Rotator.
+"""Google Chrome Login Helper for the Antigravity Token-Refresh-Service.
 
 TWO MODES:
   1. standalone (--attach NOT set):
@@ -34,7 +34,7 @@ def log_to_brain(msg: str):
         log_file = (
             Path.home()
             / ".config"
-            / "openAntigravity-auth-rotator"
+            / "openAntigravity-auth-Token-Refresh-Service"
             / "login_helper.log"
         )
         with open(log_file, "a") as f:
@@ -439,7 +439,7 @@ if __name__ == "__main__":
         "--attach",
         action="store_true",
         help="Attach to already-running Chrome via CDP (no AppleScript, no Vision-Gate). "
-        "Used by the rotator when nodriver has already launched Chrome.",
+        "Used by the Token-Refresh-Service when nodriver has already launched Chrome.",
     )
     args = parser.parse_args()
 

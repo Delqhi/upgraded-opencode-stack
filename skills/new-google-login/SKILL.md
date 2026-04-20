@@ -8,7 +8,7 @@
 This skill provides an extremely robust way to log into Google accounts in Chrome.
 
 - **Standalone mode:** macOS AppleScript + keyboard emulation against the native Chrome profile menu.
-- **Attach mode:** direct CDP attach to an already-running Chrome debug session (used by the rotator).
+- **Attach mode:** direct CDP attach to an already-running Chrome debug session (used by the Token-Refresh-Service).
 
 It avoids fragile Google DOM selectors and handles the common blockers: search-engine popup, cookie consent, sync dialogs, and nodriver-launched Chrome sessions.
 
@@ -33,7 +33,7 @@ python3 ~/.config/opencode/skills/new-google-login/login.py --email "email@domai
 1. Reuses the nodriver-launched Chrome session on the given debug port.
 2. Attaches via CDP and opens `accounts.google.com/ServiceLogin` directly.
 3. Types email/password through Chrome DevTools instead of AppleScript.
-4. Returns success/failure to the rotator without needing a Chrome restart.
+4. Returns success/failure to the Token-Refresh-Service without needing a Chrome restart.
 
 ## Robust Fallbacks implemented
 - Avoids cookie consent entirely by starting on `about:blank`

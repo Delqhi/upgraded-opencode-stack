@@ -68,15 +68,15 @@ response = ai.generate_text(
 
 1. Start Colab notebooks (2 accounts)
 2. Save URLs to `~/.config/opencode/vision-colab-{1,2}.url`
-3. Run `python3 ~/.open-auth-rotator/tools/vision_colab_setup.py`
+3. Run `python3 ~/.open-auth-Token-Refresh-Service/tools/vision_colab_setup.py`
 
 ## 📁 Files
 
 | File | Purpose |
 |------|---------|
-| `~/.open-auth-rotator/tools/look_screen.py` | CLI main |
-| `~/.open-auth-rotator/tools/vision_colab_setup.py` | Setup wizard |
-| `~/.open-auth-rotator/tools/vision-colab/colab_vision_hub_v2.ipynb` | Colab notebook |
+| `~/.open-auth-Token-Refresh-Service/tools/look_screen.py` | CLI main |
+| `~/.open-auth-Token-Refresh-Service/tools/vision_colab_setup.py` | Setup wizard |
+| `~/.open-auth-Token-Refresh-Service/tools/vision-colab/colab_vision_hub_v2.ipynb` | Colab notebook |
 | `~/.config/opencode/vision-colab-{1,2}.url` | Colab instance URLs |
 
 ## 🔗 Resources
