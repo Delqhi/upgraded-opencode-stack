@@ -187,7 +187,7 @@ function latestGeneratedImage() {
 }
 
 function runImage(prompt, fileName) {
-  const message = `\\generate-image ${prompt}; file name should be ${fileName}; save it at .opencode/generated-images`;
+  const message = `/generate-image ${prompt}; file name should be ${fileName}; save it at .opencode/generated-images`;
   execFileSync("opencode", ["run", message, "--model=google/antigravity-gemini-3-flash", "--format", "json"], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
