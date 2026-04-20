@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+import requests
+import sys
+import re
+import urllib.parse
+
+def web_research(query, mode='general'):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    
+    # Optimierung für Foren/Social
+    if mode == 'forum':
+        query = f"({query}) (site:reddit.com OR site:stackoverflow.com OR site:quora.com OR site:forums.gentoo.org OR site:news.ycombinator.com)"
+    elif mode == 'social':
+        query = f"({query}) (site:twitter.com OR site:x.com OR site:instagram.com OR site:linkedin.com)"
+
+    encoded_query = urllib.parse.quote(query)
+    url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+    
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code != 200:
+            return f"Fehler: Status {response.status_code}"
+            
+        html = response.text
+        results = []
+        
+        # Regex für Ergebnisse extrahieren
+        blocks = re.findall(r'<div class="result__body">.*?</div>\s*</div>', html, re.DOTALL)
+        
+        for block in blocks:
+            title_match = re.search(r'class="result__a".*?>(.*?)</a>', block, re.DOTALL)
+            url_match = re.search(r'href="(.*?)"', block, re.DOTALL)
+            snippet_match = re.search(r'class="result__snippet".*?>(.*?)</a>', block, re.DOTALL)
+            
+            if title_match and url_match:
+                title = re.sub('<[^<]+?>', '', title_match.group(1)).strip()
+                link = url_match.group(1)
+                snippet = "No description available."
+                if snippet_match:
+                    snippet = re.sub('<[^<]+?>', '', snippet_match.group(1)).strip()
+                
+                if link.startswith('//'):
+                    link = 'https:' + link
+                elif link.startswith('/l/'):
+                    parsed_link = urllib.parse.parse_qs(urllib.parse.urlparse(link).query)
+                    if 'uddg' in parsed_link:
+                        link = parsed_link['uddg'][0]
+                
+                results.append(f"### [{title}]({link})\n{snippet}\n")
+        
+        if not results:
+            return "Keine Ergebnisse gefunden."
+            
+        header = f"## Web Research Results ({mode.capitalize()})\n\n"
+        return header + "\n---\n".join(results[:10])
+    except Exception as e:
+        return f"Fehler bei der Recherche: {str(e)}"
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: web_research <query> [general|forum|social]")
+        sys.exit(1)
+    
+    query = sys.argv[1]
+    mode = sys.argv[2] if len(sys.argv) > 2 else 'general'
+    print(web_research(query, mode))

@@ -764,6 +764,10 @@
   },
   "default_agent": "SIN-Zeus",
   "command": {
+    "web-research": {
+      "description": "Deep Web Research via SearXNG/DuckDuckGo (Free, Anonym, Forum-Optimiert)",
+      "template": "Führe eine Web-Recherche mit dem Tool `web_research` durch. Nutze den Query-String: $ARGUMENTS. Wenn Foren oder Social Media gewünscht sind, hänge 'forum' oder 'social' als Modus an (z.B. `web_research \"OpenSIN\" forum`)."
+    },
     "omoc-swarm-create": {
       "description": "Create/register a swarm for this session",
       "template": "Nutze das Tool `swarm_create` um eine OMOC Swarm Session zu erstellen. Wenn $ARGUMENTS nicht leer ist, nutze es als id, sonst auto-id. Danach gib `swarm_status()` aus."

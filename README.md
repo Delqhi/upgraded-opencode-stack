@@ -161,6 +161,7 @@ For full documentation, see the plugin README:
 | **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
 | **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start | ✅ |
 | **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
+| **Web Research (Free)** | Deep Research via SearXNG/DuckDuckGo (Ersetzt Google Search API) | ✅ |
 
 <details>
 <summary>Full Tool Surface — Alle Komponenten im Detail</summary>
@@ -283,6 +284,7 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 | `omoc-status` | Swarm Members anzeigen |
 | `sin-terminal-orchestrate` | SIN-Terminal — parallele Sessions steuern |
 | `sin-zeus-bootstrap` | GitHub Project + Issue Pool aus Zeus Plan |
+| `web-research` | Deep Research (Free, Anonym, Forum-Focus) |
 
 <details>
 <summary>Alle 13 Commands</summary>
@@ -432,6 +434,11 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 ---
 
 ## Changelog
+
+### v2.2.3 (2026-04-21)
+- **Web Research (Free)** — Ersetzt das kostenpflichtige `google_search` Tool durch einen stabilen SearXNG/DuckDuckGo-Hybrid.
+- **Forum/Social Focus** — Direkte Unterstützung für Recherche auf Reddit, StackOverflow und X/Twitter ohne zusätzliche Keys.
+- **Security** — Google Cloud Projekt Abhängigkeiten (`rising-fact-p41fc`) für Suchen vollständig entfernt.
 
 ### v2.2.2 (2026-04-16)
 - **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification
