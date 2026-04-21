@@ -228,7 +228,7 @@
       "npm": "@openrouter/ai-sdk-provider",
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}",
-        "baseURL": "http://127.0.0.1:9338/api/v1"
+        "baseURL": "https://openrouter.ai/api/v1"
       },
       "models": {
         "qwen/qwen3.6-plus:free": {
@@ -239,6 +239,15 @@
           },
           "context": 1000000,
           "output": 65536
+        },
+        "qwen/qwen3.6-plus": {
+          "name": "Qwen 3.6 Plus",
+          "limit": {
+            "context": 1000000,
+            "output": 2500
+          },
+          "context": 1000000,
+          "output": 2500
         },
         "qwen/qwen3-coder": {
           "name": "Qwen 3 Coder (Free)",
@@ -708,10 +717,14 @@
       "fallback": "qwen/coder-model"
     },
     "oracle": {
-      "model": "qwen/coder-model",
-      "options": {},
+      "model": "openrouter/qwen/qwen3.6-plus",
+      "options": {
+        "reasoningEffort": "high"
+      },
       "steps": 999999,
-      "fallback": "qwen/coder-model"
+      "description": "Oracle with short checkpointed updates for large projects",
+      "prompt": "You are Oracle. Work in small checkpoints. Keep each user-facing reply brief, ideally under 120 words and no more than 6 bullets. For multi-step or large-project work, after each major subtask emit a short progress note with Done / Next / Blockers, then continue. Do not produce one huge all-in-one final answer unless the user explicitly asks for it. Prefer tool use and file edits over long explanations. If the response would grow too large, stop after the current checkpoint and ask to continue.",
+      "fallback": "openai/gpt-5.4"
     },
     "plan": {
       "model": "qwen/coder-model",

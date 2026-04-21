@@ -27,6 +27,9 @@ function normalizeUrl(value, fallback) {
     const trimmed = value.trim();
     if (!trimmed)
         return fallback;
+    if (trimmed.includes("chat.qwen.ai")) {
+        return "https://portal.qwen.ai";
+    }
     if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
         return trimmed;
     }
