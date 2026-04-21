@@ -1,5 +1,5 @@
 import { QWEN_DEFAULT_SCOPES, QWEN_OAUTH_BASE_URL } from "./constants";
-import { getMinRateLimitWait, loadAccounts, lockedSelectAndSave, markRateLimited, recordFailure, recordSuccess, saveAccounts, selectAccount, updateAccount, upsertAccount, } from "./plugin/account";
+import { getMinRateLimitWait, loadAccounts, markRateLimited, recordFailure, recordSuccess, saveAccounts, selectAccount, updateAccount, upsertAccount, } from "./plugin/account";
 import { accessTokenExpired, isOAuthAuth } from "./plugin/auth";
 import { loadConfig } from "./plugin/config";
 import { createLogger, initDebugFromEnv, setLoggerQuietMode, } from "./plugin/logger";
@@ -167,22 +167,9 @@ function stripUnsupportedQwenRequestFields(payload) {
     }
     return cleaned;
 }
-// Codes that indicate a refresh token is permanently dead and the account
-// should be quarantined for INVALID_AUTH_COOLDOWN_MS (24h).
-// - invalid_grant / invalid_request: Qwen server says token is revoked/expired
-// - waf_challenge: Aliyun WAF returned HTML instead of JSON (TLS fingerprint block)
-// - parse_error: Response body was not valid JSON at all
 function isInvalidRefreshCode(code) {
-    return (code === "invalid_grant" ||
-        code === "invalid_request" ||
-        code === "waf_challenge" ||
-        code === "parse_error");
+    return code === "invalid_grant" || code === "invalid_request";
 }
-// Hard cap on rotation attempts per single request to prevent hanging
-// when hundreds/thousands of accounts have dead tokens. After this many
-// consecutive failures the plugin throws immediately instead of trying
-// every single account (which could take 90+ minutes with 2694 accounts).
-const MAX_ROTATION_ATTEMPTS = 10;
 function quarantineInvalidAccount(storage, index) {
     return updateAccount(storage, index, {
         accessToken: "",
@@ -241,13 +228,17 @@ function getPidOffset(config) {
         return 0;
     return process.pid;
 }
+// Option C: Store getAuth function in module scope so fetch() can call it on every request
+// This eliminates the sync gap: /connect writes to OpenCode auth store, fetch() syncs to qwen-auth-accounts.json
+let moduleGetAuthFn = null;
+
 export const createQwenOAuthPlugin = (providerId) => async ({ client, directory }) => {
-    const config = loadConfig(directory);
-    setLoggerQuietMode(config.quiet_mode);
-    initDebugFromEnv();
-    initializeTrackers(config);
-    const pidOffset = getPidOffset(config);
-    logger.debug("Plugin initialized", {
+  const config = loadConfig(directory);
+  setLoggerQuietMode(config.quiet_mode);
+  initDebugFromEnv();
+  initializeTrackers(config);
+  const pidOffset = getPidOffset(config);
+  logger.debug("Plugin initialized", {
         providerId,
         directory,
         strategy: config.rotation_strategy,
@@ -257,8 +248,10 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
     return {
         auth: {
             provider: providerId,
-            async loader(getAuth, provider) {
-                const auth = (await getAuth());
+async loader(getAuth, provider) {
+      // Option C: Store getAuth so fetch() can call it on every request
+      moduleGetAuthFn = getAuth;
+      const auth = (await getAuth());
                 if (!isOAuthAuth(auth)) {
                     return {};
                 }
@@ -274,10 +267,30 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                         }
                     }
                 }
-                return {
-                    apiKey: "",
-                    fetch: async (input, init) => {
-                        let attempts = 0;
+return {
+    apiKey: "",
+    fetch: async (input, init) => {
+      // Option C: Sync from OpenCode auth store on EVERY request
+      // This ensures accounts added via /connect are picked up immediately (not just on plugin init)
+      if (moduleGetAuthFn) {
+        try {
+          const opencodeAuth = await moduleGetAuthFn();
+          if (isOAuthAuth(opencodeAuth) && opencodeAuth.refresh) {
+            const existingRTs = accountStorage.accounts.map((a) => a.refreshToken);
+            if (!existingRTs.includes(opencodeAuth.refresh)) {
+              logger.debug("Option C: New credential from OpenCode auth store detected, syncing", {
+                hasRefresh: !!opencodeAuth.refresh,
+                hasAccess: !!opencodeAuth.access,
+                totalAccounts: accountStorage.accounts.length + 1,
+              });
+              accountStorage = await ensureAuthInStorage(accountStorage, opencodeAuth);
+            }
+          }
+        } catch (err) {
+          logger.debug("Option C: Could not sync from OpenCode auth store", { error: err.message });
+        }
+      }
+      let attempts = 0;
                         const forcedRefreshTokens = new Set();
                         const healthTracker = getHealthTracker();
                         const tokenTracker = getTokenTracker();
@@ -288,16 +301,8 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                         };
                         while (true) {
                             const now = Date.now();
-                            // Atomic file-locked selection: loads fresh state from
-                            // disk, selects an account, writes the updated activeIndex
-                            // back — all under a single file lock. This prevents 12+
-                            // concurrent sessions from picking the same account and
-                            // burning single-use refresh tokens.
-                            const selection = await lockedSelectAndSave(config.rotation_strategy, now, selectOptions);
+                            const selection = selectAccount(accountStorage, config.rotation_strategy, now, selectOptions);
                             if (!selection) {
-                                // Reload fresh state for rate-limit wait calculation
-                                const freshState = await loadAccounts();
-                                if (freshState) accountStorage = freshState;
                                 const waitMs = getMinRateLimitWait(accountStorage, now);
                                 if (!waitMs) {
                                     throw new Error("No available Qwen OAuth accounts. Re-authenticate to continue.");
@@ -331,20 +336,6 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                     proactive: config.proactive_refresh,
                                 });
                                 try {
-                                    // Multi-session concurrency fix: Check if another session already
-                                    // refreshed this account while we were preparing to refresh. 
-                                    // If the refresh token on disk has changed, we just grab the new 
-                                    // tokens and retry instead of burning a single-use token twice.
-                                    const freshStorage = await loadAccounts();
-                                    const freshAccount = freshStorage?.accounts[accountIndex];
-                                    if (freshAccount && freshAccount.refreshToken !== selectedAuth.refresh) {
-                                        logger.debug("Another session already refreshed this token proactively. Retrying.", {
-                                            accountIndex
-                                        });
-                                        accountStorage = freshStorage;
-                                        continue;
-                                    }
-
                                     const refreshed = await refreshAccessToken(selectedAuth, oauthOptions, client, providerId);
                                     if (!refreshed) {
                                         throw new Error("Token refresh failed");
@@ -373,7 +364,7 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                         await saveAccounts(accountStorage);
                                     }
                                     attempts += 1;
-                                    if (attempts >= MAX_ROTATION_ATTEMPTS) {
+                                    if (attempts >= accountStorage.accounts.length) {
                                         throw error;
                                     }
                                     continue;
@@ -494,24 +485,6 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                 const canForceRefresh = !!refreshKey && !forcedRefreshTokens.has(refreshKey);
                                 if (canForceRefresh) {
                                     forcedRefreshTokens.add(refreshKey);
-                                    
-                                    // Multi-session concurrency fix: Check if another session already
-                                    // refreshed this account while we were failing. If the refresh
-                                    // token on disk has changed, we just grab the new tokens and retry
-                                    // the API call instead of burning a single-use refresh token twice.
-                                    const freshStorage = await loadAccounts();
-                                    const freshAccount = freshStorage?.accounts[accountIndex];
-                                    if (freshAccount && freshAccount.refreshToken !== refreshKey) {
-                                        logger.debug("Another session already refreshed this token. Retrying API with new tokens.", {
-                                            accountIndex
-                                        });
-                                        activeAuth.refresh = freshAccount.refreshToken;
-                                        activeAuth.access = freshAccount.accessToken;
-                                        activeAuth.expires = freshAccount.expires;
-                                        accountStorage = freshStorage;
-                                        continue;
-                                    }
-
                                     try {
                                         const recovered = await refreshAccessToken(activeAuth, oauthOptions, client, providerId);
                                         if (recovered) {
@@ -543,8 +516,8 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                     await saveAccounts(accountStorage);
                                 }
                                 attempts += 1;
-                                if (attempts >= MAX_ROTATION_ATTEMPTS) {
-                                    throw new Error("All Qwen OAuth accounts have invalid or expired credentials. Run `opencode providers login --provider qwen --method \\\"Qwen OAuth\\\"` to reconnect.");
+                                if (attempts >= accountStorage.accounts.length) {
+                                    throw new Error("All Qwen OAuth accounts have invalid or expired credentials. Run `opencode providers login --provider qwen --method \"Qwen OAuth\"` to reconnect.");
                                 }
                                 continue;
                             }
@@ -604,7 +577,7 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                 }
                                 await saveAccounts(accountStorage);
                                 attempts += 1;
-                                if (attempts >= MAX_ROTATION_ATTEMPTS) {
+                                if (attempts >= accountStorage.accounts.length) {
                                     const waitMs = getMinRateLimitWait(accountStorage, Date.now());
                                     if (waitMs) {
                                         logger.debug("All accounts rate limited, waiting", {
@@ -618,13 +591,52 @@ export const createQwenOAuthPlugin = (providerId) => async ({ client, directory 
                                 }
                                 continue;
                             }
-                            accountStorage = recordSuccess(accountStorage, accountIndex);
-                            healthTracker.recordSuccess(accountIndex);
-                            await saveAccounts(accountStorage);
-                            return response;
-                        }
-                    },
-                };
+// === QUOTA ERROR CHECK (BUG-FIX) ===
+// The plugin treats ALL HTTP 200 responses as "success" by calling recordSuccess()
+// WITHOUT checking if the response body contains an error code like "insufficient_quota".
+// This causes quota exhaustion to be recorded as success, draining the token bucket,
+// resetting consecutiveFailures to 0, and keeping health scores high even when
+// the API is actually rejecting requests due to quota exhaustion.
+// FIX: For chat/completions responses (not /responses transform path), parse the body
+// and check for quota/rate-limit error codes BEFORE calling recordSuccess().
+const QUOTA_ERROR_CODES = new Set(["insufficient_quota", "rate_limit_exceeded", "quota_exceeded", "monthly_quota_exceeded"]);
+if (!needsResponsesTransform && response.ok && response.body) {
+  try {
+    const bodyText = await response.clone().text();
+    const body = JSON.parse(bodyText);
+    if (body && typeof body === "object" && body.error && typeof body.error === "object") {
+      const errorCode = body.error.code;
+      if (errorCode && QUOTA_ERROR_CODES.has(errorCode)) {
+        logger.debug("Quota error detected in response body, treating as failure", {
+          accountIndex,
+          errorCode,
+          errorMessage: body.error.message,
+        });
+        accountStorage = recordFailure(accountStorage, accountIndex);
+        healthTracker.recordFailure(accountIndex);
+        await saveAccounts(accountStorage);
+        attempts += 1;
+        if (attempts >= accountStorage.accounts.length) {
+          // No more accounts to try — return the error response so OpenCode can show it
+          return response;
+        }
+        continue;
+      }
+    }
+  }
+  catch {
+    // If we can't parse the body (streaming, empty, or invalid JSON), fall through to success
+    logger.debug("Could not parse response body for quota check, treating as success");
+  }
+}
+// === END QUOTA ERROR CHECK ===
+accountStorage = recordSuccess(accountStorage, accountIndex);
+healthTracker.recordSuccess(accountIndex);
+await saveAccounts(accountStorage);
+return response;
+}
+},
+};
             },
             methods: [
                 {

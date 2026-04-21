@@ -1,0 +1,130 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.0.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Bug Fix: [Bug Title]",
+  "mode": "plan-and-execute",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "outcomes": {
+    "objective": "Fix [bug] to restore [expected behavior] for [affected users]",
+    "key_results": [
+      {"metric": "bug_reproduction", "target": "0 occurrences", "current": "reproducible"},
+      {"metric": "regression_tests", "target": "0 regressions", "current": "baseline"},
+      {"metric": "user_impact", "target": "issue resolved", "current": "affected"}
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Reproduce and Root Cause",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Create minimal reproduction case for the bug",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": [],
+          "validation": "Bug reproduced consistently in isolated test case",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Identify root cause through debugging and log analysis",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": ["P1-T1"],
+          "validation": "Root cause documented with evidence (logs, stack traces, code analysis)",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Fix and Regression Tests",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Implement the fix with minimal scope change",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": ["P1-T2"],
+          "validation": "Fix resolves the bug, no new failures in existing tests",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P2-T2",
+          "description": "Add regression test to prevent recurrence",
+          "effort": {"pessimistic": "2h", "realistic": "1h", "optimistic": "0.5h"},
+          "dependencies": ["P2-T1"],
+          "validation": "Regression test fails without fix, passes with fix",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": ["P1-T1", "P1-T2", "P2-T1", "P2-T2"],
+    "edges": [
+      {"from": "P1-T1", "to": "P1-T2", "type": "hard"},
+      {"from": "P1-T2", "to": "P2-T1", "type": "hard"},
+      {"from": "P2-T1", "to": "P2-T2", "type": "hard"}
+    ],
+    "critical_path": ["P1-T1", "P1-T2", "P2-T1", "P2-T2"]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Fix introduces regressions in related functionality",
+      "likelihood": 0.2,
+      "impact": 6,
+      "score": 1.2,
+      "mitigation": "Run full test suite, add regression tests, staging deployment before production",
+      "owner": "engineer",
+      "status": "mitigated"
+    }
+  ],
+  "overall_risk_score": 12,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "Fix causes new bugs or fails in staging",
+    "action": "Revert commit, investigate further, create new fix branch",
+    "max_loss": "2-4 hours engineering time"
+  },
+  "done_criteria": [
+    {"criterion": "Bug reproduction case documented", "status": "not-met"},
+    {"criterion": "Root cause identified and documented", "status": "not-met"},
+    {"criterion": "Fix implemented and tested", "status": "not-met"},
+    {"criterion": "Regression test added", "status": "not-met"},
+    {"criterion": "Fix deployed to production", "status": "not-met"},
+    {"criterion": "Original bug no longer reproducible", "status": "not-met"}
+  ],
+  "approvals": [
+    {"role": "tech-lead", "status": "pending", "date": null}
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}

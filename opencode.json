@@ -351,7 +351,7 @@
       "type": "local",
       "command": [
         "python3",
-        "/Users/jeremy/dev/sin-telegrambot-cli/mcp/mcp_sin_document_forge.py"
+        "{env:HOME}/.config/opencode/scripts/mcp/mcp_sin_document_forge.py"
       ],
       "enabled": true
     },
@@ -359,7 +359,7 @@
       "type": "local",
       "command": [
         "python3",
-        "/Users/jeremy/dev/sin-telegrambot-cli/mcp/mcp_sin_telegrambot.py"
+        "{env:HOME}/.config/opencode/scripts/mcp/mcp_sin_telegrambot.py"
       ],
       "enabled": true
     },
@@ -419,7 +419,7 @@
     "sin-google-apps": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-google-apps-mcp"
+        "{env:HOME}/.local/bin/sin-google-apps-mcp"
       ],
       "environment": {
         "SIN_GOOGLE_APPS_HOST": "127.0.0.1",
@@ -431,7 +431,7 @@
     "sin-server": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-server",
+        "{env:HOME}/.local/bin/sin-server",
         "serve-mcp"
       ],
       "enabled": true
@@ -439,7 +439,7 @@
     "sin-cloudflare": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-cloudflare",
+        "{env:HOME}/.local/bin/sin-cloudflare",
         "serve-mcp"
       ],
       "enabled": true
@@ -460,7 +460,7 @@
     "sin-research": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-research",
+        "{env:HOME}/.local/bin/sin-research",
         "serve-mcp"
       ],
       "enabled": true
@@ -468,7 +468,7 @@
     "sin-team-worker": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-team-worker",
+        "{env:HOME}/.local/bin/sin-team-worker",
         "serve-mcp"
       ],
       "enabled": true
@@ -476,7 +476,7 @@
     "sin-tiktok": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-tiktok",
+        "{env:HOME}/.local/bin/sin-tiktok",
         "serve-mcp"
       ],
       "enabled": true
@@ -484,7 +484,7 @@
     "sin-tiktok-shop": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-tiktok-shop",
+        "{env:HOME}/.local/bin/sin-tiktok-shop",
         "serve-mcp"
       ],
       "enabled": true
@@ -492,7 +492,7 @@
     "sin-terminal": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-terminal",
+        "{env:HOME}/.local/bin/sin-terminal",
         "serve-mcp"
       ],
       "enabled": true
@@ -501,7 +501,7 @@
       "type": "local",
       "command": [
         "python3",
-        "/Users/jeremy/dev/A2A-SIN-Box-Storage/scripts/mcp-box-storage.py"
+        "{env:HOME}/.config/opencode/scripts/mcp/mcp-box-storage.py"
       ],
       "environment": {
         "BOX_STORAGE_URL": "http://room-09-box-storage:3000",
@@ -530,7 +530,7 @@
     "sin-authenticator": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-authenticator",
+        "{env:HOME}/.local/bin/sin-authenticator",
         "serve-mcp"
       ],
       "environment": {
@@ -545,7 +545,7 @@
     "sin-github-issues": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-github-issues",
+        "{env:HOME}/.local/bin/sin-github-issues",
         "serve-mcp"
       ],
       "enabled": true
@@ -553,7 +553,7 @@
     "sin-oraclecloud-mcp": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-oraclecloud-mcp",
+        "{env:HOME}/.local/bin/sin-oraclecloud-mcp",
         "serve-mcp"
       ],
       "enabled": true
@@ -576,14 +576,14 @@
       "type": "local",
       "command": [
         "python3",
-        "/Users/jeremy/dev/sin-telegrambot-cli/mcp/mcp_sin_google_docs.py"
+        "{env:HOME}/.config/opencode/scripts/mcp/mcp_sin_google_docs.py"
       ],
       "enabled": true
     },
     "sin-summary": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-summary",
+        "{env:HOME}/.local/bin/sin-summary",
         "serve-mcp"
       ],
       "enabled": true
@@ -591,7 +591,7 @@
     "sin-paragraph": {
       "type": "local",
       "command": [
-        "/Users/jeremy/dev/OpenSIN-backend/bin/sin-paragraph",
+        "{env:HOME}/.local/bin/sin-paragraph",
         "serve-mcp"
       ],
       "enabled": true

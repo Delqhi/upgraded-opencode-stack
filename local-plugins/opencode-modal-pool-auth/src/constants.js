@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DEFAULT_MAX_RETRIES = exports.DEFAULT_COOLDOWN_SECONDS = exports.DEFAULT_WAIT_TIMEOUT_SECONDS = exports.DEFAULT_POOL_TIMEOUT_MS = exports.DEFAULT_MODAL_BASE_URL = exports.DEFAULT_POOL_ADMIN_BASE_URL = exports.DEFAULT_GATEWAY_BASE_URL = exports.PROVIDER_ID = void 0;
+exports.PROVIDER_ID = "modal";
+exports.DEFAULT_GATEWAY_BASE_URL = "http://92.5.60.87:4100/modal/v1";
+exports.DEFAULT_POOL_ADMIN_BASE_URL = "http://92.5.60.87:4100/modal";
+exports.DEFAULT_MODAL_BASE_URL = "https://api.us-west-2.modal.direct/v1";
+exports.DEFAULT_POOL_TIMEOUT_MS = 8000;
+exports.DEFAULT_WAIT_TIMEOUT_SECONDS = 5;
+exports.DEFAULT_COOLDOWN_SECONDS = 60;
+exports.DEFAULT_MAX_RETRIES = 2;

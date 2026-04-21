@@ -1,0 +1,23 @@
+{
+  "name": "opencode-modal-pool-auth",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "description": "OpenCode modal auth plugin that stores added API keys in the GLM rotator pool",
+  "files": [
+    "index.ts",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^0.15.30",
+    "@types/node": "^22.19.17",
+    "typescript": "^5.9.3",
+    "typescript-json-schema": "^0.67.1"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.0"
+  }
+}

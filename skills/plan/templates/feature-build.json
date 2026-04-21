@@ -1,0 +1,167 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.0.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Feature Build: [Feature Name]",
+  "mode": "plan-and-execute",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "outcomes": {
+    "objective": "What business or user outcome does this feature deliver?",
+    "key_results": [
+      {"metric": "adoption_rate", "target": "X%", "current": "0%"},
+      {"metric": "user_satisfaction", "target": "X/10", "current": "baseline"},
+      {"metric": "performance_impact", "target": "<Xms latency", "current": "baseline"}
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "API and Data Model",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Design and implement data model / database schema",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": [],
+          "validation": "Database migration runs successfully, schema matches design",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Implement API endpoints with input validation",
+          "effort": {"pessimistic": "12h", "realistic": "6h", "optimistic": "3h"},
+          "dependencies": ["P1-T1"],
+          "validation": "All API endpoints return correct responses, validation rejects invalid input",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T3",
+          "description": "Write unit and integration tests for API",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P1-T2"],
+          "validation": "Test coverage >80%, all tests pass in CI",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "UI and Integration",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Build UI components and integrate with API",
+          "effort": {"pessimistic": "16h", "realistic": "8h", "optimistic": "4h"},
+          "dependencies": ["P1-T2"],
+          "validation": "UI renders correctly, API integration works end-to-end",
+          "owner": "frontend-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P2-T2",
+          "description": "Add error handling, loading states, edge cases",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P2-T1"],
+          "validation": "All error states handled, loading states visible, edge cases covered",
+          "owner": "frontend-engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Polish and Edge Cases",
+      "priority": "optional",
+      "tasks": [
+        {
+          "id": "P3-T1",
+          "description": "Performance optimization and accessibility audit",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P2-T2"],
+          "validation": "Lighthouse score >90, WCAG 2.1 AA compliant",
+          "owner": "frontend-engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": ["P1-T1", "P1-T2", "P1-T3", "P2-T1", "P2-T2", "P3-T1"],
+    "edges": [
+      {"from": "P1-T1", "to": "P1-T2", "type": "hard"},
+      {"from": "P1-T2", "to": "P1-T3", "type": "hard"},
+      {"from": "P1-T2", "to": "P2-T1", "type": "hard"},
+      {"from": "P2-T1", "to": "P2-T2", "type": "hard"},
+      {"from": "P2-T2", "to": "P3-T1", "type": "soft"}
+    ],
+    "critical_path": ["P1-T1", "P1-T2", "P2-T1", "P2-T2"]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "API design changes require data model refactoring",
+      "likelihood": 0.3,
+      "impact": 7,
+      "score": 21,
+      "mitigation": "Finalize API spec before implementation, get stakeholder sign-off",
+      "owner": "tech-lead",
+      "status": "mitigated"
+    },
+    {
+      "id": "R2",
+      "description": "Third-party API rate limits or downtime",
+      "likelihood": 0.2,
+      "impact": 5,
+      "score": 10,
+      "mitigation": "Implement caching, retry logic, and graceful degradation",
+      "owner": "backend-engineer",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 31,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "API endpoint fails load testing or data model incompatible with production",
+    "action": "Revert database migration, disable feature flag, keep branch for later retry",
+    "max_loss": "1-2 days engineering time"
+  },
+  "done_criteria": [
+    {"criterion": "All API endpoints tested and documented", "status": "not-met"},
+    {"criterion": "UI functional with error handling and loading states", "status": "not-met"},
+    {"criterion": "Test coverage >80% across all layers", "status": "not-met"},
+    {"criterion": "Feature passes QA and stakeholder review", "status": "not-met"},
+    {"criterion": "Deployed to production with feature flag", "status": "not-met"}
+  ],
+  "approvals": [
+    {"role": "tech-lead", "status": "pending", "date": null},
+    {"role": "product-owner", "status": "pending", "date": null}
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}

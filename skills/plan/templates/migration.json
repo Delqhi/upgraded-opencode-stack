@@ -1,0 +1,179 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.0.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Migration: [From] to [To]",
+  "mode": "plan-and-execute",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "outcomes": {
+    "objective": "Migrate from [old system] to [new system] with zero downtime and no data loss",
+    "key_results": [
+      {"metric": "data_integrity", "target": "100% match", "current": "baseline"},
+      {"metric": "downtime", "target": "<5 minutes", "current": "unknown"},
+      {"metric": "rollback_time", "target": "<15 minutes", "current": "N/A"}
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Build Parallel System",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Set up new system infrastructure and configuration",
+          "effort": {"pessimistic": "16h", "realistic": "8h", "optimistic": "4h"},
+          "dependencies": [],
+          "validation": "New system is running and accessible",
+          "owner": "infrastructure-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Implement data migration scripts with validation",
+          "effort": {"pessimistic": "24h", "realistic": "12h", "optimistic": "6h"},
+          "dependencies": ["P1-T1"],
+          "validation": "Migration scripts run successfully on test dataset, 100% data match",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T3",
+          "description": "Build dual-write layer to keep both systems in sync",
+          "effort": {"pessimistic": "16h", "realistic": "8h", "optimistic": "4h"},
+          "dependencies": ["P1-T1"],
+          "validation": "Writes go to both systems, reads verified against both",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Dual-Write and Verify",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Enable dual-write in staging, verify data consistency",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P1-T2", "P1-T3"],
+          "validation": "Data matches between old and new system for 24h in staging",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P2-T2",
+          "description": "Enable dual-write in production, monitor for issues",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P2-T1"],
+          "validation": "Dual-write running in production for 48h with zero inconsistencies",
+          "owner": "backend-engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Cutover and Cleanup",
+      "priority": "optional",
+      "tasks": [
+        {
+          "id": "P3-T1",
+          "description": "Switch reads to new system, monitor performance",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": ["P2-T2"],
+          "validation": "All reads served from new system, performance within SLA",
+          "owner": "infrastructure-engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P3-T2",
+          "description": "Disable dual-write, decommission old system",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": ["P3-T1"],
+          "validation": "Old system decommissioned, no dependencies remaining",
+          "owner": "infrastructure-engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": ["P1-T1", "P1-T2", "P1-T3", "P2-T1", "P2-T2", "P3-T1", "P3-T2"],
+    "edges": [
+      {"from": "P1-T1", "to": "P1-T2", "type": "hard"},
+      {"from": "P1-T1", "to": "P1-T3", "type": "hard"},
+      {"from": "P1-T2", "to": "P2-T1", "type": "hard"},
+      {"from": "P1-T3", "to": "P2-T1", "type": "hard"},
+      {"from": "P2-T1", "to": "P2-T2", "type": "hard"},
+      {"from": "P2-T2", "to": "P3-T1", "type": "hard"},
+      {"from": "P3-T1", "to": "P3-T2", "type": "hard"}
+    ],
+    "critical_path": ["P1-T1", "P1-T3", "P2-T1", "P2-T2", "P3-T1", "P3-T2"]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Data inconsistency during migration",
+      "likelihood": 0.2,
+      "impact": 9,
+      "score": 18,
+      "mitigation": "Dual-write layer with consistency checks, automated reconciliation",
+      "owner": "backend-engineer",
+      "status": "mitigated"
+    },
+    {
+      "id": "R2",
+      "description": "Performance degradation after cutover",
+      "likelihood": 0.3,
+      "impact": 6,
+      "score": 18,
+      "mitigation": "Load test new system before cutover, keep old system as fallback",
+      "owner": "infrastructure-engineer",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 36,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "Data inconsistency detected or performance below SLA after cutover",
+    "action": "Switch reads back to old system, disable dual-write, investigate",
+    "max_loss": "1-2 days engineering time + potential data reconciliation"
+  },
+  "done_criteria": [
+    {"criterion": "New system running with 100% data match", "status": "not-met"},
+    {"criterion": "Dual-write verified in production for 48h", "status": "not-met"},
+    {"criterion": "All reads served from new system", "status": "not-met"},
+    {"criterion": "Old system decommissioned", "status": "not-met"},
+    {"criterion": "Rollback plan tested and verified", "status": "not-met"}
+  ],
+  "approvals": [
+    {"role": "tech-lead", "status": "pending", "date": null},
+    {"role": "engineering-manager", "status": "pending", "date": null},
+    {"role": "sre", "status": "pending", "date": null}
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}

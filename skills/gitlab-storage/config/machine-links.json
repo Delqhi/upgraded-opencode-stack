@@ -1,0 +1,14 @@
+{
+  "oci-vm-92.5.60.87": {
+    "projects": ["oci-vm", "sin-solver", "sin-backend"],
+    "sync_dirs": {
+      "/var/log": "logs",
+      "/opt/sin-supabase/volumes": "backups",
+      "/opt/OpenSIN-Code/.git/objects": "backups"
+    }
+  },
+  "mac-jeremy": {
+    "projects": ["sin-solver", "opencode-stack"],
+    "sync_dirs": {}
+  }
+}

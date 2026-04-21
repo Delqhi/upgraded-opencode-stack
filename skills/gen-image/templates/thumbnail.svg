@@ -1,0 +1,63 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#0B0F1A"/>
+
+  <!-- Glow -->
+  <defs>
+    <radialGradient id="greenGlow">
+      <stop offset="0%" stop-color="#00FF88" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="textShadow">
+      <feDropShadow dx="5" dy="5" stdDeviation="5" flood-color="#000"/>
+    </filter>
+
+    <linearGradient id="yellowGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD400"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#FFD400"/>
+    </marker>
+  </defs>
+
+  <circle cx="300" cy="360" r="300" fill="url(#greenGlow)" opacity="0.4"/>
+
+  <!-- Mascot -->
+  <image href="{{MASCOT_IMAGE}}" x="50" y="100" width="520" />
+
+  <!-- Text -->
+  <text x="700" y="220"
+        font-family="Impact, sans-serif"
+        font-size="150"
+        fill="#FFFFFF"
+        stroke="#000"
+        stroke-width="12"
+        filter="url(#textShadow)">
+    {{TEXT_MAIN}}
+  </text>
+
+  <text x="700" y="380"
+        font-family="Impact, sans-serif"
+        font-size="170"
+        fill="url(#yellowGradient)"
+        stroke="#000"
+        stroke-width="14"
+        filter="url(#textShadow)">
+    {{TEXT_HIGHLIGHT}}
+  </text>
+
+  <!-- Arrow -->
+  <path d="M600,500 Q750,450 850,500"
+        stroke="#FFD400"
+        stroke-width="20"
+        fill="none"
+        marker-end="url(#arrowhead)"/>
+
+  <!-- Laptop Placeholder -->
+  <rect x="850" y="350" width="300" height="200"
+        fill="#00FF88" rx="20" opacity="0.8"/>
+</svg>

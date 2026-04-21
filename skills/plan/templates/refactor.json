@@ -1,0 +1,156 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.0.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Refactor: [Component/Module]",
+  "mode": "plan-and-execute",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "outcomes": {
+    "objective": "Improve [maintainability/performance/testability] of [component] without changing external behavior",
+    "key_results": [
+      {"metric": "code_complexity", "target": "Reduce cyclomatic complexity by X%", "current": "baseline"},
+      {"metric": "test_coverage", "target": ">80%", "current": "current%"},
+      {"metric": "build_time", "target": "<X seconds", "current": "current seconds"}
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Add Tests Around Current Behavior",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Document current behavior and edge cases",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": [],
+          "validation": "Behavior documented with examples and edge cases",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Add characterization tests to capture current behavior",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P1-T1"],
+          "validation": "All tests pass, edge cases covered, no gaps in behavior documentation",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Incremental Refactoring",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Refactor first module with tests as safety net",
+          "effort": {"pessimistic": "8h", "realistic": "4h", "optimistic": "2h"},
+          "dependencies": ["P1-T2"],
+          "validation": "All characterization tests pass, code review approved",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P2-T2",
+          "description": "Refactor remaining modules incrementally",
+          "effort": {"pessimistic": "16h", "realistic": "8h", "optimistic": "4h"},
+          "dependencies": ["P2-T1"],
+          "validation": "All tests pass, complexity reduced, no behavior changes",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Remove Old Code",
+      "priority": "optional",
+      "tasks": [
+        {
+          "id": "P3-T1",
+          "description": "Remove deprecated code, update imports, clean up",
+          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "dependencies": ["P2-T2"],
+          "validation": "No references to old code remain, build succeeds, all tests pass",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": ["P1-T1", "P1-T2", "P2-T1", "P2-T2", "P3-T1"],
+    "edges": [
+      {"from": "P1-T1", "to": "P1-T2", "type": "hard"},
+      {"from": "P1-T2", "to": "P2-T1", "type": "hard"},
+      {"from": "P2-T1", "to": "P2-T2", "type": "hard"},
+      {"from": "P2-T2", "to": "P3-T1", "type": "soft"}
+    ],
+    "critical_path": ["P1-T1", "P1-T2", "P2-T1", "P2-T2"]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Refactoring changes external behavior (breaking change)",
+      "likelihood": 0.2,
+      "impact": 8,
+      "score": 16,
+      "mitigation": "Characterization tests catch behavior changes, review all test failures",
+      "owner": "engineer",
+      "status": "mitigated"
+    },
+    {
+      "id": "R2",
+      "description": "Scope creep: refactoring turns into feature work",
+      "likelihood": 0.4,
+      "impact": 5,
+      "score": 20,
+      "mitigation": "Strict scope definition, reject feature requests during refactor",
+      "owner": "tech-lead",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 36,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "Characterization tests fail or external behavior changes detected",
+    "action": "Revert refactor branch, investigate behavior change, fix and retry",
+    "max_loss": "1-2 days engineering time"
+  },
+  "done_criteria": [
+    {"criterion": "Characterization tests capture all current behavior", "status": "not-met"},
+    {"criterion": "Code complexity reduced by target percentage", "status": "not-met"},
+    {"criterion": "All characterization tests pass", "status": "not-met"},
+    {"criterion": "No references to old code remain", "status": "not-met"},
+    {"criterion": "No external behavior changes", "status": "not-met"}
+  ],
+  "approvals": [
+    {"role": "tech-lead", "status": "pending", "date": null}
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}

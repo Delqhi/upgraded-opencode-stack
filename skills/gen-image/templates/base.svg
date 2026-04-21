@@ -1,0 +1,53 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="yellowGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD400"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    <filter id="textShadow">
+      <feDropShadow dx="8" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+    <clipPath id="textZone">
+      <rect x="640" y="60" width="580" height="300" rx="24"/>
+    </clipPath>
+  </defs>
+
+  <image href="{{BG_LAYER}}" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
+  <image href="{{EFFECTS_LAYER}}" width="1280" height="720" opacity="0.6" preserveAspectRatio="xMidYMid slice"/>
+  <image href="{{MASCOT_LAYER}}" x="20" y="60" width="560" height="560" preserveAspectRatio="xMidYMid meet"/>
+  <image href="{{OBJECT_LAYER}}" x="800" y="340" width="400" height="300" preserveAspectRatio="xMidYMid meet"/>
+  <image href="{{ARROW_LAYER}}" x="540" y="440" width="280" height="180" preserveAspectRatio="xMidYMid meet"/>
+
+  <g transform="translate(1210, 145) skewX(-7)" filter="url(#textShadow)" clip-path="url(#textZone)">
+    <text x="0" y="0"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="28"
+          fill="#68f0c7"
+          text-anchor="end"
+          letter-spacing="3">
+      {{TEXT_SUBTITLE}}
+    </text>
+
+    <text x="0" y="82"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="96"
+          fill="#FFFFFF"
+          stroke="#000"
+          stroke-width="12"
+          paint-order="stroke"
+          text-anchor="end">
+      {{TEXT_MAIN}}
+    </text>
+
+    <text x="0" y="202"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="116"
+          fill="url(#yellowGradient)"
+          stroke="#000"
+          stroke-width="14"
+          paint-order="stroke"
+          text-anchor="end">
+      {{TEXT_HIGHLIGHT}}
+    </text>
+  </g>
+</svg>
