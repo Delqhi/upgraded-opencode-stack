@@ -2,7 +2,7 @@
   "id": "a2a-sin-vision-colab",
   "name": "A2A-SIN-Vision-Colab",
   "version": "4.0.0",
-  "description": "Screen recording + AI vision analysis via direct Gemini REST API. No browser, no Colab MCP, no CDP. 6-model fallback chain for unlimited free-tier vision calls.",
+  "description": "Screen recording + AI vision analysis via OpenAI GPT models with standardized fallback chain. No browser, no Colab MCP, no CDP.",
   "team": "Team - Infrastructure",
   "manager": "SIN-Zeus",
   "status": "production-ready",
@@ -16,14 +16,11 @@
     "continuous_monitoring"
   ],
   "models": {
-    "primary": "gemini-2.5-flash (via REST API)",
+    "primary": "openai/gpt-5.4-mini",
     "fallback_chain": [
-      "gemini-2.5-flash",
-      "gemini-3-flash-preview",
-      "gemini-3.1-flash-lite-preview",
-      "gemma-3-27b",
-      "gemma-3-12b",
-      "gemma-3-4b"
+      "nvidia-nim/z-ai/glm5.1",
+      "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+      "nvidia-nim/stepfun-ai/step-3.5-flash"
     ]
   },
   "endpoints": {
@@ -60,8 +57,8 @@
     "identity": {
       "name": "A2A-SIN-Vision-Colab",
       "version": "4.0.0",
-      "description": "SOTA 2026 Vision Agent using direct Gemini REST API with 6-model fallback chain"
-    },
+    "description": "SOTA 2026 Vision Agent using OpenAI GPT primary with standardized fallback chain"
+  },
     "capabilities": [
       {
         "name": "screen_record",

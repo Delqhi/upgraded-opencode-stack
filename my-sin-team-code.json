@@ -27,11 +27,12 @@
     // SIN-ZEUS — Supreme Fleet Commander
     // Plant lokal, erstellt GitHub Issues, dispatcht an Cloud-Executors
     "sin-zeus": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "fleet-commander",
       "description": "Supreme fleet commander — plant, dispatcht, ueberwacht"
@@ -40,11 +41,11 @@
     // SIMONE MCP — Der ultimative Code-Worker
     // LSP-powered semantic code operations fuer 40+ Sprachen
     "simone-mcp": {
-      "model": "google/antigravity-claude-sonnet-4-6",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "code-worker",
       "description": "LSP-powered semantic code operations (40+ languages)"
@@ -53,11 +54,11 @@
     // FRONTEND — UI/UX Specialist
     // React, Next.js, CSS, Design-Systems
     "frontend": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "frontend-specialist",
       "description": "UI/UX, React, Next.js, Design-Systems, CSS"
@@ -66,11 +67,11 @@
     // BACKEND — API & Services Specialist
     // FastAPI, Node.js, Databases, Infrastructure
     "backend": {
-      "model": "google/antigravity-claude-sonnet-4-6",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "backend-specialist",
       "description": "APIs, Services, Databases, Infrastructure"
@@ -79,11 +80,11 @@
     // FULLSTACK — Generalist
     // Can handle both frontend and backend tasks
     "fullstack": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "google/antigravity-gemini-3.1-pro",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "fullstack-generalist",
       "description": "Full-Stack — kann Frontend UND Backend"
@@ -97,46 +98,52 @@
 
     // Architecture-Design — Schwere Architektur-Entscheidungen
     "architecture": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Implementation — Code schreiben
     "implementation": {
-      "model": "google/antigravity-claude-sonnet-4-6",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Code-Review — Qualitaetskontrolle
     "review": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Testing — Test schreiben und ausfuehren
     "testing": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Refactoring — Code umstrukturieren
     "refactoring": {
-      "model": "google/antigravity-claude-sonnet-4-6",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   }

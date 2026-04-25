@@ -34,28 +34,24 @@
   "agents": {
 
     // EXPLORE — Codebase erkunden, Dateien durchsuchen, Struktur verstehen
-    // Nutzt GLM-5.1 (gratis via Modal) — schnell und günstig für Lese-Operationen
+    // Nutzt Nemotron 3 Super 120B — stark für Analyse und breite Recherche
     "explore": {
-      "model": "modal/glm-5.1-fp8",
+      "model": "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // LIBRARIAN — Dokumentation lesen, Spezifikationen analysieren, Referenzen finden
-    // Nutzt GLM-5.1 (gratis via Modal) — perfekt für Text-Lastige Aufgaben
+    // Nutzt Nemotron 3 Super 120B — ideal für Doku, Specs und Referenzen
     "librarian": {
-      "model": "modal/glm-5.1-fp8",
+      "model": "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
@@ -63,107 +59,105 @@
     // Nutzt GPT-5.4 — beste Architektur-Erkennung
     "oracle": {
       "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // MULTIMODAL-LOOKER — Bildanalyse, Screenshots auswerten, UI verstehen
-    // Nutzt Gemini 3.1 Pro — bestes Vision-Modell im Stack
+    // Nutzt OpenAI GPT-5.4-mini — visionfähiges Modell für look_at
     "multimodal-looker": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // MOMUS — Plan-Kritiker, findet Fehler in Plänen, warnt vor Risiken
     // Nutzt Gemini 3.1 Pro — starkes kritisches Denken
     "momus": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // METIS — Plan-Berater, strategische Empfehlungen, Alternativen aufzeigen
     // Nutzt Gemini 3.1 Pro — starke strategische Analyse
     "metis": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // SISYPHUS — Ultraworker, endlose Aufgaben bis sie fertig sind
     // Nutzt Claude Opus 4.6 Thinking — tiefstes Nachdenken für komplexe Tasks
     "sisyphus": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // HEPHAESTUS — Deep Agent, tiefe Code-Analyse, komplexe Implementationen
     // Nutzt Claude Sonnet 4.6 — bestes Coding-Modell
     "hephaestus": {
-      "model": "google/antigravity-claude-sonnet-4-6",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // ATLAS — Plan Executor, setzt Pläne in Code um
     // Nutzt Claude Opus 4.6 Thinking — durchdachteste Implementation
     "atlas": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // PROMETHEUS — Plan Builder, erstellt detaillierte Pläne
     // Nutzt Qwen 3.6 Plus — kostenlos und schnell für Plan-Erstellung
     "prometheus": {
-      "model": "qwen/coder-model",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-gemini-3.1-pro",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // SISYPHUS-JUNIOR — Fast-Ultraworker, schnellere Variante von Sisyphus
     // Nutzt Gemini 3.1 Pro — guter Kompromiss aus Geschwindigkeit und Qualität
     "sisyphus-junior": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   },
@@ -175,84 +169,84 @@
 
     // QUICK — Schnelle Antworten, einfache Fragen, kurze Tasks
     "quick": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // DEEP — Tiefe Analysen, komplexe Probleme, umfangreiche Recherche
     "deep": {
       "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // ARTISTRY — Kreative Tasks, Design, UI/UX, visuelle Inhalte
     "artistry": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // ULTRABRAIN — Schwerste Probleme, maximale Denkleistung
     "ultrabrain": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // VISUAL-ENGINEERING — UI/UX Tasks, Frontend-Design, Layout
     "visual-engineering": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // UNSPECIFIED-LOW — Unspezifische Tasks mit niedriger Priorität
     "unspecified-low": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // UNSPECIFIED-HIGH — Unspezifische Tasks mit hoher Priorität
     "unspecified-high": {
       "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-opus-4-6-thinking",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // WRITING — Text-Generierung, Dokumentation, Copywriting
     "writing": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   }

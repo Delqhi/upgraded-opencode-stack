@@ -23,10 +23,10 @@
     // PROLIFIC WORKER — Survey Automation
     // Autonome Survey-Teilnahme auf Prolific
     "prolific": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model",
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "survey-worker",
@@ -36,10 +36,11 @@
     // FREELANCER WORKER — Freelancing Automation
     // Bewerbungen auf Freelancer-Plattformen
     "freelancer": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "freelancer",
       "description": "Freelancing-Automation — Bewerbungen, Kommunikation"
@@ -48,9 +49,10 @@
     // SURVEY WORKER — Allgemeine Survey Automation
     // Multi-Platform Survey Worker
     "survey": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "survey-generalist",
@@ -65,28 +67,31 @@
 
     // Survey Discovery — Surveys finden
     "discovery": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Survey Completion — Surveys ausfuellen
     "completion": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Communication — Emails, Nachrichten schreiben
     "communication": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3.1-pro",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   }

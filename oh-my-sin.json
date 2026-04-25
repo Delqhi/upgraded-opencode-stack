@@ -18,11 +18,11 @@
         "A2A-SIN-Backend",
         "A2A-SIN-Fullstack"
       ],
-      "primary_model": "google/antigravity-claude-sonnet-4-6",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-worker": {
@@ -35,10 +35,10 @@
         "A2A-SIN-Worker-Freelancer",
         "A2A-SIN-Worker-Survey"
       ],
-      "primary_model": "google/antigravity-gemini-3-flash",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model",
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
@@ -52,11 +52,11 @@
         "A2A-SIN-Monitoring",
         "A2A-SIN-Security"
       ],
-      "primary_model": "openai/gpt-5.4",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-google-apps": {
@@ -69,11 +69,11 @@
         "A2A-SIN-Google-Sheets",
         "A2A-SIN-Google-Drive"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-apple-apps": {
@@ -85,10 +85,11 @@
         "A2A-SIN-Apple-Shortcuts",
         "A2A-SIN-Apple-macOS"
       ],
-      "primary_model": "openai/gpt-5.4",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-apple": {
@@ -110,10 +111,11 @@
         "A2A-SIN-Apple-Shortcuts",
         "A2A-SIN-Apple-SystemSettings"
       ],
-      "primary_model": "openai/gpt-5.4",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-gemini-3-flash",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-social": {
@@ -128,10 +130,11 @@
         "A2A-SIN-TikTok",
         "A2A-SIN-X-Twitter"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-messaging": {
@@ -147,10 +150,11 @@
         "A2A-SIN-Nostr",
         "A2A-SIN-Zoom"
       ],
-      "primary_model": "google/antigravity-gemini-3-flash",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-forum": {
@@ -162,10 +166,11 @@
         "A2A-SIN-StackOverflow",
         "A2A-SIN-Quora"
       ],
-      "primary_model": "google/antigravity-gemini-3-flash",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-legal": {
@@ -177,10 +182,11 @@
         "A2A-SIN-Patents",
         "A2A-SIN-Tax"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-commerce": {
@@ -191,10 +197,11 @@
       "members": [
         "A2A-SIN-TikTok-Shop"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-community": {
@@ -203,10 +210,11 @@
       "manager": "A2A-SIN-Community",
       "config_file": "my-sin-community.json",
       "members": [],
-      "primary_model": "google/antigravity-gemini-3-flash",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-google": {
@@ -217,10 +225,11 @@
       "members": [
         "A2A-SIN-Opal"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-microsoft": {
@@ -229,10 +238,11 @@
       "manager": "A2A-SIN-Microsoft",
       "config_file": "my-sin-microsoft.json",
       "members": [],
-      "primary_model": "openai/gpt-5.4",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-research": {
@@ -243,10 +253,11 @@
       "members": [
         "A2A-SIN-Research"
       ],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-opus-4-6-thinking"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-media-comfyui": {
@@ -255,10 +266,11 @@
       "manager": "A2A-SIN-Media-ComfyUI",
       "config_file": "my-sin-media-comfyui.json",
       "members": [],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-media-music": {
@@ -267,10 +279,11 @@
       "manager": "A2A-SIN-Media-Music",
       "config_file": "my-sin-media-music.json",
       "members": [],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-coding-cybersec": {
@@ -282,10 +295,11 @@
         "A2A-SIN-Security-Recon",
         "A2A-SIN-Security-Fuzz"
       ],
-      "primary_model": "google/antigravity-claude-sonnet-4-6",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-coding-frontend": {
@@ -294,10 +308,11 @@
       "manager": "A2A-SIN-Code-Frontend",
       "config_file": "my-sin-coding-frontend.json",
       "members": [],
-      "primary_model": "google/antigravity-gemini-3.1-pro",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-coding-backend": {
@@ -306,10 +321,11 @@
       "manager": "A2A-SIN-Code-Backend",
       "config_file": "my-sin-coding-backend.json",
       "members": [],
-      "primary_model": "google/antigravity-claude-sonnet-4-6",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
     "team-coding-agents": {
@@ -357,21 +373,21 @@
           "purpose": "Tool builders \u2014 CLI utilities, external integrations"
         }
       },
-      "primary_model": "google/antigravity-claude-sonnet-4-6",
+      "primary_model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   },
   "defaults": {
-    "explore_model": "nvidia-nim/stepfun-ai/step-3.5-flash",
-    "librarian_model": "nvidia-nim/stepfun-ai/step-3.5-flash",
+    "explore_model": "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+    "librarian_model": "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
     "fallback_models": [
-      "google/antigravity-gemini-3-flash",
-      "openai/gpt-5.4",
-      "qwen/coder-model"
+      "nvidia-nim/z-ai/glm5.1",
+      "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+      "nvidia-nim/stepfun-ai/step-3.5-flash"
     ]
   }
 }

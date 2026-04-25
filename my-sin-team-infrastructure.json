@@ -23,10 +23,11 @@
     // DEPLOY AGENT — Deployment Automation
     // Vercel, Cloudflare, HF Spaces, OCI VM
     "deploy": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "deployment-specialist",
       "description": "Deployment Automation — Vercel, Cloudflare, HF Spaces, OCI"
@@ -35,10 +36,11 @@
     // MONITORING AGENT — System Monitoring
     // Health Checks, Alerts, Performance
     "monitoring": {
-      "model": "google/antigravity-gemini-3.1-pro",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "monitoring-specialist",
       "description": "Health Checks, Alerts, Performance-Monitoring"
@@ -47,10 +49,12 @@
     // SECURITY AGENT — Security Audits
     // Vulnerability Scanning, Secret Detection
     "security": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "security-specialist",
       "description": "Vulnerability Scanning, Secret Detection, Security Audits"
@@ -64,37 +68,42 @@
 
     // Infrastructure Setup — Server, Services einrichten
     "setup": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Deployment — Code deployen
     "deployment": {
-      "model": "openai/gpt-5.4",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Monitoring — System ueberwachen
     "monitoring": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "openai/gpt-5.4-mini",
       "fallback_models": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
 
     // Security — Security Audits
     "security": {
-      "model": "google/antigravity-claude-opus-4-6-thinking",
+      "model": "openai/gpt-5.4",
+      "reasoningEffort": "xhigh",
       "fallback_models": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "nvidia-nim/z-ai/glm5.1",
+        "nvidia-nim/nvidia/nemotron-3-super-120b-a12b",
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     }
   }
