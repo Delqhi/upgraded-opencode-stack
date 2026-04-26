@@ -37,7 +37,7 @@
         "antigravity-claude-opus-4-6-thinking": {
           "name": "Claude Opus 4.6 Thinking (Antigravity)",
           "limit": {
-            "context": 200000,
+            "context": 1000000,
             "output": 64000
           },
           "modalities": {
@@ -62,7 +62,7 @@
               }
             }
           },
-          "context": 200000,
+          "context": 1000000,
           "output": 32000
         },
         "antigravity-gemini-3.1-pro": {

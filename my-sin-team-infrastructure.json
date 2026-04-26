@@ -57,7 +57,8 @@
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "security-specialist",
-      "description": "Vulnerability Scanning, Secret Detection, Security Audits"
+      "description": "Vulnerability Scanning, Secret Detection, Security Audits",
+      "reasoningEffort": "xhigh"
     }
   },
 

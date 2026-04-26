@@ -5,7 +5,7 @@
      "oh-my-opencode@3.11.2"
    ],
 -  "model": "google/gemini-3.1-pro-preview",
-+  "model": "google/antigravity-gemini-3.1-pro",
++  "model": "openai/gpt-5.4-mini",
    "provider": {
      "google": {
        "npm": "@ai-sdk/google",

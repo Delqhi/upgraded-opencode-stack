@@ -8,9 +8,9 @@
       "description": "Elite-Coder-Flotte fuer Implementation, Testing, Deployment",
       "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
-        "openai/gpt-5.4",
         "qwen/coder-model",
-        "google/antigravity-gemini-3.1-pro"
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Simone-MCP",
@@ -26,9 +26,9 @@
       "description": "Autonome Worker fuer Surveys, Freelancing, Monetarisierung",
       "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "openai/gpt-5.4",
         "qwen/coder-model",
-        "nvidia-nim/stepfun-ai/step-3.5-flash"
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Worker-Prolific",
@@ -43,9 +43,9 @@
       "description": "DevOps-Flotte fuer Deployment, CI/CD, Monitoring, Infrastructure",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "google/antigravity-claude-sonnet-4-6",
         "qwen/coder-model",
-        "google/antigravity-gemini-3.1-pro"
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Deploy",
@@ -60,9 +60,9 @@
       "description": "Google Workspace Integration — Docs, Sheets, Drive, Gmail",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
         "qwen/coder-model",
-        "google/antigravity-claude-sonnet-4-6"
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Google-Docs",
@@ -77,8 +77,9 @@
       "description": "Apple Ecosystem — macOS Automation, iOS, Shortcuts",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "google/antigravity-gemini-3-flash",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Apple-Shortcuts",
@@ -92,8 +93,9 @@
       "description": "macOS/iOS Automation — Mail, Notes, Calendar, FaceTime, Safari, etc.",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "google/antigravity-gemini-3-flash",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Apple-Mail",
@@ -117,8 +119,9 @@
       "description": "Social Media Automation — TikTok, Instagram, X, LinkedIn, Facebook, YouTube",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Instagram",
@@ -135,8 +138,9 @@
       "description": "Messaging Integration — WhatsApp, Telegram, Signal, Discord, iMessage",
       "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-WhatsApp",
@@ -154,8 +158,9 @@
       "description": "Forum Automation — Reddit, HackerNews, StackOverflow, Quora, DevTo",
       "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-StackOverflow",
@@ -169,8 +174,9 @@
       "description": "Legal Automation — ClaimWriter, Patents, Damages, Compliance, Contract",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Patents",
@@ -184,8 +190,9 @@
       "description": "Commerce Automation — Shop-Finance, Shop-Logistic, TikTok-Shop, Stripe",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-TikTok-Shop"
@@ -198,8 +205,9 @@
       "description": "Community Management — Discord, WhatsApp, Telegram, YouTube Community",
       "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}
@@ -210,8 +218,9 @@
       "description": "Google Workspace — Google-Apps, Google-Chat, Opal",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Opal"
@@ -224,8 +233,9 @@
       "description": "Microsoft 365 — Teams, Outlook, OneDrive, Excel, Word, PowerPoint",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "google/antigravity-claude-sonnet-4-6",
-        "qwen/coder-model"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}
@@ -236,8 +246,9 @@
       "description": "Deep Research Agent",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-opus-4-6-thinking"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Research"
@@ -250,8 +261,9 @@
       "description": "Media Generation — ImageGen, VideoGen, ComfyUI Workflows",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}
@@ -262,8 +274,9 @@
       "description": "Music Production — Beats, Producer, Singer, Songwriter, Videogen",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-claude-sonnet-4-6"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}
@@ -274,8 +287,9 @@
       "description": "Security Specialists — BugBounty, Cloudflare, 16x Security-Spezialisten",
       "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [
         "A2A-SIN-Security-Recon",
@@ -289,8 +303,9 @@
       "description": "Frontend Specialists — Accessibility, App-Shell, Commerce-UI, Design-Systems",
       "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "google/antigravity-claude-sonnet-4-6",
-        "openai/gpt-5.4"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}
@@ -301,8 +316,9 @@
       "description": "Backend Specialists — Server, OracleCloud, Passwordmanager",
       "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
-        "openai/gpt-5.4",
-        "google/antigravity-gemini-3.1-pro"
+        "qwen/coder-model",
+        "modal/glm-5.1-fp8",
+        "nvidia-nim/qwen-3.5-397b"
       ],
       "members": [],
       "config": {}

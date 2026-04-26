@@ -147,7 +147,7 @@
     "slug": "create-flow",
     "name": "create-flow",
     "title": "Create Flow",
-    "description": "Build interactive flows with atomic single-action steps, screenshot + vision gating, local brain evidence, and tiered autorun promotion (run → mini → low → high → max → full) only after 10 consecutive successful validations per tier. Vision analysis uses google/antigravity-gemini-3-flash directly and writes detailed analysis artifacts alongside each step.",
+    "description": "Build interactive flows with atomic single-action steps, screenshot + vision gating, local brain evidence, and tiered autorun promotion (run → mini → low → high → max → full) only after 10 consecutive successful validations per tier. Vision analysis uses the current OpenAI GPT vision stack directly and writes detailed analysis artifacts alongside each step.",
     "source": "/Users/jeremy/.config/opencode/skills/create-flow",
     "destination": "/Users/jeremy/.config/opencode/skills/create-flow"
   }

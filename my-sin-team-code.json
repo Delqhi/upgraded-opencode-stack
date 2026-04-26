@@ -35,7 +35,8 @@
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "role": "fleet-commander",
-      "description": "Supreme fleet commander — plant, dispatcht, ueberwacht"
+      "description": "Supreme fleet commander — plant, dispatcht, ueberwacht",
+      "reasoningEffort": "xhigh"
     },
 
     // SIMONE MCP — Der ultimative Code-Worker
