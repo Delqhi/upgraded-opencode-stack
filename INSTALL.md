@@ -14,11 +14,11 @@ cd upgraded-opencode-stack
 
 | Category | Count | Description |
 |----------|-------|-------------|
-| **Skills** | 29 | Custom workflows for A2A creation, deployment, debugging, browser automation, and thumbnail A/B testing |
-| **Plugins** | 4 | Auth plugins for Antigravity, Qwen, OpenRouter |
+| **Skills** | 45 | Custom workflows for A2A creation, deployment, debugging, browser automation, media analysis, and thumbnail A/B testing |
+| **Plugins** | 3 | Auth plugins for Antigravity and OpenRouter |
 | **Agents** | 21 | Custom agents including SIN-Zeus, OMOC swarm, and multimodal tools |
-| **Commands** | 13 | Custom CLI commands for swarm orchestration, terminal management, Zeus control |
-| **Scripts** | 12 | Utility scripts for sync, rotation, PR watching, GitHub management |
+| **Commands** | 14 | Custom CLI commands for swarm orchestration, terminal management, Zeus control, video analysis |
+| **Scripts** | 13 | Utility scripts for sync, rotation, PR watching, GitHub management, video analysis |
 | **CLI Tools** | 12 | sin-* CLI tools for docs, n8n, telegram, health, metrics |
 | **Templates** | 5 | JSON schemas for work items, PR watchers, governance |
 | **Hooks** | 1 | Pre-commit hook for auto-sync |
@@ -61,3 +61,7 @@ upgraded-opencode-stack/
 2. Configure auth plugins with your credentials
 3. Run `sin-sync` to sync to other machines
 4. Verify with `opencode --version` and test a skill
+
+### Video Analysis
+
+Use `/video-check <video-path> [custom-prompt]` for token-efficient video summaries powered by `nvidia/meta/llama-3.2-11b-vision-instruct`.

@@ -1,0 +1,181 @@
+{
+  "name": "SIN-Team Workspace - Intake & Dispatch",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "team-workspace-intake",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        250,
+        300
+      ],
+      "id": "webhook-node",
+      "webhookId": "team-workspace-intake"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({json: {work_item: {id: 'wi-' + Date.now(), team: 'Team Workspace', source: item.json.source || 'webhook', priority: item.json.priority || 'medium', type: item.json.type || 'task', description: item.json.description || '', created_at: new Date().toISOString(), status: 'queued'}}});"
+      },
+      "name": "Normalize Work Item",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        470,
+        300
+      ],
+      "id": "normalize-node"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "tableId": "work_items",
+        "columns": {
+          "id": "={{ $json.work_item.id }}",
+          "team": "={{ $json.work_item.team }}",
+          "status": "={{ $json.work_item.status }}",
+          "priority": "={{ $json.work_item.priority }}",
+          "description": "={{ $json.work_item.description }}",
+          "created_at": "={{ $json.work_item.created_at }}"
+        }
+      },
+      "name": "Log to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        690,
+        300
+      ],
+      "id": "supabase-node"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/OpenSIN-AI/OpenSIN-backend/issues",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github+json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "=[{{ $json.work_item.priority }}] {{ $json.work_item.type }}"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json.work_item.description }}"
+            },
+            {
+              "name": "labels",
+              "value": "={{ $json.work_item.team }}, {{ $json.work_item.priority }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Create GitHub Issue",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        910,
+        300
+      ],
+      "id": "github-issue-node"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://92.5.60.87:8014/api/v1/tasks/claim",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "team",
+                "value": "Team Workspace"
+            },
+            {
+              "name": "issue_url",
+              "value": "={{ $json.html_url }}"
+            },
+            {
+              "name": "priority",
+              "value": "={{ $json.work_item.priority }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Dispatch to Hermes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1130,
+        300
+      ],
+      "id": "hermes-dispatch-node"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Work Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Work Item": {
+      "main": [
+        [
+          {
+            "node": "Log to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Create GitHub Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create GitHub Issue": {
+      "main": [
+        [
+          {
+            "node": "Dispatch to Hermes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  }
+}

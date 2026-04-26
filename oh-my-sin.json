@@ -59,11 +59,11 @@
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
-    "team-google-apps": {
-      "name": "Team Google Apps",
-      "description": "Google Workspace Integration \u2014 Docs, Sheets, Drive, Gmail",
+    "team-workspace-apps": {
+      "name": "Team Workspace Apps",
+      "description": "Workspace Integration \u2014 Docs, Sheets, Drive, Gmail",
       "manager": "A2A-SIN-Google-Apps",
-      "config_file": "my-sin-team-google-apps.json",
+      "config_file": "my-sin-team-workspace-apps.json",
       "members": [
         "A2A-SIN-Google-Docs",
         "A2A-SIN-Google-Sheets",
@@ -217,11 +217,11 @@
         "nvidia-nim/stepfun-ai/step-3.5-flash"
       ]
     },
-    "team-google": {
-      "name": "Team Google",
-      "description": "Google Workspace \u2014 Google-Apps, Google-Chat, Opal",
+    "team-workspace": {
+      "name": "Team Workspace",
+      "description": "Workspace \u2014 Apps, Chat, Opal",
       "manager": "A2A-SIN-Google",
-      "config_file": "my-sin-google.json",
+      "config_file": "my-sin-workspace.json",
       "members": [
         "A2A-SIN-Opal"
       ],

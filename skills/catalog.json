@@ -107,7 +107,7 @@
     "slug": "sin-a2a-agent-forge",
     "name": "sin-a2a-agent-forge",
     "title": "SIN A2A Agent Forge",
-    "description": "Create, standardize, or upgrade SIN A2A agents using the canonical SIN template, private GitHub repo provisioning, team-manager registry rules, Google Docs tab sync, A2A card requirements, and fleet validation. Use whenever a new SIN A2A agent must be built or an existing one must be brought up to the 2026 fleet standard.",
+    "description": "Create, standardize, or upgrade SIN A2A agents using the canonical SIN template, private GitHub repo provisioning, team-manager registry rules, workspace tab sync, A2A card requirements, and fleet validation. Use whenever a new SIN A2A agent must be built or an existing one must be brought up to the 2026 fleet standard.",
     "source": "/Users/jeremy/.config/opencode/skills/sin-a2a-agent-forge",
     "destination": "/Users/jeremy/.config/opencode/skills/sin-a2a-agent-forge"
   },
@@ -131,7 +131,7 @@
     "slug": "sin-vision-colab",
     "name": "sin-vision-colab",
     "title": "A2A-SIN-Vision-Colab",
-    "description": "Screen recording + AI vision analysis via google-colab-ai. Any agent can record screen, capture screenshots, and get AI analysis through Colab's free Gemini models. NO API KEY NEEDED — uses Google account auth.",
+    "description": "Screen recording + AI vision analysis via the local vision stack. Any agent can record screen, capture screenshots, and get AI analysis through the configured vision-capable models in the stack. NO extra API key required beyond provider auth.",
     "source": "/Users/jeremy/.config/opencode/skills/sin-vision-colab",
     "destination": "/Users/jeremy/.config/opencode/skills/sin-vision-colab"
   },
@@ -147,8 +147,16 @@
     "slug": "create-flow",
     "name": "create-flow",
     "title": "Create Flow",
-    "description": "Build interactive flows with atomic single-action steps, screenshot + vision gating, local brain evidence, and tiered autorun promotion (run → mini → low → high → max → full) only after 10 consecutive successful validations per tier. Vision analysis uses the current OpenAI GPT vision stack directly and writes detailed analysis artifacts alongside each step.",
+    "description": "Build interactive flows with atomic single-action steps, screenshot + vision gating, local brain evidence, and tiered autorun promotion (run → mini → low → high → max → full) only after 10 consecutive successful validations per tier. Vision analysis uses nvidia/meta/llama-3.2-11b-vision-instruct directly and writes detailed analysis artifacts alongside each step.",
     "source": "/Users/jeremy/.config/opencode/skills/create-flow",
     "destination": "/Users/jeremy/.config/opencode/skills/create-flow"
+  },
+  {
+    "slug": "video-check",
+    "name": "video-check",
+    "title": "Video Check",
+    "description": "Analyze local video files with token-efficient scene-change frame sampling and NVIDIA NIM vision using nvidia/meta/llama-3.2-11b-vision-instruct. Use when the user asks to summarize, inspect, or extract text and anomalies from a video.",
+    "source": "/Users/jeremy/.config/opencode/skills/video-check",
+    "destination": "/Users/jeremy/.config/opencode/skills/video-check"
   }
 ]

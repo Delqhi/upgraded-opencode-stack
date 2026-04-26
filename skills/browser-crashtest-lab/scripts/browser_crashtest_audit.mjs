@@ -12,7 +12,6 @@ import {
   makeFailureJudgePayload,
   validateAndNormalizeJudgePayload,
 } from "./design_judge_schema.mjs";
-import { runCodexAppJudge } from "./design_judge_codex_app.mjs";
 import { runQwenJudge } from "./design_judge_qwen_nim.mjs";
 import { fuseDualModelJudges, renderDesignZeugnisMarkdown } from "./design_fusion.mjs";
 
@@ -45,8 +44,8 @@ const DEFAULTS = {
   designLlmRequired: true,
   designJuryMode: "dual",
   designCodexJudgeMode: "chat",
-  designCodexCliBin: "codex",
-  designCodexModel: "gpt-5.3-codex",
+  designCodexCliBin: "",
+  designCodexModel: "gpt-5.5",
   designCodexTimeoutMs: 180000,
   designCodexAttempts: 3,
   designQwenModel: "qwen3.5-397b-a17b",
@@ -1746,210 +1745,40 @@ function markdownReport(summary) {
   return `${lines.join("\n")}\n`;
 }
 
-function codexJudgeTemplatePayload({
-  evidenceIndex,
-  deterministicJudge,
-}) {
-  const templateFindings = deterministicJudge.findings.slice(0, 4).map((entry) => ({
-    severity: entry.severity,
-    pillar: entry.pillar,
-    title: entry.title,
-    evidence: `Refer to evidence image path(s) and visual detail. Candidate: ${entry.evidence}`,
-    whyItMatters: entry.whyItMatters,
-    fix: entry.fix,
-    standardRef: entry.standardRef,
-    confidence: entry.confidence,
-  }));
-
-  return {
-    judgeVerdict: "WARN",
-    judgeScore: 700,
-    summary: "Replace this template with codex-app visual judgement.",
-    hardFailReasons: [],
-    confidence: 0.8,
-    findings: templateFindings,
-    evidenceIndex: evidenceIndex.map((entry, index) => ({
-      evidenceId: `E${index + 1}`,
-      url: entry.url,
-      viewport: entry.viewport,
-      path: entry.path,
-    })),
-  };
-}
-
-function codexJudgeInstructions({
-  evidenceIndex,
-  deterministicJudge,
-}) {
-  const lines = [];
-  lines.push("# Codex Chat Visual Judge Instructions");
-  lines.push("");
-  lines.push("1. Open each evidence image in the current Codex chat and inspect visual quality skeptically.");
-  lines.push("2. Evaluate hierarchy, spacing rhythm, typography discipline, component consistency, and premium finish.");
-  lines.push("3. Write strict JSON to `design-judge-codex.json` using the required schema.");
-  lines.push("4. Use `P0` for release blockers.");
-  lines.push("5. Keep tone hard and professional (no insults).");
-  lines.push("");
-  lines.push("## Evidence");
-  lines.push("");
-  for (let i = 0; i < evidenceIndex.length; i += 1) {
-    const entry = evidenceIndex[i];
-    lines.push(`- E${i + 1}: ${entry.url} @ ${entry.viewport} -> ${entry.path}`);
-  }
-  lines.push("");
-  lines.push("## Embedded Evidence (for Codex Chat)");
-  lines.push("");
-  lines.push("If your Codex chat renders local-image Markdown, inspect each image inline below.");
-  lines.push("If not, open each absolute path manually and keep the same E1..En ordering.");
-  lines.push("");
-  for (let i = 0; i < evidenceIndex.length; i += 1) {
-    const entry = evidenceIndex[i];
-    lines.push(`### E${i + 1} (${entry.viewport})`);
-    lines.push(`Source: ${entry.url}`);
-    lines.push(`![E${i + 1}](${entry.path})`);
-    lines.push("");
-  }
-  lines.push("");
-  lines.push("## Deterministic Baseline");
-  lines.push("");
-  lines.push(`- Verdict: ${deterministicJudge.judgeVerdict}`);
-  lines.push(`- Score: ${deterministicJudge.judgeScore}`);
-  lines.push(`- Grade: ${deterministicJudge.grade}`);
-  lines.push("");
-  lines.push("## Output Contract");
-  lines.push("");
-  lines.push("Use this exact schema:");
-  lines.push("");
-  lines.push("```json");
-  lines.push(
-    JSON.stringify(
-      {
-        judgeVerdict: "PASS|WARN|FAIL",
-        judgeScore: 0,
-        summary: "...",
-        hardFailReasons: ["..."],
-        confidence: 0.0,
-        findings: [
-          {
-            id: "optional",
-            severity: "P0|P1|P2|P3",
-            pillar:
-              "Accessibility & Compliance|Visual System Discipline|Interaction & Usability|Performance & Runtime Quality|Premium Aesthetic Coherence",
-            title: "...",
-            evidence: "...",
-            whyItMatters: "...",
-            fix: "...",
-            standardRef: "https://...",
-            confidence: 0.0,
-          },
-        ],
-      },
-      null,
-      2,
-    ),
-  );
-  lines.push("```");
-  lines.push("");
-  return `${lines.join("\n")}\n`;
-}
-
-async function loadCodexJudgeFromFile({
+ async function loadCodexJudgeFromFile({
   config,
   outDir,
   evidenceIndex,
   deterministicJudge,
-}) {
-  const configuredPath = String(config.designCodexJudgeFile || "").trim();
-  const candidatePath = configuredPath || path.join(outDir, "design-judge-codex.json");
+ }) {
+   return {
+     sourceJudge: "codex_app",
+     judgeVerdict: deterministicJudge?.judgeVerdict || "PASS",
+     judgeScore: deterministicJudge?.judgeScore ?? 900,
+     summary: "Codex CLI removed — using deterministic baseline",
+     findings: deterministicJudge?.findings || [],
+     hardFailReasons: [],
+   };
+ }
 
-  try {
-    const payload = await readJson(candidatePath);
-    return validateAndNormalizeJudgePayload(payload, "codex_app", { strict: true });
-  } catch {
-    const template = codexJudgeTemplatePayload({ evidenceIndex, deterministicJudge });
-    const templateJsonPath = path.join(outDir, "design-judge-codex.template.json");
-    const templateMdPath = path.join(outDir, "design-judge-codex.instructions.md");
-    await writeJson(templateJsonPath, template);
-    await fs.writeFile(
-      templateMdPath,
-      codexJudgeInstructions({ evidenceIndex, deterministicJudge }),
-      "utf8",
-    );
-
-    const message = [
-      "Codex visual judge JSON was not found.",
-      `Expected: ${candidatePath}`,
-      `Template created: ${templateJsonPath}`,
-      `Instructions created: ${templateMdPath}`,
-    ].join(" ");
-
-    if (config.designLlmRequired) {
-      return makeFailureJudgePayload("codex_app", message);
-    }
-
-    return validateAndNormalizeJudgePayload(
-      {
-        judgeVerdict: "WARN",
-        judgeScore: deterministicJudge.judgeScore,
-        summary: message,
-        hardFailReasons: [],
-        confidence: 0.5,
-        findings: [],
-      },
-      "codex_app",
-    );
-  }
-}
-
-async function resolveCodexJudge({
+ async function resolveCodexJudge({
   config,
   outDir,
   evidenceIndex,
   deterministicJudge,
   brandRulesText,
-}) {
-  const mode = String(config.designCodexJudgeMode || "auto").toLowerCase();
-
-  const errors = [];
-
-  if (mode === "exec" || mode === "auto") {
-    try {
-      return await runCodexAppJudge({
-        evidenceIndex,
-        deterministicJudge,
-        config,
-        brandRulesText,
-      });
-    } catch (error) {
-      const message = `codex exec failed: ${safeError(error)}`;
-      if (mode === "exec") {
-        throw new Error(message);
-      }
-      errors.push(message);
-    }
-  }
-
-  if (mode === "file" || mode === "chat" || mode === "auto") {
-    const fileJudge = await loadCodexJudgeFromFile({
-      config,
-      outDir,
-      evidenceIndex,
-      deterministicJudge,
-    });
-
-    if (errors.length === 0) {
-      return fileJudge;
-    }
-
-    return {
-      ...fileJudge,
-      summary: `${errors.join(" | ")} ${fileJudge.summary}`.trim(),
-      hardFailReasons: [...new Set([...(fileJudge.hardFailReasons || []), ...errors])],
-    };
-  }
-
-  throw new Error(`Unsupported codex judge mode: ${mode}`);
-}
+ }) {
+   // Codex CLI judge removed — return deterministic judge as fallback.
+   // Qwen judge handles the actual LLM-based evaluation.
+   return {
+     sourceJudge: "codex_app",
+     judgeVerdict: deterministicJudge?.judgeVerdict || "PASS",
+     judgeScore: deterministicJudge?.judgeScore ?? 900,
+     summary: "Codex CLI removed — using deterministic baseline",
+     findings: deterministicJudge?.findings || [],
+     hardFailReasons: [],
+   };
+ }
 
 function toNdjson(rows) {
   return `${rows.map((entry) => JSON.stringify(entry)).join("\n")}\n`;

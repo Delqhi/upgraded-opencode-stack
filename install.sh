@@ -10,6 +10,9 @@ SKIP_BUN=false
 OPENCODE_DIR="$HOME/.config/opencode"
 BIN_DIR="$HOME/.local/bin"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REQUIRED_OPENCODE_VERSION="${REQUIRED_OPENCODE_VERSION:-1.14.24}"
+OPENCODE_CANONICAL_BIN="$HOME/.opencode/bin/opencode"
+export REQUIRED_OPENCODE_VERSION
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -19,8 +22,92 @@ NC='\033[0m'
 
 log_info()  { echo -e "${BLUE}[INFO]${NC}  $1"; }
 log_ok()    { echo -e "${GREEN}[OK]${NC}    $1"; }
+log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $1"; }
 log_skip()  { echo -e "${YELLOW}[SKIP]${NC}  $1 (bereits vorhanden)"; }
+
+version_lt() {
+  python3 - "$1" "$2" <<'PYEOF'
+import re, sys
+
+def normalize(value: str) -> list[int]:
+    parts = [int(x) for x in re.findall(r"\d+", value)]
+    return (parts + [0, 0, 0])[:3]
+
+sys.exit(0 if normalize(sys.argv[1]) < normalize(sys.argv[2]) else 1)
+PYEOF
+}
+
+resolve_opencode_bin() {
+  if [ -x "$OPENCODE_CANONICAL_BIN" ]; then
+    printf '%s\n' "$OPENCODE_CANONICAL_BIN"
+    return 0
+  fi
+  if command -v opencode >/dev/null 2>&1; then
+    command -v opencode
+    return 0
+  fi
+  return 1
+}
+
+install_or_upgrade_opencode_cli() {
+  log_info "Installing OpenCode CLI $REQUIRED_OPENCODE_VERSION via official installer..."
+  if [ "$DRY_RUN" = false ]; then
+    curl -fsSL https://opencode.ai/install | env VERSION="$REQUIRED_OPENCODE_VERSION" bash -s -- --no-modify-path
+  fi
+}
+
+ensure_opencode_cli() {
+  local opencode_bin=""
+  local current_version=""
+
+  if opencode_bin="$(resolve_opencode_bin 2>/dev/null)"; then
+    current_version="$("$opencode_bin" --version 2>/dev/null | tr -d 'v' | awk '{print $NF}')"
+    if [ -z "$current_version" ] || version_lt "$current_version" "$REQUIRED_OPENCODE_VERSION"; then
+      log_warn "OpenCode CLI ${current_version:-unbekannt} ist zu alt; benötige >= $REQUIRED_OPENCODE_VERSION"
+      install_or_upgrade_opencode_cli
+    else
+      log_ok "OpenCode CLI: $opencode_bin ($current_version)"
+      return 0
+    fi
+  else
+    log_warn "OpenCode CLI nicht gefunden — installiere kanonische Version $REQUIRED_OPENCODE_VERSION"
+    install_or_upgrade_opencode_cli
+  fi
+
+  opencode_bin="$(resolve_opencode_bin 2>/dev/null || true)"
+  if [ -z "$opencode_bin" ]; then
+    log_error "OpenCode CLI konnte nicht installiert werden"
+    exit 1
+  fi
+
+  current_version="$("$opencode_bin" --version 2>/dev/null | tr -d 'v' | awk '{print $NF}')"
+  log_ok "OpenCode CLI: $opencode_bin (${current_version:-$REQUIRED_OPENCODE_VERSION})"
+}
+
+ensure_local_opencode_plugin_sdk() {
+  log_info "Syncing local @opencode-ai/plugin runtime package..."
+  if [ "$DRY_RUN" = false ]; then
+    mkdir -p "$OPENCODE_DIR"
+    python3 <<'PYEOF'
+import json, os
+
+path = os.path.expanduser("~/.config/opencode/package.json")
+required = os.environ["REQUIRED_OPENCODE_VERSION"]
+data = {}
+if os.path.exists(path):
+    with open(path) as f:
+        data = json.load(f)
+deps = data.setdefault("dependencies", {})
+deps["@opencode-ai/plugin"] = required
+with open(path, "w") as f:
+    json.dump(data, f, indent=2)
+    f.write("\n")
+PYEOF
+    npm install --save-exact --prefix "$OPENCODE_DIR" "@opencode-ai/plugin@$REQUIRED_OPENCODE_VERSION" >/dev/null
+  fi
+  log_ok "@opencode-ai/plugin auf $REQUIRED_OPENCODE_VERSION synchronisiert"
+}
 
 for arg in "$@"; do
   case $arg in
@@ -37,8 +124,7 @@ echo ""
 
 # 1. Prerequisites
 log_info "Checking prerequisites..."
-command -v opencode &>/dev/null || { log_error "OpenCode CLI nicht gefunden. Erst installieren: https://opencode.ai"; exit 1; }
-log_ok "OpenCode CLI: $(which opencode)"
+ensure_opencode_cli
 command -v node &>/dev/null || { log_error "Node.js nicht gefunden"; exit 1; }
 log_ok "Node.js: $(node --version)"
 command -v bun &>/dev/null || { log_error "bun nicht gefunden"; exit 1; }
@@ -48,6 +134,11 @@ echo ""
 # 2. Create directories
 mkdir -p "$OPENCODE_DIR" "$BIN_DIR"
 log_ok "Verzeichnisse bereit"
+if [ -x "$OPENCODE_CANONICAL_BIN" ]; then
+  [ "$DRY_RUN" = false ] && ln -sf "$OPENCODE_CANONICAL_BIN" "$BIN_DIR/opencode"
+  log_ok "Kanonischer opencode Wrapper nach $BIN_DIR/opencode verlinkt"
+fi
+ensure_local_opencode_plugin_sdk
 echo ""
 
 # 3. Install bun plugins (global — betrifft nur diese Machine)
@@ -69,14 +160,8 @@ for plugin in "opencode-antigravity-auth@1.6.5-beta.0" "oh-my-opencode@3.11.2"; 
 log_ok "opencode-openrouter-auth installiert"
 fi
 fi
-if [ -d "local-plugins/opencode-qwen-auth" ]; then
-# Qwen auth is shipped from this repository itself, so reinstalling it keeps
-# the runtime plugin aligned with the repo's canonical bug fixes.
-[ "$DRY_RUN" = false ] && cd "local-plugins/opencode-qwen-auth" && bun add -g . 2>&1 | tail -1 && cd "$SCRIPT_DIR"
-log_ok "opencode-qwen-auth aktualisiert"
-fi
 else
-log_info "Skipping bun plugin installs"
+  log_info "Skipping bun plugin installs"
 fi
 echo ""
 
@@ -159,10 +244,6 @@ fi
 
 log_info "Installing vendor..."
 sync_dir_additive "vendor" "$OPENCODE_DIR/vendor" "Vendor"
-
-log_info "Installing local qwen plugin copy..."
-sync_dir_overlay "local-plugins/opencode-qwen-auth" "$OPENCODE_DIR/local-plugins/opencode-qwen-auth" "Qwen Plugin"
-sync_dir_overlay "local-plugins/opencode-qwen-auth" "$HOME/.cache/opencode/node_modules/opencode-qwen-auth" "Qwen Plugin Cache"
 
 log_info "Installing nodriver-profiles..."
 sync_dir_additive "nodriver-profiles" "$OPENCODE_DIR/nodriver-profiles" "Nodriver Profiles"
@@ -263,9 +344,8 @@ for name, prov in src_providers.items():
         
         # Force sync critical options from source for providers where stale
         # local values are known to break auth or routing.
-        if name in {"modal", "qwen"}:
-            for k, v in src_opts.items():
-                tgt_opts[k] = v
+        if name in {"modal", "qwen", "openai"}:
+            tgt_opts = src_opts
         else:
             # For others, only add new options
             for k, v in src_opts.items():

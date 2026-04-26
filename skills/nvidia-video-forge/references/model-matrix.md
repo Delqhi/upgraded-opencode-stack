@@ -16,7 +16,7 @@ Hosted default endpoints are resolved in `video_forge.py` and can be overridden 
 
 | Judge mode | Transport | Default | Notes |
 | --- | --- | --- | --- |
-| `chat_bridge` | local bridge files + same chat session | yes | no `codex exec`; exits `3` awaiting `resume` |
+| `chat_bridge` | local bridge files + same chat session | yes | chat-based judge; exits `3` awaiting `resume` |
 | `nvidia_qa` | `video_qa_gate_openai_compat.py` with NVIDIA-compatible endpoint | no | strict technical + semantic + temporal gate |
 | `openai_api` | same QA wrapper with custom OpenAI-compatible base URL | no | for direct API judging |
 | `dual` | QA gate first, chat-bridge fallback | no | emits bridge when QA rejects |

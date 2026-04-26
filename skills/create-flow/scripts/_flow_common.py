@@ -319,9 +319,9 @@ def run_vision_command(
             [
                 "opencode",
                 "run",
-                f"Image: {screenshot}. {prompt} Answer exactly with PROCEED, RETRY, or STOP. Use the Antigravity plugin model google/antigravity-gemini-3-flash directly; never use the direct Gemini API.",
+                f"Image: {screenshot}. {prompt} Answer exactly with PROCEED, RETRY, or STOP. Use the model nvidia/meta/llama-3.2-11b-vision-instruct directly; never use the direct Gemini API.",
                 "--model",
-                "google/antigravity-gemini-3-flash",
+                "nvidia/meta/llama-3.2-11b-vision-instruct",
                 "--format",
                 "json",
             ],

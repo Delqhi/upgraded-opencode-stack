@@ -345,19 +345,13 @@
 
 ### 15. Team Research
 
-**Zweck:** Deep Research Agent — Autonome Recherche über Web, Foren und Social Media.
+**Zweck:** Deep Research Agent
 
 | Feld | Wert |
 |:---|:---|
 | **Manager** | `A2A-SIN-Research` |
 | **Config** | `my-sin-research.json` |
 | **Primary Model** | `google/antigravity-gemini-3.1-pro` |
-| **Search Engine** | `web_research` (SearXNG/DuckDuckGo Hybrid) |
-
-**Highlights:**
-- Nutzt das optimierte `web_research` Tool (kostenlos, anonym, SearXNG-Pool).
-- Spezialisierte Modi für **Foren** (Reddit, StackOverflow) und **Social Media** (X/Twitter, LinkedIn).
-- Integration mit `jina_reader` für sauberen Markdown-Content.
 
 **Mitglieder:**
 - `A2A-SIN-Research`

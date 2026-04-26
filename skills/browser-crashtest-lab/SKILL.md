@@ -36,10 +36,10 @@ For the second visual judge (NVIDIA Qwen), set:
 export NVIDIA_API_KEY="..."
 ```
 
-Ensure Codex CLI is available for the first visual judge:
+Ensure Qwen model is configured for the visual judge:
 
 ```bash
-command -v codex >/dev/null 2>&1
+opencode providers list | grep qwen
 ```
 
 ## Skill Path
@@ -92,17 +92,10 @@ node "$CRASHLAB" \
 
 4. Re-run after fixes and compare status and score deltas.
 
-5. Default Codex judge mode is `chat`: the skill writes a strict JSON template + instructions for this Codex chat model.
-   - use `--design-codex-judge-mode chat` (default)
-   - fill `output/browser-crashtest/design-judge-codex.json` from this chat review
-   - rerun the same command (or use `auto` to try `exec` first, then chat/file fallback)
-6. If you explicitly want CLI-driven codex runs, use:
-   - `--design-codex-judge-mode exec`
-7. If Codex CLI execution is blocked/unavailable and you intentionally disable strict LLM requirement, use:
-   - `--no-design-llm-required --design-codex-judge-mode file`
-   - `output/browser-crashtest/design-judge-codex.template.json`
-   - `output/browser-crashtest/design-judge-codex.instructions.md`
-   Then rerun the same command.
+5. Visual judge uses Qwen multimodal model (Codex CLI removed).
+   - Deterministic judge provides baseline score
+   - Qwen 3.5 provides LLM-based visual evaluation
+   - Fusion combines both for final verdict
 
 ## Key Tuning Flags
 
@@ -114,11 +107,7 @@ node "$CRASHLAB" \
   - `both`: run both and merge results for stricter audits.
 - `--design-zeugnis`: Enable strict design jury and professor-style design report.
 - `--design-llm-required`: Fail when any required judge is missing (default on).
-- `--design-jury-mode dual`: Use Codex app visual judge + NVIDIA Qwen 3.5.
-- `--design-codex-judge-mode auto|exec|chat|file`: Codex judge source (default `chat`).
-- `--design-codex-model <name>`: Codex model override for local CLI judge runs (default `gpt-5.3-codex`).
-- `--design-codex-timeout-ms <n>`: Timeout for Codex judge execution.
-- `--design-codex-attempts <n>`: Codex judge attempts (default `3`).
+- `--design-jury-mode dual`: Use deterministic baseline + Qwen 3.5.
 - `--design-fusion-mode union`: Fail if one judge fails.
 - `--design-qwen-endpoint <url>`: Optional explicit endpoint override if base URL routing differs.
 - `--design-qwen-model <name>`: Qwen model name (default `qwen3.5-397b-a17b`).
@@ -126,15 +115,13 @@ node "$CRASHLAB" \
 - `--design-viewports 390x844,768x1024,1440x900`: Multi-viewport evidence capture.
 - `--design-min-score-fail 920`: Hard fail threshold on 1000 scale.
 - `--design-max-evidence-images <n>`: Global cap for captured judge evidence.
-- `--design-codex-max-evidence-images <n>`: Codex-specific evidence cap (default `6`).
 - `--design-qwen-max-evidence-images <n>`: Qwen-specific evidence cap (default `18`).
-- `--design-codex-judge-file <path>`: Optional explicit path for codex judge JSON.
 
 ## What The Audit Enforces
 
 - Crawl + coverage: Discover internal pages by BFS and test them in parallel processes.
 - Link resilience: Open discovered links in a real browser by default and flag 4xx/5xx or request failures.
-- Interaction resilience: Attempt safe button/control clicks with per-page parallel micro-workers.
+- Interaction resilience: Attempt safe Button/control clicks with per-page parallel micro-workers.
 - Runtime stability: Capture `console` errors/warnings, `pageerror`, and failed network requests.
 - Accessibility baseline: Run axe-core (if installed).
 - Best-practice baseline: Run Lighthouse categories (`performance`, `accessibility`, `best-practices`, `seo`) on sampled pages.
@@ -147,9 +134,7 @@ node "$CRASHLAB" \
 
 ## Dual-Model Jury Mode
 
-- Judge A (no API, default): this Codex chat model reviews evidence and writes `design-judge-codex.json`.
-- Judge A optional CLI path: local `codex exec` with attached evidence images.
-- Judge A fallback artifact path: `design-judge-codex.template.json` + `design-judge-codex.instructions.md`.
+- Judge A: Deterministic baseline (no API needed, evaluates structure/performance metrics).
 - Judge B (API): NVIDIA Qwen 3.5 (`qwen3.5-397b-a17b`) runs multimodal judgement.
 - Fusion: `union` gate => if one judge says `FAIL`, final design verdict is `FAIL`.
 
@@ -165,7 +150,6 @@ node "$CRASHLAB" \
 - Missing required judge output with `--design-llm-required`.
 - Overall design score below `--design-min-score-fail`.
 - Critical WCAG/Core Web Vitals issues.
-- Codex CLI account quota/usage-limit errors in strict mode.
 
 ## Judge Disagreement
 

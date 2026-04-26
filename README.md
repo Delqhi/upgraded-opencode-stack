@@ -157,23 +157,22 @@ For full documentation, see the plugin README:
 | **4 Plugins** | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework | ✅ |
 | **27 MCP Servers** | sin-telegrambot, sin-google-apps, sin-terminal, webauto-nodriver, ... | ✅ |
 | **12 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
-| **5 Provider** | Google Antigravity, OpenAI, OpenRouter, Qwen, Modal (GLM-5.1) | ✅ |
+| **5 Provider** | NVIDIA NIM, OpenAI, Modal (GLM-5.1) | ✅ |
 | **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
 | **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start | ✅ |
 | **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
-| **Web Research (Free)** | Deep Research via SearXNG/DuckDuckGo (Ersetzt Google Search API) | ✅ |
 
 <details>
 <summary>Full Tool Surface — Alle Komponenten im Detail</summary>
 
-### Skills (44)
-`anonymous`, `awesome-opensin-design`, `browser-crashtest-lab`, `check-my-dev-in-web`, `check-plan-done`, `cloudflare-deploy`, `create-a2a`, `create-a2a-mcp`, `create-a2a-sin-agent`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `create-github-account`, `create-github-app`, `create-telegrambot`, `doc`, `enterprise-deep-debug`, `enterprise-parallel-exploration`, `gen-image`, `gen-thumb`, `gen-thumbnail`, `gen-veo`, `gitlab-storage`, `imagegen`, `new-google-login`, `nvidia-3d-forge`, `nvidia-video-forge`, `omoc-plan-swarm`, `opencode-subagent-delegation`, `pdf`, `plan`, `preview`, `self-healer`, `seo-import`, `sin-bridge`, `sin-vision-colab`, `sora`, `sovereign-repo-governance`, `sovereign-research`, `thumbnail-optimizer`, `undelete-login-google`, `vercel-deploy`, `visual-repo`
+### Skills (45)
+`anonymous`, `awesome-opensin-design`, `browser-crashtest-lab`, `check-my-dev-in-web`, `check-plan-done`, `cloudflare-deploy`, `create-a2a`, `create-a2a-mcp`, `create-a2a-sin-agent`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `create-github-account`, `create-github-app`, `create-telegrambot`, `doc`, `enterprise-deep-debug`, `enterprise-parallel-exploration`, `gen-image`, `gen-thumb`, `gen-thumbnail`, `gen-veo`, `gitlab-storage`, `imagegen`, `new-google-login`, `nvidia-3d-forge`, `nvidia-video-forge`, `omoc-plan-swarm`, `opencode-subagent-delegation`, `pdf`, `plan`, `preview`, `self-healer`, `seo-import`, `sin-bridge`, `sin-vision-colab`, `sora`, `sovereign-repo-governance`, `sovereign-research`, `thumbnail-optimizer`, `undelete-login-google`, `video-check`, `vercel-deploy`, `visual-repo`
 
-### Plugins (4)
-`opencode-antigravity-auth` (Token Rotation), `oh-my-opencode` (Framework), `opencode-qwen-auth` (Qwen OAuth), `opencode-openrouter-auth` (OpenRouter Proxy)
+### Plugins (3)
+`oh-my-opencode` (Framework), `opencode-openrouter-auth` (OpenRouter Proxy), `opencode-antigravity-auth` (Token Rotation)
 
 ### MCP Servers (27)
-`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-google-apps`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `webauto-nodriver`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`
+`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `webauto-nodriver`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`, `video-check`
 
 </details>
 
@@ -284,7 +283,6 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 | `omoc-status` | Swarm Members anzeigen |
 | `sin-terminal-orchestrate` | SIN-Terminal — parallele Sessions steuern |
 | `sin-zeus-bootstrap` | GitHub Project + Issue Pool aus Zeus Plan |
-| `web-research` | Deep Research (Free, Anonym, Forum-Focus) |
 
 <details>
 <summary>Alle 13 Commands</summary>
@@ -434,11 +432,6 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 ---
 
 ## Changelog
-
-### v2.2.3 (2026-04-21)
-- **Web Research (Free)** — Ersetzt das kostenpflichtige `google_search` Tool durch einen stabilen SearXNG/DuckDuckGo-Hybrid.
-- **Forum/Social Focus** — Direkte Unterstützung für Recherche auf Reddit, StackOverflow und X/Twitter ohne zusätzliche Keys.
-- **Security** — Google Cloud Projekt Abhängigkeiten (`rising-fact-p41fc`) für Suchen vollständig entfernt.
 
 ### v2.2.2 (2026-04-16)
 - **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification

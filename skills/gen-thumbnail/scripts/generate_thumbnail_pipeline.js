@@ -11,9 +11,9 @@ const OUT = {
 
 const DEFAULT_BRAND = {
   name: "OpenSIN Profit Thumbnail System",
-  generation_backend: "opencode-image-flow",
+  generation_backend: "generate-image",
   image_command: "\\generate-image",
-  model_hint: "google/antigravity-gemini-3-flash",
+  model_hint: "nvidia/meta/llama-3.2-11b-vision-instruct",
   output_source_dir: ".opencode/generated-images/",
   reference_style: "left-dominant mascot, right-stacked headline, neon green/yellow money visuals, dark background, glossy high-contrast YouTube thumbnail",
   palette: {
@@ -188,7 +188,7 @@ function latestGeneratedImage() {
 
 function runImage(prompt, fileName) {
   const message = `\\generate-image ${prompt}; file name should be ${fileName}; save it at .opencode/generated-images`;
-  execFileSync("opencode", ["run", message, "--model=google/antigravity-gemini-3-flash", "--format", "json"], {
+  execFileSync("opencode", ["run", message, "--model=nvidia/meta/llama-3.2-11b-vision-instruct", "--format", "json"], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
   });

@@ -1,0 +1,21 @@
+{
+  "name": "opencode-openai-codex-bridge",
+  "version": "0.1.0",
+  "description": "Reuse ChatGPT Codex OAuth for OpenCode openai/gpt-5.5 requests",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.14.24"
+  },
+  "keywords": [
+    "opencode",
+    "openai",
+    "codex",
+    "oauth",
+    "gpt-5.5"
+  ],
+  "license": "MIT"
+}

@@ -167,7 +167,8 @@ All options can be overridden via environment variables:
 | Model              | Context Window | Features                     |
 | ------------------ | -------------- | ---------------------------- |
 | `qwen3-coder-plus` | 1M tokens      | Optimized for coding tasks   |
-| `qwen3-vl-plus`    | 256K tokens    | Vision + language multimodal |
+
+**Note:** The `qwen3-vl-plus` vision model is no longer supported via the Qwen OAuth API.
 
 ## Multi-Account Rotation
 

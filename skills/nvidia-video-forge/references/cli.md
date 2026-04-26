@@ -53,7 +53,7 @@ Judge loop:
 
 - `--judge-mode {chat_bridge,nvidia_qa,openai_api,dual}` (default: `chat_bridge`)
 - `--judge-model <name>`
-- `--judge-model-alias <name>` (default: `gpt-5.3-codex`)
+- `--judge-model-alias <name>` (default: `gpt-5.5`)
 - `--judge-base-url <https-url>`
 - `--judge-max-iterations <int>` (default: `6`)
 - `--judge-max-minutes <int>` (default: `45`)

@@ -2,12 +2,7 @@
   "team": {
     "name": "Team Research",
     "manager": "A2A-SIN-Research",
-    "description": "Deep Research Agent — Autonome Recherche über Web, Foren und Social Media",
-    "tools": [
-      "web_research",
-      "jina_reader",
-      "scrape_site"
-    ]
+    "description": "Deep Research Agent"
   },
   "agents": {},
   "categories": {

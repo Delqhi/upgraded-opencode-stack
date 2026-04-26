@@ -66,9 +66,9 @@ build_model_chain() {
   models_to_try=()
 
   local chain_raw="${OPENCODE_MODEL_FALLBACK_CHAIN:-}"
-  local primary="${model_arg:-${OPENCODE_PRIMARY_MODEL:-google/gemini-3.1-pro-preview}}"
-  local fallback="${OPENCODE_FALLBACK_MODEL:-google/gemini-3-flash-preview}"
-  local tertiary="${OPENCODE_TERTIARY_FALLBACK_MODEL:-${OPENCODE_NIM_FALLBACK_MODEL:-nvidia-nim/qwen-3.5-397b}}"
+  local primary="${model_arg:-${OPENCODE_PRIMARY_MODEL:-nvidia-nim/stepfun-ai/step-3.5-flash}}"
+  local fallback="${OPENCODE_FALLBACK_MODEL:-nvidia-nim/stepfun-ai/step-3.5-flash}"
+  local tertiary="${OPENCODE_TERTIARY_FALLBACK_MODEL:-${OPENCODE_NIM_FALLBACK_MODEL:-nvidia-nim/stepfun-ai/step-3.5-flash}}"
   local fallback_enabled="${OPENCODE_ENABLE_MODEL_FALLBACK:-1}"
   local tertiary_enabled="${OPENCODE_ENABLE_TERTIARY_FALLBACK:-1}"
 

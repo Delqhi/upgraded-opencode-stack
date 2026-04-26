@@ -317,7 +317,7 @@ def vision_gate(step_name: str, expected: str) -> str:
             "run",
             f"Image: {screenshot_path}. {prompt}",
             "--model",
-            "google/antigravity-gemini-3-flash",
+            "nvidia/meta/llama-3.2-11b-vision-instruct",
             "--format",
             "json",
         ]

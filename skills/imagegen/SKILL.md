@@ -198,11 +198,9 @@ Asset-type templates (website assets, game assets, wireframes, logo) are consoli
 ## CLI + environment notes
 - CLI commands + examples: `references/cli.md`
 - API parameter quick reference: `references/image-api.md`
-- If network approvals / sandbox settings are getting in the way: `references/codex-network.md`
 
 ## Reference map
 - **`references/cli.md`**: how to *run* image generation/edits/batches via `scripts/gemini_image_router.py` (commands, flags, env, recipes).
 - **`references/image-api.md`**: current provider order, official model IDs, and environment expectations.
 - **`references/prompting.md`**: prompting principles (structure, constraints/invariants, iteration patterns).
 - **`references/sample-prompts.md`**: copy/paste prompt recipes (generate + edit workflows; examples only).
-- **`references/codex-network.md`**: environment/sandbox/network-approval troubleshooting.

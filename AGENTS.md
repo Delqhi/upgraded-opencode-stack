@@ -1058,8 +1058,9 @@ browser = await uc.start(
 | Model ID | Name |
 |----------|------|
 | `openai/gpt-5.2` | GPT-5.2 |
-| `openai/gpt-5.2-codex` | GPT-5.2 Codex |
-| `openai/gpt-5.2-codex-mini` | GPT-5.2 Codex Mini |
+| `openai/gpt-5.5` | GPT-5.5 |
+| `openai/gpt-5.5-fast` | GPT-5.5 Fast |
+| `openai/gpt-5.5-pro` | GPT-5.5 Pro |
 
 #### NVIDIA NIM
 | Model ID | Name |
@@ -1139,7 +1140,7 @@ Format-Vorlage:
 
 - When creating new `SIN-Solver` A2A agents, treat code, docs, agent card, dashboard/workforce registry, landing linkage, and OpenCode/MCP wiring as one deployment unit.
 - Do not stop after code generation. A new A2A agent must also have:
-  - `agent.json`, `A2A-CARD.md`, `AGENTS.md`, `mcp-config.json`, `clients/opencode-mcp.json`, `clients/codex-config.toml`
+  - `agent.json`, `A2A-CARD.md`, `AGENTS.md`, `mcp-config.json`, `clients/opencode-mcp.json`
   - `.well-known/agent-card.json`, `.well-known/agent.json`, `.well-known/oauth-client.json`
   - repo `.opencode/opencode.json` MCP entry
   - global OpenCode MCP/config entry if the agent should be available globally

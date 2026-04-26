@@ -141,7 +141,6 @@ Use these modules when the request is for a specific artifact. They provide targ
 - Prompting guidance: `references/prompting.md`
 - Sample prompts: `references/sample-prompts.md`
 - Troubleshooting: `references/troubleshooting.md`
-- Network/sandbox tips: `references/codex-network.md`
 
 ## Reference map
 - **`references/cli.md`**: how to run create/poll/remix/download/batch via `scripts/sora.py`.
@@ -151,4 +150,3 @@ Use these modules when the request is for a specific artifact. They provide targ
 - **`references/cinematic-shots.md`**: templates for filmic shots.
 - **`references/social-ads.md`**: templates for short social ad beats.
 - **`references/troubleshooting.md`**: common errors and fixes.
-- **`references/codex-network.md`**: network/approval troubleshooting.
