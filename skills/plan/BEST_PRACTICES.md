@@ -79,7 +79,7 @@ Located at `~/.config/opencode/skills/plan/templates/`:
 ## 3. GCP Configuration
 
 ### Project: `artificial-biometrics`
-- **Account**: `zukunftsorientierte.energie@gmail.com`
+- **Account**: `user@example.com`
 - **Service Account**: `ki-agent@artificial-biometrics.iam.gserviceaccount.com`
 - **Key**: `~/.config/opencode/auth/google/service-account.json`
 - **APIs Enabled**: 41 (including Secret Manager, Gemini, YouTube, Drive, etc.)

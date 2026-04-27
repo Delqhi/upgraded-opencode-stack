@@ -128,7 +128,7 @@ Every new Team Manager MUST scaffold workers with awareness of OpenSIN's full ca
 ## Google account matrix
 
 - Team agents that touch Google Docs/Drive must inherit the global matrix in `~/.config/opencode/google-account-matrix.json`.
-- Do not guess accounts. Existing Docs -> `zukunftsorientierte.energie@gmail.com`; Admin/Workspace -> `info@zukunftsorientierte-energie.de`; server jobs only on explicitly shared surfaces -> `ki-agent@artificial-biometrics.iam.gserviceaccount.com`.
+- Do not guess accounts. Existing Docs -> `user@example.com`; Admin/Workspace -> `info@example.com`; server jobs only on explicitly shared surfaces -> `ki-agent@artificial-biometrics.iam.gserviceaccount.com`.
 - Prefer `sin-document-forge` for new high-speed enterprise documents.
 
 - Google Docs access must use the Google account matrix plus the `sin-google-docs` commands `ensure-access`, `ensure-patent-structure`, and `replace-patent-tabs` when relevant.

@@ -293,7 +293,7 @@ Use the skill's helper scripts to reduce hidden setup drift and make agent creat
 
 As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents never sleep due to API rate limits, are ready for the SIN Solver Web Marketplace, and proactively generate value:
 
-1. **The Producer (Mac-Token-Refresh-Service):** The Mac runs `opencodex-auth-Token-Refresh-Service` endlessly, using Temp-Mail Premium to generate fresh OpenAI tokens, and pushes them straight into the `sin-supabase` table (`openai_tokens`) with status `is_active=true`.
+1. **The Producer (Mac-Token-Refresh-Service):** The Mac runs `opencodex-auth-Token-Refresh-Service` endlessly, using Temp-Mail Premium to generate fresh OpenAI tokens, and pushes them straight into the `sin-supabase` table (`token_store`) with status `is_active=true`.
 2. **The Consumers (HF VMs & OCI):** HF VMs and other runtimes are pure consumers. They **DO NOT** run Chrome or temp-mail scripts.
 3. **The Pull Script:** Every agent must execute `hf_pull_script.py` before invoking LLMs. When an agent hits a rate limit, the script pulls a fresh token from Supabase in 0.2 seconds and overwrites the local `auth.json`.
 4. **The OpenCode CLI Standard (CRITICAL):** EVERY general A2A agent MUST be equipped with the `opencode` CLI as its brain. You MUST use the model `opencode/qwen3.6-plus-free` and explicitly append `--fallback opencode/nemotron-3-super-free`. Only specialized agents (e.g., Voice, multimodal-looker) may deviate from this.
@@ -566,8 +566,8 @@ OpenSIN-AI is now **100% feature-equivalent + superior** to Claude Code in all c
 ## Google account matrix
 
 - New agents that touch Google Docs/Drive must follow `~/.config/opencode/google-account-matrix.json` and `~/.config/opencode/GOOGLE-ACCOUNTS.md`.
-- Existing Docs in My Drive -> `zukunftsorientierte.energie@gmail.com` via `oauth_user`.
-- Admin/Workspace tasks -> `info@zukunftsorientierte-energie.de` via `oauth_user`.
+- Existing Docs in My Drive -> `user@example.com` via `oauth_user`.
+- Admin/Workspace tasks -> `info@example.com` via `oauth_user`.
 - Service account `ki-agent@artificial-biometrics.iam.gserviceaccount.com` only for explicitly shared or service-account-owned files/folders.
 - For new enterprise docs, prefer offline `.docx` generation via `sin-document-forge` into `/Users/jeremy/Google Drive/Geteilte Ablagen/OpenSolver-Repo in Organisation verschieben`.
 

@@ -3,12 +3,12 @@
 Automatisierte Wiederherstellung gelöschter Google Workspace Accounts und Login in Chrome.
 
 ## WANN VERWENDEN
-- Wenn ein alter Google Workspace Account (@zukunftsorientierte-energie.de) wiederhergestellt werden muss
+- Wenn ein alter Google Workspace Account (@example.com) wiederhergestellt werden muss
 - Wenn ein Agent einen Google Account in Chrome eingeloggt braucht
 - Wenn Google Account-Erstellung blockiert ist (412 "abusive behavior")
 
 ## KRITISCHE INFOS
-- Google Workspace Domain: `zukunftsorientierte-energie.de`
+- Google Workspace Domain: `example.com`
 - Token-Refresh-Service Passwort: `ZOE.jerry2024`
 - Chrome Port für Token-Refresh-Service: `7656`
 - Mindestante für Restore: 170 Stunden (7 Tage)
