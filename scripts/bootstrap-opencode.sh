@@ -5,7 +5,7 @@ set -euo pipefail
 # This ensures IMPOSSIBLE to have drift - local files ARE the global file
 
 GLOBAL_CONFIG="$HOME/.config/opencode/opencode.json"
-GIT_GLOBAL_CONFIG="$HOME/.open-auth-rotator/opencode.json"
+GIT_GLOBAL_CONFIG="$GLOBAL_CONFIG"
 
 echo "=== OpenCode Config Bootstrap ==="
 
