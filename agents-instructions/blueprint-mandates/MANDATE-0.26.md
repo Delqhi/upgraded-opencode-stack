@@ -54,6 +54,7 @@
 ## Projekt: [Name]
 
 ### Meilensteine
+
 1. **[Phase 1]** - [Beschreibung]
    - Erwartung: [Was soll erreicht werden]
    - Akzeptanzkriterien: [Messbare Kriterien]
@@ -61,12 +62,14 @@
    - Status: [PLANNED/IN_PROGRESS/DONE]
 
 ### Potenzielle Fehler & Vermeidung
-| Fehler | Wahrscheinlichkeit | Prävention | Fallback |
-|--------|-------------------|------------|----------|
-| [DB Timeout] | Hoch | Connection Pooling | Retry-Logic |
-| [CORS Error] | Mittel | Korrekte Headers | Proxy Config |
+
+| Fehler       | Wahrscheinlichkeit | Prävention         | Fallback     |
+| ------------ | ------------------ | ------------------ | ------------ |
+| [DB Timeout] | Hoch               | Connection Pooling | Retry-Logic  |
+| [CORS Error] | Mittel             | Korrekte Headers   | Proxy Config |
 
 ### Aktuelle Phase
+
 **Phase:** [X von Y]  
 **Status:** [Status]  
 **Blocker:** [Keine / Liste]  

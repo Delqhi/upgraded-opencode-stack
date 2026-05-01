@@ -12,11 +12,11 @@ description: ULTIMATE A2A creation skill — creates SIN Agents, SIN Teams, and 
 
 ## 📋 Was dieser Skill kann
 
-| Erstelle | Zweck | Workflow |
-|:---|:---|:---|
-| **SIN Agent** | Einzelner A2A Agent (z.B. `A2A-SIN-Google-Docs`) | Template-SIN-Agent |
-| **SIN Team** | Team Manager (z.B. `Team-SIN-Survey`) | Template-SIN-Team |
-| **SIN Coder** | Entwickler-Agent (z.B. `A2A-SIN-Frontend`) | Template-SIN-Agent + Coder-Mandate |
+| Erstelle      | Zweck                                            | Workflow                           |
+| :------------ | :----------------------------------------------- | :--------------------------------- |
+| **SIN Agent** | Einzelner A2A Agent (z.B. `A2A-SIN-Google-Docs`) | Template-SIN-Agent                 |
+| **SIN Team**  | Team Manager (z.B. `Team-SIN-Survey`)            | Template-SIN-Team                  |
+| **SIN Coder** | Entwickler-Agent (z.B. `A2A-SIN-Frontend`)       | Template-SIN-Agent + Coder-Mandate |
 
 **Alle drei nutzen jetzt EIN Template:** Template-SIN-Agent (fusioniert aus Template-SIN-Agent, Template-SIN-Agent-Worker, Template-SIN-Worker).
 
@@ -28,17 +28,17 @@ Jeder neue Agent wird dem richtigen **A2A Team** zugeordnet und erbt dessen Mode
 
 ### Team-Register (oh-my-sin.json)
 
-| Team | Manager | Config-Datei | Primaer-Modell |
-|:---|:---|:---|:---|
-| **Team Coding** | A2A-SIN-Zeus | `my-sin-team-code.json` | `claude-sonnet-4-6` |
-| **Team Worker** | A2A-SIN-Team-Worker | `my-sin-team-worker.json` | `gemini-3-flash` |
-| **Team Infrastructure** | A2A-SIN-Team-Infrastructure | `my-sin-team-infrastructure.json` | `gpt-5.4` |
+| Team                    | Manager                     | Config-Datei                      | Primaer-Modell      |
+| :---------------------- | :-------------------------- | :-------------------------------- | :------------------ |
+| **Team Coding**         | A2A-SIN-Zeus                | `my-sin-team-code.json`           | `claude-sonnet-4-6` |
+| **Team Worker**         | A2A-SIN-Team-Worker         | `my-sin-team-worker.json`         | `gemini-3-flash`    |
+| **Team Infrastructure** | A2A-SIN-Team-Infrastructure | `my-sin-team-infrastructure.json` | `gpt-5.4`           |
 
 ### Subagenten-Modelle (oh-my-openagent.json)
 
-| Subagent | Modell | Fallback-Kette |
-|:---|:---|:---|
-| **explore** | `nvidia-nim/stepfun-ai/step-3.5-flash` | gemini-3-flash → gpt-5.4 → gemini-3.1-pro → claude-sonnet → qwen |
+| Subagent      | Modell                                 | Fallback-Kette                                                   |
+| :------------ | :------------------------------------- | :--------------------------------------------------------------- |
+| **explore**   | `nvidia-nim/stepfun-ai/step-3.5-flash` | gemini-3-flash → gpt-5.4 → gemini-3.1-pro → claude-sonnet → qwen |
 | **librarian** | `nvidia-nim/stepfun-ai/step-3.5-flash` | gemini-3-flash → gpt-5.4 → gemini-3.1-pro → claude-sonnet → qwen |
 
 ### PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)
@@ -73,25 +73,25 @@ node ~/.config/opencode/skills/create-a2a-sin-agent/scripts/a2a-preflight.mjs --
 
 ### Pflicht-Dateien (jeder SIN Agent)
 
-| Datei | Zweck |
-|:---|:---|
-| `agent.json` | Identitaet, capabilities, marketplace object |
-| `A2A-CARD.md` | Agent Card fuer Discovery |
-| `mcp-config.json` | MCP Server Konfiguration |
-| `clients/opencode-mcp.json` | OpenCode MCP Client |
-| `src/runtime.ts` | Runtime mit opencode CLI Integration |
-| `src/mcp-server.ts` | MCP Server Oberflaeche |
-| `src/a2a-http.ts` | A2A HTTP Endpoint |
-| `src/metadata.ts` | Metadata mit marketplace object |
-| `src/cli.ts` | Native CLI Entry Point |
-| `scripts/hf_pull_script.py` | Token Pull Script (Producer-Consumer) |
-| `scripts/complete-install.sh` | Idempotenter Installations-Script |
-| `governance/repo-governance.json` | Repo Governance |
-| `governance/pr-watcher.json` | PR Watcher Contract |
-| `platforms/registry.json` | Platform Registry |
-| `n8n-workflows/inbound-intake.json` | Inbound Work Intake |
-| `docs/03_ops/inbound-intake.md` | Inbound Intake Doku |
-| `scripts/watch-pr-feedback.sh` | PR Feedback Watcher |
+| Datei                               | Zweck                                        |
+| :---------------------------------- | :------------------------------------------- |
+| `agent.json`                        | Identitaet, capabilities, marketplace object |
+| `A2A-CARD.md`                       | Agent Card fuer Discovery                    |
+| `mcp-config.json`                   | MCP Server Konfiguration                     |
+| `clients/opencode-mcp.json`         | OpenCode MCP Client                          |
+| `src/runtime.ts`                    | Runtime mit opencode CLI Integration         |
+| `src/mcp-server.ts`                 | MCP Server Oberflaeche                       |
+| `src/a2a-http.ts`                   | A2A HTTP Endpoint                            |
+| `src/metadata.ts`                   | Metadata mit marketplace object              |
+| `src/cli.ts`                        | Native CLI Entry Point                       |
+| `scripts/hf_pull_script.py`         | Token Pull Script (Producer-Consumer)        |
+| `scripts/complete-install.sh`       | Idempotenter Installations-Script            |
+| `governance/repo-governance.json`   | Repo Governance                              |
+| `governance/pr-watcher.json`        | PR Watcher Contract                          |
+| `platforms/registry.json`           | Platform Registry                            |
+| `n8n-workflows/inbound-intake.json` | Inbound Work Intake                          |
+| `docs/03_ops/inbound-intake.md`     | Inbound Intake Doku                          |
+| `scripts/watch-pr-feedback.sh`      | PR Feedback Watcher                          |
 
 ---
 
@@ -108,12 +108,12 @@ node ~/.config/opencode/skills/create-a2a-sin-agent/scripts/a2a-preflight.mjs --
 
 ### Team Manager Pflicht-Dateien
 
-| Datei | Zweck |
-|:---|:---|
-| `agent.json` | Team Manager Identitaet |
-| `A2A-CARD.md` | Team Card |
-| `src/manager.ts` | Hermes Dispatch Logik |
-| `src/cli.ts` | Native CLI |
+| Datei            | Zweck                   |
+| :--------------- | :---------------------- |
+| `agent.json`     | Team Manager Identitaet |
+| `A2A-CARD.md`    | Team Card               |
+| `src/manager.ts` | Hermes Dispatch Logik   |
+| `src/cli.ts`     | Native CLI              |
 
 ---
 
@@ -132,14 +132,14 @@ Coder Agents nutzen denselben Workflow wie SIN Agents, ZUSAETZLICH mit:
 
 ### Coder-spezifische Dateien
 
-| Datei | Zweck |
-|:---|:---|
-| `config/github-app-routing.example.json` | GitHub App Bot Routing |
-| `governance/coder-dispatch-matrix.json` | Coder Spezialisierungs-Matrix |
-| `.githooks/pre-commit` | Secret + External Code Detection |
-| `.githooks/pre-push` | Commit Message Leak Detection |
-| `.secrets.baseline` | Detect-Secrets Baseline |
-| `.github/workflows/leak-prevention.yml` | CI Security Scanning |
+| Datei                                    | Zweck                            |
+| :--------------------------------------- | :------------------------------- |
+| `config/github-app-routing.example.json` | GitHub App Bot Routing           |
+| `governance/coder-dispatch-matrix.json`  | Coder Spezialisierungs-Matrix    |
+| `.githooks/pre-commit`                   | Secret + External Code Detection |
+| `.githooks/pre-push`                     | Commit Message Leak Detection    |
+| `.secrets.baseline`                      | Detect-Secrets Baseline          |
+| `.github/workflows/leak-prevention.yml`  | CI Security Scanning             |
 
 ---
 
@@ -167,6 +167,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 ```
 
 **REGELN — SOFORTIGER BAN BEI VERSTOSS:**
+
 - `opencode run --format json` = EINZIG ERLAUBT
 - OCI-Proxy direkt = VERBOTEN
 - Gemini API direkt = PERMANENT VERBOTEN
@@ -178,6 +179,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 ## 🏗️ Unified Template: Template-SIN-Agent
 
 **Drei Templates wurden zu EINEM fusioniert:**
+
 - `Template-SIN-Agent` (Basis)
 - `Template-SIN-Agent-Worker` (Worker)
 - `Template-SIN-Worker` (Minimal)
@@ -185,6 +187,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 **→ Jetzt: `Template-SIN-Agent` (all-in-one)**
 
 Jeder neue Agent nutzt dieses eine Template und konfiguriert sich via `agent.json`:
+
 - `type: "agent"` — Standard Agent
 - `type: "worker"` — Worker Agent (minimal)
 - `type: "coder"` — Coder Agent (mit LangGraph + Security)
@@ -215,4 +218,4 @@ node ~/.config/opencode/skills/create-a2a-sin-agent/scripts/a2a-verify-hf-vm-rea
 
 ---
 
-*Letzte Aktualisierung: 2026-04-14 | ULTIMATE SKILL v1.0*
+_Letzte Aktualisierung: 2026-04-14 | ULTIMATE SKILL v1.0_

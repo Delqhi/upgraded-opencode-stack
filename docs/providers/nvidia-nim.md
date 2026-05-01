@@ -5,6 +5,7 @@
 OpenCode 1.3.10+ verwendet standardmäßig die OpenAI **Responses API** (`/v1/responses`) für alle OpenAI-kompatiblen Provider. NVIDIA NIM unterstützt jedoch **nur** die Chat Completions API (`/v1/chat/completions`).
 
 **Fehler ohne Lösung:**
+
 ```
 APIError: Not Found: 404 page not found
 URL: https://integrate.api.nvidia.com/v1/responses
@@ -21,6 +22,7 @@ NVIDIA_API_KEY=nvapi-xxx node ~/.config/opencode/scripts/nvidia-proxy.js &
 ```
 
 Der Proxy läuft auf `http://127.0.0.1:4199` und:
+
 - Übersetzt `/v1/responses` → `/v1/chat/completions`
 - Konvertiert `input` → `messages` Format
 - Forwarded alle anderen Requests unverändert
@@ -56,12 +58,12 @@ In `~/.config/opencode/opencode.json`:
 
 ## Verfügbare Modelle
 
-| Modell | ID | Context | Max Output |
-|--------|-----|---------|------------|
-| Minimax M2.7 | minimaxai/minimax-m2.7 | 204,800 | 8,192 |
-| Qwen 3.5 122B | qwen/qwen3.5-122b-a10b | 262,144 | 32,768 |
-| Qwen 3.5 397B | qwen/qwen3.5-397b-a17b | 262,144 | 32,768 |
-| Step 3.5 Flash | stepfun-ai/step-3.5-flash | 262,144 | 32,768 |
+| Modell         | ID                        | Context | Max Output |
+| -------------- | ------------------------- | ------- | ---------- |
+| Minimax M2.7   | minimaxai/minimax-m2.7    | 204,800 | 8,192      |
+| Qwen 3.5 122B  | qwen/qwen3.5-122b-a10b    | 262,144 | 32,768     |
+| Qwen 3.5 397B  | qwen/qwen3.5-397b-a17b    | 262,144 | 32,768     |
+| Step 3.5 Flash | stepfun-ai/step-3.5-flash | 262,144 | 32,768     |
 
 ## Verwendung
 
@@ -76,12 +78,14 @@ opencode run "Deine Frage" --model nvidia-nim/minimax-m2.7
 ## Troubleshooting
 
 **Proxy läuft nicht:**
+
 ```bash
 ps aux | grep nvidia-proxy
 lsof -i :4199
 ```
 
 **API Key prüfen:**
+
 ```bash
 curl -s -X POST "https://integrate.api.nvidia.com/v1/chat/completions" \
   -H "Authorization: Bearer $NVIDIA_API_KEY" \
@@ -90,6 +94,7 @@ curl -s -X POST "https://integrate.api.nvidia.com/v1/chat/completions" \
 ```
 
 **Logs prüfen:**
+
 ```bash
 tail -f /tmp/nvidia-proxy.log
 ```

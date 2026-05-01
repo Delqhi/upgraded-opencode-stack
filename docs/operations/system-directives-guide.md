@@ -15,17 +15,17 @@ Nachrichtentext...
 
 ### Eingebaute Directive Types
 
-| Type | Wann ausgelöst | Quelle |
-|------|----------------|--------|
-| `TODO CONTINUATION` | Agent wird idle, Todos sind offen | `todo-continuation-enforcer` Hook |
-| `RALPH LOOP` | Ralph Loop Fortsetzung | `ralph-loop` Hook |
-| `BOULDER CONTINUATION` | Boulder-Plan mit offenen Tasks | `boulder-continuation` Hook |
-| `DELEGATION REQUIRED` | Aufgabe muss delegiert werden | `sisyphus-junior-notepad` Hook |
-| `SINGLE TASK ONLY` | Nur eine Aufgabe bearbeiten | `sisyphus-junior-notepad` Hook |
-| `WORK STOP BRAIN CHECK` | Arbeit stoppen, Brain-/Todo-State final prüfen | `brain-sync-enforcer` Hook |
-| `COMPACTION CONTEXT` | Nach Context-Kompaktierung | `context-window-monitor` Hook |
-| `CONTEXT WINDOW MONITOR` | Context-Fenster > 70% voll | `context-window-monitor` Hook |
-| `PROMETHEUS READ-ONLY` | Prometheus Planner Modus | `start-work` Hook |
+| Type                     | Wann ausgelöst                                 | Quelle                            |
+| ------------------------ | ---------------------------------------------- | --------------------------------- |
+| `TODO CONTINUATION`      | Agent wird idle, Todos sind offen              | `todo-continuation-enforcer` Hook |
+| `RALPH LOOP`             | Ralph Loop Fortsetzung                         | `ralph-loop` Hook                 |
+| `BOULDER CONTINUATION`   | Boulder-Plan mit offenen Tasks                 | `boulder-continuation` Hook       |
+| `DELEGATION REQUIRED`    | Aufgabe muss delegiert werden                  | `sisyphus-junior-notepad` Hook    |
+| `SINGLE TASK ONLY`       | Nur eine Aufgabe bearbeiten                    | `sisyphus-junior-notepad` Hook    |
+| `WORK STOP BRAIN CHECK`  | Arbeit stoppen, Brain-/Todo-State final prüfen | `brain-sync-enforcer` Hook        |
+| `COMPACTION CONTEXT`     | Nach Context-Kompaktierung                     | `context-window-monitor` Hook     |
+| `CONTEXT WINDOW MONITOR` | Context-Fenster > 70% voll                     | `context-window-monitor` Hook     |
+| `PROMETHEUS READ-ONLY`   | Prometheus Planner Modus                       | `start-work` Hook                 |
 
 ### Technische Architektur
 
@@ -41,6 +41,7 @@ session.idle Event
 ```
 
 Die Directive-Funktionen liegen im gebündelten Plugin:
+
 - **Source:** `local-plugins/oh-my-opencode-sin/dist/index.js`
 - **Key Function:** `createSystemDirective(type)` → `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - ${type}]`
 - **Directive Types:** `SystemDirectiveTypes` Konstante
@@ -90,11 +91,13 @@ kill $(cat /tmp/opensin-directive-watcher.pid 2>/dev/null) 2>/dev/null
 ### LaunchAgent (Auto-Start beim Login)
 
 LaunchAgent plist location:
+
 ```
 ~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
 ```
 
 Plist Inhalt:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -138,6 +141,7 @@ bash /Users/jeremy/.config/opencode/scripts/launch-watcher.sh
 ### Global Installierte Pfade
 
 Der Watcher ist global installiert fuer JEDES Projekt:
+
 ```
 ~/.config/opencode/scripts/system-directive-watcher.js  ← Haupt-Watcher
 ~/.config/opencode/scripts/launch-watcher.sh            ← Launch-Helper Script
@@ -162,7 +166,10 @@ Die `DIRECTIVE_ACTIONS` Map im Script definiert welche Todos pro Directive erste
 const DIRECTIVE_ACTIONS = {
   "TODO CONTINUATION": [
     { content: "Global Brain aktualisieren (.pcpm/ sync)", priority: "high" },
-    { content: "Local Brain aktualisieren (project context)", priority: "high" },
+    {
+      content: "Local Brain aktualisieren (project context)",
+      priority: "high",
+    },
     { content: "Todo-Liste pruefen und aktualisieren", priority: "medium" },
   ],
   "WORK STOP BRAIN CHECK": [
@@ -192,14 +199,15 @@ Neue Directive Types einfach als neuen Key hinzufügen.
 
 ### 3.1 Übersicht der Checks
 
-| Check | Directive Type | Erfolgs-Phrase | Priorität | Wann ausgelöst |
-|-------|----------------|----------------|-----------|----------------|
-| **A) Brain Check** | `BRAIN SYNC ENFORCER` | `Brains updated` | HIGH | Agent idle, vor Stopp |
-| **B) Code Check** | `CODE CHECK` | `Repositories updated` | HIGH | Nach Code-Arbeit |
-| **C) Documentation Check** | `DOCUMENTATION CHECK` | `Docs updated` | HIGH | Vor Abschluss |
-| **D) Organization Check** | `ORGANIZATION CHECK` | `Org updated` | HIGH | GitHub Hygiene |
+| Check                      | Directive Type        | Erfolgs-Phrase         | Priorität | Wann ausgelöst        |
+| -------------------------- | --------------------- | ---------------------- | --------- | --------------------- |
+| **A) Brain Check**         | `BRAIN SYNC ENFORCER` | `Brains updated`       | HIGH      | Agent idle, vor Stopp |
+| **B) Code Check**          | `CODE CHECK`          | `Repositories updated` | HIGH      | Nach Code-Arbeit      |
+| **C) Documentation Check** | `DOCUMENTATION CHECK` | `Docs updated`         | HIGH      | Vor Abschluss         |
+| **D) Organization Check**  | `ORGANIZATION CHECK`  | `Org updated`          | HIGH      | GitHub Hygiene        |
 
 Alle Checks arbeiten mit demselben Mechanismus:
+
 1. Directive wird per `session.promptAsync()` injiziert
 2. Agent MUSS mit exakter Erfolgs-Phrase antworten
 3. Bei fehlender Antwort: Re-Injection alle 10s (max 5 Retries)
@@ -210,12 +218,14 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Directive:** `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - BRAIN SYNC ENFORCER]`
 
 **Prüft:**
+
 - Global Brain (`.pcpm/` + Hive Mind sync)
 - Local Brain (`AGENTS.md` + Project-Pläne)
 
 **Antwort:** `Brains updated`
 
 **Patterns:**
+
 ```regex
 /brains?\s+updated?/i
 /brain\s+sync\s+(done|complete|finished|ok)/i
@@ -233,6 +243,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Directive:** `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - CODE CHECK]`
 
 **Prüft:**
+
 1. Repositories aktualisiert
 2. Alle Changes committed, gepusht, in `main` gemerged
 3. Priority Lists & Issues aktualisiert/erstellt
@@ -240,6 +251,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Antwort:** `Repositories updated`
 
 **Patterns:**
+
 ```regex
 /repositories?\s+updated/i
 /repo.*updated/i
@@ -254,6 +266,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Directive:** `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - DOCUMENTATION CHECK]`
 
 **Prüft:**
+
 - README.md Updates
 - API Documentation Changes
 - Architecture Decision Records (ADRs)
@@ -263,6 +276,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Antwort:** `Docs updated`
 
 **Patterns:**
+
 ```regex
 /docs?\s+updated/i
 /documentation.*complete/i
@@ -277,6 +291,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Directive:** `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - ORGANIZATION CHECK]`
 
 **Prüft Enterprise-GitHub-Hygiene:**
+
 1. **Issue & PR Management:** Issues korrekt gelabelt, Milestones zugewiesen, PRs mit Issues verlinkt (z.B. "Resolves #ID"), PR-Beschreibungen vollständig
 2. **Traceability:** Commits, PR-Diskussionen, Review-Kommentare enthalten Issue-ID Querverweise
 3. **Backlog & Technical Debt:** Edge-Cases, Bugs, Tech-D Debt als GitHub Issues mit Priorität erfasst
@@ -286,6 +301,7 @@ Alle Checks arbeiten mit demselben Mechanismus:
 **Antwort:** `Org updated`
 
 **Patterns:**
+
 ```regex
 /org\s+updated/i
 /organization.*complete/i
@@ -313,15 +329,18 @@ In `local-plugins/oh-my-opencode-sin/src/create-hooks.ts`:
 
 ```typescript
 const brainSyncEnforcer = isHookEnabled("brain-sync-enforcer")
-  ? safeHook("brain-sync-enforcer", () => createBrainSyncEnforcer(ctx, {
-      retryIntervalMs: 10000,
-      maxRetries: 5,
-      enabledChecks: ["brain", "code", "docs", "org"], // Alle 4 Checks
-    }))
+  ? safeHook("brain-sync-enforcer", () =>
+      createBrainSyncEnforcer(ctx, {
+        retryIntervalMs: 10000,
+        maxRetries: 5,
+        enabledChecks: ["brain", "code", "docs", "org"], // Alle 4 Checks
+      }),
+    )
   : null;
 ```
 
 **Optionen:**
+
 - `retryIntervalMs`: Re-Injection Intervall (default: 10000ms)
 - `maxRetries`: Maximale Versuche (default: 5)
 - `enabledChecks`: Array der aktiven Checks (`["brain"]` für nur Brain Check)
@@ -361,17 +380,29 @@ const DIRECTIVE_ACTIONS = {
     { content: "Brain Sync: Global Brain + Local Brain", priority: "high" },
   ],
   "CODE CHECK": [
-    { content: "Code-Check: Repositories updated + pushed + merged", priority: "high" },
+    {
+      content: "Code-Check: Repositories updated + pushed + merged",
+      priority: "high",
+    },
     { content: "Issues/Priorities aktualisiert", priority: "medium" },
   ],
   "DOCUMENTATION CHECK": [
-    { content: "Dokumentation reviewen: README, ADRs, Changelog", priority: "high" },
+    {
+      content: "Dokumentation reviewen: README, ADRs, Changelog",
+      priority: "high",
+    },
     { content: "Fehlende Docs erstellen", priority: "medium" },
   ],
   "ORGANIZATION CHECK": [
-    { content: "GitHub-Hygiene: Issues labeln, PRs verlinken", priority: "high" },
+    {
+      content: "GitHub-Hygiene: Issues labeln, PRs verlinken",
+      priority: "high",
+    },
     { content: "Traceability: Commit-Messages mit Issue-ID", priority: "high" },
-    { content: "Backlog/Technical Debt als Issues erfassen", priority: "medium" },
+    {
+      content: "Backlog/Technical Debt als Issues erfassen",
+      priority: "medium",
+    },
     { content: "Stakeholder-Kommentare/@mentions pruefen", priority: "medium" },
   ],
   // ... bestehende Types
@@ -383,23 +414,22 @@ const DIRECTIVE_ACTIONS = {
 ## 7. Agent-Anleitung: So bestehst du die Checks
 
 ### Brain Check (A)
+
 1. `node global-brain/src/cli.js sync` (Global Brain)
 2. `AGENTS.md` aktualisieren (Local Brain)
 3. Antwort: `Brains updated`
 
 ### Code Check (B)
-1.Repo(s) updaten, committen, pushen
-2. PR erstellen, in `main` mergen
-3. Priority Lists & Issues anpassen
-4. Antwort: `Repositories updated`
+
+1.Repo(s) updaten, committen, pushen 2. PR erstellen, in `main` mergen 3. Priority Lists & Issues anpassen 4. Antwort: `Repositories updated`
 
 ### Documentation Check (C)
+
 1.README/API-Docs/ADRs überprüfen
-2.Fehlende Docs erstellen/updaten
-3. Changelog ergänzen
-4. Antwort: `Docs updated`
+2.Fehlende Docs erstellen/updaten 3. Changelog ergänzen 4. Antwort: `Docs updated`
 
 ### Organization Check (D)
+
 1.Issues labeln & Milestones zuweisen
 2.PRs mit Issues verlinken ("Resolves #123")
 3.Commit-Messages mit Issue-ID
@@ -413,26 +443,26 @@ const DIRECTIVE_ACTIONS = {
 
 ## 8. Troubleshooting
 
-| Problem | Lösung |
-|---------|--------|
-| Check wird nicht ausgelöst | Hook-Aktivierung prüfen: `isHookEnabled("brain-sync-enforcer")` |
-| Agent antwortet mit falscher Phrase | Retry-Loop → nach 5 Versuchen Eskalation |
-| Zuviele Retries | `maxRetries` erhöhen oder Issue melden |
-| Nur bestimmte Checks aktivieren | `enabledChecks: ["brain", "code"]` im Hook |
-| State-Problem | State-File löschen: `rm /tmp/opensin-brain-sync-state.json` |
-| Watcher erkennt keine Directives | Session-Verzeichnis prüfen: `~/.local/share/opencode/messages/` |
+| Problem                             | Lösung                                                          |
+| ----------------------------------- | --------------------------------------------------------------- |
+| Check wird nicht ausgelöst          | Hook-Aktivierung prüfen: `isHookEnabled("brain-sync-enforcer")` |
+| Agent antwortet mit falscher Phrase | Retry-Loop → nach 5 Versuchen Eskalation                        |
+| Zuviele Retries                     | `maxRetries` erhöhen oder Issue melden                          |
+| Nur bestimmte Checks aktivieren     | `enabledChecks: ["brain", "code"]` im Hook                      |
+| State-Problem                       | State-File löschen: `rm /tmp/opensin-brain-sync-state.json`     |
+| Watcher erkennt keine Directives    | Session-Verzeichnis prüfen: `~/.local/share/opencode/messages/` |
 
 ---
 
 ## 9. Dateien-Übersicht
 
-| Datei | Zweck |
-|-------|------|
-| `scripts/brain-sync-enforcer.js` | Hook + Standalone Script (4 Checks) |
-| `scripts/system-directive-watcher.js` | Background Watcher für alle Directives |
-| `docs/operations/system-directives-guide.md` | Diese Dokumentation |
-| `/tmp/opensin-brain-sync-state.json` | Check-Status pro Session |
-| `/tmp/opensin-directive-watcher-state.json` | Watcher-State (processed Directives) |
+| Datei                                        | Zweck                                  |
+| -------------------------------------------- | -------------------------------------- |
+| `scripts/brain-sync-enforcer.js`             | Hook + Standalone Script (4 Checks)    |
+| `scripts/system-directive-watcher.js`        | Background Watcher für alle Directives |
+| `docs/operations/system-directives-guide.md` | Diese Dokumentation                    |
+| `/tmp/opensin-brain-sync-state.json`         | Check-Status pro Session               |
+| `/tmp/opensin-directive-watcher-state.json`  | Watcher-State (processed Directives)   |
 
 ---
 
@@ -444,7 +474,7 @@ const DIRECTIVE_ACTIONS = {
 // In brain-sync-enforcer.js
 const CHECKS = {
   // ... bestehende Checks
-  
+
   myCustomCheck: {
     directiveType: "MY CUSTOM CHECK",
     prompt: `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - MY CUSTOM CHECK]
@@ -464,9 +494,7 @@ Prüfe ob...`,
 ```javascript
 // In system-directive-watcher.js
 const DIRECTIVE_ACTIONS = {
-  "MY CUSTOM CHECK": [
-    { content: "Custom Check Todo 1", priority: "high" },
-  ],
+  "MY CUSTOM CHECK": [{ content: "Custom Check Todo 1", priority: "high" }],
   // ...
 };
 ```
@@ -475,8 +503,8 @@ const DIRECTIVE_ACTIONS = {
 
 ```typescript
 createBrainSyncEnforcer(ctx, {
-  enabledChecks: ["brain", "code", "docs", "org", "myCustomCheck"]
-})
+  enabledChecks: ["brain", "code", "docs", "org", "myCustomCheck"],
+});
 ```
 
 Für native Integration als Hook im Plugin:
@@ -493,21 +521,26 @@ local-plugins/oh-my-opencode-sin/
 ```
 
 **Hook-Registrierung** in `src/hooks/index.ts`:
+
 ```typescript
 export { createBrainSyncEnforcer } from "./brain-sync-enforcer";
 ```
 
 **Einbinden** in `src/create-hooks.ts`:
+
 ```typescript
 const brainSyncEnforcer = isHookEnabled("brain-sync-enforcer")
-  ? safeHook("brain-sync-enforcer", () => createBrainSyncEnforcer(ctx, {
-      retryIntervalMs: 10000,
-      maxRetries: 5,
-    }))
+  ? safeHook("brain-sync-enforcer", () =>
+      createBrainSyncEnforcer(ctx, {
+        retryIntervalMs: 10000,
+        maxRetries: 5,
+      }),
+    )
   : null;
 ```
 
 **Deaktivieren** via `oh-my-openagent.json`:
+
 ```json
 {
   "disabled_hooks": ["brain-sync-enforcer"]
@@ -615,25 +648,25 @@ export function createBrainSyncEnforcer(ctx, options) {
 
 ## 6. Troubleshooting
 
-| Problem | Lösung |
-|---------|--------|
-| Watcher erkennt keine Directives | Session-Verzeichnis prüfen: `~/.local/share/opencode/messages/` |
+| Problem                               | Lösung                                                             |
+| ------------------------------------- | ------------------------------------------------------------------ |
+| Watcher erkennt keine Directives      | Session-Verzeichnis prüfen: `~/.local/share/opencode/messages/`    |
 | Directives werden doppelt verarbeitet | State-File löschen: `rm /tmp/opensin-directive-watcher-state.json` |
-| Daemon startet nicht | PID-File prüfen: `rm /tmp/opensin-directive-watcher.pid` |
-| Brain Sync Enforcer nicht aktiv | Hook-Name in `disabled_hooks` prüfen |
-| Agent antwortet nicht auf Brain Sync | Retry-Interval erhöhen (`--interval=15000`) |
+| Daemon startet nicht                  | PID-File prüfen: `rm /tmp/opensin-directive-watcher.pid`           |
+| Brain Sync Enforcer nicht aktiv       | Hook-Name in `disabled_hooks` prüfen                               |
+| Agent antwortet nicht auf Brain Sync  | Retry-Interval erhöhen (`--interval=15000`)                        |
 
 ---
 
 ## 7. Dateien-Übersicht
 
-| Datei | Zweck |
-|-------|-------|
-| `scripts/system-directive-watcher.js` | Background Watcher für alle Directive Types |
-| `scripts/brain-sync-enforcer.js` | Brain Sync Enforcer (eigenständig) |
+| Datei                                            | Zweck                                         |
+| ------------------------------------------------ | --------------------------------------------- |
+| `scripts/system-directive-watcher.js`            | Background Watcher für alle Directive Types   |
+| `scripts/brain-sync-enforcer.js`                 | Brain Sync Enforcer (eigenständig)            |
 | `local-plugins/oh-my-opencode-sin/dist/index.js` | Oh-My-Opencode Plugin (Source der Directives) |
-| `/tmp/opensin-directive-watcher-state.json` | Watcher State (processed Directives) |
-| `/tmp/opensin-brain-sync-state.json` | Brain Sync State (Session-Tracking) |
+| `/tmp/opensin-directive-watcher-state.json`      | Watcher State (processed Directives)          |
+| `/tmp/opensin-brain-sync-state.json`             | Brain Sync State (Session-Tracking)           |
 
 ---
 
@@ -652,6 +685,7 @@ Wenn du eine `[SYSTEM DIRECTIVE: OH-MY-OPENCODE - BRAIN SYNC ENFORCER]` Nachrich
 4. Du darfst NICHT weiterarbeiten oder stoppen ohne diese Bestätigung
 
 Brain Sync Checklist:
+
 - `.pcpm/` Verzeichnis aktuell? → `node global-brain/src/cli.js sync`
 - `AGENTS.md` aktuell? → Projektstand dokumentieren
 - Antwort: "Brains updated"

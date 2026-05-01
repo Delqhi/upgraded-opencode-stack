@@ -16,8 +16,9 @@ A new Coder Agent is **NOT** a simple script kiddie. They are the **best of the 
 Because building a masterpiece requires a team of experts, **ONE agent does not build a whole new Coder Agent alone.**
 
 Instead, this skill uses an **n8n automated workflow** to:
+
 1. Create the base GitHub repository.
-1b. Provision a dedicated GitHub App bot contract for that coder agent. A coder agent is not complete without its own GitHub App persona / routing lane.
+   1b. Provision a dedicated GitHub App bot contract for that coder agent. A coder agent is not complete without its own GitHub App persona / routing lane.
 2. Generate a suite of 5-10 specialized, expert-level GitHub Issues (e.g., "Implement High-Performance Event Loop", "Scaffold Enterprise MCP Runtime", "Setup Infinite Scaling Authentication").
 3. Push these issues to the `sin_issues_pool` (Supabase).
 4. `SIN-Hermes` and `SIN-GitHub-Issues` automatically assign these issues across the existing **A2A Team Code** (Frontend, Backend, Tester, Architect).
@@ -26,6 +27,7 @@ Instead, this skill uses an **n8n automated workflow** to:
 ## Mandatory inbound-work + PR-watcher contract
 
 Every coder repo created by this factory MUST ship the following from day zero:
+
 - `governance/repo-governance.json`
 - `governance/pr-watcher.json`
 - `governance/coder-dispatch-matrix.json`
@@ -36,6 +38,7 @@ Every coder repo created by this factory MUST ship the following from day zero:
 - `config/github-app-routing.example.json`
 
 Coder-factory issues MUST explicitly include:
+
 1. n8n intake bootstrap for inbound work platforms
 2. GitHub issue-first normalization against the shared work-item schema
 3. PR watcher bootstrap so existing PR feedback automation can attach immediately once the first PR exists
@@ -52,6 +55,7 @@ Coder-factory issues MUST explicitly include:
 Every new coder agent MUST be scaffolded with dedicated GitHub App bot metadata so it can appear and respond as its own GitHub bot persona.
 
 Minimum required spec fields for coder creation:
+
 - `githubBot.enabled=true`
 - `githubBot.appSlug`
 - `githubBot.botName`
@@ -65,10 +69,12 @@ The generated coder repo must include `config/github-app-routing.example.json` w
 ## HF coder fleet readiness gate (March 24, 2026)
 
 Before you let the factory assume an HF coder can receive live work, read:
+
 - `/Users/jeremy/dev/SIN-Solver/a2a/team-infratructur/A2A-SIN-Server/hf-docs/hf-coder-fleet-ssot.json`
 - `/Users/jeremy/dev/SIN-Solver/a2a/team-infratructur/A2A-SIN-Server/hf-docs/hf-coder-fleet-playbook.json`
 
 Rules:
+
 1. `AZA-SIN-Coder-•-GitHub-Issues` owns triage/enqueue/lifecycle issue comments.
 2. `AZA-SIN-Coder-e-Global-HermesBote` owns dispatch/claim/running/completed/failed/stale-requeue comments.
 3. Do not assign a ProtonMail/GitHub coder-manager identity unless it maps to exactly one runtime role and one comment surface set.
@@ -94,14 +100,15 @@ node ~/.config/opencode/skills/create-a2a-sin-coder/scripts/trigger-factory.mjs 
 
 When defining a Coder Agent's `system_prompt` (in `agent.json` and `A2A-CARD.md`), you MUST enforce the following identity:
 
-> **You are A2A-SIN-Code-[Specialty], an ultimate CEO-level coding mastermind.** 
-> You possess the combined expert knowledge of 10 million elite developers. You do not write simple or average code; you engineer multi-billion dollar enterprise Alpha architectures that rival Google Workspace and OpenAI. You use the best world-class practices, flawless state management, infinite-scaling producer-consumer patterns, and absolute type safety. You are a cornerstone of the A2A Code Team, working in perfect synchronization with your peers (Backend, Tester, Ops) via GitHub Issues dispatched by SIN-Hermes. 
-> 
+> **You are A2A-SIN-Code-[Specialty], an ultimate CEO-level coding mastermind.**
+> You possess the combined expert knowledge of 10 million elite developers. You do not write simple or average code; you engineer multi-billion dollar enterprise Alpha architectures that rival Google Workspace and OpenAI. You use the best world-class practices, flawless state management, infinite-scaling producer-consumer patterns, and absolute type safety. You are a cornerstone of the A2A Code Team, working in perfect synchronization with your peers (Backend, Tester, Ops) via GitHub Issues dispatched by SIN-Hermes.
+>
 > When you receive a task, you plan like an architect, execute like a machine, and verify like a senior auditor.
 
 ## 📦 Required Files to Generate in the Repository via the Team
 
 The issues created by the n8n workflow will mandate the Team Code to generate:
+
 - The standard V2 Infinite Scaling Architecture (`hf_pull_script.py`, `opencode` CLI integration).
 - The `agent.json` and `A2A-CARD.md` with the "Master Boss Coder" mandate.
 - Governance/intake artifacts (`governance/`, `platforms/`, `n8n-workflows/inbound-intake.json`, `scripts/watch-pr-feedback.sh`).
@@ -109,7 +116,7 @@ The issues created by the n8n workflow will mandate the Team Code to generate:
 - The `src/runtime.ts` executing `opencode/qwen3.6-plus-free` + `--fallback opencode/minimax-m2.5-free`.
 - A dedicated Telegram bot for domain-specific notifications (Watcher).
 
-*Remember to run `sin-sync` after modifying anything in the `~/.config/opencode/skills/` directory.*
+_Remember to run `sin-sync` after modifying anything in the `~/.config/opencode/skills/` directory._
 
 ## 🚨 LLM-AUFRUF PFLICHT-ARCHITEKTUR — ABSOLUT, KEINE AUSNAHMEN
 
@@ -135,6 +142,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 ```
 
 **REGELN — SOFORTIGER BAN BEI VERSTOSS:**
+
 - `opencode run --format json` nutzt das Antigravity Plugin — identisch auf Mac, OCI VM und HF VMs
 - OCI-Proxy `http://92.5.60.87:4100/v1` direkt per HTTP anrufen = VERBOTEN (liefert 500)
 - Gemini API direkt (`generativelanguage.googleapis.com`) = PERMANENT VERBOTEN
@@ -147,6 +155,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 ## 🕸️ Hierarchical LangGraph Coder (April 2026)
 
 Every A2A Coder MUST be built on top of a multi-agent LangGraph.js Supervisor pattern.
+
 - **Supervisor Node:** Evaluates the overarching GitHub Issue / architectural directive.
 - **Worker Nodes:** Specialized nodes mapped to phases: e.g., CodeGenerationNode, TestingNode, IntegrationNode.
 - **ToolNode:** Resolves code actions via ast-grep and ripgrep natively bound.
@@ -158,21 +167,27 @@ Every A2A Coder MUST be built on top of a multi-agent LangGraph.js Supervisor pa
 **EVERY new Coder Agent MUST be scaffolded with full browser and GUI automation awareness.**
 
 ### sinInChrome for Coder Agents
+
 Coder agents MUST be able to:
+
 - Test web applications they build via sinInChrome (13 browser actions)
 - Perform automated UI testing and screenshot capture
 - Access browser console and network logs for debugging
 - Use the API gateway for free-tier testing (100 req/hour)
 
 ### sin-computer-use for Coder Agents
+
 macOS-based coder agents MUST be able to:
+
 - Run and test desktop applications they build
 - Perform GUI automation testing
 - Capture screenshots of running applications
 - Manage application lifecycle (open, close, hide)
 
 ### Security Hardening for Coder Repos
+
 Every coder repo created by this factory MUST NOW include:
+
 - `governance/source-code-classification.md` (PUBLIC/PRIVATE/SECRET/LEAKABLE)
 - `governance/incident-response-playbook.md`
 - `.githooks/pre-commit` with secret + external code detection
@@ -185,6 +200,7 @@ Every coder repo created by this factory MUST NOW include:
 ## 🏆 OpenSIN Coder Superiority (April 2026)
 
 OpenSIN Coder Agents now exceed Claude Code capabilities in all categories:
+
 - **Browser Testing**: sinInChrome with 13 actions vs Claude's basic browser tool
 - **GUI Testing**: sin-computer-use with native macOS bindings
 - **Security**: 7-layer hardening vs Claude's basic protections
@@ -194,10 +210,10 @@ OpenSIN Coder Agents now exceed Claude Code capabilities in all categories:
 
 Coder agents MUST be instructed to leverage these capabilities when building and testing applications.
 
-
 ## Auto Mode lessons for coder agents
 
 Coder agents must not behave like blind OpenClaw-style plugin runners. They need:
+
 - actor-critic or reviewer gate before commit/merge
 - bounded retry loops with stop conditions
 - validation command contracts
@@ -213,7 +229,9 @@ Coder agents must not behave like blind OpenClaw-style plugin runners. They need
 - Google Docs access must use the Google account matrix plus the `sin-google-docs` commands `ensure-access`, `ensure-patent-structure`, and `replace-patent-tabs` when relevant.
 
 ### 🚨 GLOBAL SSOT DAEMON MANDATE (MANDATORY FOR ALL NEW CODER AGENTS)
+
 When scaffolding or initializing a new Coder Agent environment, you MUST integrate the Global SSOT Daemon.
+
 - **The Rule**: The Coder Agent's execution environment (HF Space or VM) MUST run the `ssot-daemon.sh` as a background process.
 - **Function**: The daemon continuously pulls `git@github.com:OpenSIN-AI/OpenSIN-Code.git` and enforces identical opencode configurations (`opencode.json`, `plugins`, `skills`, `mcp`) on the local VM.
 - **Why**: To guarantee that ANY change pushed to the `OpenSIN-AI/OpenSIN-Code` fork is immediately active across the entire A2A Coder Fleet worldwide within 60 seconds.

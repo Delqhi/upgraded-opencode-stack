@@ -71,12 +71,14 @@
    - Experten-Artikel
 
 **VERBOTEN (NIEMALS TUN):**
+
 - ❌ "Ich denke, das sollte so funktionieren..."
 - ❌ "Das habe ich mal irgendwo gesehen..."
 - ❌ "Probieren wir es einfach aus..."
 - ❌ "Das ist vermutlich deprecated..."
 
 **GEPRIESEN (IMMER TUN):**
+
 - ✅ "Lass mich die aktuelle Dokumentation prüfen..."
 - ✅ "Die offiziellen Best Practices 2026 sagen..."
 - ✅ "Laut der neuesten Version sollten wir..."

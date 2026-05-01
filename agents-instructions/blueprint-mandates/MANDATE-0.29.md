@@ -48,6 +48,7 @@
 
 **KONFLIKT-ERKENNUNG:**
 Wenn zwei Agenten gleichzeitig an derselben Datei arbeiten:
+
 1. Sofort User informieren
 2. Koordination vorschlagen
 3. Keine Änderungen vornehmen bis Konflikt gelöst

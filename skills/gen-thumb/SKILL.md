@@ -40,6 +40,7 @@ Die Most-Best-Practice für Klicks ist ein **Layered Workflow** — nicht alles 
 ## Implementierung
 
 Der Skill besteht aus:
+
 - `SKILL.md` (diese Datei)
 - `assets/mascot/` — Hier Deine Referenzbilder des Maskottchens ablegen (PNG, transparent bevorzugt)
 - `scripts/`:

@@ -14,7 +14,7 @@ The user has explicitly mandated the use of specific Google Gemini preview model
    - "generateContent error"
    - Rate limits
    - Timeout
-   
+
    **DO NOT remove the model from opencode.json or oh-my-opencode.json.**
 
 3. **The exact provider strings are ABSOLUTE and IMMUTABLE:**
@@ -35,18 +35,18 @@ The user has explicitly mandated the use of specific Google Gemini preview model
 
 ## THE EXACT MODEL ALLOCATION MATRIX
 
-| Agent | Model | Notes |
-|-------|-------|-------|
-| Prometheus | `google/gemini-3.1-pro-preview` | Strategische Planung |
-| Metis | `google/gemini-3-pro-preview` | Analyse & Lücken |
-| Momus | `opencode/glm-5-free` | Review |
-| Sisyphus | `nvidia-nim/qwen3.5-397b-a17b` | Main Orchestrator, variant: "max" |
-| Atlas | `opencode/glm-5-free` | Master Orchestrator |
-| Librarian | `opencode-zen/minimax-m2.5-free` | Research/Docs |
-| Explore | `google/gemini-3-flash-preview` | Fast Grep |
-| Oracle | `google/gemini-3.1-pro-preview` | Spezial-Agent Debugging |
-| Artistry (Kategorie) | `google/gemini-3-pro-preview` | Unkonventionelle Ansätze |
-| sisyphus-junior | `opencode/glm-5-free` | Quick Tasks |
+| Agent                | Model                            | Notes                             |
+| -------------------- | -------------------------------- | --------------------------------- |
+| Prometheus           | `google/gemini-3.1-pro-preview`  | Strategische Planung              |
+| Metis                | `google/gemini-3-pro-preview`    | Analyse & Lücken                  |
+| Momus                | `opencode/glm-5-free`            | Review                            |
+| Sisyphus             | `nvidia-nim/qwen3.5-397b-a17b`   | Main Orchestrator, variant: "max" |
+| Atlas                | `opencode/glm-5-free`            | Master Orchestrator               |
+| Librarian            | `opencode-zen/minimax-m2.5-free` | Research/Docs                     |
+| Explore              | `google/gemini-3-flash-preview`  | Fast Grep                         |
+| Oracle               | `google/gemini-3.1-pro-preview`  | Spezial-Agent Debugging           |
+| Artistry (Kategorie) | `google/gemini-3-pro-preview`    | Unkonventionelle Ansätze          |
+| sisyphus-junior      | `opencode/glm-5-free`            | Quick Tasks                       |
 
 ## VIOLATION = TECHNICAL TREASON
 

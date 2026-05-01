@@ -24,6 +24,7 @@ command -v vercel
 ```
 
 2. If `vercel` is installed, run this (with a 10 minute timeout):
+
 ```bash
 vercel deploy [path] -y
 ```
@@ -56,6 +57,7 @@ The script handles framework detection, packaging, and deployment. It waits for 
 ## Production Deploys
 
 Only if user explicitly asks:
+
 ```bash
 vercel deploy [path] --prod -y
 ```

@@ -41,24 +41,24 @@ Screen recording + AI vision analysis via **direct Gemini REST API** with a **6-
 
 ## 📋 FALLBACK CHAIN (Unlimited Free Tier)
 
-| Priority | Model | Free Tier Quota | Purpose |
-|----------|-------|-----------------|---------|
-| 1 | `gemini-2.5-flash` | Unlimited RPM, 1M context | Primary vision |
-| 2 | `gemini-3-flash-preview` | 5 RPM, 250K tokens | Backup vision |
-| 3 | `gemini-3.1-flash-lite-preview` | 15 RPM, 250K tokens | Lightweight backup |
-| 4 | `gemma-3-27b` | 30 RPM, 15K context | Fallback vision |
-| 5 | `gemma-3-12b` | 30 RPM, 15K context | Fallback vision |
-| 6 | `gemma-3-4b` | 30 RPM, 15K context | Last resort |
+| Priority | Model                           | Free Tier Quota           | Purpose            |
+| -------- | ------------------------------- | ------------------------- | ------------------ |
+| 1        | `gemini-2.5-flash`              | Unlimited RPM, 1M context | Primary vision     |
+| 2        | `gemini-3-flash-preview`        | 5 RPM, 250K tokens        | Backup vision      |
+| 3        | `gemini-3.1-flash-lite-preview` | 15 RPM, 250K tokens       | Lightweight backup |
+| 4        | `gemma-3-27b`                   | 30 RPM, 15K context       | Fallback vision    |
+| 5        | `gemma-3-12b`                   | 30 RPM, 15K context       | Fallback vision    |
+| 6        | `gemma-3-4b`                    | 30 RPM, 15K context       | Last resort        |
 
 ## 📋 WANN NUTZEN
 
-| Trigger | Aktion |
-|---------|--------|
-| "nimm bildschirm auf" | `look-screen --record` |
+| Trigger                 | Aktion                                                |
+| ----------------------- | ----------------------------------------------------- |
+| "nimm bildschirm auf"   | `look-screen --record`                                |
 | "analysiere bildschirm" | `look-screen --screenshot /tmp/screen.png --describe` |
-| "was siehst du?" | `look-screen --once --screenshot /tmp/screen.png` |
-| "überwache bildschirm" | `look-screen --interval 3` |
-| "stop aufnahme" | `look-screen --stop` |
+| "was siehst du?"        | `look-screen --once --screenshot /tmp/screen.png`     |
+| "überwache bildschirm"  | `look-screen --interval 3`                            |
+| "stop aufnahme"         | `look-screen --stop`                                  |
 
 ## 🚀 SETUP
 

@@ -18,6 +18,7 @@ metadata:
 ## Purpose
 
 Use this skill when the user wants one workflow that can:
+
 - check whether a good plan already exists
 - create a plan if it does not
 - review that plan before action
@@ -25,11 +26,13 @@ Use this skill when the user wants one workflow that can:
 - stop only when the done criteria actually pass
 
 This skill is the merged successor to:
+
 - `omoc-plan-swarm`
 - `/biometrics-plan`
 - `/biometrics-work`
 
 It preserves the strong parts of those sources and removes the weak ones:
+
 - keep the OMOC pipeline and fail-fast gates
 - keep the BIOMETRICS approval handoff before execution
 - keep the BIOMETRICS task-by-task execution discipline
@@ -143,6 +146,7 @@ No filler.
 ### Gate 1: Research quality
 
 Do not proceed unless:
+
 - both branches returned concrete substance
 - the local analysis contains file or project references when applicable
 - the research identifies both good patterns and failure risks
@@ -218,6 +222,7 @@ RULES:
 ### Gate 2: Plan completeness
 
 Do not proceed unless the plan includes:
+
 - summary
 - current state
 - decisions
@@ -305,11 +310,13 @@ node ~/dev/sin-solver-control-plane/packages/cli/src/index.mjs issues \
 Then remove `--dry-run` for the real creation pass.
 
 This automatically:
+
 - converts the plan markdown into a roadmap JSON via `plan-to-roadmap.mjs`
 - creates labels, epics, sub-issues, and the master tracker via `issue-architect.mjs`
 - preserves the `check-plan-done` phase structure in GitHub issue form
 
 This creates:
+
 - **Labels** with colors and descriptions
 - **Epic issues** with Context, Scope, Acceptance Criteria, Governance Gates, Sources, Dependencies
 - **Sub-issues** linked to parent epics via description references and cross-linking comments
@@ -318,22 +325,34 @@ This creates:
 If you need manual control, you can still run the two scripts separately.
 
 **Roadmap JSON structure:**
+
 ```json
 {
   "labels": [{ "name": "epic", "color": "6f42c1", "description": "..." }],
   "masterTracker": { "title": "[Master] Phase X: ...", "summary": "..." },
-  "epics": [{
-    "id": "XA", "title": "[Epic] ...", "priority": "P0",
-    "labels": ["epic", "phase:x"], "context": "...",
-    "scope": ["..."], "acceptanceCriteria": ["..."],
-    "governanceGates": ["sin doctor must pass"],
-    "sources": ["[Link](url)"], "dependsOn": ["#NN"],
-    "subIssues": [{
-      "title": "[XA-1] ...", "priority": "P0",
-      "labels": ["phase:x"], "tasks": ["..."],
-      "acceptanceCriteria": ["..."]
-    }]
-  }]
+  "epics": [
+    {
+      "id": "XA",
+      "title": "[Epic] ...",
+      "priority": "P0",
+      "labels": ["epic", "phase:x"],
+      "context": "...",
+      "scope": ["..."],
+      "acceptanceCriteria": ["..."],
+      "governanceGates": ["sin doctor must pass"],
+      "sources": ["[Link](url)"],
+      "dependsOn": ["#NN"],
+      "subIssues": [
+        {
+          "title": "[XA-1] ...",
+          "priority": "P0",
+          "labels": ["phase:x"],
+          "tasks": ["..."],
+          "acceptanceCriteria": ["..."]
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -355,6 +374,7 @@ Output the created Master Epic URL to the user and declare King CEO Mode active.
 Turn the approved plan into a live task loop.
 
 Execution rules:
+
 - execute one concrete task at a time
 - keep the current task aligned with the approved phase order
 - after each task, run the exact validation required by the plan or the project
@@ -371,6 +391,7 @@ Do not create an unbounded orchestration loop. Use a bounded task loop with clea
 ## Stage 5: Verify Done
 
 Before stopping, verify:
+
 - every required task is completed or explicitly deferred
 - every done criterion passes
 - all critical validations passed
@@ -378,6 +399,7 @@ Before stopping, verify:
 - **Tracker Closeout:** Close the GitHub Sub-Tasks and the Master Epic with a final summary comment. Run `~/.config/opencode/scripts/sync-github-board.sh` one last time.
 
 Return:
+
 - what was completed
 - what was validated
 - what remains open, if anything
@@ -391,11 +413,14 @@ If the work is not actually done, continue the loop instead of giving a prematur
 An Enterprise-grade agent ensures knowledge outlives the task.
 
 ### Issue Board Closeout
+
 - Close completed Sub-Issues and Epics with a final summary comment via `gh issue close <ID> --comment "..."`.
 - Update the Master Tracker with final status.
 
 ### Wiki Documentation Sync (if applicable)
+
 If the project has a GitHub Wiki:
+
 1. Run `~/.config/opencode/scripts/sync-github-wiki.sh <path_to_saved_plan.md>`
 2. **If the script reports "WIKI NOT INITIALIZED"**, use browser automation to visit `https://github.com/<owner>/<repo>/wiki/_new`, create an initial page, then re-run.
 

@@ -51,11 +51,11 @@ Jedes Space MUSS Keep-Alive-Ping haben (alle 5min) um 48h Sleep zu verhindern.
 
 ## KOSTEN
 
-| Hardware | Kosten | Max gleichzeitig |
-|----------|--------|-----------------|
-| cpu-basic | **$0** | **UNBEGRENZT** |
-| zerogpu | FREE | 8 pro Account |
-| gpu (T4) | $288/Mo | Unbegrenzt (Payment) |
+| Hardware  | Kosten  | Max gleichzeitig     |
+| --------- | ------- | -------------------- |
+| cpu-basic | **$0**  | **UNBEGRENZT**       |
+| zerogpu   | FREE    | 8 pro Account        |
+| gpu (T4)  | $288/Mo | Unbegrenzt (Payment) |
 
 **FAZIT: CPU-Basic = $0, UNBEGRENZT Spaces!**
 

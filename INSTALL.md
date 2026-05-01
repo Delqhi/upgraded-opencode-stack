@@ -12,18 +12,18 @@ cd upgraded-opencode-stack
 
 ## What This Installs
 
-| Category | Count | Description |
-|----------|-------|-------------|
-| **Skills** | 45 | Custom workflows for A2A creation, deployment, debugging, browser automation, media analysis, and thumbnail A/B testing |
-| **Plugins** | 3 | Auth plugins for Antigravity and OpenRouter |
-| **Agents** | 21 | Custom agents including SIN-Zeus, OMOC swarm, and multimodal tools |
-| **Commands** | 14 | Custom CLI commands for swarm orchestration, terminal management, Zeus control, video analysis |
-| **Scripts** | 13 | Utility scripts for sync, rotation, PR watching, GitHub management, video analysis |
-| **CLI Tools** | 12 | sin-* CLI tools for docs, n8n, telegram, health, metrics |
-| **Templates** | 5 | JSON schemas for work items, PR watchers, governance |
-| **Hooks** | 1 | Pre-commit hook for auto-sync |
-| **Instructions** | 4 | Orchestrator, planner, worker guidelines |
-| **Rules** | 1 | Model preservation rules |
+| Category         | Count | Description                                                                                                             |
+| ---------------- | ----- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Skills**       | 45    | Custom workflows for A2A creation, deployment, debugging, browser automation, media analysis, and thumbnail A/B testing |
+| **Plugins**      | 3     | Auth plugins for Antigravity and OpenRouter                                                                             |
+| **Agents**       | 21    | Custom agents including SIN-Zeus, OMOC swarm, and multimodal tools                                                      |
+| **Commands**     | 14    | Custom CLI commands for swarm orchestration, terminal management, Zeus control, video analysis                          |
+| **Scripts**      | 13    | Utility scripts for sync, rotation, PR watching, GitHub management, video analysis                                      |
+| **CLI Tools**    | 12    | sin-\* CLI tools for docs, n8n, telegram, health, metrics                                                               |
+| **Templates**    | 5     | JSON schemas for work items, PR watchers, governance                                                                    |
+| **Hooks**        | 1     | Pre-commit hook for auto-sync                                                                                           |
+| **Instructions** | 4     | Orchestrator, planner, worker guidelines                                                                                |
+| **Rules**        | 1     | Model preservation rules                                                                                                |
 
 ## Prerequisites
 

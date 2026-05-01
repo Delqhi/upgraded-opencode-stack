@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-This skill defines the absolute mandatory standard for **Search Engine Optimization (SEO)**, **Generative Engine Optimization (GEO)**, and **Answer Engine Optimization (AEO)** across all OpenSIN web projects. 
+This skill defines the absolute mandatory standard for **Search Engine Optimization (SEO)**, **Generative Engine Optimization (GEO)**, and **Answer Engine Optimization (AEO)** across all OpenSIN web projects.
 
 No agent is permitted to manually write scattered meta tags, generic robots.txt files, or basic sitemaps anymore. **EVERY new website or major update MUST use the automated Auto-Injector from `Delqhi/seo-import`.** This ensures maximum visibility in Google, ChatGPT, Perplexity, and Claude.
 
@@ -30,27 +30,32 @@ No agent is permitted to manually write scattered meta tags, generic robots.txt 
 When asked to optimize a repository for SEO/GEO/AEO, execute the following steps exactly:
 
 ### Step 1: Prepare the Toolkit
+
 Check if `/Users/jeremy/dev/seo-import` exists. If not, clone it:
 \`\`\`bash
 cd /Users/jeremy/dev && git clone https://github.com/Delqhi/seo-import.git
 \`\`\`
 
 ### Step 2: Run the Auto-Injector
+
 Run the CLI injector against the target project directory:
 \`\`\`bash
 node /Users/jeremy/dev/seo-import/cli.js inject /path/to/target-project
 \`\`\`
 
 This will automatically:
+
 - Create `public/_headers`, `public/_redirects`, `public/robots.txt`, and `public/.well-known/security.txt`.
 - Copy React/Vue SEO components into `src/components/seo/`.
 - Copy the build scripts `build-llms-txt.mjs` and `generate-sitemap.mjs` into `scripts/seo/`.
 - Update `package.json` to inject the `seo:sitemap` and `seo:llms` commands into the build pipeline.
 
 ### Step 3: Update `package.json` Domain
+
 Open the target project's `package.json` and replace `YOUR_DOMAIN_HERE` in the newly injected `seo:sitemap` and `seo:llms` scripts with the actual production domain (e.g., `https://my.opensin.ai`).
 
 ### Step 4: Implement the SEO Components in Code
+
 Open the main layout (e.g., `App.tsx` or `index.html`) and individual page components.
 Import and use the injected `<SeoHead />` and `<StructuredData />` components.
 
@@ -59,40 +64,42 @@ Import and use the injected `<SeoHead />` and `<StructuredData />` components.
 import { SeoHead, StructuredData } from './components/seo/SeoHelpers';
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What is OpenSIN?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'OpenSIN is an open-source AI agent platform.'
-      }
-    }
-  ]
+'@context': 'https://schema.org',
+'@type': 'FAQPage',
+mainEntity: [
+{
+'@type': 'Question',
+name: 'What is OpenSIN?',
+acceptedAnswer: {
+'@type': 'Answer',
+text: 'OpenSIN is an open-source AI agent platform.'
+}
+}
+]
 };
 
 export default function MyPage() {
-  return (
-    <>
-      <SeoHead 
+return (
+<>
+<SeoHead 
         title="My Page | OpenSIN" 
         description="The ultimate guide to AI agents." 
         canonicalUrl="https://opensin.ai/my-page"
       />
-      <StructuredData data={jsonLd} />
-      <main>
-        {/* Page Content */}
-      </main>
-    </>
-  );
+<StructuredData data={jsonLd} />
+<main>
+{/_ Page Content _/}
+</main>
+</>
+);
 }
 \`\`\`
 
 ### Step 5: Verify the Build Pipeline
+
 Run the project's build command (e.g., `npm run build` or `bun run build`).
 Verify that the `dist/` or `out/` folder now contains:
+
 - `sitemap.xml`
 - `llms.txt`
 - `llms-full.txt`
@@ -104,7 +111,7 @@ If they are missing, ensure the build tool (like Vite) copies files from `public
 
 ## TROUBLESHOOTING
 
-- **Vite isn't copying `llms.txt` to `dist/` during build?** 
-  Vite copies the `public/` directory *before* the post-build scripts run. If `llms.txt` is generated *after* Vite builds, it will end up in `public/` but not `dist/`. Modify the `package.json` script to output directly to `./dist` instead of `./public` for `build-llms-txt.mjs` and `generate-sitemap.mjs`, or add a copy step.
-- **JSON-LD isn't showing up?** 
+- **Vite isn't copying `llms.txt` to `dist/` during build?**
+  Vite copies the `public/` directory _before_ the post-build scripts run. If `llms.txt` is generated _after_ Vite builds, it will end up in `public/` but not `dist/`. Modify the `package.json` script to output directly to `./dist` instead of `./public` for `build-llms-txt.mjs` and `generate-sitemap.mjs`, or add a copy step.
+- **JSON-LD isn't showing up?**
   Ensure the `<StructuredData />` component is mounted and that the `data` prop receives a valid JavaScript object (not a string).

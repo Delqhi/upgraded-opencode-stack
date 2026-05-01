@@ -25,7 +25,7 @@ Copy the logic into your OpenCode workflow.
 ### Basic Usage
 
 ```typescript
-import { selectContext } from './context-router';
+import { selectContext } from "./context-router";
 
 // Analyze user prompt
 const userPrompt = "Create a login component with React and Tailwind";
@@ -37,10 +37,10 @@ const contextFiles = selectContext(userPrompt);
 ### With Config Loading
 
 ```typescript
-import { loadConfig, selectContext } from './context-router';
+import { loadConfig, selectContext } from "./context-router";
 
 // Load router configuration
-const config = await loadConfig('agents-instructions/context-router.json');
+const config = await loadConfig("agents-instructions/context-router.json");
 
 // Select context based on user input
 const files = selectContext(userPrompt, config);
@@ -55,13 +55,16 @@ const files = selectContext(userPrompt, config);
 Analyzes user input and returns relevant context files.
 
 **Parameters:**
+
 - `userInput` - The user's prompt or question
 - `config` - Optional router configuration (uses default if not provided)
 
 **Returns:**
+
 - Array of file paths to load
 
 **Example:**
+
 ```typescript
 const files = selectContext("Deploy with Docker");
 // Returns: ['Agents.md', 'infrastructure_setup.md', 'deployment_flow.md']
@@ -72,9 +75,11 @@ const files = selectContext("Deploy with Docker");
 Loads the router configuration from a JSON file.
 
 **Parameters:**
+
 - `path` - Path to context-router.json
 
 **Returns:**
+
 - Router configuration object
 
 ---
@@ -87,12 +92,12 @@ See `agents-instructions/context-router.json` for the full configuration.
 
 ```typescript
 interface ContextModule {
-  id: string;           // Unique identifier
-  name: string;         // Display name
-  description: string;  // What this module covers
-  triggers: string[];   // Keywords that activate this module
-  files: string[];      // Files to load when triggered
-  priority: number;     // Loading priority (1 = highest)
+  id: string; // Unique identifier
+  name: string; // Display name
+  description: string; // What this module covers
+  triggers: string[]; // Keywords that activate this module
+  files: string[]; // Files to load when triggered
+  priority: number; // Loading priority (1 = highest)
 }
 ```
 
@@ -124,6 +129,7 @@ When multiple modules are triggered, additional files can be loaded:
 ### Fallback Behavior
 
 If no modules match:
+
 1. Load default files only
 2. Notify user
 3. Suggest available modules
@@ -132,7 +138,7 @@ If no modules match:
 
 ## 📊 Performance
 
-- **Time Complexity:** O(n*m) where n = input length, m = triggers
+- **Time Complexity:** O(n\*m) where n = input length, m = triggers
 - **Space Complexity:** O(k) where k = matched files
 - **Caching:** Config is cached for 1 hour
 - **Max Files:** 10 total files per request
@@ -144,15 +150,15 @@ If no modules match:
 ### Unit Tests
 
 ```typescript
-describe('Context Router', () => {
-  test('matches design keywords', () => {
+describe("Context Router", () => {
+  test("matches design keywords", () => {
     const files = selectContext("Create a button component");
-    expect(files).toContain('design_guidelines.md');
+    expect(files).toContain("design_guidelines.md");
   });
 
-  test('matches infrastructure keywords', () => {
+  test("matches infrastructure keywords", () => {
     const files = selectContext("Deploy with Docker");
-    expect(files).toContain('infrastructure_setup.md');
+    expect(files).toContain("infrastructure_setup.md");
   });
 });
 ```

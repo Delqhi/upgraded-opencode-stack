@@ -66,30 +66,35 @@
 ## VOR DEM "FERTIG"-SAGEN:
 
 ### Code-Qualität
+
 - [ ] Haben oeffentliche oder nicht offensichtliche APIs JSDoc/TSDoc mit echtem Mehrwert?
 - [ ] Keine `any` Types in TypeScript?
 - [ ] Error Handling an allen kritischen Punkten?
 - [ ] Logging für Debugging vorhanden?
 
 ### Testing
+
 - [ ] Unit Tests für alle neuen Funktionen?
 - [ ] Integration Tests für API-Endpoints?
 - [ ] E2E Tests für User Flows?
 - [ ] Edge Cases abgedeckt?
 
 ### Performance
+
 - [ ] Ladezeit < 3 Sekunden?
 - [ ] Keine N+1 Queries?
 - [ ] Caching implementiert wo nötig?
 - [ ] Bundle Size optimiert?
 
 ### Security
+
 - [ ] Input Validierung?
 - [ ] Authentication/Authorization?
 - [ ] Secrets nicht im Code?
 - [ ] CORS korrekt konfiguriert?
 
 ### Dokumentation
+
 - [ ] README aktualisiert?
 - [ ] API Docs geschrieben?
 - [ ] lastchanges.md aktualisiert?
@@ -99,6 +104,7 @@
 
 **GEWISSENHAFTE ANTWORT:**
 "Ich bin mir zu 100% sicher, dass alles funktioniert, weil:
+
 1. Alle Tests bestehen (Unit, Integration, E2E)
 2. Browser-Verifikation erfolgreich
 3. Crashtests bestanden

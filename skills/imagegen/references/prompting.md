@@ -1,6 +1,7 @@
 # Prompting best practices (Gemini / Imagen / NVIDIA image workflows)
 
 ## Contents
+
 - [Structure](#structure)
 - [Specificity](#specificity)
 - [Avoiding “tacky” outputs](#avoiding-tacky-outputs)
@@ -14,50 +15,61 @@
 - [Where to find copy/paste recipes](#where-to-find-copypaste-recipes)
 
 ## Structure
+
 - Use a consistent order: scene/background -> subject -> key details -> constraints -> output intent.
 - Include intended use (ad, UI mock, infographic) to set the mode and polish level.
 - For complex requests, use short labeled lines instead of a long paragraph.
 
 ## Specificity
+
 - Name materials, textures, and visual medium (photo, watercolor, 3D render).
 - For photorealism, include camera/composition language (lens, framing, lighting).
 - Add targeted quality cues only when needed (film grain, textured brushstrokes, macro detail); avoid generic "8K" style prompts.
 
 ## Avoiding “tacky” outputs
+
 - Don’t use vibe-only buzzwords (“epic”, “cinematic”, “trending”, “8k”, “award-winning”, “unreal engine”, “artstation”) unless the user explicitly wants that look.
 - Specify restraint: “minimal”, “editorial”, “premium”, “subtle”, “natural color grading”, “soft contrast”, “no harsh bloom”, “no oversharpening”.
 - For 3D/illustration, name the finish you want: “matte”, “paper grain”, “ink texture”, “flat color with soft shadow”; avoid “glossy plastic” unless requested.
 - Add a short negative line when needed (especially for marketing art): “Avoid: stock-photo vibe; cheesy lens flare; oversaturated neon; excessive bokeh; fake-looking smiles; clutter”.
 
 ## Composition & layout
+
 - Specify framing and viewpoint (close-up, wide, top-down) and placement ("logo top-right").
 - Call out negative space if you need room for UI or overlays.
 
 ## Constraints & invariants
+
 - State what must not change ("keep background unchanged").
 - For edits, say "change only X; keep Y unchanged" and repeat invariants on every iteration to reduce drift.
 
 ## Text in images
+
 - Put literal text in quotes or ALL CAPS and specify typography (font style, size, color, placement).
 - Spell uncommon words letter-by-letter if accuracy matters.
 - For in-image copy, require verbatim rendering and no extra characters.
 
 ## Multi-image inputs
+
 - Reference inputs by index and role ("Image 1: product, Image 2: style").
 - Describe how to combine them ("apply Image 2's style to Image 1").
 - For compositing, specify what moves where and what must remain unchanged.
 
 ## Iterate deliberately
+
 - Start with a clean base prompt, then make small single-change edits.
 - Re-specify critical constraints when you iterate.
 
 ## Quality vs latency
+
 - For latency-sensitive runs, keep the prompt tight and let the router drop from Gemini Pro to the faster fallback chain only when needed.
 - Use larger output sizes only when the asset really needs them; `1K` is usually enough for iteration, `2K` for polished campaign output.
 - For strict edits (identity preservation, layout lock), repeat invariants and stay on the Gemini edit path.
 
 ## Use-case tips
+
 Generate:
+
 - photorealistic-natural: Prompt as if a real photo is captured in the moment; use photography language (lens, lighting, framing); call for real texture (pores, wrinkles, fabric wear, imperfections); avoid studio polish or staging; use `quality=high` when detail matters.
 - product-mockup: Describe the product/packaging and materials; ensure clean silhouette and label clarity; if in-image text is needed, require verbatim rendering and specify typography.
 - ui-mockup: Describe a real product; focus on layout, hierarchy, and common UI elements; avoid concept-art language so it looks shippable.
@@ -68,6 +80,7 @@ Generate:
 - historical-scene: State the location/date and required period accuracy; constrain clothing, props, and environment to match the era.
 
 Edit:
+
 - text-localization: Change only the text; preserve layout, typography, spacing, and hierarchy; no extra words or reflow unless needed.
 - identity-preserve: Lock identity (face, body, pose, hair, expression); change only the specified elements; match lighting and shadows; use `input_fidelity=high` if likeness drifts.
 - precise-object-edit: Specify exactly what to remove/replace; preserve surrounding texture and lighting; keep everything else unchanged.
@@ -78,4 +91,5 @@ Edit:
 - sketch-to-render: Preserve layout, proportions, and perspective; add plausible materials, lighting, and environment; "do not add new elements or text."
 
 ## Where to find copy/paste recipes
+
 For copy/paste prompt specs (examples only), see `references/sample-prompts.md`. This file focuses on principles, structure, and iteration patterns.

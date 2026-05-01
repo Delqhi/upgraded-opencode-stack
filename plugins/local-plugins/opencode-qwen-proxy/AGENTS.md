@@ -62,28 +62,28 @@ src/
 
 ### Naming Conventions
 
-| Type | Convention | Example |
-|------|------------|---------|
-| Files | kebab-case | `request-queue.ts` |
-| Interfaces/Types | PascalCase | `QwenCredentials` |
-| Classes | PascalCase | `QwenAuthError` |
-| Functions | camelCase | `generatePKCE()` |
-| Constants | UPPER_SNAKE_CASE | `TOKEN_CACHE_DURATION` |
-| Enums | PascalCase | `AuthErrorKind` |
-| Enum Values | snake_case | `'token_expired'` |
+| Type             | Convention       | Example                |
+| ---------------- | ---------------- | ---------------------- |
+| Files            | kebab-case       | `request-queue.ts`     |
+| Interfaces/Types | PascalCase       | `QwenCredentials`      |
+| Classes          | PascalCase       | `QwenAuthError`        |
+| Functions        | camelCase        | `generatePKCE()`       |
+| Constants        | UPPER_SNAKE_CASE | `TOKEN_CACHE_DURATION` |
+| Enums            | PascalCase       | `AuthErrorKind`        |
+| Enum Values      | snake_case       | `'token_expired'`      |
 
 ### Import Rules
 
 ```typescript
 // Relative imports MUST include .js extension (ESM)
-import { Something } from './module.js';
-import { Something } from '../utils/helper.js';
+import { Something } from "./module.js";
+import { Something } from "../utils/helper.js";
 
 // External packages
-import { spawn } from 'node:child_process';
+import { spawn } from "node:child_process";
 
 // Type-only imports
-import type { QwenCredentials } from './types.js';
+import type { QwenCredentials } from "./types.js";
 ```
 
 ### TypeScript Rules
@@ -95,7 +95,7 @@ import type { QwenCredentials } from './types.js';
 
 ```typescript
 // ✅ Good
-import type { SomeType } from './types.js';
+import type { SomeType } from "./types.js";
 interface UserConfig {
   apiKey: string;
 }
@@ -114,10 +114,10 @@ const something: any = someValue;
 ```typescript
 export class CustomError extends Error {
   public readonly code: string;
-  
+
   constructor(code: string, message: string) {
     super(message);
-    this.name = 'CustomError';
+    this.name = "CustomError";
     this.code = code;
   }
 }
@@ -140,7 +140,7 @@ export class CustomError extends Error {
  */
 export async function fetchData(url: string): Promise<Data> {
   if (!url) {
-    throw new Error('URL is required');
+    throw new Error("URL is required");
   }
   const response = await fetch(url);
   return response.json();
@@ -154,7 +154,7 @@ export async function fetchData(url: string): Promise<Data> {
 - Structure debug logs with clear prefixes: `[QwenAuth] Action: details`
 
 ```typescript
-const isDebug = process.env.OPENCODE_QWEN_DEBUG === '1';
+const isDebug = process.env.OPENCODE_QWEN_DEBUG === "1";
 
 function debugLog(message: string): void {
   if (isDebug) {
@@ -200,6 +200,7 @@ function debugLog(message: string): void {
 ### OpenCode Plugin Structure
 
 The plugin exposes three main functions:
+
 1. **loader**: Returns configuration (apiKey, baseURL, fetch function)
 2. **fetch**: Intercepts all requests, adds auth headers and handles throttling
 3. **methods**: Provides OAuth methods (login, logout, refresh)
@@ -212,6 +213,6 @@ The plugin exposes three main functions:
 
 ### Environment Variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable              | Description                        |
+| --------------------- | ---------------------------------- |
 | `OPENCODE_QWEN_DEBUG` | Set to `1` to enable debug logging |

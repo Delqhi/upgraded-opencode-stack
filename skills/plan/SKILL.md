@@ -22,6 +22,7 @@ metadata:
 ## Purpose
 
 One skill for everything planning-related. Modes:
+
 - **plan-only:** Strategy, roadmap, architecture only
 - **plan-and-execute:** Build, fix, implement, ship
 - **resume-approved-plan:** Continue existing approved plan
@@ -57,12 +58,12 @@ Incorporates best practices from Linear (Visual Initiatives), GitHub Projects (C
 
 ## Modes
 
-| Mode | When | Flow |
-|------|------|------|
-| `plan-only` | Strategy, roadmap, architecture | Stages 0 through 3.5, then stop |
-| `plan-and-execute` | Build, fix, implement, ship | Full Stages 0 through 7 |
-| `resume-approved-plan` | Existing approved plan matches | Skip to Stage 5 (Execute) |
-| `continuous-planning` | Living plan with auto-adaptation | Full loop with monitor and auto-re-plan |
+| Mode                   | When                             | Flow                                    |
+| ---------------------- | -------------------------------- | --------------------------------------- |
+| `plan-only`            | Strategy, roadmap, architecture  | Stages 0 through 3.5, then stop         |
+| `plan-and-execute`     | Build, fix, implement, ship      | Full Stages 0 through 7                 |
+| `resume-approved-plan` | Existing approved plan matches   | Skip to Stage 5 (Execute)               |
+| `continuous-planning`  | Living plan with auto-adaptation | Full loop with monitor and auto-re-plan |
 
 ---
 
@@ -127,7 +128,11 @@ Every plan MUST conform to this schema:
   "outcomes": {
     "objective": "What business/user outcome",
     "key_results": [
-      {"metric": "metric name", "target": "target value", "current": "current value"}
+      {
+        "metric": "metric name",
+        "target": "target value",
+        "current": "current value"
+      }
     ]
   },
 
@@ -138,11 +143,17 @@ Every plan MUST conform to this schema:
   },
 
   "decisions": [
-    {"decision": "what", "rationale": "why", "alternatives": ["list"], "owner": "role", "date": "YYYY-MM-DD"}
+    {
+      "decision": "what",
+      "rationale": "why",
+      "alternatives": ["list"],
+      "owner": "role",
+      "date": "YYYY-MM-DD"
+    }
   ],
 
   "assumptions": [
-    {"assumption": "what", "confidence": 0.95, "validation": "how to check"}
+    { "assumption": "what", "confidence": 0.95, "validation": "how to check" }
   ],
 
   "phases": [
@@ -154,7 +165,11 @@ Every plan MUST conform to this schema:
         {
           "id": "P1-T1",
           "description": "What to do",
-          "effort": {"pessimistic": "4h", "realistic": "2h", "optimistic": "1h"},
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
           "dependencies": ["P1-T0"],
           "validation": "How to verify",
           "owner": "role",
@@ -166,7 +181,7 @@ Every plan MUST conform to this schema:
 
   "dependency_graph": {
     "nodes": ["P1-T1", "P1-T2"],
-    "edges": [{"from": "P1-T1", "to": "P1-T2", "type": "hard|soft|external"}],
+    "edges": [{ "from": "P1-T1", "to": "P1-T2", "type": "hard|soft|external" }],
     "critical_path": ["P1-T1", "P1-T2"]
   },
 
@@ -193,11 +208,11 @@ Every plan MUST conform to this schema:
   },
 
   "done_criteria": [
-    {"criterion": "Measurable outcome", "status": "not-met|met"}
+    { "criterion": "Measurable outcome", "status": "not-met|met" }
   ],
 
   "approvals": [
-    {"role": "tech-lead", "status": "pending|approved|rejected", "date": null}
+    { "role": "tech-lead", "status": "pending|approved|rejected", "date": null }
   ],
 
   "metrics": {
@@ -297,6 +312,7 @@ Output: concise markdown with file:line references.
 ### Gate 1: Research Quality
 
 Do not proceed unless:
+
 - Librarian returned concrete findings with source URLs
 - Explore returned file references and specific findings
 - Both outputs contain 200+ words of substance
@@ -414,6 +430,7 @@ RULES:
 ### Gate 2: Plan Completeness
 
 Do not proceed unless the plan includes:
+
 - Outcomes or OKRs section with measurable key results
 - Current state analysis
 - Decisions table with rationale
@@ -438,10 +455,11 @@ If sections are missing, fix the plan before review.
 ### 3-Point Estimation (PERT Formula)
 
 For each task:
+
 - Pessimistic (P): everything goes wrong
 - Realistic (R): normal conditions
 - Optimistic (O): everything goes right
-- Expected (E) = (P + 4*R + O) / 6
+- Expected (E) = (P + 4\*R + O) / 6
 
 ### Monte Carlo Simulation (simplified)
 
@@ -474,6 +492,7 @@ Risk level:
 ### Gate 2b: Estimation Confidence
 
 Do not proceed unless:
+
 - All tasks have 3-point estimates
 - Confidence 95th percentile is within 2x of expected total
 - Overall risk score is 60 or below
@@ -534,11 +553,11 @@ RULES:
 
 ### Gate 3: Approval Readiness
 
-| Verdict | Action |
-|---------|--------|
-| APPROVED, no CRITICAL | Continue to Stage 3.2 |
-| NEEDS REVISION with CRITICAL | Integrate changes yourself, re-check, max 1 revision |
-| Still critical after 1 revision | Stop, present with OPEN ISSUES |
+| Verdict                         | Action                                               |
+| ------------------------------- | ---------------------------------------------------- |
+| APPROVED, no CRITICAL           | Continue to Stage 3.2                                |
+| NEEDS REVISION with CRITICAL    | Integrate changes yourself, re-check, max 1 revision |
+| Still critical after 1 revision | Stop, present with OPEN ISSUES                       |
 
 ---
 
@@ -546,14 +565,14 @@ RULES:
 
 Auto-calculate quality score (0-100):
 
-| Category | Weight | Criteria |
-|----------|--------|----------|
-| Completeness | 25 | All sections present, OKRs defined, deps mapped |
-| Clarity | 20 | Tasks unambiguous, validation clear, criteria measurable |
-| Risk Coverage | 20 | Major risks identified, scores realistic, mitigations defined |
-| Estimation Quality | 15 | 3-point estimates present, confidence intervals reasonable |
-| Dependency Modeling | 10 | DAG correct, critical path identified, blockers flagged |
-| Outcome Alignment | 10 | Every task maps to KR, OKRs measurable |
+| Category            | Weight | Criteria                                                      |
+| ------------------- | ------ | ------------------------------------------------------------- |
+| Completeness        | 25     | All sections present, OKRs defined, deps mapped               |
+| Clarity             | 20     | Tasks unambiguous, validation clear, criteria measurable      |
+| Risk Coverage       | 20     | Major risks identified, scores realistic, mitigations defined |
+| Estimation Quality  | 15     | 3-point estimates present, confidence intervals reasonable    |
+| Dependency Modeling | 10     | DAG correct, critical path identified, blockers flagged       |
+| Outcome Alignment   | 10     | Every task maps to KR, OKRs measurable                        |
 
 Quality Score formula:
 (completeness divided by 100 times 25) + (clarity divided by 100 times 20) + (risk_coverage divided by 100 times 20) + (estimation_quality divided by 100 times 15) + (dependency_modeling divided by 100 times 10) + (outcome_alignment divided by 100 times 10)
@@ -583,12 +602,12 @@ gh issue create --title "[Approval] [Role] - Plan: <title>" \
 ### Decision Register
 
 | Decision | Rationale | Alternatives | Decided By | Date | Status |
-|----------|-----------|-------------|------------|------|--------|
+| -------- | --------- | ------------ | ---------- | ---- | ------ |
 
 ### Assumptions Log
 
 | Assumption | Confidence | Validation | Status |
-|------------|-----------|------------|--------|
+| ---------- | ---------- | ---------- | ------ |
 
 If plan-only mode, return approved plan and stop.
 If plan-and-execute mode, continue to Stage 4.
@@ -664,6 +683,7 @@ Output: scenario analysis table with pass or fail verdict.
 Turn approved plan into live task loop.
 
 Execution rules:
+
 - One concrete task at a time
 - Keep aligned with approved phase order
 - Run exact validation after each task
@@ -679,16 +699,17 @@ Execution rules:
 
 ## Stage 5.5: Automated Re-Plan Triggers
 
-| Trigger | Threshold | Action |
-|---------|-----------|--------|
-| Schedule Slip | Actual over 120% of planned | Re-estimate remaining |
-| Blocker Detected | Task blocked over 24h | Re-scope or escalate |
-| Scope Creep | More than 2 new requirements | Re-plan with new scope |
-| Risk Materialized | Any risk status = occurred | Activate mitigation, re-plan if needed |
-| Resource Change | Team size changes | Re-estimate with new capacity |
-| Dependency Failure | External dependency unavailable | Find alternative or re-plan |
+| Trigger            | Threshold                       | Action                                 |
+| ------------------ | ------------------------------- | -------------------------------------- |
+| Schedule Slip      | Actual over 120% of planned     | Re-estimate remaining                  |
+| Blocker Detected   | Task blocked over 24h           | Re-scope or escalate                   |
+| Scope Creep        | More than 2 new requirements    | Re-plan with new scope                 |
+| Risk Materialized  | Any risk status = occurred      | Activate mitigation, re-plan if needed |
+| Resource Change    | Team size changes               | Re-estimate with new capacity          |
+| Dependency Failure | External dependency unavailable | Find alternative or re-plan            |
 
 When re-plan triggered:
+
 1. Log re-plan event with reason
 2. Jump to Stage 2
 3. Keep previous learnings and decisions
@@ -700,6 +721,7 @@ When re-plan triggered:
 ## Stage 6: Verify Done
 
 Before stopping:
+
 - Every required task completed or explicitly deferred with reason
 - Every done criterion passes
 - All critical validations passed
@@ -708,6 +730,7 @@ Before stopping:
 - Outcome Verification: Key Results measured and compared to targets
 
 Return:
+
 - What was completed
 - What was validated
 - What remains open
@@ -756,6 +779,7 @@ gh issue comment <MASTER_ID> --body "
 ### Velocity Baseline Update
 
 Store actual durations for future estimation:
+
 ```
 velocity_db[task_type] = {
   avg_duration: ...,
@@ -786,6 +810,7 @@ Open issues: <none or list>
 ### Wiki Documentation Sync
 
 If the project has a GitHub Wiki:
+
 1. Run `~/.config/opencode/scripts/sync-github-wiki.sh <plan_path>`
 2. If script reports "WIKI NOT INITIALIZED", use browser automation to create initial page, then re-run.
 
@@ -793,36 +818,36 @@ If the project has a GitHub Wiki:
 
 ## Anti-Patterns To Reject
 
-| Anti-Pattern | Why | Replacement |
-|-------------|-----|-------------|
-| Vague quality claims | Not measurable | Concrete gates with pass/fail |
-| Hidden dependencies | Brittle | Explicit dependency DAG |
-| Story points | Abstract, gameable | PERT 3-point estimation with historical data |
-| Static risk matrix | Outdated instantly | Real-time RAG from CI/CD health, bugs, scope creep |
-| Annual batch planning | Too slow for 2026 | Continuous planning with decision velocity |
-| Planning without outcomes | Tasks for tasks sake | OKR-first, outcome-driven planning |
-| Fictional agent names | No real tool mapping | Real task() with subagent_type or category |
-| Mandatory auto-commit | Unsafe, destructive | Explicit commit only when user requests |
-| Planning without review | Blind spots | Stage 3 critical review mandatory |
-| Execution without done criteria | Cannot verify | Every plan MUST have done criteria |
-| Infinite loops | Resource waste | Bounded loops with stop conditions |
-| Premature success | User loses trust | Verify ALL done criteria before stopping |
-| Plans without rollback | No safety net | Every plan needs rollback trigger and action |
-| Plans without versioning | Cannot track changes | Every change increments version with diff |
-| Subjective project health | PM gut feeling | Algorithmic RAG from pipeline, bugs, scope |
-| Output metrics over outcomes | Revenue targets miss quality | Controllable Input Metrics (Amazon style) |
+| Anti-Pattern                    | Why                          | Replacement                                        |
+| ------------------------------- | ---------------------------- | -------------------------------------------------- |
+| Vague quality claims            | Not measurable               | Concrete gates with pass/fail                      |
+| Hidden dependencies             | Brittle                      | Explicit dependency DAG                            |
+| Story points                    | Abstract, gameable           | PERT 3-point estimation with historical data       |
+| Static risk matrix              | Outdated instantly           | Real-time RAG from CI/CD health, bugs, scope creep |
+| Annual batch planning           | Too slow for 2026            | Continuous planning with decision velocity         |
+| Planning without outcomes       | Tasks for tasks sake         | OKR-first, outcome-driven planning                 |
+| Fictional agent names           | No real tool mapping         | Real task() with subagent_type or category         |
+| Mandatory auto-commit           | Unsafe, destructive          | Explicit commit only when user requests            |
+| Planning without review         | Blind spots                  | Stage 3 critical review mandatory                  |
+| Execution without done criteria | Cannot verify                | Every plan MUST have done criteria                 |
+| Infinite loops                  | Resource waste               | Bounded loops with stop conditions                 |
+| Premature success               | User loses trust             | Verify ALL done criteria before stopping           |
+| Plans without rollback          | No safety net                | Every plan needs rollback trigger and action       |
+| Plans without versioning        | Cannot track changes         | Every change increments version with diff          |
+| Subjective project health       | PM gut feeling               | Algorithmic RAG from pipeline, bugs, scope         |
+| Output metrics over outcomes    | Revenue targets miss quality | Controllable Input Metrics (Amazon style)          |
 
 ---
 
 ## Cost Awareness
 
-| Stage | Calls | Latency | Notes |
-|-------|-------|---------|-------|
-| Research | 2 parallel | 1 LLM round | Librarian + Explore simultaneously |
-| Plan Draft | 1 sequential | 1 LLM round | Synthesizes research |
-| Review | 1 sequential | 1 LLM round | Critical review |
-| Simulation | 0-1 sequential | 0-1 LLM rounds | Optional what-if |
-| **Total Planning** | **4-5 calls** | **4-5 LLM rounds** | vs 6+ in old designs |
+| Stage              | Calls          | Latency            | Notes                              |
+| ------------------ | -------------- | ------------------ | ---------------------------------- |
+| Research           | 2 parallel     | 1 LLM round        | Librarian + Explore simultaneously |
+| Plan Draft         | 1 sequential   | 1 LLM round        | Synthesizes research               |
+| Review             | 1 sequential   | 1 LLM round        | Critical review                    |
+| Simulation         | 0-1 sequential | 0-1 LLM rounds     | Optional what-if                   |
+| **Total Planning** | **4-5 calls**  | **4-5 LLM rounds** | vs 6+ in old designs               |
 
 - Re-run only weak research branch, not both
 - Max 1 revision round after review
@@ -832,16 +857,16 @@ If the project has a GitHub Wiki:
 
 ## Tool Reference
 
-| Stage | Tool | Purpose |
-|-------|------|---------|
-| Research | task(subagent_type: librarian) | Web and docs research |
-| Research | task(subagent_type: explore) | Codebase analysis |
-| Plan | task(category: deep) | Synthesize plan |
-| Review | task(category: artistry) | Critical review |
-| Simulation | task(category: deep) | What-if scenarios |
-| Sync | gh issue create or Issue Architect CLI | Persist to GitHub |
-| Execute | gh issue comment | Live tracker updates |
-| Closeout | gh issue close | Issue board closeout |
+| Stage      | Tool                                   | Purpose               |
+| ---------- | -------------------------------------- | --------------------- |
+| Research   | task(subagent_type: librarian)         | Web and docs research |
+| Research   | task(subagent_type: explore)           | Codebase analysis     |
+| Plan       | task(category: deep)                   | Synthesize plan       |
+| Review     | task(category: artistry)               | Critical review       |
+| Simulation | task(category: deep)                   | What-if scenarios     |
+| Sync       | gh issue create or Issue Architect CLI | Persist to GitHub     |
+| Execute    | gh issue comment                       | Live tracker updates  |
+| Closeout   | gh issue close                         | Issue board closeout  |
 
 ---
 
@@ -850,21 +875,25 @@ If the project has a GitHub Wiki:
 Use these templates for common scenarios. Load the template, fill in specifics.
 
 ### Feature Build Template
+
 - Phase 1: API and data model (critical path)
 - Phase 2: UI and integration
 - Phase 3: Polish and edge cases (optional)
 
 ### Bug Fix Template
+
 - Phase 1: Reproduce and root cause (critical)
 - Phase 2: Fix and regression tests
 - Phase 3: Monitor in production (optional)
 
 ### Migration Template
+
 - Phase 1: Build parallel system (critical)
 - Phase 2: Dual-write and verify
 - Phase 3: Cutover and cleanup
 
 ### Refactor Template
+
 - Phase 1: Add tests around current behavior (critical)
 - Phase 2: Incremental refactoring
 - Phase 3: Remove old code

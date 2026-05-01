@@ -1,13 +1,15 @@
-# 🤖 Qwen Code OAuth Plugin for OpenCode 
+# 🤖 Qwen Code OAuth Plugin for OpenCode
 
 > **Enhanced Version** - Added request throttling, 429 handling, header alignment and other enhancements based on [opencode-qwencode-auth](https://github.com/gustavodiasdev/opencode-qwencode-auth)
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ---
-中文文档见--[README.zh.md](README.zh.md)
----
+
+## 中文文档见--[README.zh.md](README.zh.md)
+
 ## ✨ Use Qwen's Latest and Most Powerful Model Qwen3.5 Plus on Your OpenCode!
+
 ![alt text](726a626d29d2c09e13e97c1a974e89eb.jpg)
 ![alt text](4f5d83ebb1d715f68fa839bf856dd7b3.jpg)
 
@@ -87,12 +89,14 @@ You should see `qwen-code/coder-model` and `qwen-code/vision-model` in the list.
 ## ✨ Core Features
 
 ### Basic Features
+
 - 🔐 **OAuth Device Flow** - Standard authentication flow based on RFC 8628
 - 🆓 **1000 times/day Free** - No API Key, no credit card required
 - 🔄 **Auto Token Refresh** - Automatically renews before expiration
 - 🔗 **Credential Sharing** - Shares `~/.qwen/oauth_creds.json` with Qwen Code CLI
 
 ### Enhanced Features (This Version)
+
 - ⏱️ **Request Throttling** - Control 1 time/second, avoid hitting 60 times/minute limit
 - 📡 **429 Auto Retry** - Automatically wait and retry when rate limited
 - 🎲 **Request Jitter** - 0.5-1.5s random delay, avoid fixed patterns
@@ -104,10 +108,10 @@ You should see `qwen-code/coder-model` and `qwen-code/vision-model` in the list.
 
 > **Important**: Qwen OAuth only supports 2 models, fully aligned with qwen-code CLI.
 
-| Model | Context | Max Output | Description |
-|------|---------|------------|-------------|
-| `coder-model` | 1M tokens | 64K tokens | Code model (default, recommended) |
-| `vision-model` | 128K tokens | 32K tokens | Vision model |
+| Model          | Context     | Max Output | Description                       |
+| -------------- | ----------- | ---------- | --------------------------------- |
+| `coder-model`  | 1M tokens   | 64K tokens | Code model (default, recommended) |
+| `vision-model` | 128K tokens | 32K tokens | Vision model                      |
 
 ### Usage Examples
 
@@ -120,15 +124,14 @@ opencode --provider qwen-code --model vision-model
 ```
 
 > **Note**: ![alt text](image.png)
->**According to qwen code description, coder-model is the newly released qwen 3.5 plus**
-
+> **According to qwen code description, coder-model is the newly released qwen 3.5 plus**
 
 ---
 
 ## 📊 Usage Limits
 
-| Plan | Rate Limit | Daily Limit |
-|------|------------|-------------|
+| Plan         | Rate Limit      | Daily Limit    |
+| ------------ | --------------- | -------------- |
 | Free (OAuth) | 60 times/minute | 1000 times/day |
 
 > Limits reset at 0:00 Beijing Time next day. For higher limits, use [DashScope API](https://dashscope.aliyun.com).
@@ -176,11 +179,11 @@ opencode --provider qwen-code --model vision-model
 
 ### Three Roles of the Plugin
 
-| Role | Function | Purpose |
-|------|----------|---------|
-| **Auth Provider** | `loader` | Returns config (apiKey + baseURL + fetch) |
-| **Request Interceptor** | `fetch` | Intercepts all requests, adds headers + throttling |
-| **OAuth Entry** | `methods` | Handles user login, gets access token |
+| Role                    | Function  | Purpose                                            |
+| ----------------------- | --------- | -------------------------------------------------- |
+| **Auth Provider**       | `loader`  | Returns config (apiKey + baseURL + fetch)          |
+| **Request Interceptor** | `fetch`   | Intercepts all requests, adds headers + throttling |
+| **OAuth Entry**         | `methods` | Handles user login, gets access token              |
 
 ---
 
@@ -200,11 +203,11 @@ class RequestQueue {
   async enqueue<T>(fn: () => Promise<T>): Promise<T> {
     const elapsed = Date.now() - this.lastRequestTime;
     const waitTime = Math.max(0, this.MIN_INTERVAL - elapsed);
-    
+
     if (waitTime > 0) {
-      await new Promise(resolve => setTimeout(resolve, waitTime));
+      await new Promise((resolve) => setTimeout(resolve, waitTime));
     }
-    
+
     this.lastRequestTime = Date.now();
     return fn();
   }
@@ -260,7 +263,7 @@ headers.set('X-DashScope-AuthType', 'qwen-oauth`);
 
 ```typescript
 if (response.status === 429) {
-  const retryAfter = response.headers.get('Retry-After') || '60';
+  const retryAfter = response.headers.get("Retry-After") || "60";
   await sleep(parseInt(retryAfter) * 1000);
   return fetch(input, { headers }); // Retry
 }
@@ -272,13 +275,13 @@ if (response.status === 429) {
 
 ## ✨ Enhanced Features
 
-| Feature | Description |
-|---------|-------------|
+| Feature               | Description                                                                     |
+| --------------------- | ------------------------------------------------------------------------------- |
 | ⏱️ Request Throttling | 1 second interval + 0.5-1.5s random jitter, avoid hitting 60 times/minute limit |
-| 📡 429 Auto Retry | Automatically wait and retry when rate limited |
-| 🏷️ Header Alignment | User-Agent, X-DashScope-* exactly matching qwen-code CLI |
-| 💾 Token Cache | No refresh within 5 minutes, reduce extra requests |
-| 🎯 Streamlined Models | Only supports 2 models (coder-model, vision-model), aligned with qwen-code CLI |
+| 📡 429 Auto Retry     | Automatically wait and retry when rate limited                                  |
+| 🏷️ Header Alignment   | User-Agent, X-DashScope-\* exactly matching qwen-code CLI                       |
+| 💾 Token Cache        | No refresh within 5 minutes, reduce extra requests                              |
+| 🎯 Streamlined Models | Only supports 2 models (coder-model, vision-model), aligned with qwen-code CLI  |
 
 ---
 
@@ -304,6 +307,7 @@ opencode auth login
 ### Plugin Not Showing
 
 In `opencode auth login`:
+
 1. Select **"Other"**
 2. Enter `qwen-code`
 
@@ -389,6 +393,7 @@ Edit `~/.config/opencode/package.json`:
 ```
 
 > Replace `/path/to/OpenCode-Qwen-Proxy` with actual absolute path, for example:
+>
 > - Linux/Mac: `file:/home/username/OpenCode-Qwen-Proxy`
 > - Windows: `file:C:/Users/username/OpenCode-Qwen-Proxy`
 
@@ -415,11 +420,11 @@ This will auto-rebuild when code changes, convenient for real-time debugging.
 
 ### Build Commands Explanation
 
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Build production version to `dist/` directory |
-| `npm run dev` | Development mode, watch files and auto rebuild |
-| `npm run typecheck` | TypeScript type checking |
+| Command             | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| `npm run build`     | Build production version to `dist/` directory  |
+| `npm run dev`       | Development mode, watch files and auto rebuild |
+| `npm run typecheck` | TypeScript type checking                       |
 
 ---
 
@@ -458,6 +463,7 @@ cat ~/.qwen/oauth_creds.json
 **Q: What to do if problems occur?**
 
 > A:
+>
 > 1. Confirm `"plugin": ["opencode-qwen-proxy"]` is added in `~/.config/opencode/opencode.jsonc`
 > 2. Run `npm run typecheck` to check for syntax errors
 > 3. Check console output for error messages
@@ -489,7 +495,6 @@ opencode-qwen-proxy/
 - [qwen-code](https://github.com/QwenLM/qwen-code) - Official Qwen Code CLI
 - [OpenCode](https://opencode.ai) - AI Programming Assistant CLI
 - [opencode-antigravity-auth](https://github.com/NoeFabris/opencode-antigravity-auth) - Google OAuth reference implementation
-
 
 ---
 

@@ -7,8 +7,9 @@
 **🎯 PRINZIP:** Wir nutzen unsere EIGENE Docker-basierte Knowledge Base - nicht externe Tools wie Linear!
 
 **UNSERE DOCKER KNOWLEDGE BASE ALS:**
+
 - ✅ Dev-Book
-- ✅ Dev-Docs  
+- ✅ Dev-Docs
 - ✅ WIKI
 - ✅ Sammlung wichtiger Daten
 - ✅ Task-Planer
@@ -58,6 +59,7 @@
 ```
 
 **KEIN LINEAR MEHR:**
+
 - ❌ Externe Tools wie Linear werden NICHT mehr verwendet
 - ✅ Wir nutzen ausschließlich unsere eigene Docker-basierte Knowledge Base
 - ✅ Vollständige Datenhoheit und Self-Hosting

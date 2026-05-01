@@ -25,6 +25,7 @@ metadata:
 **Keywords:** "visual repo", "diagramme", "mermaid", "infografik", "readme verbessern", "repo visualisieren", "architektur diagramm", "was macht das projekt", "besser erklären", "nutzerfreundlich", "verkaufen", "landing page", "hook", "benefits zeigen", "action zeigen", "optisch vorstellen", "quereinsteiger", "nicht-developer", "bilder sagen mehr als tausend worte", "llms.txt", "social preview", "badges", "contributing", "security"
 
 **PFLICHT-AUSLÖSER:**
+
 - `/sovereign-repo-governance` → IMMER `/visual-repo` mitverwenden!
 - Neues Repo erstellt
 - Bestehendes Repo mit schlechter README-Doku
@@ -38,6 +39,7 @@ metadata:
 ## 🧠 DAS PROBLEM
 
 95% aller GitHub Repos werden von Nicht-Developern nicht verstanden. Bilder sagen mehr als tausend Worte. Wir brauchen ZWEI Ebenen:
+
 1. **Developer:** Mermaid-Diagramme, Architektur-Flows, technische Tiefe
 2. **Nutzer:** Infografiken, Nutzen-Versprechen, "Was bringt mir das?"
 
@@ -57,15 +59,15 @@ Problem → Nutzen → Einfachheit → Preis → Visualisierung
 
 **BEVOR du startest: Repo-Typ bestimmen! Jeder Typ hat andere Prioritäten.**
 
-| Repo-Typ | Erkennung | Fokus | Diagramme |
-|:---|:---|:---|:---|
+| Repo-Typ            | Erkennung                                    | Fokus                                 | Diagramme                |
+| :------------------ | :------------------------------------------- | :------------------------------------ | :----------------------- |
 | **Library/Package** | `package.json`, `pyproject.toml`, `setup.py` | API Reference, Installation, Examples | Architecture, Usage Flow |
-| **Web App** | `next.config.js`, `vite.config.ts` | Features, Screenshots, Deploy | System Arch, Data Flow |
-| **CLI Tool** | `bin/`, `argparse`, `click` | Commands, Flags, Examples | Command Flow |
-| **API/Service** | `openapi.yaml`, `routes/` | Endpoints, Auth, Rate Limits | API Gateway, Sequence |
-| **Agent/AI** | `agent.json`, `mcp-config.json` | Capabilities, Actions, Integration | Agent Arch, Tool Surface |
-| **Infrastructure** | `terraform/`, `docker-compose.yml` | Components, Networking, Deploy | Infra Topology |
-| **Monorepo** | `packages/`, `pnpm-workspace.yaml` | Package Boundaries, CI/CD | Package Graph |
+| **Web App**         | `next.config.js`, `vite.config.ts`           | Features, Screenshots, Deploy         | System Arch, Data Flow   |
+| **CLI Tool**        | `bin/`, `argparse`, `click`                  | Commands, Flags, Examples             | Command Flow             |
+| **API/Service**     | `openapi.yaml`, `routes/`                    | Endpoints, Auth, Rate Limits          | API Gateway, Sequence    |
+| **Agent/AI**        | `agent.json`, `mcp-config.json`              | Capabilities, Actions, Integration    | Agent Arch, Tool Surface |
+| **Infrastructure**  | `terraform/`, `docker-compose.yml`           | Components, Networking, Deploy        | Infra Topology           |
+| **Monorepo**        | `packages/`, `pnpm-workspace.yaml`           | Package Boundaries, CI/CD             | Package Graph            |
 
 **Regel:** Passe README-Schwerpunkte am Repo-Typ an! Eine Library braucht API-Beispiele, ein CLI Tool braucht Command-Referenz.
 
@@ -102,13 +104,20 @@ Problem → Nutzen → Einfachheit → Preis → Visualisierung
 **MAXIMAL 5-7 Badges!**
 
 #### Statische Badges:
+
 ```html
 <p align="center">
   <a href="{{REPO_URL}}/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+    <img
+      src="https://img.shields.io/badge/license-MIT-blue.svg"
+      alt="License"
+    />
   </a>
   <a href="https://www.python.org/downloads/">
-    <img src="https://img.shields.io/badge/python-3.12+-3776AB.svg?logo=python&logoColor=white" alt="Python" />
+    <img
+      src="https://img.shields.io/badge/python-3.12+-3776AB.svg?logo=python&logoColor=white"
+      alt="Python"
+    />
   </a>
   <a href="https://github.com/modelcontextprotocol">
     <img src="https://img.shields.io/badge/MCP-2.0-068A0A?logo=mcp" alt="MCP" />
@@ -117,6 +126,7 @@ Problem → Nutzen → Einfachheit → Preis → Visualisierung
 ```
 
 #### Dynamische Badges (Punkt 3 - Auto-Update!):
+
 ```
 Stars:        https://img.shields.io/github/stars/{{REPO_SLUG}}?style=social
 Forks:        https://img.shields.io/github/forks/{{REPO_SLUG}}?style=social
@@ -128,7 +138,9 @@ Topics:       https://img.shields.io/github/topics/{{REPO_SLUG}}
 ```
 
 #### Tech-Stack Badges mit Logos (Punkt 20 - SimpleIcons.org):
+
 **Logos finden:** https://simpleicons.org/
+
 ```
 Python:       https://img.shields.io/badge/python-3776AB?logo=python&logoColor=white
 FastAPI:      https://img.shields.io/badge/FastAPI-005571?logo=fastapi
@@ -145,6 +157,7 @@ Redis:        https://img.shields.io/badge/redis-DC382D?logo=redis&logoColor=whi
 ```
 
 **Badges IMMER:**
+
 - In `<p align="center">` wrapen
 - Mit `<a href="...">` wrapen für Klickbarkeit
 - Max 5-7 in einer Reihe
@@ -156,17 +169,16 @@ Redis:        https://img.shields.io/badge/redis-DC382D?logo=redis&logoColor=whi
 
 ```html
 <p align="center">
-  <a href="#quick-start">Quick Start</a> ·
-  <a href="#features">Features</a> ·
+  <a href="#quick-start">Quick Start</a> · <a href="#features">Features</a> ·
   <a href="#architecture">Architecture</a> ·
-  <a href="#use-cases">Use Cases</a> ·
-  <a href="#commands">Commands</a> ·
+  <a href="#use-cases">Use Cases</a> · <a href="#commands">Commands</a> ·
   <a href="#deploy">Deploy</a> ·
   <a href="#contributing">Contributing</a>
 </p>
 ```
 
 **🚨 KRITISCH - Anchor-Link Regeln:**
+
 - Headings OHNE Emojis: `## Quick Start` NICHT `## 🚀 Quick Start`
 - Anchor: `#quick-start` NICHT `#-quick-start`
 - GitHub: Heading-Text → lowercase → spaces zu dashes → Sonderzeichen entfernen
@@ -221,49 +233,53 @@ python3 src/cli.py serve-mcp
 ### 📊 5. Professionelle Tabellen
 
 **Feature-Vergleich mit Status:**
+
 ```markdown
-| Capability | Description | Status |
-|:---|:---|:---:|
-| **Symbol Operations** | AST-level find, replace, insert | ✅ |
-| **Dual Transport** | stdio + streamable HTTP | ✅ |
+| Capability            | Description                     | Status |
+| :-------------------- | :------------------------------ | :----: |
+| **Symbol Operations** | AST-level find, replace, insert |   ✅   |
+| **Dual Transport**    | stdio + streamable HTTP         |   ✅   |
 ```
 
 **Feature Comparison Matrix (Punkt 9 - vs Competitors!):**
+
 ```markdown
-| Feature | {{REPO_NAME}} | Alternative A | Alternative B |
-|:---|:---:|:---:|:---:|
-| AST-Level Analysis | ✅ | ❌ | ❌ |
-| Dual Transport | ✅ | ✅ | ❌ |
-| OAuth 2.1 | ✅ | ❌ | ❌ |
-| Hybrid Memory | ✅ | ❌ | ✅ |
-| A2A Native | ✅ | ❌ | ❌ |
-| Open Source | ✅ | ✅ | ❌ |
+| Feature            | {{REPO_NAME}} | Alternative A | Alternative B |
+| :----------------- | :-----------: | :-----------: | :-----------: |
+| AST-Level Analysis |      ✅       |      ❌       |      ❌       |
+| Dual Transport     |      ✅       |      ✅       |      ❌       |
+| OAuth 2.1          |      ✅       |      ❌       |      ❌       |
+| Hybrid Memory      |      ✅       |      ❌       |      ✅       |
+| A2A Native         |      ✅       |      ❌       |      ❌       |
+| Open Source        |      ✅       |      ✅       |      ❌       |
 ```
 
 **3-Spalten Quick Start (HTML Table):**
+
 ```html
 <table>
-<tr>
-<td width="33%" align="center">
-<strong>1. Clone</strong><br/><br/>
-<code>git clone {{REPO_SLUG}}</code><br/><br/>
-<img src="https://img.shields.io/badge/⏱️_30s-Blue?style=flat" />
-</td>
-<td width="33%" align="center">
-<strong>2. Install</strong><br/><br/>
-<code>pip install -e .</code><br/><br/>
-<img src="https://img.shields.io/badge/⏱️_30s-Blue?style=flat" />
-</td>
-<td width="33%" align="center">
-<strong>3. Run</strong><br/><br/>
-<code>python src/cli.py serve</code><br/><br/>
-<img src="https://img.shields.io/badge/⏱️_Go!-Green?style=flat" />
-</td>
-</tr>
+  <tr>
+    <td width="33%" align="center">
+      <strong>1. Clone</strong><br /><br />
+      <code>git clone {{REPO_SLUG}}</code><br /><br />
+      <img src="https://img.shields.io/badge/⏱️_30s-Blue?style=flat" />
+    </td>
+    <td width="33%" align="center">
+      <strong>2. Install</strong><br /><br />
+      <code>pip install -e .</code><br /><br />
+      <img src="https://img.shields.io/badge/⏱️_30s-Blue?style=flat" />
+    </td>
+    <td width="33%" align="center">
+      <strong>3. Run</strong><br /><br />
+      <code>python src/cli.py serve</code><br /><br />
+      <img src="https://img.shields.io/badge/⏱️_Go!-Green?style=flat" />
+    </td>
+  </tr>
 </table>
 ```
 
 **Mobile-Responsive Tabellen (Punkt 10!):**
+
 - Max 3-4 Spalten!
 - Auf Mobile werden breite Tabellen unlesbar
 - Trick: 2-Spalten "Feature / Notes" statt 6+ Spalten
@@ -274,6 +290,7 @@ python3 src/cli.py serve-mcp
 ### 🖼️ 6. Professionelle Bilder
 
 **Banner mit Breite:**
+
 ```html
 <p align="center">
   <img src="./assets/banner.PNG" alt="Project Banner" width="960" />
@@ -281,20 +298,28 @@ python3 src/cli.py serve-mcp
 ```
 
 **Dark/Light Mode Bilder (Punkt 4!):**
+
 ```html
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.png" />
-    <source media="(prefers-color-scheme: light)" srcset="./assets/banner-light.png" />
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="./assets/banner-dark.png"
+    />
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="./assets/banner-light.png"
+    />
     <img src="./assets/banner.png" alt="Banner" width="960" />
   </picture>
 </p>
 ```
 
 **Side-by-Side Vergleich:**
+
 ```markdown
-| Before | After |
-|:---:|:---:|
+|                    Before                     |                    After                     |
+| :-------------------------------------------: | :------------------------------------------: |
 | <img src="./assets/before.png" width="400" /> | <img src="./assets/after.png" width="400" /> |
 ```
 
@@ -310,21 +335,31 @@ python3 src/cli.py serve-mcp
 ```html
 <p align="center">
   <a href="https://www.youtube.com/watch?v=VIDEO_ID">
-    <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Watch Demo" width="720" />
+    <img
+      src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
+      alt="Watch Demo"
+      width="720"
+    />
   </a>
 </p>
 ```
 
 **ODER Custom Thumbnail mit Play-Icon:**
+
 ```html
 <p align="center">
   <a href="https://www.youtube.com/watch?v=VIDEO_ID">
-    <img src="./assets/video-thumbnail.png" alt="Watch Demo Video" width="720" />
+    <img
+      src="./assets/video-thumbnail.png"
+      alt="Watch Demo Video"
+      width="720"
+    />
   </a>
 </p>
 ```
 
 **ODER Collapsible Pattern für lange READMEs:**
+
 ```markdown
 <details>
 <summary>🎬 Watch 60-second walkthrough</summary>
@@ -376,11 +411,13 @@ simone-mcp/
 ### ⬆️ 10. Back-to-Top Links (Punkt 11!)
 
 **Nach JEDER Major Section:**
+
 ```markdown
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 ```
 
 **Am Anfang der README (Anchor setzen):**
+
 ```html
 <a name="readme-top"></a>
 ```
@@ -390,15 +427,18 @@ simone-mcp/
 ### 🔗 11. Changelog Section (Punkt 12!)
 
 **Zeigt: Projekt lebt und entwickelt sich!**
+
 ```markdown
 ## Changelog
 
 ### v2.0.0 (2026-04-14)
+
 - 🎨 Complete README overhaul with enterprise visual standard
 - 🔧 Fixed all Mermaid diagram syntax errors
 - 📖 Added llms.txt for AI discoverability
 
 ### v1.0.0 (2026-03-01)
+
 - 🚀 Initial release
 - ✅ Symbol operations
 - ✅ Dual MCP transport
@@ -411,16 +451,28 @@ simone-mcp/
 ```html
 <p align="center">
   <a href="https://discord.gg/YOUR_INVITE">
-    <img src="https://img.shields.io/discord/CHANNEL_ID?logo=discord&logoColor=white&label=Discord" alt="Discord" />
+    <img
+      src="https://img.shields.io/discord/CHANNEL_ID?logo=discord&logoColor=white&label=Discord"
+      alt="Discord"
+    />
   </a>
   <a href="{{REPO_URL}}/discussions">
-    <img src="https://img.shields.io/github/discussions/{{REPO_SLUG}}?logo=github" alt="Discussions" />
+    <img
+      src="https://img.shields.io/github/discussions/{{REPO_SLUG}}?logo=github"
+      alt="Discussions"
+    />
   </a>
   <a href="https://github.com/sponsors/YOUR_USERNAME">
-    <img src="https://img.shields.io/github/sponsors/YOUR_USERNAME?logo=githubsponsors&label=Sponsors" alt="Sponsors" />
+    <img
+      src="https://img.shields.io/github/sponsors/YOUR_USERNAME?logo=githubsponsors&label=Sponsors"
+      alt="Sponsors"
+    />
   </a>
   <a href="https://twitter.com/YOUR_HANDLE">
-    <img src="https://img.shields.io/twitter/follow/YOUR_HANDLE?style=social" alt="Twitter" />
+    <img
+      src="https://img.shields.io/twitter/follow/YOUR_HANDLE?style=social"
+      alt="Twitter"
+    />
   </a>
 </p>
 ```
@@ -432,7 +484,10 @@ simone-mcp/
 ```html
 <p align="center">
   <a href="https://github.com/sponsors/YOUR_USERNAME">
-    <img src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-EA4AAA?logo=githubsponsors&logoColor=white" alt="Sponsor" />
+    <img
+      src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-EA4AAA?logo=githubsponsors&logoColor=white"
+      alt="Sponsor"
+    />
   </a>
 </p>
 ```
@@ -444,12 +499,14 @@ simone-mcp/
 **2026 Standard! MACH dein Repo AI-discoverable!**
 
 ### llms.txt (Root des Repos!)
+
 ```markdown
 # {{REPO_NAME}}
 
 > {{DESCRIPTION}}
 
 ## Documentation
+
 - [README]({{REPO_URL}}/blob/main/README.md) - Quick start, features, architecture
 - [Architecture]({{REPO_URL}}/blob/main/docs/architecture.md) - Detailed system design
 - [API Reference]({{REPO_URL}}/blob/main/docs/api.md) - Full API documentation
@@ -457,6 +514,7 @@ simone-mcp/
 - [Changelog]({{REPO_URL}}/blob/main/CHANGELOG.md) - Version history
 
 ## Key Information
+
 - License: MIT
 - Language: Python 3.12+
 - Framework: FastAPI
@@ -465,26 +523,31 @@ simone-mcp/
 ```
 
 ### llms-full.txt (Vollständiger Kontext für AI Agents)
+
 ```markdown
 # {{REPO_NAME}} - Full Context
 
 ## Overview
+
 {{DESCRIPTION}}
 
 {{TAGLINE}}
 
 ## What It Does
+
 - Feature 1: Beschreibung
 - Feature 2: Beschreibung
 - Feature 3: Beschreibung
 
 ## Architecture
+
 - Transport: stdio + streamable HTTP
 - Core Engine: Python AST-based symbol operations
 - Memory: Qdrant (vector) + Neo4j (graph)
 - Auth: OAuth 2.1 with JWKS
 
 ## Quick Start
+
 \`\`\`bash
 git clone {{REPO_SLUG}}
 cd {{REPO_NAME}}
@@ -493,15 +556,18 @@ python src/cli.py serve
 \`\`\`
 
 ## Tools
+
 - code.find_symbol - Locate symbol definitions
 - code.replace_symbol_body - Replace function body
 - code.insert_after_symbol - Insert text after symbol
 - memory.query - Hybrid memory search
 
 ## Configuration
+
 See .env.example for all environment variables.
 
 ## Links
+
 - GitHub: {{REPO_URL}}
 - Documentation: {{REPO_URL}}/blob/main/docs/
 - Issues: {{REPO_URL}}/issues
@@ -509,6 +575,7 @@ See .env.example for all environment variables.
 ```
 
 **llms.txt Regeln:**
+
 - IMMER im Repo-Root (gleiche Ebene wie README.md)
 - Absolute URLs verwenden (nicht relativ!)
 - Beschreibungen, nicht nur Links
@@ -528,17 +595,20 @@ See .env.example for all environment variables.
 **Format:** PNG oder JPG
 
 **Content des Social Preview:**
+
 - Repo Name (groß, zentriert)
 - Tagline (1 Satz)
 - Tech-Stack Badges (3-5)
 - "Open Source" oder "MIT License" Badge
 
 **Generieren mit:**
+
 - https://socialify.git.ci/{{REPO_SLUG}} (automatisch!)
 - https://og.github.com/
 - Eigenes Design in Figma/Canva
 
 **Socialify URL Pattern:**
+
 ```
 https://socialify.git.ci/{{REPO_SLUG}}/image?description=1&font=Source%20Code%20Pro&forks=1&issues=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark
 ```
@@ -550,6 +620,7 @@ https://socialify.git.ci/{{REPO_SLUG}}/image?description=1&font=Source%20Code%20
 **Badge zeigt: Projekt wird getestet und ist gepflegt!**
 
 ### CI Workflow erstellen (.github/workflows/ci.yml):
+
 ```yaml
 name: CI
 
@@ -579,11 +650,13 @@ jobs:
 ```
 
 ### CI Badge in README:
+
 ```markdown
 ![CI](https://github.com/{{REPO_SLUG}}/actions/workflows/ci.yml/badge.svg)
 ```
 
 **Erweiterte CI Badges:**
+
 ```
 Coverage:     https://img.shields.io/codecov/c/github/{{REPO_SLUG}}
 Code Quality: https://img.shields.io/codefactor/grade/github/{{REPO_SLUG}}
@@ -619,18 +692,22 @@ pip install -e .[dev]
 \`\`\`
 
 ## Code Style
+
 - Follow PEP 8 for Python
 - Run `pytest tests/ -v` before submitting
 - Add comments explaining complex logic
 
 ## Reporting Bugs
+
 Please use [GitHub Issues]({{REPO_URL}}/issues) with:
+
 - Clear description
 - Steps to reproduce
 - Expected vs actual behavior
 - Environment details
 
 ## Pull Request Checklist
+
 - [ ] Tests pass
 - [ ] Agent card validates (`print-card`)
 - [ ] Health check passes
@@ -648,10 +725,10 @@ Please use [GitHub Issues]({{REPO_URL}}/issues) with:
 ## Supported Versions
 
 | Version | Supported |
-|:---|:---|
-| 2.x.x | ✅ |
-| 1.x.x | ✅ |
-| < 1.0 | ❌ |
+| :------ | :-------- |
+| 2.x.x   | ✅        |
+| 1.x.x   | ✅        |
+| < 1.0   | ❌        |
 
 ## Reporting a Vulnerability
 
@@ -668,6 +745,7 @@ If you discover a security vulnerability, please:
 We will respond within 48 hours and work with you to resolve the issue.
 
 ## Security Best Practices
+
 - Keep dependencies updated
 - Never commit secrets or API keys
 - Use environment variables for configuration
@@ -681,14 +759,16 @@ We will respond within 48 hours and work with you to resolve the issue.
 **Bilder optimieren BEVOR du sie ins Repo commitest!**
 
 ### Bild-Größen-Richtlinien:
-| Typ | Max Größe | Format | Breite |
-|:---|:---|:---|:---|
-| Banner | 500 KB | PNG/WebP | 1280px |
-| Screenshot | 200 KB | WebP/PNG | 720px |
-| Icon/Logo | 50 KB | SVG/PNG | 128px |
-| Thumbnail | 100 KB | JPG/WebP | 640px |
+
+| Typ        | Max Größe | Format   | Breite |
+| :--------- | :-------- | :------- | :----- |
+| Banner     | 500 KB    | PNG/WebP | 1280px |
+| Screenshot | 200 KB    | WebP/PNG | 720px  |
+| Icon/Logo  | 50 KB     | SVG/PNG  | 128px  |
+| Thumbnail  | 100 KB    | JPG/WebP | 640px  |
 
 ### Komprimierung:
+
 ```bash
 # WebP konvertieren (besser als PNG!)
 cwebp -q 80 input.png -o output.webp
@@ -701,7 +781,9 @@ find assets/ -name "*.png" -exec identify -format "%f: %wx%h, %b\n" {} \;
 ```
 
 ### GitHub CDN Nutzung:
+
 **Bilder die im README referenziert werden, müssen im Repo liegen!**
+
 - Relative Pfade: `./assets/banner.png`
 - Keine externen Hosts (außer shields.io)
 - Bilder werden von GitHub CDN ausgeliefert
@@ -712,18 +794,20 @@ find assets/ -name "*.png" -exec identify -format "%f: %wx%h, %b\n" {} \;
 
 **GitHub About Section optimieren:**
 
-| Feld | Wert | Beispiel |
-|:---|:---|:---|
+| Feld            | Wert                      | Beispiel                                              |
+| :-------------- | :------------------------ | :---------------------------------------------------- |
 | **Description** | Tagline (max 350 Zeichen) | "Production-grade Code-Worker with symbol operations" |
-| **Website** | Demo/Dokumentation | https://docs.example.com |
-| **Topics** | 5-10 relevante Keywords | `mcp`, `python`, `ai-agents`, `code-analysis`, `a2a` |
+| **Website**     | Demo/Dokumentation        | https://docs.example.com                              |
+| **Topics**      | 5-10 relevante Keywords   | `mcp`, `python`, `ai-agents`, `code-analysis`, `a2a`  |
 
 **Topics die Traffic bringen:**
+
 - Primär: Haupttechnologie (z.B. `python`, `typescript`)
 - Sekundär: Use-Case (z.B. `code-analysis`, `api-server`)
 - Tertiär: Ökosystem (z.B. `mcp`, `a2a`, `opencode`)
 
 **Homepage URL:**
+
 - Immer setzen! Selbst wenn es nur die README ist
 - Besser: Separate Docs-Seite oder Demo
 
@@ -738,16 +822,21 @@ find assets/ -name "*.png" -exec identify -format "%f: %wx%h, %b\n" {} \;
 <img src="./assets/banner.png" />
 
 <!-- ✅ GUT -->
-<img src="./assets/banner.png" alt="Simone MCP Architecture - Clients connect via stdio/HTTP to Core Engine with Storage layer" />
+<img
+  src="./assets/banner.png"
+  alt="Simone MCP Architecture - Clients connect via stdio/HTTP to Core Engine with Storage layer"
+/>
 ```
 
 **Alt-Text Regeln:**
+
 - Beschreibe WAS man sieht, nicht den Dateinamen
 - Max 125 Zeichen
 - Dekorative Bilder: `alt=""` (leer lassen)
 - Diagramme: Kurze Zusammenfassung des Inhalts
 
 **Screen Reader Testing:**
+
 ```bash
 # Prüfe ob alle Bilder alt-Text haben
 grep -r '<img' README.md | grep -v 'alt="'
@@ -761,6 +850,7 @@ grep -r '<img' README.md | grep -v 'alt="'
 **Konsistente Farben durch ALLE Diagramme und Badges!**
 
 ### Enterprise Farbschema:
+
 ```
 Primary Blue:    #01579b (Clients, Links)
 Primary Orange:  #e65100 (Transport, Warnings)
@@ -779,6 +869,7 @@ Background Red:    #ffebee
 ```
 
 ### Mermaid classDef Template:
+
 ```mermaid
 classDef clientClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
 classDef transportClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
@@ -792,6 +883,7 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 ## 🚨 MERMAID-SYNTAX-REGELN (Enterprise)
 
 ### 10 Kritische Regeln:
+
 1. **KEINE reservierten Keywords als Klassennamen** (`graph`, `class`, `end` forbidden)
 2. **Eckige Klammern in Labels quoten** (`PIP["pip install -e"]` NICHT `PIP[pip install -e]`)
 3. **Kein `Note over` in flowcharts** (nur sequenceDiagram!)
@@ -813,36 +905,27 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 1. Banner/Logo (zentriert, width=960, dark/light mode)
 2. Badges Row (5-7 Shields.io Badges, zentriert, dynamisch)
 3. Inline Navigation (Anchor Links)
-4. Tagline (zentriert, kursiv)
-   ---
-5. What is X? (Blockquote + Erklärung)
-   ---
+4. ## Tagline (zentriert, kursiv)
+5. ## What is X? (Blockquote + Erklärung)
 6. Quick Start (HTML 3-Spalten-Tabelle mit Zeit-Badges)
    [!TIP] Alert für Hinweis
-   ---
+   ***
 7. Features (Tabelle mit Status-Spalte)
-   <details> Full Tool Surface </details>
-   ---
+   ## <details> Full Tool Surface </details>
 8. Architecture (Mermaid flowchart - MAX 1 hier!)
    → Link zu docs/architecture.md für mehr
-   ---
-9. Use Cases (Tabelle: Wer/Problem/Lösung)
-   ---
-10. Commands (mehrere <details> Sections)
-    ---
+   ***
+9. ## Use Cases (Tabelle: Wer/Problem/Lösung)
+10. ## Commands (mehrere <details> Sections)
 11. Deploy (Tabelle: Methode/Kommando/Zweck)
     <details> Docker Compose Details </details>
     [!WARNING] Alert für HF Spaces Hinweis
     ---
 12. Configuration
-    <details> Environment Variables </details>
-    ---
-13. Contributing (1-2-3-4-5 Steps + [!NOTE])
-    ---
-14. License
-    ---
-15. OpenSIN-AI Werbebanner (PFLICHT! Siehe OPENSIN-AI WERBEBANNER Section)
-    ---
+    ## <details> Environment Variables </details>
+13. ## Contributing (1-2-3-4-5 Steps + [!NOTE])
+14. ## License
+15. ## OpenSIN-AI Werbebanner (PFLICHT! Siehe OPENSIN-AI WERBEBANNER Section)
 16. Footer (zentriert, subtil)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -859,12 +942,14 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 ## 📋 QUALITÄTS-CHECKLISTE (34+ Punkte!)
 
 ### AI Discoverability
+
 - [ ] `llms.txt` im Repo-Root vorhanden?
 - [ ] `llms-full.txt` mit vollständigem Kontext?
 - [ ] Absolute URLs in llms.txt verwendet?
 - [ ] Social Preview Image gesetzt (GitHub Settings)?
 
 ### Enterprise Visualisierung
+
 - [ ] Shields.io Badges vorhanden (5-7, zentriert)?
 - [ ] Dynamische Badges genutzt (Stars, Downloads)?
 - [ ] Inline Navigation mit funktionierenden Anchor Links?
@@ -880,6 +965,7 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 - [ ] Video Thumbnail (klickbar, falls Video existiert)?
 
 ### Mermaid-Diagramme
+
 - [ ] System Architecture Diagram vorhanden?
 - [ ] Request Flow Diagram vorhanden?
 - [ ] docs/architecture.md mit allen Diagrammen?
@@ -889,12 +975,14 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 - [ ] Alle Labels mit Sonderzeichen gequotet?
 
 ### Nutzer-Verständlichkeit
+
 - [ ] 5-Sekunden-Hook (Ein-Blick-Erklärung)?
 - [ ] Benefit Tabelle (Vorher/Nachher)?
 - [ ] Use Case Tabelle (Wer/Problem/Lösung)?
 - [ ] Nicht-Developer versteht sofort was das macht?
 
 ### Professionalität
+
 - [ ] CONTRIBUTING.md vorhanden?
 - [ ] SECURITY.md vorhanden?
 - [ ] CI Badge zeigt echten Build-Status?
@@ -904,12 +992,14 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 - [ ] Konsistente Farbschema in Diagrammen?
 
 ### Anchor-Link Validierung
+
 - [ ] Headings haben KEINE Emojis?
 - [ ] Anchor-Links haben KEINEN führenden Bindestrich?
 - [ ] Anchor-IDs entsprechen exakt Heading-Text?
 - [ ] Auf GitHub getestet (klicken und prüfen)?
 
 ### Technische Validierung
+
 - [ ] README 300-800 Zeilen?
 - [ ] Quick Start funktioniert (max 5 Commands)?
 - [ ] Alle externen Links funktionieren?
@@ -925,6 +1015,7 @@ classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
 **Internationale Contributor anziehen! README in mehreren Sprachen!**
 
 ### Standard-Pattern:
+
 ```
 README.md          → English (Primary)
 README.de.md       → Deutsch
@@ -937,18 +1028,21 @@ README.ko.md       → Korean
 ```
 
 ### Language Selector in README.md (GANZ OBEN!):
+
 ```markdown
 **Read this in other languages:**
 [Deutsch](README.de.md) | [日本語](README.ja.md) | [中文](README.zh-CN.md) | [Português](README.pt-BR.md) | [Español](README.es.md)
 ```
 
 ### WAS übersetzt wird:
+
 - ✅ Section Headings
 - ✅ Erklärende Absätze
 - ✅ Installationsanweisungen (Prosa-Teile)
 - ✅ Usage Descriptions
 
 ### WAS NICHT übersetzt wird:
+
 - ❌ Code Blocks und Command Examples
 - ❌ Badge URLs und Badge Markdown Syntax
 - ❌ Repository URLs
@@ -956,6 +1050,7 @@ README.ko.md       → Korean
 - ❌ Variable Names und Configuration Keys
 
 ### Lokalisierte README Struktur:
+
 ```markdown
 # {{REPO_NAME}} (Deutsch)
 
@@ -976,6 +1071,7 @@ README.ko.md       → Korean
 **Strukturierte Bug Reports und Feature Requests!**
 
 ### .github/ISSUE_TEMPLATE/bug_report.yml
+
 ```yaml
 name: Bug Report
 description: File a bug report
@@ -1032,6 +1128,7 @@ body:
 ```
 
 ### .github/ISSUE_TEMPLATE/feature_request.yml
+
 ```yaml
 name: Feature Request
 description: Suggest an idea for this project
@@ -1069,6 +1166,7 @@ body:
 ```
 
 ### .github/ISSUE_TEMPLATE/config.yml
+
 ```yaml
 blank_issues_enabled: true
 contact_links:
@@ -1087,12 +1185,16 @@ contact_links:
 **Bessere Code Reviews durch strukturierte PR-Beschreibungen!**
 
 ### .github/pull_request_template.md
+
 ```markdown
 ## Description
+
 <!-- Provide a clear summary of what this PR does and why. -->
 
 ## Type of Change
+
 <!-- Check all that apply -->
+
 - [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
 - [ ] ✨ New feature (non-breaking change which adds functionality)
 - [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
@@ -1101,15 +1203,19 @@ contact_links:
 - [ ] 🔧 Refactoring (no functional changes)
 
 ## Testing
+
 <!-- Describe the tests you ran and how to reproduce them. -->
+
 - [ ] All existing tests pass (`pytest tests/ -v`)
 - [ ] Agent card validates (`python src/cli.py print-card`)
 - [ ] Health check passes
 
 ## Screenshots (if applicable)
+
 <!-- Add screenshots or screen recordings to help explain your changes. -->
 
 ## Checklist
+
 - [ ] My code follows the project's style guidelines
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
@@ -1118,11 +1224,14 @@ contact_links:
 - [ ] I have updated the changelog (if applicable)
 
 ## Related Issues
+
 <!-- Link any related issues here using #issue-number -->
+
 Closes #
 ```
 
 ### Multiple PR Templates (für größere Teams):
+
 ```
 .github/PULL_REQUEST_TEMPLATE/
 ├── feature.md      # Für neue Features
@@ -1139,6 +1248,7 @@ Closes #
 **Auto-assign Reviewer basierend auf Dateipfaden!**
 
 ### .github/CODEOWNERS
+
 ```
 # Global maintainers
 * @maintainer
@@ -1161,6 +1271,7 @@ docker-compose.yml @infra-team
 ```
 
 **Regeln:**
+
 - `*` = Alle Dateien (Fallback)
 - Pfade relative zum Repo-Root
 - Letzter Match gewinnt
@@ -1174,6 +1285,7 @@ docker-compose.yml @infra-team
 **One-Click Dev Environment via GitHub Codespaces!**
 
 ### .devcontainer/devcontainer.json
+
 ```json
 {
   "name": "{{REPO_NAME}}",
@@ -1211,6 +1323,7 @@ docker-compose.yml @infra-team
 ```
 
 **Vorteile:**
+
 - One-Click Development Environment
 - Konsistente Setup über alle Entwickler
 - GitHub Codespaces Support
@@ -1223,6 +1336,7 @@ docker-compose.yml @infra-team
 **Auto Dependency Updates!**
 
 ### .github/dependabot.yml
+
 ```yaml
 version: 2
 updates:
@@ -1270,19 +1384,20 @@ updates:
 **Sponsor Button auf GitHub!**
 
 ### .github/FUNDING.yml
+
 ```yaml
 # These are supported funding model platforms
 
-github: [YOUR_USERNAME]           # GitHub Sponsors
-patreon: YOUR_USERNAME            # Patreon
-open_collective: YOUR_PROJECT     # Open Collective
-ko_fi: YOUR_USERNAME              # Ko-fi
+github: [YOUR_USERNAME] # GitHub Sponsors
+patreon: YOUR_USERNAME # Patreon
+open_collective: YOUR_PROJECT # Open Collective
+ko_fi: YOUR_USERNAME # Ko-fi
 tidelift: # Replace with a single Tidelift platform-name/package-name
 community_bridge: # Replace with a single Community Bridge project-name
-liberapay: YOUR_USERNAME          # Liberapay
+liberapay: YOUR_USERNAME # Liberapay
 issuehunt: # Replace with a single IssueHunt username
 otechie: # Replace with a single Otechie username
-custom: ['https://your-donation-page.com']
+custom: ["https://your-donation-page.com"]
 ```
 
 **Ergebnis:** Grüner "Sponsor" Button auf GitHub Repo!
@@ -1294,6 +1409,7 @@ custom: ['https://your-donation-page.com']
 **Academic Citation für Forschung!**
 
 ### CITATION.cff
+
 ```yaml
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
@@ -1334,6 +1450,7 @@ community a harassment-free experience for everyone.
 ## Our Standards
 
 Examples of behavior that contributes to a positive environment:
+
 - Using welcoming and inclusive language
 - Being respectful of differing viewpoints and experiences
 - Gracefully accepting constructive criticism
@@ -1341,6 +1458,7 @@ Examples of behavior that contributes to a positive environment:
 - Showing empathy towards other community members
 
 Examples of unacceptable behavior:
+
 - The use of sexualized language or imagery
 - Trolling, insulting or derogatory comments
 - Personal or political attacks
@@ -1388,28 +1506,35 @@ version 2.1, available at
 **Do not open issues for general support questions.**
 
 ### 📖 Documentation
+
 - [README]({{REPO_URL}}/blob/main/README.md) - Quick start and features
 - [Architecture Docs]({{REPO_URL}}/blob/main/docs/architecture.md) - Detailed design
 - [API Reference]({{REPO_URL}}/blob/main/docs/api.md) - Full API docs
 
 ### 💬 Community
+
 - [GitHub Discussions]({{REPO_URL}}/discussions) - Ask questions
 - [GitHub Issues]({{REPO_URL}}/issues) - Bug reports and feature requests
 
 ### 🐛 Bug Reports
+
 If you found a bug, please open an issue with:
+
 1. Clear description of the problem
 2. Steps to reproduce
 3. Expected vs actual behavior
 4. Environment details (OS, Python version, etc.)
 
 ### 💡 Feature Requests
+
 For feature requests, please:
+
 1. Check if it already exists in [Issues]({{REPO_URL}}/issues)
 2. Open a new issue with the "enhancement" label
 3. Describe the problem you're trying to solve
 
 ### 📧 Contact
+
 For private inquiries: support@example.com
 ```
 
@@ -1420,6 +1545,7 @@ For private inquiries: support@example.com
 **Automatische Changelogs!**
 
 ### .github/release.yml
+
 ```yaml
 changelog:
   categories:
@@ -1451,6 +1577,7 @@ changelog:
 **Sprachspezifische Templates für saubere Repos!**
 
 ### Python .gitignore
+
 ```
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -1494,6 +1621,7 @@ Thumbs.db
 **Konsistente Formatierung über alle Editoren!**
 
 ### .editorconfig
+
 ```ini
 root = true
 
@@ -1534,17 +1662,18 @@ indent_size = 2
 
 ### Topic-Matrix nach Repo-Typ:
 
-| Repo-Typ | Primär | Sekundär | Tertiär |
-|:---|:---|:---|:---|
-| **Library** | `python`, `typescript` | `library`, `sdk` | `open-source`, `mit` |
-| **Web App** | `react`, `nextjs` | `webapp`, `saas` | `cloud`, `deployment` |
-| **CLI Tool** | `cli`, `command-line` | `tool`, `utility` | `terminal`, `automation` |
-| **API/Service** | `api`, `rest`, `graphql` | `backend`, `service` | `microservice`, `serverless` |
-| **Agent/AI** | `mcp`, `ai-agent`, `llm` | `automation`, `a2a` | `opencode`, `ai` |
-| **Infrastructure** | `docker`, `kubernetes` | `infrastructure`, `devops` | `terraform`, `iac` |
-| **Monorepo** | `monorepo`, `workspace` | `tooling`, `build` | `nx`, `turborepo` |
+| Repo-Typ           | Primär                   | Sekundär                   | Tertiär                      |
+| :----------------- | :----------------------- | :------------------------- | :--------------------------- |
+| **Library**        | `python`, `typescript`   | `library`, `sdk`           | `open-source`, `mit`         |
+| **Web App**        | `react`, `nextjs`        | `webapp`, `saas`           | `cloud`, `deployment`        |
+| **CLI Tool**       | `cli`, `command-line`    | `tool`, `utility`          | `terminal`, `automation`     |
+| **API/Service**    | `api`, `rest`, `graphql` | `backend`, `service`       | `microservice`, `serverless` |
+| **Agent/AI**       | `mcp`, `ai-agent`, `llm` | `automation`, `a2a`        | `opencode`, `ai`             |
+| **Infrastructure** | `docker`, `kubernetes`   | `infrastructure`, `devops` | `terraform`, `iac`           |
+| **Monorepo**       | `monorepo`, `workspace`  | `tooling`, `build`         | `nx`, `turborepo`            |
 
 **Regeln:**
+
 - Max 20 Topics pro Repo
 - 5-10 relevante Keywords
 - Keine zu generischen Topics (`awesome`, `project`)
@@ -1557,18 +1686,19 @@ indent_size = 2
 **GitHub Action die README automatisch validiert!**
 
 ### .github/workflows/readme-lint.yml
+
 ```yaml
 name: README Lint
 
 on:
   push:
     paths:
-      - 'README.md'
-      - 'docs/**'
+      - "README.md"
+      - "docs/**"
   pull_request:
     paths:
-      - 'README.md'
-      - 'docs/**'
+      - "README.md"
+      - "docs/**"
 
 jobs:
   lint:
@@ -1579,9 +1709,9 @@ jobs:
       - name: Check for broken links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: '.markdown-link-check.json'
+          use-quiet-mode: "yes"
+          use-verbose-mode: "yes"
+          config-file: ".markdown-link-check.json"
 
       - name: Check for broken images
         run: |
@@ -1624,6 +1754,7 @@ jobs:
 ```
 
 ### .markdown-link-check.json
+
 ```json
 {
   "retryOn429": true,
@@ -1699,13 +1830,24 @@ llms-full.txt
 
 <p align="center">
   <a href="https://opensin.ai">
-    <img src="https://img.shields.io/badge/🤖_Powered_by-OpenSIN--AI-7B3FE4?style=for-the-badge&logo=github&logoColor=white" alt="Powered by OpenSIN-AI" />
+    <img
+      src="https://img.shields.io/badge/🤖_Powered_by-OpenSIN--AI-7B3FE4?style=for-the-badge&logo=github&logoColor=white"
+      alt="Powered by OpenSIN-AI"
+    />
   </a>
 </p>
 
 <p align="center">
-  <sub>Entwickelt vom <a href="https://opensin.ai"><strong>OpenSIN-AI</strong></a> Ökosystem – Enterprise AI Agents die autonom arbeiten.</sub><br/>
-  <sub>🌐 <a href="https://opensin.ai">opensin.ai</a> · 💬 <a href="https://opensin.ai/agents">Alle Agenten</a> · 🚀 <a href="https://opensin.ai/dashboard">Dashboard</a></sub>
+  <sub
+    >Entwickelt vom
+    <a href="https://opensin.ai"><strong>OpenSIN-AI</strong></a> Ökosystem –
+    Enterprise AI Agents die autonom arbeiten.</sub
+  ><br />
+  <sub
+    >🌐 <a href="https://opensin.ai">opensin.ai</a> · 💬
+    <a href="https://opensin.ai/agents">Alle Agenten</a> · 🚀
+    <a href="https://opensin.ai/dashboard">Dashboard</a></sub
+  >
 </p>
 ```
 
@@ -1716,17 +1858,30 @@ llms-full.txt
 
 <p align="center">
   <a href="https://opensin.ai">
-    <img src="https://opensin.ai/assets/opensin-banner.png" alt="OpenSIN-AI – Enterprise AI Agents" width="720" />
+    <img
+      src="https://opensin.ai/assets/opensin-banner.png"
+      alt="OpenSIN-AI – Enterprise AI Agents"
+      width="720"
+    />
   </a>
 </p>
 
 <p align="center">
-  <sub>Entwickelt vom <a href="https://opensin.ai"><strong>OpenSIN-AI</strong></a> Ökosystem</sub><br/>
-  <sub>🌐 <a href="https://opensin.ai">opensin.ai</a> · 💬 <a href="https://opensin.ai/agents">Agenten</a> · 🚀 <a href="https://opensin.ai/dashboard">Dashboard</a> · 📖 <a href="https://opensin.ai/docs">Docs</a></sub>
+  <sub
+    >Entwickelt vom
+    <a href="https://opensin.ai"><strong>OpenSIN-AI</strong></a> Ökosystem</sub
+  ><br />
+  <sub
+    >🌐 <a href="https://opensin.ai">opensin.ai</a> · 💬
+    <a href="https://opensin.ai/agents">Agenten</a> · 🚀
+    <a href="https://opensin.ai/dashboard">Dashboard</a> · 📖
+    <a href="https://opensin.ai/docs">Docs</a></sub
+  >
 </p>
 ```
 
 ### PFLICHT-Regeln für das Banner:
+
 - **IMMER** ganz unten in der README (nach License, vor schließendem `<p>`)
 - **IMMER** mit `<a href="https://opensin.ai">` wrapen für Klickbarkeit
 - **IMMER** mindestens 3 Links: opensin.ai, Agenten, Dashboard
@@ -1737,11 +1892,9 @@ llms-full.txt
 
 ```markdown
 ---
-
 ## License
 
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
-
 ---
 
 <p align="center">
@@ -1766,26 +1919,26 @@ Distributed under the **MIT License**. See [LICENSE](LICENSE) for more informati
 
 ### 🔴 KRITISCHE PROBLEME (Diagramm rendert GAR NICHT):
 
-| Problem | Fehlermeldung | Vermeidung |
-|:---|:---|:---|
-| **`graph` statt `flowchart`** | `Parse error on line X` | IMMER `flowchart TB/LR` nutzen |
-| **Reservierte Keywords als classDef** | `Expecting 'AMP', 'COLON', got 'GRAPH'` | `graph`, `class`, `end`, `subgraph`, `style` NIE verwenden |
-| **Eckige Klammern in Labels** | `Expecting 'SQE', got 'SQS'` | Labels IMMER quoten: `["text with [brackets]"]` |
-| **`Note over` in flowchart** | `Expecting 'SEMI', got 'NODE_STRING'` | `Note over` NUR in `sequenceDiagram`! |
-| **Geschweifte Klammern in Labels** | `Lexical error` | `{}` in Labels vermeiden: `auth oauth2.1` statt `auth: {type: oauth2.1}` |
-| **Zahlen als Node-ID** | `Lexical error` | `ERR401` statt `401` |
-| **Slashes/Kommas in Labels** | `Lexical error` | Labels quoten: `["/health /dashboard"]` |
-| **`<br/>` in Labels** | Inkonsistentes Rendering | Eher separate Nodes oder `direction TB` Subgraphs |
+| Problem                               | Fehlermeldung                           | Vermeidung                                                               |
+| :------------------------------------ | :-------------------------------------- | :----------------------------------------------------------------------- |
+| **`graph` statt `flowchart`**         | `Parse error on line X`                 | IMMER `flowchart TB/LR` nutzen                                           |
+| **Reservierte Keywords als classDef** | `Expecting 'AMP', 'COLON', got 'GRAPH'` | `graph`, `class`, `end`, `subgraph`, `style` NIE verwenden               |
+| **Eckige Klammern in Labels**         | `Expecting 'SQE', got 'SQS'`            | Labels IMMER quoten: `["text with [brackets]"]`                          |
+| **`Note over` in flowchart**          | `Expecting 'SEMI', got 'NODE_STRING'`   | `Note over` NUR in `sequenceDiagram`!                                    |
+| **Geschweifte Klammern in Labels**    | `Lexical error`                         | `{}` in Labels vermeiden: `auth oauth2.1` statt `auth: {type: oauth2.1}` |
+| **Zahlen als Node-ID**                | `Lexical error`                         | `ERR401` statt `401`                                                     |
+| **Slashes/Kommas in Labels**          | `Lexical error`                         | Labels quoten: `["/health /dashboard"]`                                  |
+| **`<br/>` in Labels**                 | Inkonsistentes Rendering                | Eher separate Nodes oder `direction TB` Subgraphs                        |
 
 ### 🟡 HÄUFIGE PROBLEME (Diagramm rendert aber falsch):
 
-| Problem | Symptom | Vermeidung |
-|:---|:---|:---|
-| **classDef VOR Nodes** | Farben werden nicht angewendet | classDef IMMER NACH den Nodes definieren |
-| **Falsches Leerzeichen bei class** | Klassen nicht zugewiesen | EXAKT ein Leerzeichen: `class A,B myClass` |
-| **Emoji in Node-Labels** | Render-Probleme auf GitHub | Emojis NUR in Subgraph-Titeln, nicht in Nodes |
-| **Zu viele Nodes** | Diagramm unlesbar | Max 15-20 Nodes pro Diagramm |
-| **Keine direction im Subgraph** | Nodes übereinander gestapelt | `direction LR` oder `direction TB` IMMER setzen |
+| Problem                            | Symptom                        | Vermeidung                                      |
+| :--------------------------------- | :----------------------------- | :---------------------------------------------- |
+| **classDef VOR Nodes**             | Farben werden nicht angewendet | classDef IMMER NACH den Nodes definieren        |
+| **Falsches Leerzeichen bei class** | Klassen nicht zugewiesen       | EXAKT ein Leerzeichen: `class A,B myClass`      |
+| **Emoji in Node-Labels**           | Render-Probleme auf GitHub     | Emojis NUR in Subgraph-Titeln, nicht in Nodes   |
+| **Zu viele Nodes**                 | Diagramm unlesbar              | Max 15-20 Nodes pro Diagramm                    |
+| **Keine direction im Subgraph**    | Nodes übereinander gestapelt   | `direction LR` oder `direction TB` IMMER setzen |
 
 ### 🟢 BEST PRACTICES (funktionieren IMMER):
 
@@ -1835,6 +1988,7 @@ grep -nP '^\s+\d+\[' README.md && echo "WARNUNG: Zahlen-IDs vermeiden!"
 ```
 
 ### ✅ MERMAID-CHECKLISTE (PFLICHT VOR COMMIT!):
+
 - [ ] `flowchart` statt `graph` verwendet?
 - [ ] Keine reservierten Keywords (`graph`, `class`, `end`) in classDef?
 - [ ] Alle Labels mit Sonderzeichen (`[]`, `{}`, `/`, `,`) gequotet?
@@ -1854,50 +2008,54 @@ grep -nP '^\s+\d+\[' README.md && echo "WARNUNG: Zahlen-IDs vermeiden!"
 
 ### 🚨 HÄUFIGE LINK-FEHLER:
 
-| Fehler | Problem | Lösung |
-|:---|:---|:---|
-| **Relative Pfade falsch** | `./docs/architecture.md` existiert nicht | Pfad vom Dateistandort prüfen! |
-| **Anker-Links mit Emoji** | `#-quick-start` (führender Bindestrich) | Headings OHNE Emojis: `## Quick Start` → `#quick-start` |
-| **Externe URLs tot** | API-Doku verschoben | URLs vor Commit testen! |
-| **Badge-URLs falsch** | `{{REPO_SLUG}}` nicht ersetzt | Template-Variablen ALLE ersetzen! |
-| **GitHub Topics falsch** | Topics als Links formatiert | Topics gehören in GitHub Settings, nicht in README |
+| Fehler                    | Problem                                  | Lösung                                                  |
+| :------------------------ | :--------------------------------------- | :------------------------------------------------------ |
+| **Relative Pfade falsch** | `./docs/architecture.md` existiert nicht | Pfad vom Dateistandort prüfen!                          |
+| **Anker-Links mit Emoji** | `#-quick-start` (führender Bindestrich)  | Headings OHNE Emojis: `## Quick Start` → `#quick-start` |
+| **Externe URLs tot**      | API-Doku verschoben                      | URLs vor Commit testen!                                 |
+| **Badge-URLs falsch**     | `{{REPO_SLUG}}` nicht ersetzt            | Template-Variablen ALLE ersetzen!                       |
+| **GitHub Topics falsch**  | Topics als Links formatiert              | Topics gehören in GitHub Settings, nicht in README      |
 
 ### ✅ LINK-REGELN (PFLICHT!):
 
 #### 1. Interne Links (im gleichen Repo):
+
 ```markdown
 ✅ RICHTIG: [Architecture](docs/architecture.md)
 ✅ RICHTIG: [License](LICENSE)
 ✅ RICHTIG: [Contributing](CONTRIBUTING.md)
-❌ FALSCH:  [Architecture](./docs/architecture.md)  ← ./ optional aber OK
-❌ FALSCH:  [Architecture](/docs/architecture.md)   ← / = Repo-Root, nicht Datei-Pfad!
+❌ FALSCH: [Architecture](./docs/architecture.md) ← ./ optional aber OK
+❌ FALSCH: [Architecture](/docs/architecture.md) ← / = Repo-Root, nicht Datei-Pfad!
 ```
 
 #### 2. Anchor-Links:
+
 ```markdown
-Heading: ## Quick Start      → Anchor: #quick-start ✅
-Heading: ## Use Cases        → Anchor: #use-cases ✅
-Heading: ## API Reference    → Anchor: #api-reference ✅
-Heading: ## 🚀 Quick Start   → Anchor: #-quick-start ❌ FÜHRENDER BINDESTRICH!
+Heading: ## Quick Start → Anchor: #quick-start ✅
+Heading: ## Use Cases → Anchor: #use-cases ✅
+Heading: ## API Reference → Anchor: #api-reference ✅
+Heading: ## 🚀 Quick Start → Anchor: #-quick-start ❌ FÜHRENDER BINDESTRICH!
 
 ✅ RICHTIG: [Quick Start](#quick-start)
-❌ FALSCH:  [Quick Start](#-quick-start)
+❌ FALSCH: [Quick Start](#-quick-start)
 ```
 
 **Regel: Headings NIE mit Emojis beginnen!**
 
 #### 3. Externe Links:
+
 ```markdown
 ✅ RICHTIG: [FastAPI](https://fastapi.tiangolo.com/)
 ✅ RICHTIG: [MCP Protocol](https://github.com/modelcontextprotocol)
-❌ FALSCH:  [FastAPI](https://fastapi.tiangoloo.com/)  ← Tippfehler!
-❌ FALSCH:  [Docs](https://docs.example.com/v1)        ← v1 existiert nicht mehr!
+❌ FALSCH: [FastAPI](https://fastapi.tiangoloo.com/) ← Tippfehler!
+❌ FALSCH: [Docs](https://docs.example.com/v1) ← v1 existiert nicht mehr!
 ```
 
 #### 4. Badge-Links:
+
 ```markdown
 ✅ RICHTIG: [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Delqhi/Simone-MCP/blob/main/LICENSE)
-❌ FALSCH:  [![License](https://img.shields.io/badge/license-MIT-blue.svg)]({{REPO_URL}}/blob/main/LICENSE)  ← Variable nicht ersetzt!
+❌ FALSCH: [![License](https://img.shields.io/badge/license-MIT-blue.svg)]({{REPO_URL}}/blob/main/LICENSE) ← Variable nicht ersetzt!
 ```
 
 ### 🧪 LINK-VALIDIERUNG VOR COMMIT:
@@ -1923,6 +2081,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 ```
 
 ### 🔗 LINK-CHECKLISTE (PFLICHT VOR COMMIT!):
+
 - [ ] Alle internen Dateipfade existieren wirklich?
 - [ ] Alle externen URLs sind erreichbar (kein 404)?
 - [ ] Alle Anchor-Links matchen existierende Headings?
@@ -1940,6 +2099,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 ## 📋 ERWEITERTE QUALITÄTS-CHECKLISTE (50+ Punkte!)
 
 ### Community & Collaboration (NEU!)
+
 - [ ] Issue Templates vorhanden (bug_report.yml, feature_request.yml)?
 - [ ] PR Template vorhanden (pull_request_template.md)?
 - [ ] CODEOWNERS definiert?
@@ -1952,6 +2112,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] Multi-Language READMEs (README.de.md, etc.)?
 
 ### CI/CD & Automation (NEU!)
+
 - [ ] CI Workflow (.github/workflows/ci.yml)?
 - [ ] README Lint Workflow?
 - [ ] Dependabot konfiguriert?
@@ -1959,6 +2120,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] CITATION.cff für Academic Citation?
 
 ### Editor & Formatting (NEU!)
+
 - [ ] .editorconfig für konsistente Formatierung?
 - [ ] .gitignore sprachspezifisch?
 - [ ] Markdown Link Check konfiguriert?
@@ -1967,6 +2129,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] Bilder-Referenzen intakt?
 
 ### Discoverability (NEU!)
+
 - [ ] GitHub Topics gesetzt (5-10 relevante)?
 - [ ] GitHub Description optimiert?
 - [ ] GitHub Website URL gesetzt?
@@ -1975,6 +2138,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] llms-full.txt mit vollständigem Kontext?
 
 ### OpenSIN-AI Branding (PFLICHT!)
+
 - [ ] OpenSIN-AI Werbebanner ganz unten in README?
 - [ ] Banner-Link zu https://opensin.ai funktioniert?
 - [ ] Mindestens 3 Links im Banner (opensin.ai, agents, dashboard)?
@@ -1982,6 +2146,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] Banner NICHT entfernt oder geändert?
 
 ### Link-Validierung (PFLICHT!)
+
 - [ ] Alle internen Dateipfade existieren wirklich?
 - [ ] Alle externen URLs sind erreichbar (kein 404)?
 - [ ] Keine Anchor-Links mit führendem Bindestrich (`#-xxx`)?
@@ -1994,6 +2159,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] OpenSIN-AI Banner-Links funktionieren?
 
 ### Mermaid-Validierung (PFLICHT!)
+
 - [ ] `flowchart` statt `graph` verwendet?
 - [ ] Keine reservierten Keywords in classDef?
 - [ ] Alle Labels mit Sonderzeichen gequotet?
@@ -2004,6 +2170,7 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] `direction` in jedem Subgraph?
 
 ### Enterprise Visualisierung
+
 - [ ] Shields.io Badges (5-7, zentriert)?
 - [ ] Dynamische Badges genutzt?
 - [ ] Inline Navigation funktioniert?
@@ -2013,18 +2180,21 @@ grep -oP 'https://img\.shields\.io/[^)]*' README.md | head -20
 - [ ] Feature Comparison Matrix?
 
 ### Mermaid-Diagramme
+
 - [ ] System Architecture Diagram?
 - [ ] Alle Diagramme rendern korrekt?
 - [ ] Keine reservierten Keywords in classDef?
 - [ ] Alle Labels mit Sonderzeichen gequotet?
 
 ### Nutzer-Verständlichkeit
+
 - [ ] 5-Sekunden-Hook vorhanden?
 - [ ] Benefit Tabelle?
 - [ ] Use Case Tabelle?
 - [ ] Nicht-Developer versteht es sofort?
 
 ### Accessibility & Mobile
+
 - [ ] Alle Bilder haben alt-Text?
 - [ ] Tabellen mobil-freundlich (max 3-4 Spalten)?
 - [ ] Back-to-Top Links?
@@ -2043,6 +2213,7 @@ Reihenfolge: 1. Governance → 2. Visuals → 3. Community Files → 4. Commit &
 Dieser Skill stellt sicher, dass JEDES Repo:
 
 **VISUELL (1-10):**
+
 1. ✅ Sofort verständlich (5-Sekunden-Regel)
 2. ✅ Professionell aussieht (Badges, Social Preview)
 3. ✅ AI-discoverable (llms.txt/llms-full.txt)
@@ -2054,41 +2225,11 @@ Dieser Skill stellt sicher, dass JEDES Repo:
 9. ✅ Video Embed Pattern
 10. ✅ Konsistente Farbschema
 
-**COMMUNITY (11-20):**
-11. ✅ Contributors anzieht (CONTRIBUTING.md)
-12. ✅ Security Reports (SECURITY.md)
-13. ✅ Strukturierte Issues (Issue Templates)
-14. ✅ Strukturierte PRs (PR Templates)
-15. ✅ Auto Reviewer (CODEOWNERS)
-16. ✅ Professional Conduct (CODE_OF_CONDUCT.md)
-17. ✅ Support Paths (SUPPORT.md)
-18. ✅ Funding Options (FUNDING.yml)
-19. ✅ Academic Citation (CITATION.cff)
-20. ✅ Multi-Language Support (I18n)
+**COMMUNITY (11-20):** 11. ✅ Contributors anzieht (CONTRIBUTING.md) 12. ✅ Security Reports (SECURITY.md) 13. ✅ Strukturierte Issues (Issue Templates) 14. ✅ Strukturierte PRs (PR Templates) 15. ✅ Auto Reviewer (CODEOWNERS) 16. ✅ Professional Conduct (CODE_OF_CONDUCT.md) 17. ✅ Support Paths (SUPPORT.md) 18. ✅ Funding Options (FUNDING.yml) 19. ✅ Academic Citation (CITATION.cff) 20. ✅ Multi-Language Support (I18n)
 
-**AUTOMATION (21-30):**
-21. ✅ CI/CD Pipelines
-22. ✅ Auto Dependency Updates (Dependabot)
-23. ✅ One-Click Dev Env (Dev Container)
-24. ✅ README Validation CI
-25. ✅ Release Notes Automation
-26. ✅ Gitignore Patterns
-27. ✅ EditorConfig
-28. ✅ Topic Recommendations
-29. ✅ Broken Link Detection
-30. ✅ Mermaid Syntax Validation
+**AUTOMATION (21-30):** 21. ✅ CI/CD Pipelines 22. ✅ Auto Dependency Updates (Dependabot) 23. ✅ One-Click Dev Env (Dev Container) 24. ✅ README Validation CI 25. ✅ Release Notes Automation 26. ✅ Gitignore Patterns 27. ✅ EditorConfig 28. ✅ Topic Recommendations 29. ✅ Broken Link Detection 30. ✅ Mermaid Syntax Validation
 
-**DISCOVERABILITY (31-40):**
-31. ✅ SEO für GitHub optimiert
-32. ✅ Accessibility-konform
-33. ✅ Repo-Typ-Erkennung
-34. ✅ Template-Variablen
-35. ✅ Anchor-Link Validierung
-36. ✅ Image Optimization
-37. ✅ Color Palette System
-38. ✅ SimpleIcons Reference
-39. ✅ Changelog Section
-40. ✅ Back-to-Top Navigation
+**DISCOVERABILITY (31-40):** 31. ✅ SEO für GitHub optimiert 32. ✅ Accessibility-konform 33. ✅ Repo-Typ-Erkennung 34. ✅ Template-Variablen 35. ✅ Anchor-Link Validierung 36. ✅ Image Optimization 37. ✅ Color Palette System 38. ✅ SimpleIcons Reference 39. ✅ Changelog Section 40. ✅ Back-to-Top Navigation
 
 **Bilder sagen mehr als tausend Worte - AI findet dein Repo durch llms.txt - Contributors lieben strukturierte Templates - OpenSIN-AI wird sichtbar beworben!**
 
@@ -2097,21 +2238,23 @@ Dieser Skill stellt sicher, dass JEDES Repo:
 ## 🆕 NEU in v4.0 (Zusätzliche Features):
 
 ### OpenSIN-AI Branding (PFLICHT!)
+
 - ✅ Werbebanner ganz unten in JEDER README
 - ✅ Link zu https://opensin.ai + agents + dashboard
 - ✅ "Powered by OpenSIN-AI" Branding
 - ✅ Badge: `🤖 Powered by OpenSIN-AI`
 
 ### Mermaid Anti-Bug Guide
+
 - ✅ Alle bekannten Parse-Errors dokumentiert
 - ✅ Vermeidungs-Strategien für jedes Problem
 - ✅ Validierungs-Skripte vor Commit
 - ✅ 10-Punkte Mermaid-Checkliste
 
 ### Link-Validierung
+
 - ✅ Alle Link-Fehler typen dokumentiert
 - ✅ Anchor-Link Regeln (KEIN `-` am Anfang!)
 - ✅ Template-Variable Validierung
 - ✅ Interne/Externe/Badge-Link Regeln
 - ✅ 10-Punkte Link-Checkliste
-

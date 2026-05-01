@@ -76,8 +76,11 @@ assignees: ''
 
 ## Logs
 ```
+
 <!-- Paste relevant logs here -->
+
 ```
+
 ```
 
 **FEATURE REQUEST TEMPLATE (`.github/ISSUE_TEMPLATE/feature_request.md`):**
@@ -113,12 +116,15 @@ assignees: ''
 
 ```markdown
 ## Description
+
 <!-- Describe your changes in detail -->
 
 ## Related Issue
+
 Fixes #(issue number)
 
 ## Type of Change
+
 - [ ] 🐛 Bug fix (non-breaking change that fixes an issue)
 - [ ] ✨ New feature (non-breaking change that adds functionality)
 - [ ] 💥 Breaking change (fix or feature that would cause existing functionality to change)
@@ -127,6 +133,7 @@ Fixes #(issue number)
 - [ ] ♻️ Refactoring (no functional changes)
 
 ## Checklist
+
 - [ ] My code follows the project's style guidelines
 - [ ] I have performed a self-review of my code
 - [ ] Ich habe meinen Code umfassend kommentiert, damit alle Coder künftig Bescheid wissen (Was, Warum, Weshalb, Zusammenhänge).
@@ -137,9 +144,11 @@ Fixes #(issue number)
 - [ ] Any dependent changes have been merged and published
 
 ## Visual Evidence (required)
+
 <!-- Add screenshots, images, diagrams, and/or videos that prove the change, bug, fix, or workflow -->
 
 ## Testing Instructions
+
 <!-- How can reviewers test your changes? -->
 ```
 
@@ -165,8 +174,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm run lint
 
@@ -176,8 +185,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm run typecheck
 
@@ -187,8 +196,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm run test -- --coverage
       - uses: codecov/codecov-action@v4
@@ -202,8 +211,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
@@ -287,7 +296,7 @@ updates:
 
 **CONTRIBUTING.md TEMPLATE:**
 
-```markdown
+````markdown
 # Contributing to [Project Name]
 
 Thank you for your interest in contributing! This document provides guidelines.
@@ -346,75 +355,81 @@ npm run lint
 # Build for production
 npm run build
 ```
+````
 
 ## Questions?
 
 Open an issue or reach out to the maintainers.
+
 ```
 
 **BRANCH PROTECTION RULES (Documentation):**
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  🛡️  RECOMMENDED BRANCH PROTECTION RULES                                   │
+│ 🛡️ RECOMMENDED BRANCH PROTECTION RULES │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  For `main` branch:                                                         │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  ✅ Require pull request reviews before merging                            │
-│  ✅ Require at least 1 approving review                                    │
-│  ✅ Dismiss stale pull request approvals when new commits are pushed       │
-│  ✅ Require review from Code Owners                                        │
-│  ✅ Require status checks to pass before merging                           │
-│     • ci / lint                                                            │
-│     • ci / typecheck                                                       │
-│     • ci / test                                                            │
-│     • ci / build                                                           │
-│  ✅ Require branches to be up to date before merging                       │
-│  ✅ Require signed commits (optional but recommended)                      │
-│  ✅ Include administrators in restrictions                                 │
-│  ❌ Allow force pushes: DISABLED                                           │
-│  ❌ Allow deletions: DISABLED                                              │
-│                                                                              │
-│  For `develop` branch (if using GitFlow):                                   │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│  ✅ Require pull request reviews before merging                            │
-│  ✅ Require status checks to pass before merging                           │
-│  ✅ Allow force pushes by maintainers only                                 │
-│                                                                              │
+│ │
+│ For `main` branch: │
+│ ───────────────────────────────────────────────────────────────────────── │
+│ ✅ Require pull request reviews before merging │
+│ ✅ Require at least 1 approving review │
+│ ✅ Dismiss stale pull request approvals when new commits are pushed │
+│ ✅ Require review from Code Owners │
+│ ✅ Require status checks to pass before merging │
+│ • ci / lint │
+│ • ci / typecheck │
+│ • ci / test │
+│ • ci / build │
+│ ✅ Require branches to be up to date before merging │
+│ ✅ Require signed commits (optional but recommended) │
+│ ✅ Include administrators in restrictions │
+│ ❌ Allow force pushes: DISABLED │
+│ ❌ Allow deletions: DISABLED │
+│ │
+│ For `develop` branch (if using GitFlow): │
+│ ───────────────────────────────────────────────────────────────────────── │
+│ ✅ Require pull request reviews before merging │
+│ ✅ Require status checks to pass before merging │
+│ ✅ Allow force pushes by maintainers only │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
+
 ```
 
 **MANDATORY COMPLIANCE CHECKLIST:**
 
 ```
+
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  ✅ REPOSITORY SETUP CHECKLIST                                             │
+│ ✅ REPOSITORY SETUP CHECKLIST │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  📋 Templates:                                                              │
-│  [ ] Bug report template created                                           │
-│  [ ] Feature request template created                                      │
-│  [ ] PR template with checklist created                                    │
-│                                                                              │
-│  📋 CI/CD:                                                                  │
-│  [ ] CI workflow (lint, typecheck, test, build)                            │
-│  [ ] Release workflow (if applicable)                                      │
-│  [ ] CodeQL security scanning                                              │
-│  [ ] Dependabot configured                                                 │
-│                                                                              │
-│  📋 Documentation:                                                          │
-│  [ ] CONTRIBUTING.md written                                               │
-│  [ ] CODE_OF_CONDUCT.md present                                            │
-│  [ ] LICENSE file present                                                  │
-│  [ ] SECURITY.md for vulnerability reporting                               │
-│                                                                              │
-│  📋 Access Control:                                                         │
-│  [ ] CODEOWNERS file configured                                            │
-│  [ ] Branch protection rules enabled                                       │
-│  [ ] Required reviewers set                                                │
-│                                                                              │
+│ │
+│ 📋 Templates: │
+│ [ ] Bug report template created │
+│ [ ] Feature request template created │
+│ [ ] PR template with checklist created │
+│ │
+│ 📋 CI/CD: │
+│ [ ] CI workflow (lint, typecheck, test, build) │
+│ [ ] Release workflow (if applicable) │
+│ [ ] CodeQL security scanning │
+│ [ ] Dependabot configured │
+│ │
+│ 📋 Documentation: │
+│ [ ] CONTRIBUTING.md written │
+│ [ ] CODE_OF_CONDUCT.md present │
+│ [ ] LICENSE file present │
+│ [ ] SECURITY.md for vulnerability reporting │
+│ │
+│ 📋 Access Control: │
+│ [ ] CODEOWNERS file configured │
+│ [ ] Branch protection rules enabled │
+│ [ ] Required reviewers set │
+│ │
 └─────────────────────────────────────────────────────────────────────────────┘
+
 ```
 
 **VIOLATIONS = REPOSITORY NICHT PRODUCTION-READY:**
@@ -428,3 +443,4 @@ Open an issue or reach out to the maintainers.
 **Source:** ~/.config/opencode/Agents.md (Line 2318-2744)
 **Status:** ACTIVE - MANDATORY COMPLIANCE
 **Category:** blueprint-mandates
+```

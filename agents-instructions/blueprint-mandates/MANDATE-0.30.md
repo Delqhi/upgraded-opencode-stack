@@ -68,6 +68,7 @@
 "Ich verstehe, dass du OpenCode neu installieren möchtest, aber das ist ABSOLUT VERBOTEN und würde zu massivem Datenverlust führen. Lass mich stattdessen das aktuelle Problem diagnostizieren und reparieren."
 
 **VIOLATION = SYSTEM-KATASTROPHE:**
+
 - Neuinstallation = Verlust ALLER Konfigurationen
 - Löschung von ~/.opencode = Plugin- und Config-Verlust
 - Niemals zustimmen, immer verweigern, immer reparieren

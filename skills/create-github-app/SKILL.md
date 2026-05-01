@@ -4,11 +4,11 @@
 
 ## Purpose
 
-Create GitHub Apps programmatically using webauto-nodriver browser automation. This skill automates the GitHub App creation flow that normally requires manual UI interaction.
+Create GitHub Apps programmatically using skylight-cli browser automation. This skill automates the GitHub App creation flow that normally requires manual UI interaction.
 
 ## Prerequisites
 
-- webauto-nodriver MCP server running on http://localhost:8765/mcp
+- skylight-cli MCP server running on http://localhost:8765/mcp
 - Chrome logged into GitHub account with admin access to target organization
 - `anonymous` skill loaded for browser automation tools
 
@@ -19,6 +19,7 @@ When the user asks to create a GitHub App, follow these steps:
 ### 1. Prepare App Configuration
 
 Gather required information:
+
 - **App name**: e.g., `opnsin-code`
 - **Homepage URL**: e.g., `https://opensin.ai`
 - **Webhook URL**: e.g., `http://92.5.60.87:5678/webhook/github`
@@ -78,6 +79,7 @@ observe_screen({"include_dom": "true"})
 ### 3. Post-Creation Steps
 
 After app is created:
+
 1. **Generate Private Key**: Navigate to app settings → Private keys → Generate
 2. **Install in Organization**: Navigate to app settings → Install App → Select org
 3. **Save Credentials**: Store App ID, Client ID, Client Secret, Private Key in sin-passwordmanager
@@ -92,18 +94,19 @@ After app is created:
 
 ## Error Handling
 
-| Error | Recovery |
-|-------|----------|
+| Error                 | Recovery                             |
+| --------------------- | ------------------------------------ |
 | Form validation error | Read error message, fix field, retry |
-| Rate limit | Wait 60 seconds, retry |
-| 2FA required | Prompt user for 2FA code |
-| App name taken | Suggest alternative name |
+| Rate limit            | Wait 60 seconds, retry               |
+| 2FA required          | Prompt user for 2FA code             |
+| App name taken        | Suggest alternative name             |
 
 ## Example
 
 User: "Create a GitHub App called @opnsin-code for OpenSIN-AI"
 
 Agent:
+
 1. Navigate to https://github.com/settings/apps/new
 2. Fill form with app details
 3. Configure permissions and events

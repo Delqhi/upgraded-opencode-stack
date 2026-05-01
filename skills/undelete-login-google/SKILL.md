@@ -3,11 +3,13 @@
 Automatisierte Wiederherstellung gelöschter Google Workspace Accounts und Login in Chrome.
 
 ## WANN VERWENDEN
+
 - Wenn ein alter Google Workspace Account (@zukunftsorientierte-energie.de) wiederhergestellt werden muss
 - Wenn ein Agent einen Google Account in Chrome eingeloggt braucht
 - Wenn Google Account-Erstellung blockiert ist (412 "abusive behavior")
 
 ## KRITISCHE INFOS
+
 - Google Workspace Domain: `zukunftsorientierte-energie.de`
 - Token-Refresh-Service Passwort: `ZOE.jerry2024`
 - Chrome Port für Token-Refresh-Service: `7656`
@@ -39,12 +41,12 @@ def launch_chrome():
             except: pass
         except: pass
         LOGIN_PID.unlink(missing_ok=True)
-    
+
     # Fresh profile
     if LOGIN_PROFILE.exists():
         shutil.rmtree(LOGIN_PROFILE, ignore_errors=True)
     LOGIN_PROFILE.mkdir(parents=True, exist_ok=True)
-    
+
     proc = subprocess.Popen(
         [
             CHROME_BINARY,
@@ -66,7 +68,7 @@ def launch_chrome():
         start_new_session=True,
     )
     LOGIN_PID.write_text(str(proc.pid))
-    
+
     # Wait for Chrome ready
     for _ in range(40):
         if proc.poll() is not None:
@@ -81,6 +83,7 @@ def launch_chrome():
 ```
 
 **WICHTIGSTE FLAGS:**
+
 - `--disable-features=SigninInterceptBubble,ExplicitBrowserSigninUIOnDesktop` → Unterdrückt natives Chrome Sync Popup
 - `--disable-sync` → Verhindert Sync-Vorschläge
 - `--no-first-run` → Kein Willkommens-Screen
@@ -89,6 +92,7 @@ def launch_chrome():
 ## FLOW
 
 ### 1. Account wiederherstellen
+
 ```python
 import sys
 sys.path.insert(0, '/Users/jeremy/.open-auth-Token-Refresh-Service/antigravity')
@@ -100,6 +104,7 @@ print(f"Restored: {email}")
 ```
 
 ### 2. Chrome starten (MIT FLAGS!)
+
 ```python
 from oar_steps.chrome import launch_chrome, connect_browser
 
@@ -108,6 +113,7 @@ browser = await connect_browser()
 ```
 
 ### 3. Google Login
+
 ```python
 from oar_steps.google_login import google_login
 
@@ -117,6 +123,7 @@ if not ok:
 ```
 
 ### 4. Verifizieren
+
 ```python
 current_url = browser.tabs[0].url or ""
 assert "myaccount.google.com" in current_url
@@ -126,6 +133,7 @@ print(f"Logged in: {current_url}")
 ## GOOGLE LOGIN DETAILS
 
 Der Login verwendet nodriver mit diesen Schritten:
+
 1. Navigiere zu `https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn`
 2. Finde `input[type='email']` → Email eingeben
 3. Klicke `#identifierNext` oder Enter
@@ -134,23 +142,26 @@ Der Login verwendet nodriver mit diesen Schritten:
 6. Warte auf `myaccount.google.com` oder `mail.google`
 
 **Fallbacks:**
+
 - Wenn "Anderes Konto verwenden" erscheint → klicken
 - Wenn TOS/Willkommen erscheint → akzeptieren
 - Wenn Challenge/2FA → Screenshot speichern und fehlschlagen
 
 ## FEHLERBEHEBUNG
 
-| Fehler | Lösung |
-|--------|--------|
-| 412 "abusive behavior" | Deleted Account Restore verwenden |
-| 404 "userKey not found" | Account ist zu alt (>20 Tage), anderen versuchen |
-| Chrome startet nicht | `pkill -f chrome` dann neu starten |
-| Login scheitert | Passwort reset: `update_workspace_password(email, "ZOE.jerry2024")` |
-| "Mein Chrome" Popup | Flags fehlen! `--disable-features=SigninInterceptBubble,ExplicitBrowserSigninUIOnDesktop` |
-| Login landet auf signin | Chrome Profil war nicht frisch → `/tmp/oar_*` löschen |
+| Fehler                  | Lösung                                                                                    |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| 412 "abusive behavior"  | Deleted Account Restore verwenden                                                         |
+| 404 "userKey not found" | Account ist zu alt (>20 Tage), anderen versuchen                                          |
+| Chrome startet nicht    | `NIEMALS – BANNED (semgrep Regel)` dann neu starten                                                        |
+| Login scheitert         | Passwort reset: `update_workspace_password(email, "ZOE.jerry2024")`                       |
+| "Mein Chrome" Popup     | Flags fehlen! `--disable-features=SigninInterceptBubble,ExplicitBrowserSigninUIOnDesktop` |
+| Login landet auf signin | Chrome Profil war nicht frisch → `/tmp/oar_*` löschen                                     |
 
 ## SCREENSHOT PFLICHT
+
 Nach JEDEM Schritt Screenshot speichern:
+
 - `/tmp/undelete_01_before.png`
 - `/tmp/undelete_02_after_restore.png`
 - `/tmp/undelete_03_google_login.png`
@@ -158,7 +169,9 @@ Nach JEDEM Schritt Screenshot speichern:
 - `/tmp/undelete_05_final_state.png`
 
 ## LOG PFLICHT
+
 Jeder Schritt MUSS loggen:
+
 - URL vor und nach jeder Aktion
 - Alle gefundenen/nicht-gefundenen Elemente
 - Tab-Anzahl im Browser

@@ -1,21 +1,22 @@
 ---
 name: anonymous
-description: "Provides browser automation capabilities via the webauto-nodriver-mcp server. Enables agents to perform web interactions, UI automation, and cross-platform tasks using nodriver with stealth capabilities."
+description: "Provides browser automation capabilities via the skylight-cli-mcp server. Enables agents to perform web interactions, UI automation, and cross-platform tasks using nodriver with stealth capabilities."
 license: MIT
 compatibility: opencode
 metadata:
   audience: all-agents
   workflow: browser-automation
-  trigger: webauto-nodriver
+  trigger: skylight-cli
 ---
 
 # Anonymous Skill
 
-This skill provides access to the webauto-nodriver-mcp server, which offers a comprehensive set of tools for browser automation, UI control, and cross-platform tasks.
+This skill provides access to the skylight-cli-mcp server, which offers a comprehensive set of tools for browser automation, UI control, and cross-platform tasks.
 
 ## Purpose
 
 The Anonymous skill enables agents to:
+
 - Automate browser interactions using nodriver with Chrome DevTools Protocol (CDP)
 - Perform UI automation on macOS (AppleScript, keyboard/mouse control)
 - Interact with WhatsApp, Apple Notes, Calendar, and iMessage
@@ -26,7 +27,7 @@ The Anonymous skill enables agents to:
 
 ## How It Works
 
-When this skill is loaded, it enables access to the webauto-nodriver-mcp server which is already configured globally in the OpenCode configuration. The skill doesn't start the server itself but makes the tools available to agents.
+When this skill is loaded, it enables access to the skylight-cli-mcp server which is already configured globally in the OpenCode configuration. The skill doesn't start the server itself but makes the tools available to agents.
 
 ## Tool Categories
 
@@ -52,15 +53,15 @@ The skill provides tools in these categories:
 
 ## Usage
 
-Once loaded, agents can use any of the tools provided by the webauto-nodriver-mcp server. The tools are available in the agent's toolset and can be invoked directly.
+Once loaded, agents can use any of the tools provided by the skylight-cli-mcp server. The tools are available in the agent's toolset and can be invoked directly.
 
 ## Example
 
 ```python
 # Example usage in an agent
-await webauto_nodriver_goto({"url": "https://google.com"})
-await webauto_nodriver_click({"x": 100, "y": 200})
-await webauto_nodriver_type_text({"text": "Hello World"})
+await skylight-cli_goto({"url": "https://google.com"})
+await skylight-cli_click({"x": 100, "y": 200})
+await skylight-cli_type_text({"text": "Hello World"})
 ```
 
 ## Notes

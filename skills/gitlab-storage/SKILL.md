@@ -20,10 +20,10 @@
 
 ## 🔑 Token & Auth
 
-| Variable | Pfad | Zweck |
-|----------|------|-------|
+| Variable                 | Pfad                                      | Zweck                                              |
+| ------------------------ | ----------------------------------------- | -------------------------------------------------- |
 | `GITLAB_LOGCENTER_TOKEN` | `~/.config/opencode/gitlab_logcenter.env` | GitLab API Token (privat, aus SIN-Passwordmanager) |
-| `GITLAB_STORAGE_TOKEN` | `~/.config/opencode/gitlab_logcenter.env` | Gleicher Token, alias |
+| `GITLAB_STORAGE_TOKEN`   | `~/.config/opencode/gitlab_logcenter.env` | Gleicher Token, alias                              |
 
 **Token kommt aus:** `sin-passwordmanager` → `gitlab.com` → `GITLAB_LOGCENTER_TOKEN`
 
@@ -61,17 +61,17 @@ gitlab_storage_manager.py get-active --project <name>
 
 ### Kategorien
 
-| Kategorie | Zweck | Beispiele |
-|-----------|-------|-----------|
-| `logs` | Application Logs, Crash Logs | `runner.log`, `crash.dump` |
-| `video` | Screen Recordings, CDP Screencasts | `browser_recording.mp4` |
-| `screenshots` | Browser Screenshots, UI Captures | `screenshot.png` |
-| `browser` | CDP Console, Network, Performance Logs | `console.log`, `network.har` |
-| `reports` | Crash Analysis, RCA Reports | `crash_analysis.json` |
-| `docker-images` | Exportierte Docker Images | `supabase_backup.tar` |
-| `backups` | Datenbank-Backups, Config-Backups | `supabase_db.sql.gz` |
-| `agent-artifacts` | Agent Build-Outputs, Test-Results | `test_results.json` |
-| `misc` | Alles andere | `unknown.dat` |
+| Kategorie         | Zweck                                  | Beispiele                    |
+| ----------------- | -------------------------------------- | ---------------------------- |
+| `logs`            | Application Logs, Crash Logs           | `runner.log`, `crash.dump`   |
+| `video`           | Screen Recordings, CDP Screencasts     | `browser_recording.mp4`      |
+| `screenshots`     | Browser Screenshots, UI Captures       | `screenshot.png`             |
+| `browser`         | CDP Console, Network, Performance Logs | `console.log`, `network.har` |
+| `reports`         | Crash Analysis, RCA Reports            | `crash_analysis.json`        |
+| `docker-images`   | Exportierte Docker Images              | `supabase_backup.tar`        |
+| `backups`         | Datenbank-Backups, Config-Backups      | `supabase_db.sql.gz`         |
+| `agent-artifacts` | Agent Build-Outputs, Test-Results      | `test_results.json`          |
+| `misc`            | Alles andere                           | `unknown.dat`                |
 
 ---
 
@@ -80,6 +80,7 @@ gitlab_storage_manager.py get-active --project <name>
 **Zentrales Register:** `config/storage-registry.json`
 
 Jeder Eintrag enthält:
+
 ```json
 {
   "project": "sin-solver",
@@ -98,13 +99,13 @@ Jeder Eintrag enthält:
 
 ### Bekannte Projekte (Stand: 2026-04-13)
 
-| Projekt | Repo-Prefix | Visibility | Zweck |
-|---------|-------------|------------|-------|
-| `sin-solver` | `sin-solver-logcenter-` | **private** | Alle SIN Solver Logs, Videos, Reports |
-| `sin-backend` | `sin-backend-storage-` | **private** | OpenSIN-Backend Dateien, DB-Dumps |
-| `oci-vm` | `oci-vm-storage-` | **private** | OCI VM Docker-Images, System-Backups |
-| `opencode-stack` | `opencode-stack-logs-` | **private** | OpenCode CLI Logs, Plugin-Logs |
-| `sin-code` | `sin-code-artifacts-` | **private** | Build-Artefakte, Test-Results |
+| Projekt          | Repo-Prefix             | Visibility  | Zweck                                 |
+| ---------------- | ----------------------- | ----------- | ------------------------------------- |
+| `sin-solver`     | `sin-solver-logcenter-` | **private** | Alle SIN Solver Logs, Videos, Reports |
+| `sin-backend`    | `sin-backend-storage-`  | **private** | OpenSIN-Backend Dateien, DB-Dumps     |
+| `oci-vm`         | `oci-vm-storage-`       | **private** | OCI VM Docker-Images, System-Backups  |
+| `opencode-stack` | `opencode-stack-logs-`  | **private** | OpenCode CLI Logs, Plugin-Logs        |
+| `sin-code`       | `sin-code-artifacts-`   | **private** | Build-Artefakte, Test-Results         |
 
 ---
 
@@ -154,13 +155,13 @@ Jeder Eintrag enthält:
 
 **REGELN:**
 
-| Inhalt | Visibility | Grund |
-|--------|------------|-------|
-| Logs, Backups, Crash-Dumps | **private** | Enthalten sensible Daten, Secrets, IPs |
-| Agent-Artefakte, Test-Results | **private** | Interne Entwicklungsdaten |
-| Screenshots, Videos von UIs | **private** | Können User-Daten zeigen |
-| Docker-Images | **private** | Enthalten Configs, Secrets |
-| **Öffentliche Demos/Showcases** | **public** | Nur wenn explizit gewollt und keine Secrets |
+| Inhalt                          | Visibility  | Grund                                       |
+| ------------------------------- | ----------- | ------------------------------------------- |
+| Logs, Backups, Crash-Dumps      | **private** | Enthalten sensible Daten, Secrets, IPs      |
+| Agent-Artefakte, Test-Results   | **private** | Interne Entwicklungsdaten                   |
+| Screenshots, Videos von UIs     | **private** | Können User-Daten zeigen                    |
+| Docker-Images                   | **private** | Enthalten Configs, Secrets                  |
+| **Öffentliche Demos/Showcases** | **public**  | Nur wenn explizit gewollt und keine Secrets |
 
 **IMMER private**, es sei denn der User sagt explizit "public".
 
@@ -170,14 +171,14 @@ Jeder Eintrag enthält:
 
 ### Was muss von der OCI VM migriert werden:
 
-| Datei/Verzeichnis | Ziel-Kategorie | Größe (geschätzt) |
-|-------------------|----------------|-------------------|
-| `/var/log/*.log` | `logs` | ~440 MB |
-| `/opt/sin-supabase/backups/` | `backups` | ~225 MB |
-| `/opt/OpenSIN-Code/.git/objects/` | `backups` | ~363 MB |
-| Docker-Images (backup) | `docker-images` | ~7 GB |
-| `/tmp/agent-artifacts/` | `agent-artifacts` | variabel |
-| `~/.cache/` | `misc` | ~144 MB |
+| Datei/Verzeichnis                 | Ziel-Kategorie    | Größe (geschätzt) |
+| --------------------------------- | ----------------- | ----------------- |
+| `/var/log/*.log`                  | `logs`            | ~440 MB           |
+| `/opt/sin-supabase/backups/`      | `backups`         | ~225 MB           |
+| `/opt/OpenSIN-Code/.git/objects/` | `backups`         | ~363 MB           |
+| Docker-Images (backup)            | `docker-images`   | ~7 GB             |
+| `/tmp/agent-artifacts/`           | `agent-artifacts` | variabel          |
+| `~/.cache/`                       | `misc`            | ~144 MB           |
 
 ### Migration-Befehl:
 

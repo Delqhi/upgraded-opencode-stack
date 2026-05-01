@@ -3,11 +3,13 @@
 This file contains the command catalog for the bundled Gemini-first router. Keep `SKILL.md` as overview-first; put verbose CLI details here.
 
 ## What this CLI does
+
 - `generate`: generate new images from a prompt
 - `edit`: edit an existing image with Gemini image models (optionally with a mask/image reference)
 - `generate-batch`: run many jobs from a JSONL file (one job per line)
 
 Default provider order:
+
 1. `gemini-3-pro-image-preview`
 2. `gemini-3.1-flash-image-preview`
 3. `imagen-4.0-fast-generate-001`
@@ -16,6 +18,7 @@ Default provider order:
 Real API calls require network access plus provider-specific credentials. `--dry-run` does not.
 
 ## Quick start (works from any repo)
+
 Set a stable path to the skill CLI (default `OPENCODE_HOME` is `~/.config/opencode`):
 
 ```
@@ -89,11 +92,13 @@ python "$IMAGE_GEN" generate \
 ```
 
 ## Guardrails (important)
+
 - Use `python "$IMAGE_GEN" ...` (or equivalent full path) for generations/edits/batch work.
 - Do **not** create one-off runners (e.g. `gen_images.py`) unless the user explicitly asks for a custom wrapper.
 - `scripts/image_gen.py` is legacy OpenAI-only tooling. Do not use it unless the user explicitly asks for OpenAI.
 
 ## Defaults (unless overridden by flags)
+
 - Primary model: `gemini-3-pro-image-preview`
 - Fallback model: `gemini-3.1-flash-image-preview`
 - Emergency fallback 1: `imagen-4.0-fast-generate-001`
@@ -103,11 +108,13 @@ python "$IMAGE_GEN" generate \
 - The router requests `1K`/`2K` image size with aspect ratio derived from `--size`.
 
 ## Generate vs edit
+
 - `generate` is the best path for new campaign art, lifestyle visuals, hero images, and merchandising images.
 - `edit` stays on Gemini models because the Imagen/NVIDIA fallbacks in this skill are generation-oriented.
 - For strict mask-driven inpainting, repeat invariants in the prompt and treat mask support as best-effort on the Gemini path.
 
 Example:
+
 ```
 python "$IMAGE_GEN" edit \
   --image input.png \
@@ -116,6 +123,7 @@ python "$IMAGE_GEN" edit \
 ```
 
 ## Optional deps
+
 Prefer `uv run --with ...` for an out-of-the-box run without changing the current project env; otherwise install into your active env:
 
 ```
@@ -123,6 +131,7 @@ uv pip install google-genai pillow
 ```
 
 ## Common recipes
+
 Generate with augmentation fields:
 
 ```
@@ -150,11 +159,13 @@ rm -f tmp/imagegen/prompts.jsonl
 ```
 
 Notes:
+
 - Per-job overrides are supported in JSONL (`size`, `n`, `image`, `images`, `mask`, and prompt-augmentation fields).
 - `--n` generates multiple variants for a single prompt; the router will keep provider order per job.
 - Treat the JSONL file as temporary: write it under `tmp/` and delete it after the run (don’t commit it).
 
 ## CLI notes
+
 - Supported sizes: `1024x1024`, `1536x1024`, `1024x1536`, or `auto`.
 - The router maps those sizes to supported Google aspect ratios and `1K`/`2K` output sizes.
 - Default output is `output.png`; multiple images become `output-1.png`, `output-2.png`, etc.
@@ -164,5 +175,6 @@ Notes:
 - `doctor` prints the current env/config status for each provider in JSON lines.
 
 ## See also
+
 - API parameter quick reference: `references/image-api.md`
 - Prompt examples: `references/sample-prompts.md`

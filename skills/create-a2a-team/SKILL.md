@@ -33,6 +33,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 **REGELN:** OCI-Proxy direkt per HTTP = VERBOTEN. Gemini API direkt = VERBOTEN. opencode CLI = EINZIG ERLAUBT.
 
 Use this skill when the task is:
+
 - create a new SIN A2A Team Manager (e.g. `Team - Survey`)
 - scaffold a new team manager repo from `Template-A2A-SIN-Team`
 
@@ -60,7 +61,8 @@ Unlike `/create-a2a` which requires multiple LLM-heavy MCP calls to scaffold fil
 ~/.config/opencode/skills/create-a2a-team/scripts/generate-team.sh <slug> "<Team Name>" "<Manager Name>" "<Description>"
 ```
 
-*Example:*
+_Example:_
+
 ```bash
 ~/.config/opencode/skills/create-a2a-team/scripts/generate-team.sh sin-team-survey "Team - Survey" "SIN-Team-Survey" "Autonomes Management und Hermes-Routing fuer Survey- und Microtask-Monetarisierung (Freecash, MTurk)."
 ```
@@ -84,16 +86,19 @@ Unlike `/create-a2a` which requires multiple LLM-heavy MCP calls to scaffold fil
 Every new Team Manager MUST scaffold workers with awareness of OpenSIN's full capability stack:
 
 ### Browser Automation (sinInChrome)
+
 - Workers can access 13 browser actions via API or MCP
 - Free tier: 100 requests/hour, Premium: unlimited
 - Multi-browser: Chrome, Brave, Arc, Chromium, Edge, Vivaldi, Opera
 
 ### macOS GUI Automation (sin-computer-use)
+
 - Workers can access full macOS desktop control
 - Screen capture, mouse/keyboard input, app management
 - Requires macOS Accessibility + Screen Recording permissions
 
 ### Security Standards
+
 - 7-layer security hardening mandatory for all team repos
 - Pre-commit/pre-push hooks with leak detection
 - CI/CD security scanning via GitHub Actions
@@ -105,16 +110,19 @@ Every new Team Manager MUST scaffold workers with awareness of OpenSIN's full ca
 Every new Team Manager MUST scaffold workers with awareness of OpenSIN's full capability stack:
 
 ### Browser Automation (sinInChrome)
+
 - Workers can access 13 browser actions via API or MCP
 - Free tier: 100 requests/hour, Premium: unlimited
 - Multi-browser: Chrome, Brave, Arc, Chromium, Edge, Vivaldi, Opera
 
 ### macOS GUI Automation (sin-computer-use)
+
 - Workers can access full macOS desktop control
 - Screen capture, mouse/keyboard input, app management
 - Requires macOS Accessibility + Screen Recording permissions
 
 ### Security Standards
+
 - 7-layer security hardening mandatory for all team repos
 - Pre-commit/pre-push hooks with leak detection
 - CI/CD security scanning via GitHub Actions

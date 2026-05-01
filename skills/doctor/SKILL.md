@@ -32,15 +32,19 @@ metadata:
 ## Phase 1: Diagnose — 7 Lenses + SOTA Checklist
 
 ### 🔍 Lens 1: Documentation Truthfulness
+
 Behaupten Docs Dinge, die der Code nicht hält? README-Claims vs CLI-Flags, brain.md-Mechanismen vs Source.
 
 ### 🔍 Lens 2: Methodological Correctness
+
 Existieren genannte APIs/Funktionen/Flags? Tote Technologien?
 
 ### 🔍 Lens 3: Cross-Repo Consistency
+
 Gleiche LICENSE? workspace.yaml in jedem Repo? AGENTS.md-Cross-Refs?
 
 ### 🔍 Lens 4: Documentation Completeness (SOTA Checklist)
+
 Prüft gegen die definitive 57-Dateien-Checkliste:
 
 **GitHub Community Standards (7):** README, LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, SUPPORT, CODEOWNERS
@@ -56,12 +60,15 @@ Prüft gegen die definitive 57-Dateien-Checkliste:
 **Optionals (12):** .editorconfig, .markdownlint.json, .gitattributes, docs/, examples/, docker-compose.yml, Dockerfile, TRANSLATION, THIRD_PARTY_LICENSES, CONTRIBUTORS, HISTORY, .all-contributorsrc
 
 ### 🔍 Lens 5: Code Quality Surface
+
 package.json/pyproject.toml? Tests + Linter + CI? .gitignore? Type-Hints?
 
 ### 🔍 Lens 6: Secrets & Config Hygiene
+
 .env mit Keys? .env.example fehlt? Hartcodierte API-Keys?
 
 ### 🔍 Lens 7: Repository Metadata
+
 Description + Topics? Default Branch? Issues/PRs aktiv?
 
 ---
@@ -70,15 +77,19 @@ Description + Topics? Default Branch? Issues/PRs aktiv?
 
 ```markdown
 # 🩺 Doctor Audit — REPO_NAME
+
 **Score: 85/100 (B+)** | Mode: deep | Lenses: 7/7 | SOTA Docs: 42/57
 
 ## 🔴 P0 — Critical
+
 | # | Lens | File:Line | Finding |
 
 ## 🟡 P1 — High
+
 | # | Lens | File:Line | Finding |
 
 ## 🟢 P2 — Medium
+
 | # | Lens | File:Line | Finding |
 ```
 

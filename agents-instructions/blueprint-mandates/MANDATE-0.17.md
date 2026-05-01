@@ -14,6 +14,7 @@
 | **Public API** | `https://codeserver-api.delqhi.com` | External API |
 
 **Covered Interfaces (ALL MUST USE THIS):**
+
 - SIN-Solver Cockpit Chat: `POST /webhook/cockpit-chat`
 - DelqhiChat: `POST /webhook/delqhi-chat`
 - Telegram @DelqhiBot: `POST /webhook/telegram`
@@ -21,6 +22,7 @@
 - n8n Workflows: `POST /webhook/n8n`
 
 **Available Slash Commands (29 total):**
+
 ```
 /code, /code-status, /code-cancel, /tasks
 /conversations, /conversation, /conversation-new, /conversation-delete
@@ -34,6 +36,7 @@
 ```
 
 **API Endpoints (38 total):**
+
 - Code Generation: `POST /api/code`, `GET /api/code/:taskId`
 - Conversations: `GET/POST/DELETE /api/conversations`
 - Files: `GET/POST/DELETE /api/files`
@@ -44,6 +47,7 @@
 - Metrics: `/api/metrics`, `/api/logs`
 
 **MCP Integration:**
+
 ```json
 {
   "openhands_codeserver": {
@@ -55,6 +59,7 @@
 ```
 
 **WHY THIS EXISTS:**
+
 - Unified coding experience across ALL interfaces
 - Single source of truth for code generation
 - Consistent slash commands everywhere

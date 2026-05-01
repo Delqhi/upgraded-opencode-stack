@@ -5,6 +5,7 @@
 Jedes Modul, jedes Projekt und jede Integration MUSS eine **26-PFEILER-STRUKTUR** in `Docs/[name]/` führen. Jede Datei muss die **500-Zeilen-Payload-Grenze** anstreben.
 
 Standard Pillar Files:
+
 ```
 Docs/[module-name]/
 ├── 01-[name]-overview.md

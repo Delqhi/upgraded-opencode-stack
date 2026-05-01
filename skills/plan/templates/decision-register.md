@@ -8,10 +8,10 @@
 
 ## Decision Log
 
-| ID | Decision | Rationale | Alternatives Considered | Decided By | Date | Status | Revisit Date |
-|----|----------|-----------|------------------------|------------|------|--------|-------------|
-| D1 | [What was decided] | [Why this choice] | [What else was considered] | [role/name] | YYYY-MM-DD | approved/rejected/deferred | YYYY-MM-DD or N/A |
-| D2 | | | | | | | |
+| ID  | Decision           | Rationale         | Alternatives Considered    | Decided By  | Date       | Status                     | Revisit Date      |
+| --- | ------------------ | ----------------- | -------------------------- | ----------- | ---------- | -------------------------- | ----------------- |
+| D1  | [What was decided] | [Why this choice] | [What else was considered] | [role/name] | YYYY-MM-DD | approved/rejected/deferred | YYYY-MM-DD or N/A |
+| D2  |                    |                   |                            |             |            |                            |                   |
 
 ---
 
@@ -29,6 +29,7 @@
 [Why was this choice made?]
 
 **Alternatives Considered:**
+
 1. [Alternative 1] - [Why rejected]
 2. [Alternative 2] - [Why rejected]
 
@@ -55,10 +56,10 @@
 
 ## Decision Categories
 
-| Category | Examples | Approval Required |
-|----------|----------|------------------|
-| **Architecture** | Tech stack, patterns, dependencies | Tech Lead + EM |
-| **Scope** | Feature inclusion/exclusion, priority changes | Product Owner |
-| **Timeline** | Deadline changes, phase reordering | EM + Stakeholders |
-| **Quality** | Test coverage targets, performance thresholds | Tech Lead |
-| **Process** | Workflow changes, tool adoption | Team consensus |
+| Category         | Examples                                      | Approval Required |
+| ---------------- | --------------------------------------------- | ----------------- |
+| **Architecture** | Tech stack, patterns, dependencies            | Tech Lead + EM    |
+| **Scope**        | Feature inclusion/exclusion, priority changes | Product Owner     |
+| **Timeline**     | Deadline changes, phase reordering            | EM + Stakeholders |
+| **Quality**      | Test coverage targets, performance thresholds | Tech Lead         |
+| **Process**      | Workflow changes, tool adoption               | Team consensus    |

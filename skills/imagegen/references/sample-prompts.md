@@ -7,6 +7,7 @@ For prompting principles (structure, invariants, iteration), see `references/pro
 ## Generate
 
 ### photorealistic-natural
+
 ```
 Use case: photorealistic-natural
 Primary request: candid photo of an elderly sailor on a small fishing boat adjusting a net
@@ -22,6 +23,7 @@ Quality: high
 ```
 
 ### product-mockup
+
 ```
 Use case: product-mockup
 Primary request: premium product photo of a matte black shampoo bottle with a minimal label
@@ -36,6 +38,7 @@ Quality: high
 ```
 
 ### ui-mockup
+
 ```
 Use case: ui-mockup
 Primary request: mobile app UI for a local farmers market with vendors and specials
@@ -47,6 +50,7 @@ Constraints: practical layout, clear typography, no logos or trademarks, no wate
 ```
 
 ### infographic-diagram
+
 ```
 Use case: infographic-diagram
 Primary request: detailed infographic of an automatic coffee machine flow
@@ -60,6 +64,7 @@ Quality: high
 ```
 
 ### logo-brand
+
 ```
 Use case: logo-brand
 Primary request: original logo for "Field & Flour", a local bakery
@@ -69,6 +74,7 @@ Constraints: strong silhouette, balanced negative space; original design only; n
 ```
 
 ### illustration-story
+
 ```
 Use case: illustration-story
 Primary request: 4-panel comic about a pet left alone at home
@@ -80,6 +86,7 @@ Constraints: no text; no logos or trademarks; no watermark
 ```
 
 ### stylized-concept
+
 ```
 Use case: stylized-concept
 Primary request: cavernous hangar interior with tall support beams and drifting fog
@@ -92,6 +99,7 @@ Constraints: no logos or trademarks; no watermark
 ```
 
 ### historical-scene
+
 ```
 Use case: historical-scene
 Primary request: outdoor crowd scene in Bethel, New York on August 16, 1969
@@ -105,6 +113,7 @@ Constraints: period-accurate details; no modern objects; no logos or trademarks;
 ## Asset type templates (taxonomy-aligned)
 
 ### Website assets template
+
 ```
 Use case: <photorealistic-natural|stylized-concept|product-mockup|infographic-diagram|ui-mockup>
 Asset type: <hero image / section illustration / blog header>
@@ -119,6 +128,7 @@ Constraints: <no text; no logos; no watermark; leave space for UI>
 ```
 
 ### Website assets example: minimal hero background
+
 ```
 Use case: stylized-concept
 Asset type: landing page hero background
@@ -131,6 +141,7 @@ Constraints: no text; no logos; no watermark
 ```
 
 ### Website assets example: feature section illustration
+
 ```
 Use case: stylized-concept
 Asset type: feature section illustration
@@ -143,6 +154,7 @@ Constraints: no text; no logos; no watermark
 ```
 
 ### Website assets example: blog header image
+
 ```
 Use case: photorealistic-natural
 Asset type: blog header image
@@ -155,6 +167,7 @@ Constraints: no text; no logos; no watermark
 ```
 
 ### Game assets template
+
 ```
 Use case: stylized-concept
 Asset type: <game environment concept art / game character concept / game UI icon / tileable game texture>
@@ -168,6 +181,7 @@ Constraints: no logos or trademarks; no watermark
 ```
 
 ### Game assets example: environment concept art
+
 ```
 Use case: stylized-concept
 Asset type: game environment concept art
@@ -182,6 +196,7 @@ Constraints: no logos or trademarks; no watermark
 ```
 
 ### Game assets example: character concept
+
 ```
 Use case: stylized-concept
 Asset type: game character concept
@@ -196,6 +211,7 @@ Constraints: no logos or trademarks; no watermark
 ```
 
 ### Game assets example: UI icon
+
 ```
 Use case: stylized-concept
 Asset type: game UI icon
@@ -208,6 +224,7 @@ Constraints: no text; no logos or trademarks; no watermark
 ```
 
 ### Game assets example: tileable texture
+
 ```
 Use case: stylized-concept
 Asset type: tileable game texture
@@ -219,6 +236,7 @@ Constraints: seamless edges; no obvious focal elements; no text; no logos or tra
 ```
 
 ### Wireframe template
+
 ```
 Use case: ui-mockup
 Asset type: website wireframe
@@ -231,6 +249,7 @@ Constraints: no color; no logos; no real photos; no watermark
 ```
 
 ### Wireframe example: homepage (desktop)
+
 ```
 Use case: ui-mockup
 Asset type: website wireframe
@@ -243,6 +262,7 @@ Constraints: no color; no logos; no real photos; no watermark
 ```
 
 ### Wireframe example: pricing page
+
 ```
 Use case: ui-mockup
 Asset type: website wireframe
@@ -255,6 +275,7 @@ Constraints: no color; no logos; no real photos; no watermark
 ```
 
 ### Wireframe example: mobile onboarding flow
+
 ```
 Use case: ui-mockup
 Asset type: website wireframe
@@ -267,6 +288,7 @@ Constraints: no color; no logos; no real photos; no watermark
 ```
 
 ### Logo template
+
 ```
 Use case: logo-brand
 Asset type: logo concept
@@ -279,6 +301,7 @@ Constraints: no gradients; no mockups; no 3D; no watermark
 ```
 
 ### Logo example: abstract symbol mark
+
 ```
 Use case: logo-brand
 Asset type: logo concept
@@ -290,6 +313,7 @@ Constraints: no text; no gradients; no mockups; no 3D; no watermark
 ```
 
 ### Logo example: monogram mark
+
 ```
 Use case: logo-brand
 Asset type: logo concept
@@ -301,6 +325,7 @@ Constraints: no gradients; no mockups; no 3D; no watermark
 ```
 
 ### Logo example: wordmark
+
 ```
 Use case: logo-brand
 Asset type: logo concept
@@ -315,6 +340,7 @@ Constraints: no gradients; no mockups; no 3D; no watermark
 ## Edit
 
 ### text-localization
+
 ```
 Use case: text-localization
 Input images: Image 1: original infographic
@@ -323,6 +349,7 @@ Constraints: change only the text; preserve layout, typography, spacing, and hie
 ```
 
 ### identity-preserve
+
 ```
 Use case: identity-preserve
 Input images: Image 1: person photo; Image 2..N: clothing items
@@ -332,6 +359,7 @@ Input fidelity (edits): high
 ```
 
 ### precise-object-edit
+
 ```
 Use case: precise-object-edit
 Input images: Image 1: room photo
@@ -340,6 +368,7 @@ Constraints: preserve camera angle, room lighting, floor shadows, and surroundin
 ```
 
 ### lighting-weather
+
 ```
 Use case: lighting-weather
 Input images: Image 1: original photo
@@ -349,6 +378,7 @@ Quality: high
 ```
 
 ### background-extraction
+
 ```
 Use case: background-extraction
 Input images: Image 1: product photo
@@ -358,6 +388,7 @@ Constraints: crisp silhouette, no halos/fringing; preserve label text exactly; n
 ```
 
 ### style-transfer
+
 ```
 Use case: style-transfer
 Input images: Image 1: style reference
@@ -366,6 +397,7 @@ Constraints: preserve palette, texture, and brushwork; no extra elements; plain 
 ```
 
 ### compositing
+
 ```
 Use case: compositing
 Input images: Image 1: base scene; Image 2: subject to insert
@@ -375,6 +407,7 @@ Input fidelity (edits): high
 ```
 
 ### sketch-to-render
+
 ```
 Use case: sketch-to-render
 Input images: Image 1: drawing

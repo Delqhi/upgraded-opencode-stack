@@ -16,6 +16,7 @@ metadata:
 Use this skill when a user wants to know whether a web app, preview deployment, or local build is actually healthy **without** wasting time on full browser automation too early.
 
 This skill is designed for cases like:
+
 - blank page after deploy
 - broken assets or routes
 - local preview sanity checks
@@ -23,6 +24,7 @@ This skill is designed for cases like:
 - pre-PR web validation
 
 It is **not** the right tool for:
+
 - anti-bot bypass work
 - authenticated E2E business flows
 - click-every-button UX audits across a huge app
@@ -96,6 +98,7 @@ npm run build
 ```
 
 Rules:
+
 - If a script does not exist, skip it.
 - Do **not** invent replacement scripts.
 - If `build` fails, stop here and fix the build before any browser work.
@@ -126,6 +129,7 @@ python3 "$HOME/.config/opencode/skills/check-my-dev-in-web/scripts/check_my_dev_
 ```
 
 What this proves:
+
 - HTML is reachable
 - referenced JS/CSS assets are reachable
 - route responses are not tiny error pages
@@ -140,6 +144,7 @@ npx hint http://127.0.0.1:4173
 ```
 
 Use this when you need fast checks for:
+
 - broken links
 - missing viewport / manifest / metadata
 - header issues
@@ -164,6 +169,7 @@ npx @lhci/cli autorun --collect.url=http://127.0.0.1:4173/
 ```
 
 Recommended assertions:
+
 - accessibility >= 0.90
 - best-practices >= 0.90
 - SEO >= 0.90
@@ -172,6 +178,7 @@ Recommended assertions:
 ### Phase 5 — Browser escalation (last resort)
 
 Only escalate when **all** of the following are true:
+
 - HTML is reachable
 - assets return `200`
 - build is green
@@ -188,6 +195,7 @@ Do **not** start here.
 ### If the issue is a blank page
 
 Use this order:
+
 1. Build succeeds?
 2. HTML returns `200`?
 3. Referenced JS/CSS assets return `200`?
@@ -197,6 +205,7 @@ Use this order:
 ### If the issue is broken routing
 
 Use this order:
+
 1. Fetch the domain with `curl -I` and `curl -L`
 2. Confirm the HTML title / canonical / app shell belong to the expected project
 3. Confirm asset hostnames match the expected deployment
@@ -206,6 +215,7 @@ Use this order:
 ### If the issue is "works locally, broken after deploy"
 
 Prefer:
+
 1. production build
 2. local static server from built output
 3. asset + route smoke
@@ -274,11 +284,13 @@ When using this skill, report results in this structure:
 ## check-my-dev-in-web result
 
 ### Phase 1 — Build
+
 - PASS/FAIL
 - command:
 - key output:
 
 ### Phase 2 — HTTP smoke
+
 - PASS/WARN/FAIL
 - HTML status:
 - assets checked:
@@ -286,10 +298,12 @@ When using this skill, report results in this structure:
 - routes checked:
 
 ### Phase 3 — webhint
+
 - PASS/WARN/FAIL
 - top findings:
 
 ### Phase 4 — Lighthouse
+
 - PASS/WARN/FAIL
 - performance:
 - accessibility:
@@ -297,10 +311,12 @@ When using this skill, report results in this structure:
 - seo:
 
 ### Escalation
+
 - was browser debugging needed?
 - if yes, why cheaper checks were insufficient
 
 ### Verdict
+
 - READY / NOT READY / NEEDS FIXES
 ```
 

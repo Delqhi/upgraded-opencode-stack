@@ -7,6 +7,7 @@
 ## 🚨 DAS PROBLEM
 
 Ein einzelner `task(subagent_type="explore")` auf einem grossen Projekt:
+
 - Analysiert nur ~20% der relevanten Dateien
 - Uebersieht Abhaengigkeiten zwischen Modulen
 - Liefert Zusammenfassungen auf Basis von 80% fehlendem Wissen
@@ -81,12 +82,12 @@ task(subagent_type="librarian", run_in_background=true, load_skills=[],
 
 ## 🔧 DIE FORMEL: WIEVIELE AGENTEN?
 
-| Projekt-Groesse | Explore-Agenten | Librarian-Agenten | Gesamt |
-|-----------------|-----------------|-------------------|--------|
-| Klein (< 50 Dateien) | 3 | 2 | 5 |
-| Mittel (50-500 Dateien) | 5 | 3 | 8 |
-| Gross (500-2000 Dateien) | 7 | 5 | 12 |
-| Enterprise (2000+ Dateien) | 10 | 10 | 20 |
+| Projekt-Groesse            | Explore-Agenten | Librarian-Agenten | Gesamt |
+| -------------------------- | --------------- | ----------------- | ------ |
+| Klein (< 50 Dateien)       | 3               | 2                 | 5      |
+| Mittel (50-500 Dateien)    | 5               | 3                 | 8      |
+| Gross (500-2000 Dateien)   | 7               | 5                 | 12     |
+| Enterprise (2000+ Dateien) | 10              | 10                | 20     |
 
 ---
 
@@ -129,19 +130,20 @@ all_findings = deduplicate(explore_results + librarian_results)
 
 ## 🚨 WARNUNG: WAS NICHT TUN
 
-| ❌ VERBOTEN | ✅ STATDESSEN |
-|:---|:---|
-| 1 explore-Agent fuer ganzes Projekt | 5-10 parallele Agenten mit spezifischem Fokus |
-| `run_in_background=false` | IMMER `run_in_background=true` |
-| Generischer Prompt "erkunde das Projekt" | Spezifischer Prompt mit [CONTEXT], [GOAL], [SCOPE] |
-| `load_skills=["some-skill"]` | IMMER `load_skills=[]` fuer explore/librarian |
-| Ergebnisse sofort nutzen ohne auf alle zu warten | WARTEN bis ALLE background-Agenten fertig sind |
+| ❌ VERBOTEN                                      | ✅ STATDESSEN                                      |
+| :----------------------------------------------- | :------------------------------------------------- |
+| 1 explore-Agent fuer ganzes Projekt              | 5-10 parallele Agenten mit spezifischem Fokus      |
+| `run_in_background=false`                        | IMMER `run_in_background=true`                     |
+| Generischer Prompt "erkunde das Projekt"         | Spezifischer Prompt mit [CONTEXT], [GOAL], [SCOPE] |
+| `load_skills=["some-skill"]`                     | IMMER `load_skills=[]` fuer explore/librarian      |
+| Ergebnisse sofort nutzen ohne auf alle zu warten | WARTEN bis ALLE background-Agenten fertig sind     |
 
 ---
 
 ## 📝 VORDEFINIERTE EXPLORATION-TEMPLATES
 
 ### Template: API-Exploration (7 Agenten)
+
 ```
 1. "Finde ALLE API-Endpunkte in src/api/"
 2. "Finde ALLE Controller in src/controllers/"
@@ -153,6 +155,7 @@ all_findings = deduplicate(explore_results + librarian_results)
 ```
 
 ### Template: Architektur-Exploration (8 Agenten)
+
 ```
 1. "Finde Einstiegspunkte (main, index, app)"
 2. "Finde Dependency-Injection/Service-Container"
@@ -165,6 +168,7 @@ all_findings = deduplicate(explore_results + librarian_results)
 ```
 
 ### Template: Feature-Exploration (6 Agenten)
+
 ```
 1. "Finde ALLE Dateien die [FEATURE-NAME] implementieren"
 2. "Finde ALLE Tests fuer [FEATURE-NAME]"
@@ -175,6 +179,7 @@ all_findings = deduplicate(explore_results + librarian_results)
 ```
 
 ### Template: Librarian-Recherche (5 Agenten)
+
 ```
 1. "Offizielle Doku fuer [TECHNOLOGIE] - API Reference"
 2. "Best Practices fuer [TECHNOLOGIE] in Production"
@@ -206,6 +211,7 @@ task(subagent_type="explore", run_in_background=false, prompt="...")
 ## 🔍 QUALITAETS-KONTROLLE
 
 Nachdem alle Ergebnisse da sind, pruefe:
+
 - [ ] Wurden ALLE relevanten Ordner durchsucht?
 - [ ] Gibt es Luecken (Dateien die niemand gefunden hat)?
 - [ ] Sind die Ergebnisse konsistent (keine Widersprueche)?

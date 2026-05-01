@@ -3,6 +3,7 @@
 Short clips work best with clear beats. Use 2-3 beats and keep text minimal.
 
 ## Default template
+
 ```
 Use case: social ad
 Primary request: <ad concept>
@@ -16,6 +17,7 @@ Constraints: no logos; keep text legible; avoid fast motion
 ```
 
 ## Example: product benefit
+
 ```
 Use case: social ad
 Primary request: a compact humidifier emphasizing quiet operation
@@ -29,6 +31,7 @@ Constraints: no logos; text must be legible; avoid harsh highlights
 ```
 
 ## Example: before/after
+
 ```
 Use case: social ad
 Primary request: before/after of a cluttered desk becoming tidy

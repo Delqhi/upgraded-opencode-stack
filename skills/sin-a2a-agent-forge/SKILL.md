@@ -68,6 +68,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 ```
 
 **REGELN:**
+
 - `opencode run --format json` nutzt das Antigravity Plugin — identisch auf Mac, OCI VM und HF VMs
 - OCI-Proxy `http://92.5.60.87:4100/v1` direkt per HTTP anrufen = VERBOTEN (500-Fehler)
 - Gemini API direkt = PERMANENT VERBOTEN
@@ -79,6 +80,7 @@ def call_llm(prompt: str, timeout: int = 120) -> str:
 - CLI Aufruf: `opencode run "..." --model opencode/qwen3.6-plus-free --fallback opencode/nemotron-3-super-free`
 
 Use this skill when the task is any of:
+
 - create a new SIN A2A agent
 - standardize an existing SIN A2A agent
 - repair missing agent files, card metadata, registry entries, team-manager ownership, or dedicated-doc sync
@@ -112,6 +114,7 @@ Read `/Users/jeremy/.config/opencode/skills/create-a2a/references/checklist.md` 
 ## HF VM rollout gate (March 24, 2026)
 
 Before creating, upgrading, or declaring any HF-hosted agent ready, read these repo-local artifacts first:
+
 - `/Users/jeremy/dev/OpenSIN-backend/a2a/team-infratructur/A2A-SIN-Server/hf-docs/hf-coder-fleet-ssot.json`
 - `/Users/jeremy/dev/OpenSIN-backend/a2a/team-infratructur/A2A-SIN-Server/hf-docs/hf-coder-fleet-playbook.json`
 
@@ -120,6 +123,7 @@ Before creating, upgrading, or declaring any HF-hosted agent ready, read these r
 The previous incomplete agent rollouts proved that repo scaffolding alone is not enough. A new agent is incomplete until the dashboard/detail-page surfaces are fail-closed.
 
 Mandatory rules:
+
 - the repo-local scaffold script now also generates `dashboard-enterprise/app/agents/<slug>/page.tsx` via `scripts/scaffold-a2a-agent-page.mjs`
 - published `/agents/<slug>` URLs are forbidden unless the static page file exists
 - `scripts/validate-sin-a2a-fleet.mjs` now fails if a published canonical `/agents/<slug>` route has no page file
@@ -127,6 +131,7 @@ Mandatory rules:
 - if the agent is meant to be publicly linked from Apps/Workforce/Marketplace, verify that the route file, registry source, and control-plane projection all agree on the same slug
 
 Mandatory behavior:
+
 - treat `RUNNING` as insufficient by itself; claim-safe requires explicit Room-13 worker proof
 - never mark a worker live if the HF runtime is still `BUILD_ERROR`
 - treat `a2a-verify-hf-vm-readiness.mjs` as a live-surface verifier: `--health-url` is required and `/health`, `/.well-known/agent-card.json`, and `/a2a/v1` must answer before the agent is considered ready
@@ -134,10 +139,10 @@ Mandatory behavior:
 - if a new HF agent changes the claim-safe inventory, update the SIN-Server `hf-docs/` bundle in the same workstream
 - if the HF worker talks to a bearer-protected Room-13, its runtime must support both `ROOM13_COORDINATOR_URL` and `ROOM13_BEARER_TOKEN` end-to-end instead of shipping an unauthenticated worker client
 
-
 ## 🕸️ LangGraph.js Ecosystem Standard (March 2026)
 
 All newly created or migrated A2A agents MUST utilize the LangGraph.js framework for stateful, multi-agent orchestration.
+
 - **Base Architecture:** Replace legacy conversational loops with `@langchain/langgraph` StateGraph.
 - **Nodes & Edges:** Define discrete nodes for reasoning, tool execution (`ToolNode`), and API interaction.
 - **State Management:** Use typed state channels (Messages, Context, Artifacts) strictly passed between nodes.
@@ -145,34 +150,36 @@ All newly created or migrated A2A agents MUST utilize the LangGraph.js framework
 - **Streaming:** All fastify/express endpoints (`/a2a/v1/invoke`, `/a2a/v1/stream`) must handle `.streamEvents()` from the compiled graph.
 
 When creating an agent, ensure `package.json` includes:
+
 - `@langchain/langgraph`
 - `@langchain/core`
 - `@langchain/openai`
-
-
 
 ## 🧠 Ultra-Heavy Knowledge & Dual-Supabase OCI Logging (March 23, 2026 Mandate)
 
 **1. No Blind Agents (The Dual-Supabase Protocol):**
 Every A2A agent MUST natively implement two distinct database connections to the 200GB OCI Supabase instance.
+
 - **Shared Fleet DB (`sin_global_memory`):** Every assumption, tool call, error, and `Fleet Correction Event` MUST be logged here. When an agent solves a bug, it pushes the fix to the global vector store so no other agent repeats the mistake.
 - **Dedicated Agent DB (`a2a_[agent_name]`):** Every agent MUST have its own isolated database or schema on the OCI VM for state, checkpoints, and private vector memory.
 
 **2. Dedicated n8n Connector Sync:**
 Agents MUST NOT rely on ad-hoc web searches for their primary connectors.
+
 - Every new A2A agent dedicated to a specific connector MUST include an `n8n-workflows/` directory containing an n8n project.
 - The `n8n-workflows/docs-sync.json` MUST be scaffolded by this skill.
 - The workflow's job is to autonomously scrape and vectorize the official public documentation of the connector and push the embeddings directly into the agent's **Dedicated Supabase DB**. The agent reads exclusively from this private DB to operate the connector perfectly without hallucinations.
 
-
 **1. No Blind Agents (The Sentinel Protocol):**
 Every A2A agent MUST natively implement comprehensive telemetry to the 200GB OCI Supabase instance.
+
 - **Log Everything:** Every assumption, tool call, error, and goal target MUST be logged.
 - **Vector Knowledge:** If an agent encounters a bug, it must query `fleet_knowledge_vectors` for past fleet fixes. When it solves a new bug, it MUST write a `Fleet Correction Event` to Supabase.
 - **Zero-Trust Memory:** An agent is only as good as its logs.
 
 **2. Dedicated n8n Connector Sync:**
 Agents MUST NOT rely on ad-hoc web searches for their primary connectors.
+
 - Every new A2A agent dedicated to a specific connector MUST include an `n8n-workflows/` directory.
 - The `n8n-workflows/docs-sync.json` MUST be scaffolded by this skill.
 - The workflow's job is to autonomously scrape and vectorize the official public documentation of the connector and keep the agent's `knowledge.md` and Supabase vector store 100% up-to-date.
@@ -199,7 +206,7 @@ As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents n
 4. **The OpenCode CLI Standard (CRITICAL):** EVERY general A2A agent MUST be equipped with the `opencode` CLI as its brain. You MUST use the model `opencode/qwen3.6-plus-free` and explicitly append `--fallback opencode/nemotron-3-super-free`. Only specialized agents (e.g., Voice, multimodal-looker) may deviate from this.
 5. **The Marketplace Mandate:** EVERY agent MUST include a `marketplace` metadata object in `agent.json` and `metadata.ts` (pricingModel, monthlyPrice, purchaseModes, category) to be monetizable on the future SIN Solver storefront.
 6. **The Native CLI Mandate:** EVERY agent MUST possess a Native CLI entrypoint (e.g., `src/cli.ts` -> `sin-<name>`).
-7. **The Hacker/Bypass Mentality:** Agents MUST be built to find their way into any system. Build them to use `webauto-nodriver-mcp` (or libraries like `Scrapling` for TLS spoofing and Canvas noise) to autonomously bypass Cloudflare, Turnstile, and Captchas (via GateSolve/x402). They must be independent, unstoppable problem solvers.
+7. **The Hacker/Bypass Mentality:** Agents MUST be built to find their way into any system. Build them to use `skylight-cli-mcp` (or libraries like `Scrapling` for TLS spoofing and Canvas noise) to autonomously bypass Cloudflare, Turnstile, and Captchas (via GateSolve/x402). They must be independent, unstoppable problem solvers.
 8. **The "Never Idle" Monetization Rule:** Coder A2As and general agents MUST be programmed with idle-loop behaviors:
    - **Bug Bounties:** They autonomously scan open-source repos, hunt on HackerOne/Bugcrowd, and submit exploits/fixes.
    - **Freelancing:** They autonomously register on Upwork, AgentWork, ClawGig, or Freelancer.com, apply for Dev/Moderation jobs, and execute them end-to-end.
@@ -211,6 +218,7 @@ As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents n
 ## 🚨 Hard rules
 
 - **CRITICAL AUTH SCHEMA RULE:** When generating or updating `hf_pull_script.py` (or any auth script), you MUST format the OpenCode `auth.json` strictly as follows. Using `"token"` instead of `"refresh"` will crash OpenCode with `TypeError: undefined is not an object (evaluating 'currentAuth.type')`!
+
   ```json
   {
     "openai": {
@@ -219,7 +227,6 @@ As the CEO of this silicon workforce, you must ensure that our 100+ A2A agents n
     }
   }
   ```
-
 
 - Always scaffold from the template. Never hand-roll a new SIN agent root.
 - Every new agent must get its own GitHub repo.
@@ -276,23 +283,29 @@ node /Users/jeremy/.config/opencode/skills/create-a2a/scripts/a2a-sync-runtime-a
 ```
 
 7. Implement the real runtime surface (Domain actions in `runtime.ts`).
-7b. **MCP Surface Generation (AUTOMATED):** Invoke skill `/create-a2a-mcp` to scaffold the MCP server surface. This generates `src/mcp-server.ts`, `mcp-config.json`, `clients/opencode-mcp.json`, and patches `src/cli.ts`. Run:
+   7b. **MCP Surface Generation (AUTOMATED):** Invoke skill `/create-a2a-mcp` to scaffold the MCP server surface. This generates `src/mcp-server.ts`, `mcp-config.json`, `clients/opencode-mcp.json`, and patches `src/cli.ts`. Run:
+
 ```bash
 MCP_SCRIPTS=~/.config/opencode/skills/create-a2a-mcp/scripts
 node $MCP_SCRIPTS/mcp-scaffold.mjs --agent-root /abs/path/to/new-agent-root --slug sin-<agentname> --tools '<domain-specific-tools-json>'
 node $MCP_SCRIPTS/mcp-register-global.mjs --slug sin-<agentname> --agent-root /abs/path/to/new-agent-root --bin-wrapper
 node $MCP_SCRIPTS/mcp-verify.mjs --agent-root /abs/path/to/new-agent-root --slug sin-<agentname>
 ```
+
 8. **Consumer Setup (AUTOMATED):** Inject the Infinite Scaling script into the new agent by running the skill's built-in macro:
+
 ```bash
 /Users/jeremy/.config/opencode/skills/create-a2a/scripts/setup_consumer_auth.sh /abs/path/to/new-agent-root
 ```
+
 9. Add the deployment/install bundle:
-  - `scripts/complete-install.sh`
-  - `scripts/hf_pull_script.py`
-  - complete dependency manifests + lockfiles
-  - explicit system dependency list and env contract
-  - daemon LaunchAgent bundle when applicable
+
+- `scripts/complete-install.sh`
+- `scripts/hf_pull_script.py`
+- complete dependency manifests + lockfiles
+- explicit system dependency list and env contract
+- daemon LaunchAgent bundle when applicable
+
 10. Regenerate the projection-first registry artifacts:
 
 ```bash
@@ -301,11 +314,13 @@ cd /Users/jeremy/dev/OpenSIN-backend && npm run sync:a2a:control-plane-projectio
 
 11. Add the agent to the dashboard registry and team registry.
 12. Bootstrap inbound-work governance and review automation:
-  - validate `governance/repo-governance.json`
-  - validate `governance/pr-watcher.json`
-  - populate `platforms/registry.json`
-  - keep `n8n-workflows/inbound-intake.json` aligned to the shared work-item schema
-  - verify `scripts/watch-pr-feedback.sh` starts a repo watcher contract cleanly
+
+- validate `governance/repo-governance.json`
+- validate `governance/pr-watcher.json`
+- populate `platforms/registry.json`
+- keep `n8n-workflows/inbound-intake.json` aligned to the shared work-item schema
+- verify `scripts/watch-pr-feedback.sh` starts a repo watcher contract cleanly
+
 13. Add or update the public agent page on `chat.opensin.ai`.
     - The static route file under `dashboard-enterprise/app/agents/<slug>/page.tsx` must exist before you publish or link the agent.
 14. Sync the dedicated Google Doc from `A2A-CARD.md` (legacy shared-doc tabs are fallback-only during migration).
@@ -326,6 +341,7 @@ node /Users/jeremy/.config/opencode/skills/create-a2a/scripts/a2a-verify-hf-vm-r
 ```
 
 The fleet validator now explicitly blocks these incomplete states:
+
 - published canonical `/agents/<slug>` URL without `dashboard-enterprise/app/agents/<slug>/page.tsx`
 - singular `/agent/<slug>` drift on canonical hosts
 - missing repo-local route page scaffold after agent creation
@@ -343,6 +359,7 @@ bash /abs/path/to/agent-root/scripts/complete-install.sh
 ```
 
 And verify all of these before calling it complete:
+
 - a fresh clone can be installed from the repo with no hidden manual steps
 - all dependency manifests and lockfiles exist and are actually used by the install path
 - required system packages / CLIs / browser/runtime tools are declared, not assumed
@@ -353,6 +370,7 @@ And verify all of these before calling it complete:
 ## 🔄 Upgrade workflow for existing agents
 
 Use the same checklist when normalizing older agents. Specifically check:
+
 - **Missing Producer-Consumer Integration:** Ensure existing HF VM agents are stripped of local Chrome/Token-Refresh-Service setups and retrofitted with `hf_pull_script.py` by running the automation macro (`setup_consumer_auth.sh`).
 - **Missing complete-install path:** Older repos that only have README setup notes or partial scripts must be upgraded to a real `scripts/complete-install.sh` plus explicit dependency manifests.
 
@@ -382,14 +400,17 @@ Apply this to every HF VM / deployable A2A repo.
 Every A2A agent depends on an identical OpenCode CLI environment across Mac, OCI VM, and HF VMs. The `sin-sync` tool ensures this.
 
 ### What it syncs
+
 - `~/.config/opencode/` — skills, MCPs, plugins, tools, agents, opencode.json
 - Direction: **Mac → OCI VM → HF VMs** (Mac is Source of Truth)
 
 ### What it NEVER syncs (strict exclusions)
+
 - `auth.json`, `token.json`, `antigravity-accounts.json`, `telegram_config.json`
 - `*.db`, `*.sqlite*`, `logs/`, `tmp/`, `.cache/`
 
 ### Usage
+
 ```bash
 # Sync from Mac to OCI VM (run on Mac)
 sin-sync
@@ -399,12 +420,15 @@ sin-sync
 ```
 
 ### Integration into agent creation workflow
+
 After creating or updating any skill, MCP config, or agent definition in `~/.config/opencode/`:
+
 1. Test locally on Mac
 2. Run `sin-sync` to push to OCI VM
 3. OCI VM distributes to HF VMs via the agent's `complete-install.sh` or CI pipeline
 
 ### When to run sin-sync
+
 - After adding/updating skills in `~/.config/opencode/skills/`
 - After modifying `~/.config/opencode/opencode.json` (new MCPs, models, agents)
 - After updating `~/.config/opencode/AGENTS.md` governance rules
@@ -412,20 +436,22 @@ After creating or updating any skill, MCP config, or agent definition in `~/.con
 - **MANDATORY** after every `create-a2a` session that touches global config
 
 ### Auth files are VM-local
+
 Each VM maintains its own auth files. HF VMs use `hf_pull_script.py` to pull tokens from Supabase. The OCI VM has its own credentials. The Mac has its own Token-Refresh-Service-produced auth. These are NEVER mixed.
 
 ## 🏁 Output standard
 
 When the task is finished, report:
+
 - created or updated agent root
 - GitHub repo URL
 - Infinite Scaling Auth status (Consumer automation macro applied)
 - validator results
 
-
 ## Claude Code Auto Mode lessons (March 2026)
 
 When creating or upgrading an agent, assume autonomous execution can exist, but only under strict control:
+
 - auto mode is acceptable only with bounded retries, self-verification, and explicit approval gates for risky actions
 - new agents should expose capability contracts and risk tiers instead of vague tool powers
 - prefer isolated branches/worktrees for non-trivial code mutation paths
@@ -443,13 +469,17 @@ When creating or upgrading an agent, assume autonomous execution can exist, but 
 - Google Docs access must use the Google account matrix plus the `sin-google-docs` commands `ensure-access`, `ensure-patent-structure`, and `replace-patent-tabs` when relevant.
 
 ### 🚨 GLOBAL SSOT DAEMON MANDATE (MANDATORY FOR ALL NEW A2A AGENTS)
-Every new A2A Agent (especially those deployed to HF VMs or OCI VMs) MUST include the `ssot-daemon.sh` in its background lifecycle (`start.sh`, `server.js`, or Dockerfile). 
+
+Every new A2A Agent (especially those deployed to HF VMs or OCI VMs) MUST include the `ssot-daemon.sh` in its background lifecycle (`start.sh`, `server.js`, or Dockerfile).
+
 - **The Rule**: The agent MUST clone `git@github.com:OpenSIN-AI/OpenSIN-Code.git` (or https if no SSH key) on startup.
 - **The Daemon**: It must run the loop that fetches changes every 60 seconds and forcefully updates `~/.config/opencode/` and the local `.opencode/` directory on the VM.
 - **Why**: This ensures 100% global consistency across all VMs (HF, OCI) and Macs instantly whenever the `OpenSIN-AI/OpenSIN-Code` fork is updated. No exceptions.
 
 ### 🚨 MULTI-HF-ACCOUNT STRATEGY (MANDATORY FOR SCALING)
+
 When deploying many A2A agents to HuggingFace Spaces, a single HF account hits rate limits (20 spaces/day) and capacity limits.
+
 - **Strategy**: OpenSIN manages multiple HF accounts and distributes agents across them automatically.
 - **Account Pool**: Each HF account is registered in sin-passwordmanager and sin-server.
 - **Distribution**: Agents are assigned round-robin or team-based across available accounts.
@@ -458,7 +488,9 @@ When deploying many A2A agents to HuggingFace Spaces, a single HF account hits r
 - **Template**: Every agent's `agent.json` must declare which HF account owns its space via `deployment.hfAccount`.
 
 ### 🚨 SIN-SERVER AUTO-HEALING MANDATE (MANDATORY FOR ALL VMS)
+
 sin-server is the central auto-healing orchestrator for all HF VMs and OCI VMs.
+
 - **Health Checks**: sin-server polls all agent `/health` endpoints every 60 seconds.
 - **Auto-Fix**: When an agent fails, sin-server triggers `complete-install.sh` + `hf_pull_script.py` automatically.
 - **Build Recovery**: If a HF Space is in BUILD_ERROR, sin-server re-triggers the build via HF API.
@@ -468,7 +500,9 @@ sin-server is the central auto-healing orchestrator for all HF VMs and OCI VMs.
 - **Agent Contract**: Every agent MUST expose `/health`, `/.well-known/agent-card.json`, and `/a2a/v1` endpoints.
 
 ### 🚨 TEMPLATE RUNTIME REQUIREMENTS (MANDATORY FOR ALL NEW AGENTS)
+
 The template `runtime.ts` MUST include:
+
 1. **opencode CLI call** with `--model opencode/qwen3.6-plus-free --fallback opencode/nemotron-3-super-free`
 2. **Domain actions**: health, session.status, research, draft, revoke (minimum)
 3. **Platform integration**: agent-specific actions wired to opencode CLI calls
@@ -476,14 +510,18 @@ The template `runtime.ts` MUST include:
 5. **Confirmation gates**: All write actions require `confirm: true`
 
 ### 🚨 TEMPLATE AGENT.JSON REQUIREMENTS (MANDATORY)
+
 Every agent.json MUST include:
+
 1. `marketplace` object with `pricingModel`, `monthlyPrice`, `purchaseModes`, `category`
 2. `primaryModel` set to `opencode/qwen3.6-plus-free`
 3. `controlPlane` object with all required fields
 4. `deployment` object with `workforceIndex`, `landingPage`, `publicA2A`, `cimdAnchor`, `vmServer`
 
 ### 🚨 TEMPLATE DOCKERFILE REQUIREMENTS (MANDATORY)
+
 Every Dockerfile MUST:
+
 1. Use multi-stage build (builder + runner)
 2. Install Python for bootstrap scripts
 3. Run `hf_pull_script.py` before starting the agent

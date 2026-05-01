@@ -5,14 +5,16 @@
 **REFERENCE:** `/Users/jeremy/dev/sin-code/OpenCode/ALTERnative.md` (600+ lines)
 
 #### Forbidden (Legacy) Tools
+
 - ❌ `grep` → Use `ripgrep (rg)` — 60x faster
 - ❌ `find` → Use `fd` or `fast-glob` — 15x faster
-- ❌ `sed` → Use `sd` — 10x faster  
+- ❌ `sed` → Use `sd` — 10x faster
 - ❌ `awk` → Use `ugrep` or `ripgrep` — 10x faster
 - ❌ `cat/head/tail` → Use `bat` — Syntax highlighting + git integration
 - ❌ `ls` → Use `exa` or `lsd` — 2x faster + colors
 
 #### Mandatory (2026) Tools
+
 - ✅ **ripgrep (rg)** - Code search, 60x faster than grep
 - ✅ **fd** - File discovery, 15x faster than find
 - ✅ **fast-glob** - Node.js globbing, 3-15x faster than glob
@@ -25,6 +27,7 @@
 #### Installation Requirements
 
 **Local macOS:**
+
 ```bash
 brew install ripgrep fd sd bat exa deno
 
@@ -33,6 +36,7 @@ npm install -D @vscode/ripgrep fast-glob tree-sitter tree-sitter-typescript
 ```
 
 **Docker (all agent containers):**
+
 ```dockerfile
 RUN apt-get update && apt-get install -y \
     ripgrep \
@@ -46,6 +50,7 @@ RUN apt-get update && apt-get install -y \
 #### Performance Requirements
 
 All CLI operations must meet these standards:
+
 - **Search:** ripgrep exclusively (parallelized by default)
 - **Globbing:** fast-glob or fd (automatic .gitignore support)
 - **Replacement:** sd instead of sed
@@ -55,47 +60,52 @@ All CLI operations must meet these standards:
 #### Code Standards
 
 1. **NO `grep` in scripts** - Use `rg` instead
+
    ```bash
    # ❌ WRONG
    grep -r "pattern" src/
-   
+
    # ✅ CORRECT
    rg "pattern" src/
    ```
 
 2. **NO `find` for globbing** - Use `fd` instead
+
    ```bash
    # ❌ WRONG
    find . -name "*.ts" -type f
-   
+
    # ✅ CORRECT
    fd -e ts -t f
    ```
 
 3. **NO `sed` replacements** - Use `sd` instead
+
    ```bash
    # ❌ WRONG
    sed -i 's/old/new/g' file.txt
-   
+
    # ✅ CORRECT
    sd "old" "new" file.txt
    ```
 
 4. **NO `cat` for code viewing** - Use `bat` instead
+
    ```bash
    # ❌ WRONG
    cat main.ts | grep "function"
-   
+
    # ✅ CORRECT
    bat main.ts | rg "function"
    ```
 
 5. **AST-based refactoring must use tree-sitter** - NOT regex
+
    ```typescript
    // ✅ CORRECT: Syntax-aware queries
    import Parser from "tree-sitter";
    import TypeScript from "tree-sitter-typescript";
-   
+
    const parser = new Parser();
    parser.setLanguage(TypeScript.typescript);
    const tree = parser.parse(sourceCode);
@@ -104,6 +114,7 @@ All CLI operations must meet these standards:
 #### Fallback Chain
 
 If a tool is unavailable:
+
 1. Check local installation: `which rg`
 2. Try npm wrapper: `@vscode/ripgrep`
 3. Fall back to legacy tool with performance warning
@@ -123,6 +134,7 @@ If a tool is unavailable:
 #### Elite Guide
 
 See `/Users/jeremy/dev/sin-code/OpenCode/ALTERnative.md` for:
+
 - Detailed tool comparison tables
 - Installation instructions for all platforms
 - Performance benchmarks (5-60x improvements)

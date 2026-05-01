@@ -128,23 +128,23 @@ To customize behavior, create `.opencode/qwen.json` (project) or `~/.config/open
   "max_rate_limit_wait_seconds": 300,
 
   // Suppress informational messages (default: false)
-  "quiet_mode": true
+  "quiet_mode": true,
 }
 ```
 
 ### Configuration Options
 
-| Option                        | Default                     | Description                                                      |
-| ----------------------------- | --------------------------- | ---------------------------------------------------------------- |
-| `base_url`                    | `https://portal.qwen.ai/v1` | API endpoint for Qwen requests                                   |
-| `client_id`                   | (built-in)                  | OAuth client ID                                                  |
-| `oauth_base_url`              | `https://chat.qwen.ai`      | OAuth server URL                                                 |
-| `rotation_strategy`           | `hybrid`                    | Account rotation: `hybrid`, `round-robin`, or `sequential`       |
-| `pid_offset_enabled`          | `false`                     | Distribute parallel sessions across accounts using PID offset    |
-| `proactive_refresh`           | `true`                      | Refresh tokens before expiry                                     |
-| `refresh_window_seconds`      | `300`                       | Seconds before expiry to trigger refresh                         |
-| `max_rate_limit_wait_seconds` | `300`                       | Maximum wait time when rate limited                              |
-| `quiet_mode`                  | `false`                     | Suppress informational messages                                  |
+| Option                        | Default                     | Description                                                   |
+| ----------------------------- | --------------------------- | ------------------------------------------------------------- |
+| `base_url`                    | `https://portal.qwen.ai/v1` | API endpoint for Qwen requests                                |
+| `client_id`                   | (built-in)                  | OAuth client ID                                               |
+| `oauth_base_url`              | `https://chat.qwen.ai`      | OAuth server URL                                              |
+| `rotation_strategy`           | `hybrid`                    | Account rotation: `hybrid`, `round-robin`, or `sequential`    |
+| `pid_offset_enabled`          | `false`                     | Distribute parallel sessions across accounts using PID offset |
+| `proactive_refresh`           | `true`                      | Refresh tokens before expiry                                  |
+| `refresh_window_seconds`      | `300`                       | Seconds before expiry to trigger refresh                      |
+| `max_rate_limit_wait_seconds` | `300`                       | Maximum wait time when rate limited                           |
+| `quiet_mode`                  | `false`                     | Suppress informational messages                               |
 
 ### Environment Variables
 
@@ -164,9 +164,9 @@ All options can be overridden via environment variables:
 
 ### Available via OAuth
 
-| Model              | Context Window | Features                     |
-| ------------------ | -------------- | ---------------------------- |
-| `qwen3-coder-plus` | 1M tokens      | Optimized for coding tasks   |
+| Model              | Context Window | Features                   |
+| ------------------ | -------------- | -------------------------- |
+| `qwen3-coder-plus` | 1M tokens      | Optimized for coding tasks |
 
 **Note:** The `qwen3-vl-plus` vision model is no longer supported via the Qwen OAuth API.
 
@@ -318,43 +318,43 @@ Planned features and improvements for future releases:
 
 ### 🔴 Next Release (v0.4.0)
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Rate Limit Deduplication** | Ignore duplicate 429s within 2s window to prevent backoff cascades | Planned |
-| **Exponential Backoff with Jitter** | Add randomness to retry delays to prevent thundering herd | Planned |
-| **Schema Cleaning** | Remove unsupported JSON Schema keys (`const`, `$ref`, `$defs`) that cause API rejections | Planned |
+| Feature                             | Description                                                                              | Status  |
+| ----------------------------------- | ---------------------------------------------------------------------------------------- | ------- |
+| **Rate Limit Deduplication**        | Ignore duplicate 429s within 2s window to prevent backoff cascades                       | Planned |
+| **Exponential Backoff with Jitter** | Add randomness to retry delays to prevent thundering herd                                | Planned |
+| **Schema Cleaning**                 | Remove unsupported JSON Schema keys (`const`, `$ref`, `$defs`) that cause API rejections | Planned |
 
 ### 🟡 Short-term (v0.5.0)
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Circuit Breaker** | Temporarily stop requests to failing accounts after consecutive failures | Planned |
-| **Proactive Health Checks** | Validate tokens before use, not just after failures | Planned |
-| **CLI: Status Command** | `bunx opencode-qwen-auth status` to show account health and token info | Planned |
+| Feature                     | Description                                                              | Status  |
+| --------------------------- | ------------------------------------------------------------------------ | ------- |
+| **Circuit Breaker**         | Temporarily stop requests to failing accounts after consecutive failures | Planned |
+| **Proactive Health Checks** | Validate tokens before use, not just after failures                      | Planned |
+| **CLI: Status Command**     | `bunx opencode-qwen-auth status` to show account health and token info   | Planned |
 
 ### 🟢 Medium-term
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Session Recovery** | Handle `tool_result_missing` errors from interrupted conversations | Research |
-| **CLI: Uninstall Command** | Clean removal from opencode.json | Planned |
-| **Configurable Retry Strategies** | User-selectable aggressive/conservative retry modes | Research |
+| Feature                           | Description                                                        | Status   |
+| --------------------------------- | ------------------------------------------------------------------ | -------- |
+| **Session Recovery**              | Handle `tool_result_missing` errors from interrupted conversations | Research |
+| **CLI: Uninstall Command**        | Clean removal from opencode.json                                   | Planned  |
+| **Configurable Retry Strategies** | User-selectable aggressive/conservative retry modes                | Research |
 
 ### 🔵 Future Consideration
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Dual Quota System** | Track separate quotas per API endpoint if Qwen supports | Research |
-| **OAuth Server Fallback** | Try backup auth servers when primary fails | Research |
+| Feature                   | Description                                             | Status   |
+| ------------------------- | ------------------------------------------------------- | -------- |
+| **Dual Quota System**     | Track separate quotas per API endpoint if Qwen supports | Research |
+| **OAuth Server Fallback** | Try backup auth servers when primary fails              | Research |
 | **Rate Limit Prediction** | Use historical patterns to predict when limits will hit | Research |
 
 ### ✅ Completed
 
-| Feature | Version | Description |
-|---------|---------|-------------|
-| Hybrid Account Rotation | v0.3.0 | Health scores, token bucket, LRU freshness |
-| Migration Notices | v0.3.0 | Graceful upgrade path for breaking changes |
-| PID Offset | v0.3.0 | Multi-session load distribution |
+| Feature                 | Version | Description                                |
+| ----------------------- | ------- | ------------------------------------------ |
+| Hybrid Account Rotation | v0.3.0  | Health scores, token bucket, LRU freshness |
+| Migration Notices       | v0.3.0  | Graceful upgrade path for breaking changes |
+| PID Offset              | v0.3.0  | Multi-session load distribution            |
 
 ---
 

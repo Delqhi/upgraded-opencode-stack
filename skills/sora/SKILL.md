@@ -10,12 +10,14 @@ description: "Use when the user asks to generate, remix, poll, list, download, o
 Creates or manages short video clips for the current project (product demos, marketing spots, cinematic shots, UI mocks). Defaults to `sora-2` and a structured prompt augmentation workflow, and prefers the bundled CLI for deterministic runs. Note: `$sora` is a skill tag in prompts, not a shell command.
 
 ## When to use
+
 - Generate a new video clip from a prompt
 - Remix an existing video by ID
 - Poll status, list jobs, or download assets (video/thumbnail/spritesheet)
 - Batch runs (many prompts or variants)
 
 ## Decision tree (create vs remix vs status/download vs batch)
+
 - If the user has a **video id** and wants a change → **remix**
 - If the user has a **video id** and wants status or assets → **status/poll/download**
 - If the user needs many prompts/assets → **create-batch**
@@ -23,6 +25,7 @@ Creates or manages short video clips for the current project (product demos, mar
 - Otherwise → **create** (or **create-and-poll** if they need a ready asset in one step)
 
 ## Workflow
+
 1. Decide intent: create vs remix vs status/download vs batch.
 2. Collect inputs: prompt, model, size, seconds, and any input reference image.
 3. If batch: write a temporary JSONL under tmp/ (one job per line), run once, then delete the JSONL.
@@ -34,15 +37,19 @@ Creates or manages short video clips for the current project (product demos, mar
 9. Iterate with a single targeted change per prompt.
 
 ## Authentication
+
 - `OPENAI_API_KEY` must be set for live API calls.
 
 If the key is missing, give the user these steps:
+
 1. Create an API key in the OpenAI platform UI: https://platform.openai.com/api-keys
 2. Set `OPENAI_API_KEY` as an environment variable in their system.
 3. Offer to guide them through setting the environment variable for their OS/shell if needed.
+
 - Never ask the user to paste the full key in chat. Ask them to set it locally and confirm when ready.
 
 ## Defaults & rules
+
 - Default model: `sora-2` (use `sora-2-pro` for higher fidelity).
 - Default size: `1280x720`.
 - Default seconds: `4` (allowed: "4", "8", "12" as strings).
@@ -56,6 +63,7 @@ If the key is missing, give the user these steps:
 - Sora can generate audio; if a user requests voiceover/audio, specify it explicitly in the `Audio:` and `Dialogue:` lines and keep it short.
 
 ## API limitations
+
 - Models are limited to `sora-2` and `sora-2-pro`.
 - API access to Sora models requires an organization-verified account.
 - Duration is limited to 4/8/12 seconds and must be set via the `seconds` parameter.
@@ -66,15 +74,18 @@ If the key is missing, give the user these steps:
 - Content restrictions are enforced by the API (see Guardrails below).
 
 ## Guardrails (must enforce)
+
 - Only content suitable for audiences under 18.
 - No copyrighted characters or copyrighted music.
 - No real people (including public figures).
 - Input images with human faces are rejected.
 
 ## Prompt augmentation
+
 Reformat prompts into a structured, production-oriented spec. Only make implicit details explicit; do not invent new creative requirements.
 
 Template (include only relevant lines):
+
 ```
 Use case: <where the clip will be used>
 Primary request: <user's main prompt>
@@ -97,6 +108,7 @@ Avoid: <negative constraints>
 ```
 
 Augmentation rules:
+
 - Keep it short; add only details the user already implied or provided elsewhere.
 - For remixes, explicitly list invariants ("same shot, change only X").
 - If any critical detail is missing and blocks success, ask a question; otherwise proceed.
@@ -105,6 +117,7 @@ Augmentation rules:
 ## Examples
 
 ### Generation example (single shot)
+
 ```
 Use case: product teaser
 Primary request: a close-up of a matte black camera on a pedestal
@@ -115,12 +128,14 @@ Constraints: no logos, no text
 ```
 
 ### Remix example (invariants)
+
 ```
 Primary request: same shot and framing, switch palette to teal/sand/rust with warmer backlight
 Constraints: keep the subject and camera move unchanged
 ```
 
 ## Prompting best practices (short list)
+
 - One main action + one camera move per shot.
 - Use counts or beats for timing ("two steps, pause, turn").
 - Keep text short and the camera locked-off for UI or on-screen text.
@@ -131,11 +146,14 @@ Constraints: keep the subject and camera move unchanged
 - Iterate with single-change follow-ups to preserve continuity.
 
 ## Guidance by asset type
+
 Use these modules when the request is for a specific artifact. They provide targeted templates and defaults.
+
 - Cinematic shots: `references/cinematic-shots.md`
 - Social ads: `references/social-ads.md`
 
 ## CLI + environment notes
+
 - CLI commands + examples: `references/cli.md`
 - API parameter quick reference: `references/video-api.md`
 - Prompting guidance: `references/prompting.md`
@@ -143,6 +161,7 @@ Use these modules when the request is for a specific artifact. They provide targ
 - Troubleshooting: `references/troubleshooting.md`
 
 ## Reference map
+
 - **`references/cli.md`**: how to run create/poll/remix/download/batch via `scripts/sora.py`.
 - **`references/video-api.md`**: API-level knobs (models, sizes, duration, variants, status).
 - **`references/prompting.md`**: prompt structure and iteration guidance.

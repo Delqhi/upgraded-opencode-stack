@@ -5,10 +5,11 @@ description: Öffnet ein Bild (Screenshot etc.) sofort und direkt in der macOS V
 
 # /preview Skill
 
-Verwende diesen Skill, um dem User Bilder oder Screenshots direkt auf dem Bildschirm anzuzeigen. 
+Verwende diesen Skill, um dem User Bilder oder Screenshots direkt auf dem Bildschirm anzuzeigen.
 Dieser Skill erzwingt das Öffnen der Datei in der macOS Preview.app. Es ist strengstens verboten, den User aufzubordern, eine Bilddatei manuell im Dateisystem zu suchen.
 
 **Aufruf-Parameter:**
+
 - `file`: Der absolute Pfad zur Bilddatei (z.B. `/tmp/screenshot.png`).
 
 **Ausführung:**

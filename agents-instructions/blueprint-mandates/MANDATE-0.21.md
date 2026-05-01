@@ -54,17 +54,20 @@
 ```
 
 **VERBOTENE AKTIONEN (SOFORTIGE VERWEIGERUNG):**
+
 - "Ich lösche das alte Secret mal..." → ❌ VERBOTEN
-- "Das Secret ist nicht mehr gültig, ich entferne es..." → ❌ VERBOTEN  
+- "Das Secret ist nicht mehr gültig, ich entferne es..." → ❌ VERBOTEN
 - "Die Datei ist zu groß, ich bereinige mal..." → ❌ VERBOTEN
 - "Ich rotiere das Secret und lösche das alte..." → ❌ VERBOTEN
 
 **ERLAUBTE AKTIONEN:**
+
 - "Ich füge das neue Secret zu environments-jeremy.md hinzu..." → ✅ KORREKT
 - "Ich markiere das alte Secret als DEPRECATED..." → ✅ KORREKT
 - "Ich informiere den User über das veraltete Secret..." → ✅ KORREKT
 
 **TEMPLATE FÜR NEUE SECRETS:**
+
 ```markdown
 ## [SERVICE-NAME] - [YYYY-MM-DD]
 
@@ -80,6 +83,7 @@
 ```
 
 **VIOLATIONS = TECHNISCHER HOCHVERRAT:**
+
 - Secrets nicht dokumentieren = VERWEIGERUNG DER AUFGABE
 - Secrets löschen = SOFORTIGE ESKALATION AN USER
 - Datei manipulieren = PROTOKOLLIERUNG ALS KRITISCHER FEHLER

@@ -14,6 +14,7 @@ metadata:
 > 3-stage pipeline. Small processes. Fail-fast. No monolith.
 
 Successor note:
+
 - Use `/check-plan-done` when the user wants one unified flow that both plans and executes.
 - Keep `omoc-plan-swarm` as the planning-only core when execution is not part of the request.
 
@@ -141,6 +142,7 @@ Be exhaustive but concise. No filler.
 ### Gate 1: Research Quality Check
 
 Before proceeding, verify:
+
 - [ ] Librarian returned concrete findings (not just "I couldn't find much")
 - [ ] Explore returned file references and specific findings
 - [ ] Both outputs are >200 words of substance
@@ -212,6 +214,7 @@ RULES:
 ### Gate 2: Plan Completeness Check
 
 Before proceeding, verify the plan contains:
+
 - [ ] Summary section
 - [ ] At least one phase with concrete tasks
 - [ ] Effort estimates on tasks
@@ -280,12 +283,14 @@ RULES:
 ## Rules
 
 ### Do
+
 - Start both research tasks in **parallel** (never sequentially)
 - Check each gate **before** proceeding to the next stage
 - Keep prompts **short and focused** (one job per task)
 - Return the final plan directly -- no temp files needed
 
 ### Don't
+
 - Don't spawn more than 4 `task()` calls total (2 research + 1 plan + 1 review)
 - Don't add extra "consultation" or "delegation" stages
 - Don't write intermediate results to disk
@@ -293,6 +298,7 @@ RULES:
 - Don't loop more than once on review feedback
 
 ### Cost Awareness
+
 - Librarian + Explore run in parallel = ~1 LLM round of latency
 - Plan + Review run sequentially = ~2 LLM rounds
 - Total pipeline: **~3 rounds of latency** (vs 6+ in the old design)
@@ -302,13 +308,13 @@ RULES:
 
 ## Tool Reference
 
-| Stage | Tool | Purpose |
-|-------|------|---------|
-| Research | `task(subagent_type: "librarian", run_in_background: true)` | Web & docs research |
-| Research | `task(subagent_type: "explore", run_in_background: true)` | Codebase analysis |
-| Research | `background_output(task_id: "...")` | Check if research is done |
-| Plan | `task(category: "deep", run_in_background: false)` | Synthesize plan |
-| Review | `task(category: "artistry", run_in_background: false)` | Critical review |
+| Stage    | Tool                                                        | Purpose                   |
+| -------- | ----------------------------------------------------------- | ------------------------- |
+| Research | `task(subagent_type: "librarian", run_in_background: true)` | Web & docs research       |
+| Research | `task(subagent_type: "explore", run_in_background: true)`   | Codebase analysis         |
+| Research | `background_output(task_id: "...")`                         | Check if research is done |
+| Plan     | `task(category: "deep", run_in_background: false)`          | Synthesize plan           |
+| Review   | `task(category: "artistry", run_in_background: false)`      | Critical review           |
 
 ---
 

@@ -28,9 +28,9 @@
 
 #### ✅ MINDESTSTANDARD
 
-| Pflichtsurface | Erwartung |
-|---|---|
-| Simone MCP | Aktiviert, erreichbar, von Agenten verwendet |
-| PCPM | Aktiviert, geladen, als Aufgaben-Memory genutzt |
-| Repo README | Verweist klar auf die Pflichtnutzung |
-| Install-Skript | Prüft und meldet die Pflichtnutzung |
+| Pflichtsurface | Erwartung                                       |
+| -------------- | ----------------------------------------------- |
+| Simone MCP     | Aktiviert, erreichbar, von Agenten verwendet    |
+| PCPM           | Aktiviert, geladen, als Aufgaben-Memory genutzt |
+| Repo README    | Verweist klar auf die Pflichtnutzung            |
+| Install-Skript | Prüft und meldet die Pflichtnutzung             |

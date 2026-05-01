@@ -99,6 +99,7 @@ For daemon/local-service agents also require:
 - login-cycle survival plan exists in the runbook
 
 ## HF VM Consumer Requirements
+
 - `scripts/hf_pull_script.py` present (injected via setup_consumer_auth.sh macro)
 - HF VM deployment uses `SUPABASE_URL` & `SUPABASE_SERVICE_ROLE_KEY`
 - NO local Chrome profile setups on the HF VM

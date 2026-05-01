@@ -31,6 +31,7 @@ Your MacBook filesystem MUST follow CEO-level enterprise organization:
 ```
 
 **Rules:**
+
 - NO loose files in `~/` - everything has a home
 - NO project directories directly in `~/` - use `~/dev/`
 - Auto-cleanup scripts run daily (Desktop, AI screenshots)

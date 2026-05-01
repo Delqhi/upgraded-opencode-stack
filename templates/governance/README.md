@@ -9,11 +9,11 @@ This directory contains **concrete template instances** that any A2A repo can co
 
 ## Files
 
-| File | Purpose | Copy To |
-|------|---------|---------|
-| `repo-governance.template.json` | Branch protection, merge rules, fail-closed semantics | `governance/repo-governance.json` |
-| `pr-watcher.template.json` | PR review automation, credential scanning, escalation | `governance/pr-watcher.json` |
-| `platform-registry.template.json` | Platform intake registry with fail-closed rules | `platforms/registry.json` |
+| File                              | Purpose                                               | Copy To                           |
+| --------------------------------- | ----------------------------------------------------- | --------------------------------- |
+| `repo-governance.template.json`   | Branch protection, merge rules, fail-closed semantics | `governance/repo-governance.json` |
+| `pr-watcher.template.json`        | PR review automation, credential scanning, escalation | `governance/pr-watcher.json`      |
+| `platform-registry.template.json` | Platform intake registry with fail-closed rules       | `platforms/registry.json`         |
 
 ## Usage
 
@@ -46,12 +46,12 @@ ajv validate -s templates/platform-registry.schema.json -d platforms/registry.js
 
 ## Schema Reference
 
-| Schema | Location |
-|--------|----------|
-| `repo-governance.schema.json` | `templates/repo-governance.schema.json` |
-| `pr-watcher.schema.json` | `templates/pr-watcher.schema.json` |
+| Schema                          | Location                                  |
+| ------------------------------- | ----------------------------------------- |
+| `repo-governance.schema.json`   | `templates/repo-governance.schema.json`   |
+| `pr-watcher.schema.json`        | `templates/pr-watcher.schema.json`        |
 | `platform-registry.schema.json` | `templates/platform-registry.schema.json` |
-| `work-item.schema.json` | `templates/work-item.schema.json` |
+| `work-item.schema.json`         | `templates/work-item.schema.json`         |
 
 ## Template Variables
 
@@ -64,6 +64,7 @@ These templates are the **source of truth** for governance file content. `Templa
 ## Fail-Closed Rules
 
 All governance contracts follow fail-closed semantics:
+
 - Unknown check results → **block** (not pass)
 - Missing required files → **block merge**
 - Credential leaks → **block merge immediately**

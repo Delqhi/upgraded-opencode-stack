@@ -26,14 +26,14 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 
 ## Tier ladder
 
-| Tier | Meaning | Promotion rule |
-|------|---------|----------------|
-| `run` | atomic action | 2 successes → 1 `mini` candidate |
-| `mini` | two proven runs | 10 clean candidates → approved `mini` |
-| `low` | two approved `mini` units | 10 clean candidates → approved `low` |
-| `high` | two approved `low` units | 10 clean candidates → approved `high` |
-| `max` | two approved `high` units | 10 clean candidates → approved `max` |
-| `full` | two approved `max` units | 10 clean candidates → full autorun |
+| Tier   | Meaning                   | Promotion rule                        |
+| ------ | ------------------------- | ------------------------------------- |
+| `run`  | atomic action             | 2 successes → 1 `mini` candidate      |
+| `mini` | two proven runs           | 10 clean candidates → approved `mini` |
+| `low`  | two approved `mini` units | 10 clean candidates → approved `low`  |
+| `high` | two approved `low` units  | 10 clean candidates → approved `high` |
+| `max`  | two approved `high` units | 10 clean candidates → approved `max`  |
+| `full` | two approved `max` units  | 10 clean candidates → full autorun    |
 
 ## Local brain layout
 
@@ -55,6 +55,7 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 ## Canonical tools
 
 ### CLI
+
 - `sin-flow init <flow>` — scaffold a flow workspace
 - `sin-flow step` — execute one action + screenshot + vision + brain log
 - `sin-flow keyshot` — screenshot + vision only, writes the same analysis artifacts
@@ -68,6 +69,7 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 - `sin-flow guard --repo <path>` — fail when a repo contains divergent `create-flow` runtime files outside the canonical SIN-InkogniFlow / upgraded-opencode-stack layouts
 
 ### Anti-Bot & High-Speed Features
+
 - `--mode nodriver` executes Python using an internal `async` context with `nodriver` boilerplate. It injects the `flow_cdp_utils` library automatically.
 - `--fast` skips the Vision "Stop & Verify" pause to enable fluid execution (e.g. `Mousedown -> Mouseup -> Click`) for strict bot protections.
 - **CDP Helper**: Import `flow_cdp_utils` inside your `nodriver` script for robust float-scaling on Retina, exact mouse event dispatching, and Context-ID logic for incognito windows.
@@ -79,12 +81,12 @@ The Dual-Logger captures real human workflows and replays them as agent actions 
 
 **Components:**
 
-| Component | File | Purpose |
-|-----------|------|---------|
-| OS Logger | `dual_logger/os_logger.py` | pynput + NSWorkspace: mouse, keyboard, window focus |
-| Browser Logger | `dual_logger/browser_logger.js` | Tampermonkey/JS: DOM clicks, inputs, selectors, scrolls |
-| Merge Server | `dual_logger/agent_logger.py` | Flask on :5000: merges OS+browser events chronologically |
-| Executor | `dual_logger/executor.py` | Replays with Bézier curves, jitter, CDP/pyautogui/hybrid modes |
+| Component      | File                            | Purpose                                                        |
+| -------------- | ------------------------------- | -------------------------------------------------------------- |
+| OS Logger      | `dual_logger/os_logger.py`      | pynput + NSWorkspace: mouse, keyboard, window focus            |
+| Browser Logger | `dual_logger/browser_logger.js` | Tampermonkey/JS: DOM clicks, inputs, selectors, scrolls        |
+| Merge Server   | `dual_logger/agent_logger.py`   | Flask on :5000: merges OS+browser events chronologically       |
+| Executor       | `dual_logger/executor.py`       | Replays with Bézier curves, jitter, CDP/pyautogui/hybrid modes |
 
 **Recording:**
 
@@ -113,6 +115,7 @@ sin-flow replay "My Workflow" --mode pyautogui --speed 2.0
 ```
 
 **Anti-bot countermeasures in the executor:**
+
 - Bézier curve mouse movement (not linear — mimics human hand tremor)
 - Timestamp-based inter-event delays (preserves original human timing)
 - Random jitter on coordinates (±2px) and delays (±50ms Gaussian)
@@ -120,6 +123,7 @@ sin-flow replay "My Workflow" --mode pyautogui --speed 2.0
 - Ghost-cursor-style mouse trail with overshoot on long distances
 
 ### API
+
 - `sin-flowd` — local HTTP daemon
 - `sin-eye` — optional ultra-fast vision backend when installed
 - `POST /v1/flows` — create workspace
@@ -132,6 +136,7 @@ sin-flow replay "My Workflow" --mode pyautogui --speed 2.0
 ## Vision chain
 
 Required default:
+
 1. `opencode` + `google/antigravity-gemini-3-flash`
 
 No automatic fallback chain is used by default. If the flash path fails, the step fails fast instead of silently switching models.

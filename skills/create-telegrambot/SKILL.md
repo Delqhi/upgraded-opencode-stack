@@ -16,12 +16,15 @@ metadata:
 Use this skill when the user wants to create, edit, deploy, scale, recover, or professionally operate a Telegram bot, Telegram bot platform, Telegram Mini App, or Telegram-based agent workflow.
 
 Triggers (examples)
+
 - "create telegram bot", "build a telegram bot", "edit telegram bot", "deploy telegram bot", "botfather", "telegram commands", "telegram webhook", "telegram polling", "telegram mini app", "chat id", "set telegram commands", "telegram automation", "telegram bot ops", "telegram bot recovery".
 
 Mission
+
 - Turn any agent into a Telegram bot developer + operator + product owner that can plan, bootstrap, build, test, deploy, run, and recover Telegram bots with minimal user interruption.
 
 Core operating model
+
 - API-first: use the Telegram Bot API for anything the Bot API can do deterministically.
 - App-automation second: use Telegram Desktop/App or Telegram Web automation only for surfaces the Bot API cannot do, especially BotFather bootstrap and first-chat bootstrap.
 - Manual-last: ask the user only when Telegram itself forces an unrecoverable human-only checkpoint.
@@ -29,12 +32,14 @@ Core operating model
 - Treat the bot as a product surface, not just a command handler.
 
 What makes this skill exceptional
+
 - It should make agents think like Telegram bot founders/operators, not just coders.
 - Every serious Telegram bot task is handled across four layers: product, bootstrap, code/runtime, and recovery.
 - The skill should actively reduce user annoyance by automating BotFather, first-chat bootstrap, chat_id capture, command registration, and webhook repair wherever environment tooling allows it.
 - The end result should feel like a Telegram bot developer CEO is in the loop: product clarity, ruthless automation, operational discipline, and recovery readiness.
 
 Built-in micro-scripts
+
 - `scripts/telegrambot-render-botfather-bootstrap.mjs` - generate concrete BotFather/Telegram.app bootstrap AppleScripts from the templates
 - `scripts/telegrambot-bootstrap-chat-id.py` - capture the latest useful chat_id from Bot API updates and optionally write it into local config
 - `scripts/telegrambot-verify-runtime.py` - verify token, bot identity, webhook state, commands, and chat-id presence
@@ -101,6 +106,7 @@ def tg_send(bot_alias: str, text: str, buttons: list = None) -> dict:
 `sin-telegrambot bootstrap <name>` uses macOS Telegram.app AppleScript to automatically open BotFather search, navigate to the bot, and send `/start` — then reads the resulting chat_id from `getUpdates`. The user never has to manually do anything.
 
 Mandatory guardrails
+
 - Never hardcode bot tokens, webhook secrets, admin IDs, chat exports, or production credentials in repo files.
 - Always store secrets in approved local config, environment injection, or the project secret manager.
 - Never log raw Telegram updates wholesale; redact PII, tokens, phone numbers, invite links, and payment payloads.
@@ -117,6 +123,7 @@ Mandatory guardrails
 - The registry row must include at least: type, name, purpose, bot username, commands, bootstrap path, runtime/deploy mode, secret source, status, repo/path, and docs/runbook.
 
 Capability map (Bot API + operator scope)
+
 - Identity and profile
   - create/edit bot profile via BotFather bootstrap
   - set name, username, description, short description, about text, commands, menu button, default admin rights
@@ -154,17 +161,19 @@ Capability map (Bot API + operator scope)
   - release gates, monitoring, replay, incident response
 
 Decision ladder: what to use when
+
 1. Telegram Bot API
    - Use for send/edit/delete messages, commands, menus, webhooks, updates, media, payments, inline mode, admin tools, and health checks.
 2. Telegram Desktop/App automation
    - Use for BotFather bootstrap, first `/start`, forced client-side actions, one-time chat discovery, and bootstrap messages when the bot cannot yet self-bootstrap.
-   - Prefer local app automation via the available macOS/browser automation stack, especially Telegram.app control, AppleScript, and webauto-nodriver-backed app steering.
+   - Prefer local app automation via the available macOS/browser automation stack, especially Telegram.app control, AppleScript, and skylight-cli-backed app steering.
 3. Telegram Web automation
    - Use only when Desktop/App automation is unavailable or the workflow is explicitly web-only.
 4. TDLib / MTProto
    - Use only if the product truly requires user-account capabilities beyond Bot API scope. Default: avoid this complexity.
 
 Advanced operator patterns
+
 - Hybrid webhook/polling recovery with automatic fallback and offset persistence.
 - Deterministic first-chat bootstrap: send `/start` from Telegram Desktop/App, then read the resulting chat_id from Bot API updates.
 - Multi-bot or multi-account control plane only when justified; default to one active production identity per bot surface.
@@ -175,22 +184,26 @@ Advanced operator patterns
 Default workflow
 
 Phase 1 - Product framing
+
 - define the bot's purpose, target chats, top 3 flows, admin model, and success metric
 - identify whether it is utility, SaaS, commerce, support, community, or agent-control bot
 
 Phase 2 - Architecture
+
 - choose webhook or polling
 - choose TypeScript/Node or Python stack
 - define state store, queue needs, external integrations, and recovery posture
 - justify every dependency beyond the minimal baseline
 
 Phase 3 - Bootstrap and provisioning
+
 - create or recover the bot via BotFather if needed
 - capture bot token safely into local config / env / secret manager
 - register commands, descriptions, menus, and deep-link strategy
 - discover or create admin chat and chat_id automatically from first interaction whenever possible
 
 Phase 3b - BotFather automation subworkflow
+
 - Prefer Telegram.app/Desktop automation first:
   - open Telegram.app
   - search `@BotFather`
@@ -209,22 +222,26 @@ python3 scripts/telegrambot-bootstrap-chat-id.py --config-path ~/.config/opencod
 ```
 
 Phase 4 - Bot skeleton
+
 - add config loader, update router, command registry, callback handlers, service layer, health endpoint, structured logging, and graceful shutdown
 - make startup validate required env before serving traffic
 - use `scripts/telegrambot-scaffold-ops.mjs` to generate baseline operational assets before hand-writing drift-prone docs/scripts
 
 Phase 5 - Chat bootstrap
+
 - implement `/start` as an idempotent capability introduction, not a throwaway hello-world
 - auto-register user/chat/admin records
 - support deep links like `t.me/<bot>?start=<payload>`
 - support locale/timezone capture if relevant
 
 Phase 6 - Feature delivery
+
 - implement commands, callbacks, background tasks, integrations, and media flows
 - keep domain logic outside Telegram adapter code
 - version callback payloads and conversation schemas
 
 Phase 7 - Test and verify
+
 - unit tests for handlers and service layer
 - fixtures for real Telegram update payloads
 - conversation and callback flow tests
@@ -236,20 +253,24 @@ node scripts/telegrambot-preflight.mjs --config-path ~/.config/opencode/telegram
 ```
 
 Phase 8 - Deploy and register runtime
+
 - deploy webhook endpoint with HTTPS and secret token validation
 - register webhook automatically on release or startup
 - configure observability and admin controls before calling it done
 
 Phase 9 - Operate like a pro
+
 - provide `/status`, `/health`, `/pause`, `/resume`, `/replay`, `/admin` or equivalent control lane
 - track update volume, errors, latency, retries, and cost where AI/tooling is involved
 - add flood-wait handling, backoff, and operator kill switch
 
 Phase 10 - Recovery and change management
+
 - document token rotation, webhook rebind, replay strategy, DB/schema migration, rollback plan, and outage message path
 - ship docs/runbooks with the code
 
 Zero-manual playbooks
+
 - Bot bootstrap
   - prefer Telegram Desktop/App automation to open BotFather, create the bot, capture token, and seed command config
 - Chat bootstrap
@@ -268,11 +289,13 @@ Zero-manual playbooks
   - then refresh the Google Docs summary/navigation tab so Docs stays executive-grade and Sheets remains the live row source of truth
 
 Environment-specific operator surfaces
+
 - If the environment provides local Telegram app control, use it first for BotFather and first-chat bootstrap.
 - If the environment provides browser automation for Telegram Web, use it as fallback, not as the default path.
 - If the environment provides a secret manager, store bot token and webhook secrets there immediately after bootstrap.
 
 Preferred stack (2026 default)
+
 - TypeScript + `grammY` for greenfield webhook-first bots
 - Python + `python-telegram-bot` for Python-native projects or data/ops-heavy stacks
 - Redis for ephemeral conversation/session state; SQLite only for small/local bots
@@ -280,6 +303,7 @@ Preferred stack (2026 default)
 - GitHub Actions or platform-native CI for deploy + webhook registration + smoke tests
 
 BotFather / bootstrap strategy
+
 - Use automation for BotFather whenever possible; do not make the user click through routine setup if local Telegram automation is available.
 - Capture these outputs deterministically:
   - bot token
@@ -289,17 +313,20 @@ BotFather / bootstrap strategy
 - Save only to approved config/secret surfaces.
 
 Chat ID and admin discovery strategy
+
 - Default: infer chat_id from the first inbound `/start` or any update.
 - If no inbound update exists yet, automate Telegram Desktop/App to send `/start` to the bot.
 - Persist chat mappings and admin IDs in project state.
 - Never ship placeholder chat IDs in production config.
 
 Webhook vs polling rules
+
 - Production default: webhook with HTTPS + secret token validation.
 - Local development: polling is acceptable if offset is persisted and duplicate handling is safe.
 - Fallback mode: switch to polling only temporarily when webhook health is degraded.
 
 Anti-abuse and safety
+
 - respect Telegram flood limits and `retry_after`
 - throttle per chat and globally
 - require allowlists or admin confirmation for high-risk actions
@@ -307,12 +334,14 @@ Anti-abuse and safety
 - if AI/tool execution exists, enforce cost caps, tool allowlists, and escalation boundaries
 
 Data and state rules
+
 - Store only what is needed for the active flow.
 - Version callback payloads and conversation state.
 - Use TTLs for idle sessions.
 - Make jobs and update processing replay-safe.
 
 Definition of done
+
 - working bot runtime
 - safe token/config handling
 - commands and menus configured
@@ -323,6 +352,7 @@ Definition of done
 - monitoring and recovery docs
 
 Deliverables you should produce
+
 - bot code or patch
 - `.env.example` / config schema
 - command catalog
@@ -335,6 +365,7 @@ Deliverables you should produce
 - Google Docs summary/navigation refresh in `t.msgg9oi1mot8`
 
 Do not do this
+
 - do not hardcode bot tokens or chat IDs
 - do not force polling in production without reason
 - do not mix business logic directly into callback/message transport handlers
@@ -343,6 +374,7 @@ Do not do this
 - do not use TDLib/MTProto unless the product truly needs it
 
 Recommended repo structure
+
 - repo root
   - `README.md`
   - `AGENTS.md` if the project uses agent-specific operating rules
@@ -367,6 +399,7 @@ Recommended repo structure
   - `bootstrap-chat`
 
 Verification checklist
+
 - bot token comes from config/secret manager only
 - webhook or polling mode is explicit
 - `/start` is idempotent
@@ -378,10 +411,12 @@ Verification checklist
 - docs match the real code paths
 
 Local OpenCode install expectations for this skill
+
 - SSOT repo lives under `~/dev/skills/`
 - installed skill is a symlink under `~/.config/opencode/skills/`
 - verify with `opencode debug skill | /usr/bin/grep -n "create-telegrambot"`
 
 When this skill should feel exceptional
+
 - It should not stop at "here is a simple bot".
 - It should make agents think like Telegram bot architects, launch operators, automation hackers, and product owners at the same time.

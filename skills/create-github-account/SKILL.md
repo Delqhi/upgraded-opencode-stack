@@ -3,6 +3,7 @@
 GitHub Account Registrierung via Google OAuth mit Fallback.
 
 ## WANN VERWENDEN
+
 - Wenn ein neuer GitHub Account via Google Workspace Account erstellt werden soll
 - Wenn ein Agent sich bei GitHub mit einem Google Account anmelden muss
 - Wenn ein bestehender GitHub Account mit diesem Google Account existiert (Fallback)
@@ -25,9 +26,11 @@ Siehe `/undelete-login-google` für den kompletten Chrome-Start-Code.
 ## FLOW
 
 ### 1. Google muss eingeloggt sein
+
 Stelle sicher dass Google bereits im Browser eingeloggt ist (siehe `/undelete-login-google`).
 
 ### 2. GitHub Signup
+
 ```python
 from oar_steps.github_signup import github_signup_via_google
 
@@ -38,6 +41,7 @@ result = await github_signup_via_google(browser, email)
 ```
 
 ### 3. Ablauf im Detail
+
 1. Navigiere zu `https://github.com/signup`
 2. Schließe alle Overlays/Modals (Country Selector etc.)
 3. Klicke "Continue with Google"
@@ -48,7 +52,9 @@ result = await github_signup_via_google(browser, email)
 7. Account in Google Sheets loggen
 
 ### 4. Fallback: Bereits existierender Account
+
 Wenn GitHub meldet dass der Account bereits existiert:
+
 1. Versuche Login statt Signup
 2. Navigiere zu `https://github.com/login`
 3. Klicke "Sign in with Google"
@@ -56,20 +62,26 @@ Wenn GitHub meldet dass der Account bereits existiert:
 5. Verifiziere Login-Erfolg
 
 ### 5. Google Sheets Logging
+
 Nach erfolgreicher Registrierung:
+
 ```
 Nr | vorname | nachname | geburtsdatum | benutzername | passwort
 ```
+
 Siehe Google Sheets Logging Skill für Details.
 
 ## SCREENSHOT PFLICHT
+
 - `/tmp/github_01_signup_page.png`
 - `/tmp/github_02_google_picker.png`
 - `/tmp/github_03_username_page.png`
 - `/tmp/github_04_final_state.png`
 
 ## LOG PFLICHT
+
 Jeder Schritt MUSS loggen:
+
 - URL vor und nach jeder Aktion
 - Alle gefundenen/nicht-gefundenen Elemente
 - Tab-Anzahl im Browser

@@ -5,21 +5,25 @@ This directory contains installation commands for all essential CLI tools used i
 ## Core System Tools
 
 ### Homebrew (Package Manager)
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 ### Git
+
 ```bash
 brew install git
 ```
 
 ### Curl
+
 ```bash
 # Already installed on macOS
 ```
 
 ### Zsh/Bash
+
 ```bash
 # Already installed on macOS
 ```
@@ -27,17 +31,20 @@ brew install git
 ## Development Runtimes
 
 ### Node.js (via nvm)
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 # Then: nvm install node && nvm use node
 ```
 
 ### Bun
+
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
 
 ### Python
+
 ```bash
 brew install python
 ```
@@ -45,6 +52,7 @@ brew install python
 ## Container & Virtualization
 
 ### Docker Desktop
+
 ```bash
 # Download from: https://www.docker.com/products/docker-desktop
 # Install the .dmg file
@@ -53,6 +61,7 @@ brew install python
 ## OpenCode & AI Tools
 
 ### OpenCode CLI
+
 ```bash
 # From source:
 git clone https://github.com/anomalyco/opencode.git
@@ -67,16 +76,19 @@ docker pull ghcr.io/anomalyco/opencode:latest
 ```
 
 ### Wrangler CLI (Cloudflare)
+
 ```bash
 npm install -g wrangler
 ```
 
 ### GitHub CLI
+
 ```bash
 brew install gh
 ```
 
 ### Gemini CLI
+
 ```bash
 npm install -g @google/gemini-cli
 ```
@@ -84,6 +96,7 @@ npm install -g @google/gemini-cli
 ## Database Tools
 
 ### SQLite
+
 ```bash
 brew install sqlite
 ```
@@ -91,31 +104,37 @@ brew install sqlite
 ## Additional Tools
 
 ### FFmpeg
+
 ```bash
 brew install ffmpeg
 ```
 
 ### Ripgrep
+
 ```bash
 brew install ripgrep
 ```
 
 ### Tree
+
 ```bash
 brew install tree
 ```
 
 ### htop
+
 ```bash
 brew install htop
 ```
 
 ### jq (JSON processor)
+
 ```bash
 brew install jq
 ```
 
 ### yq (YAML processor)
+
 ```bash
 brew install yq
 ```

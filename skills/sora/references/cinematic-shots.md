@@ -3,6 +3,7 @@
 Use these for filmic, mood-forward clips. Keep one subject, one action, one camera move.
 
 ## Shot grammar (pick one)
+
 - Static wide: locked-off, slow atmosphere changes
 - Dolly-in: slow push toward subject
 - Dolly-out: reveal more context
@@ -12,6 +13,7 @@ Use these for filmic, mood-forward clips. Keep one subject, one action, one came
 - Handheld drift: gentle, controlled sway
 
 ## Default template
+
 ```
 Use case: cinematic shot
 Primary request: <subject + setting>
@@ -27,6 +29,7 @@ Avoid: jitter; flicker; oversharpening
 ```
 
 ## Example: moody exterior
+
 ```
 Use case: cinematic shot
 Primary request: a lone cabin on a cliff above the sea
@@ -40,6 +43,7 @@ Constraints: no logos, no text, no people
 ```
 
 ## Example: intimate detail
+
 ```
 Use case: cinematic detail
 Primary request: close-up of a vinyl record spinning

@@ -47,26 +47,31 @@
 ## [YYYY-MM-DD HH:MM] - [AGENT/TASK-ID]
 
 **Beobachtungen:**
+
 - [Alle neuen Erkenntnisse, Fakten, Entdeckungen]
 - [Code-Struktur Analysen]
 - [User-Anforderungen Verständnis]
 
 **Fehler:**
+
 - [Exakte Error-Messages]
 - [Stacktraces]
 - [Ursachen-Analyse]
 
 **Lösungen:**
+
 - [Fix-Code Snippets]
 - [Tests die bestanden wurden]
 - [Workarounds falls nötig]
 
 **Nächste Schritte:**
+
 - [Offene Tasks]
 - [Blocker die gelöst werden müssen]
 - [Geplante Features/Änderungen]
 
 **Arbeitsbereich:**
+
 - {task-id}-{pfad/datei}-{status}
 ```
 
@@ -78,17 +83,19 @@
 **Projekt:** [Name]  
 **Erstellt:** [YYYY-MM-DD]  
 **Letzte Änderung:** [YYYY-MM-DD HH:MM]  
-**Gesamt-Sessions:** [Zahl]  
+**Gesamt-Sessions:** [Zahl]
 
 ---
 
 ## UR-GENESIS - INITIAL PROMPT
+
 [Sitzung 1 - Die allererste User-Anfrage - UNVERÄNDERLICH]
 
 ---
 ```
 
 **INTEGRITÄTS-CHECK:**
+
 - [ ] lastchanges.md existiert im Projekt-Root?
 - [ ] Format eingehalten (Zeitstempel, Struktur)?
 - [ ] APPEND-ONLY (nicht überschrieben)?

@@ -270,11 +270,12 @@ Use a `.glb` 3D model.
 Render it with Three.js.
 Place it fixed in the bottom-right corner like a chat widget.
 Enable mouse tracking:
+
 - rotate the head slightly toward the cursor
 - have the eyes follow the cursor using `lookAt()`
 - let the user drag to rotate the model
 - add hover scaling, idle motion, and a talking state
-Optimize for performance:
+  Optimize for performance:
 - lazy-load the model
 - cap DPR
 - dispose resources on unmount

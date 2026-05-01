@@ -5,6 +5,7 @@
 Every project MUST follow this unified documentation structure. No stray `.md` files allowed.
 
 **1. Directory Structure (MANDATORY):**
+
 ```
 /projectname/
 ├── docs/
@@ -17,11 +18,13 @@ Every project MUST follow this unified documentation structure. No stray `.md` f
 ```
 
 **2. DOCS.md (The Constitution):**
+
 - Must exist in project root.
 - Defines the documentation rules for that specific project.
 - Acts as the Table of Contents for `/docs/`.
 
 **3. README.md (The Gateway):**
+
 - Must use the **Document360 Standard**:
   1. **Introduction:** What/Who/Why.
   2. **Quick Start:** 5-min Copy-Paste Setup.
@@ -31,6 +34,7 @@ Every project MUST follow this unified documentation structure. No stray `.md` f
   6. **Changelog & Support:** History & Contact.
 
 **4. Postman/Hoppscotch Mandate:**
+
 - API development requires a maintained collection in `/docs/postman/`.
 - Use Hoppscotch (Room 24) as the standard tool.
 

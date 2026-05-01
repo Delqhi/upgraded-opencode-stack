@@ -74,27 +74,32 @@ Qwen OAuth (via `opencode-qwen-auth` plugin) provides free daily quota (~1000 re
 ### Quick Setup (for members)
 
 1. **Ensure plugin is installed** (the installer does this automatically):
+
    ```bash
    opencode providers list | grep qwen
    # Should show: qwen (oauth) with 0 credentials initially
    ```
 
 2. **Add your Qwen account**:
+
    ```bash
    opencode /connect
    ```
+
    - Select **Provider:** `qwen`
    - Select **Method:** `Qwen OAuth`
    - Follow device flow: open https://chat.qwen.ai/ ... enter device code
    - Complete authorization
 
 3. **Verify account added**:
+
    ```bash
    opencode providers list | grep qwen -A5
    # Should show: X credentials
    ```
 
 4. **Select Qwen model**:
+
    ```
    /model qwen/coder-model
    ```
@@ -104,11 +109,13 @@ Qwen OAuth (via `opencode-qwen-auth` plugin) provides free daily quota (~1000 re
 ### Managing Multiple Accounts
 
 Add more accounts by repeating `/connect`. The plugin supports:
+
 - **Hybrid rotation** (default): Smart selection based on health scores, token bucket, and LRU freshness
 - **Round-robin**: `qwen.json: {"rotation_strategy": "round-robin"}`
 - **Sequential**: Uses one account until rate limited, then switches
 
 **Configuration file** (`.opencode/qwen.json` or `~/.config/opencode/qwen.json`):
+
 ```json
 {
   "rotation_strategy": "hybrid",
@@ -121,6 +128,7 @@ Add more accounts by repeating `/connect`. The plugin supports:
 ### Troubleshooting
 
 **"Qwen not responding" / empty responses:**
+
 - Check quota exhaustion: `insufficient_quota` means free tier depleted (resets at UTC midnight)
 - Plugin now correctly treats quota errors as failures (BUG-QWEN-003 fixed)
 - If you added a new account via `/connect` but it's not visible to the plugin, run:
@@ -129,11 +137,13 @@ Add more accounts by repeating `/connect`. The plugin supports:
   ```
 
 **View active account:**
+
 ```bash
 cat ~/.config/opencode/qwen-auth-accounts.json | grep email
 ```
 
 **Reset plugin state:**
+
 ```bash
 rm ~/.config/opencode/qwen-auth-accounts.json
 # Then re-add accounts via /connect
@@ -144,35 +154,37 @@ For full documentation, see the plugin README:
 
 ---
 
-
 ## Features
 
-| Capability | Description | Status |
-|:---|:---|:---:|
-| **Global-Brain (DPMA v4)** | Multi-Project Memory — Agenten vergessen nie wieder was sie gelernt haben | ✅ |
-| **Local-Brain / GraphRAG** | Projekt-basiertes Plan-Gedächtnis mit Auto-Invalidation | ✅ |
-| **OMOC Swarm** | 5-Agenten-Schwarm (Atlas, Hephaestus, Metis, Momus, Prometheus) | ✅ |
-| **SIN-Zeus Fleet Commander** | GitHub Projects, Issues, Branches + Hermes Dispatch | ✅ |
-| **44 Skills** | A2A Agent Builder, Deploy, Debug, Browser Automation, Image/Video Gen | ✅ |
-| **4 Plugins** | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework | ✅ |
-| **27 MCP Servers** | sin-telegrambot, sin-google-apps, sin-terminal, webauto-nodriver, ... | ✅ |
-| **12 Custom Commands** | Swarm orchestration, Terminal orchestration, Zeus bootstrap | ✅ |
-| **5 Provider** | NVIDIA NIM, OpenAI, Modal (GLM-5.1) | ✅ |
-| **sin-sync Fleet Sync** | Mac → OCI VM → HF VM — identische Configs überall | ✅ |
-| **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start | ✅ |
-| **Box.com Storage** | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale) | ✅ |
+| Capability                   | Description                                                               | Status |
+| :--------------------------- | :------------------------------------------------------------------------ | :----: |
+| **Global-Brain (DPMA v4)**   | Multi-Project Memory — Agenten vergessen nie wieder was sie gelernt haben |   ✅   |
+| **Local-Brain / GraphRAG**   | Projekt-basiertes Plan-Gedächtnis mit Auto-Invalidation                   |   ✅   |
+| **OMOC Swarm**               | 5-Agenten-Schwarm (Atlas, Hephaestus, Metis, Momus, Prometheus)           |   ✅   |
+| **SIN-Zeus Fleet Commander** | GitHub Projects, Issues, Branches + Hermes Dispatch                       |   ✅   |
+| **44 Skills**                | A2A Agent Builder, Deploy, Debug, Browser Automation, Image/Video Gen     |   ✅   |
+| **4 Plugins**                | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework            |   ✅   |
+| **27 MCP Servers**           | sin-telegrambot, sin-google-apps, sin-terminal, skylight-cli, ...     |   ✅   |
+| **12 Custom Commands**       | Swarm orchestration, Terminal orchestration, Zeus bootstrap               |   ✅   |
+| **5 Provider**               | NVIDIA NIM, OpenAI, Modal (GLM-5.1)                                       |   ✅   |
+| **sin-sync Fleet Sync**      | Mac → OCI VM → HF VM — identische Configs überall                         |   ✅   |
+| **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start          |   ✅   |
+| **Box.com Storage**          | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale)  |   ✅   |
 
 <details>
 <summary>Full Tool Surface — Alle Komponenten im Detail</summary>
 
 ### Skills (45)
+
 `anonymous`, `awesome-opensin-design`, `browser-crashtest-lab`, `check-my-dev-in-web`, `check-plan-done`, `cloudflare-deploy`, `create-a2a`, `create-a2a-mcp`, `create-a2a-sin-agent`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `create-github-account`, `create-github-app`, `create-telegrambot`, `doc`, `enterprise-deep-debug`, `enterprise-parallel-exploration`, `gen-image`, `gen-thumb`, `gen-thumbnail`, `gen-veo`, `gitlab-storage`, `imagegen`, `new-google-login`, `nvidia-3d-forge`, `nvidia-video-forge`, `omoc-plan-swarm`, `opencode-subagent-delegation`, `pdf`, `plan`, `preview`, `self-healer`, `seo-import`, `sin-bridge`, `sin-vision-colab`, `sora`, `sovereign-repo-governance`, `sovereign-research`, `thumbnail-optimizer`, `undelete-login-google`, `video-check`, `vercel-deploy`, `visual-repo`
 
 ### Plugins (3)
+
 `oh-my-opencode` (Framework), `opencode-openrouter-auth` (OpenRouter Proxy), `opencode-antigravity-auth` (Token Rotation)
 
 ### MCP Servers (27)
-`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `webauto-nodriver`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`, `video-check`
+
+`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `skylight-cli`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`, `video-check`
 
 </details>
 
@@ -251,81 +263,82 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 
 ## Skills
 
-| Skill | Zweck |
-|-------|-------|
-| `create-a2a` | A2A Agent erstellen |
-| `create-a2a-mcp` | A2A MCP Server erstellen |
-| `create-a2a-sin-coder` | A2A Coder Agent bootstrappen |
-| `create-a2a-team` | SIN A2A Team Manager erstellen |
-| `create-auth-plugin` | OpenCode Auth Plugin bauen |
-| `create-flow` | Interaktiver Flow Builder (SIN-InkogniFlow) |
-| `new-google-login` | Robustes Google-Login via Chrome-CDP |
-| `create-telegrambot` | Telegram Bot erstellen/deployen |
-| `cloudflare-deploy` | Cloudflare Deployment |
-| `vercel-deploy` | Vercel Deployment |
-| `sin-bridge` | OpenSIN Bridge Chrome Extension |
-| `enterprise-deep-debug` | Enterprise Debugging |
-| `sovereign-repo-governance` | Repo Governance |
-| `anonymous` | Browser Automation (webauto-nodriver-mcp) |
-| `imagegen` | Bild-Generierung via Gemini |
-| `nvidia-video-forge` | Video-Generierung via NVIDIA |
+| Skill                       | Zweck                                       |
+| --------------------------- | ------------------------------------------- |
+| `create-a2a`                | A2A Agent erstellen                         |
+| `create-a2a-mcp`            | A2A MCP Server erstellen                    |
+| `create-a2a-sin-coder`      | A2A Coder Agent bootstrappen                |
+| `create-a2a-team`           | SIN A2A Team Manager erstellen              |
+| `create-auth-plugin`        | OpenCode Auth Plugin bauen                  |
+| `create-flow`               | Interaktiver Flow Builder (SIN-InkogniFlow) |
+| `new-google-login`          | Robustes Google-Login via Chrome-CDP        |
+| `create-telegrambot`        | Telegram Bot erstellen/deployen             |
+| `cloudflare-deploy`         | Cloudflare Deployment                       |
+| `vercel-deploy`             | Vercel Deployment                           |
+| `sin-bridge`                | OpenSIN Bridge Chrome Extension             |
+| `enterprise-deep-debug`     | Enterprise Debugging                        |
+| `sovereign-repo-governance` | Repo Governance                             |
+| `anonymous`                 | Browser Automation (skylight-cli-mcp)   |
+| `imagegen`                  | Bild-Generierung via Gemini                 |
+| `nvidia-video-forge`        | Video-Generierung via NVIDIA                |
 
-*Vollständige Liste: 44 Skills verfügbar*
+_Vollständige Liste: 44 Skills verfügbar_
 
 ---
 
 ## Commands
 
-| Command | Zweck |
-|---------|-------|
-| `omoc-jam` | Collaborative Swarm Jam |
-| `omoc-max` | OMOC MAX best-of-n |
-| `omoc-status` | Swarm Members anzeigen |
+| Command                    | Zweck                                     |
+| -------------------------- | ----------------------------------------- |
+| `omoc-jam`                 | Collaborative Swarm Jam                   |
+| `omoc-max`                 | OMOC MAX best-of-n                        |
+| `omoc-status`              | Swarm Members anzeigen                    |
 | `sin-terminal-orchestrate` | SIN-Terminal — parallele Sessions steuern |
-| `sin-zeus-bootstrap` | GitHub Project + Issue Pool aus Zeus Plan |
+| `sin-zeus-bootstrap`       | GitHub Project + Issue Pool aus Zeus Plan |
 
 <details>
 <summary>Alle 13 Commands</summary>
 
-| Command | Zweck |
-|---------|-------|
-| `omoc-swarm-create` | Swarm erstellen/registrieren |
-| `omoc-swarm-discover` | Swarm aus Session-Titeln entdecken |
-| `omoc-jam` | Collaborative Swarm Jam |
-| `omoc-max` | OMOC MAX best-of-n |
-| `omoc-status` | Swarm Members anzeigen |
-| `omoc-autostart` | Auto-bind Swarm + JAM Guidance |
-| `sin-terminal-orchestrate` | SIN-Terminal — parallele Sessions steuern |
-| `sin-terminal-orchestrate-status` | Terminal Orchestration Status |
-| `sin-terminal-orchestrate-delegate` | Follow-up Prompt delegieren |
-| `sin-terminal-orchestrate-stop` | Alle Sessions stoppen |
-| `sin-zeus-bootstrap` | GitHub Project + Issue Pool aus Zeus Plan |
-| `sin-zeus-hermes` | Hermes Dispatch Payloads generieren |
-| `sin-zeus-status` | Zeus Control-Plane Status |
+| Command                             | Zweck                                     |
+| ----------------------------------- | ----------------------------------------- |
+| `omoc-swarm-create`                 | Swarm erstellen/registrieren              |
+| `omoc-swarm-discover`               | Swarm aus Session-Titeln entdecken        |
+| `omoc-jam`                          | Collaborative Swarm Jam                   |
+| `omoc-max`                          | OMOC MAX best-of-n                        |
+| `omoc-status`                       | Swarm Members anzeigen                    |
+| `omoc-autostart`                    | Auto-bind Swarm + JAM Guidance            |
+| `sin-terminal-orchestrate`          | SIN-Terminal — parallele Sessions steuern |
+| `sin-terminal-orchestrate-status`   | Terminal Orchestration Status             |
+| `sin-terminal-orchestrate-delegate` | Follow-up Prompt delegieren               |
+| `sin-terminal-orchestrate-stop`     | Alle Sessions stoppen                     |
+| `sin-zeus-bootstrap`                | GitHub Project + Issue Pool aus Zeus Plan |
+| `sin-zeus-hermes`                   | Hermes Dispatch Payloads generieren       |
+| `sin-zeus-status`                   | Zeus Control-Plane Status                 |
 
 </details>
 
 ---
 
 ## Providers
-| Provider | Modelle |
-|----------|---------|
+
+| Provider                 | Modelle                                                                                                                             |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | **google** (Antigravity) | `antigravity-claude-sonnet-4-6`, `antigravity-claude-opus-4-6-thinking`, `antigravity-gemini-3.1-pro`, `antigravity-gemini-3-flash` |
-| **openai** | `gpt-5.4`, `gpt-5.4-mini` via OCI Proxy (92.5.60.87:4100) |
-| **openrouter** | Qwen 3.6 Plus, DeepSeek V3/R1, Gemini 2.5 Flash, Llama 4 Maverick, Phi-4 (free) |
-| **qwen** | `qwen/coder-model` — Qwen 3.6 Plus (OAuth, 2000/day free) |
-| **modal** | `glm-5.1-fp8` — GLM 5.1 FP8 (via OCI Token Pool) |
+| **openai**               | `gpt-5.4`, `gpt-5.4-mini` via OCI Proxy (92.5.60.87:4100)                                                                           |
+| **openrouter**           | Qwen 3.6 Plus, DeepSeek V3/R1, Gemini 2.5 Flash, Llama 4 Maverick, Phi-4 (free)                                                     |
+| **qwen**                 | `qwen/coder-model` — Qwen 3.6 Plus (OAuth, 2000/day free)                                                                           |
+| **modal**                | `glm-5.1-fp8` — GLM 5.1 FP8 (via OCI Token Pool)                                                                                    |
 
 ---
 
 ## Deploy
 
-| Methode | Kommando | Zweck |
-|:---|:---|:---|
-| **Local** | `./install.sh` | Mac Setup — 1:1 Kopie des Setups |
-| **OCI VM** | `sin-sync` | Config Sync Mac → OCI VM (92.5.60.87) |
-| **HF VM** | `sin-sync` | Config Sync Mac → HF Spaces |
-| **Lightning AI** | `sin-sync` | Config Sync Mac → Lightning AI VM |
+| Methode          | Kommando       | Zweck                                 |
+| :--------------- | :------------- | :------------------------------------ |
+| **Local**        | `./install.sh` | Mac Setup — 1:1 Kopie des Setups      |
+| **OCI VM**       | `sin-sync`     | Config Sync Mac → OCI VM (92.5.60.87) |
+| **HF VM**        | `sin-sync`     | Config Sync Mac → HF Spaces           |
+| **Lightning AI** | `sin-sync`     | Config Sync Mac → Lightning AI VM     |
 
 > [!IMPORTANT]
 > `sin-sync` muss nach JEDER Aenderung an `opencode.json` ausgefuehrt werden. Auth-Dateien werden automatisch ausgeschlossen.
@@ -333,19 +346,19 @@ For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/o
 <details>
 <summary>Environment Variables</summary>
 
-| Variable | Purpose | Required |
-|:---|:---|:---:|
-| `NVIDIA_API_KEY` | NVIDIA NIM | ✅ |
-| `GOOGLE_API_KEY` | Gemini Direct API | ✅ |
-| `OPENROUTER_API_KEY` | OpenRouter | ✅ |
-| `OPENAI_API_KEY` | OpenAI (via Proxy) | ✅ |
-| `TELEGRAM_BOT_TOKEN` | sin-telegrambot | |
-| `N8N_BASE_URL` | n8n URL | |
-| `N8N_API_KEY` | n8n API Key | |
-| `OCI_VM_HOST` | OCI VM Host | |
-| `OCI_VM_USER` | OCI VM User | |
-| `SUPABASE_URL` | Supabase | |
-| `SUPABASE_KEY` | Supabase Key | |
+| Variable             | Purpose            | Required |
+| :------------------- | :----------------- | :------: |
+| `NVIDIA_API_KEY`     | NVIDIA NIM         |    ✅    |
+| `GOOGLE_API_KEY`     | Gemini Direct API  |    ✅    |
+| `OPENROUTER_API_KEY` | OpenRouter         |    ✅    |
+| `OPENAI_API_KEY`     | OpenAI (via Proxy) |    ✅    |
+| `TELEGRAM_BOT_TOKEN` | sin-telegrambot    |          |
+| `N8N_BASE_URL`       | n8n URL            |          |
+| `N8N_API_KEY`        | n8n API Key        |          |
+| `OCI_VM_HOST`        | OCI VM Host        |          |
+| `OCI_VM_USER`        | OCI VM User        |          |
+| `SUPABASE_URL`       | Supabase           |          |
+| `SUPABASE_KEY`       | Supabase Key       |          |
 
 </details>
 
@@ -392,15 +405,15 @@ upgraded-opencode-stack/
 
 Dieses Repo verwaltet **7 Konfigurationsdateien** fuer die gesamte A2A-Flotte:
 
-| Datei | Zweck | Inhalt |
-|:---|:---|:---|
-| `opencode.json` | **Haupt-Config** — Provider, Modelle, MCPs, Agenten, Commands | Deine sichtbaren Agenten (SIN-Zeus, Sisyphus, etc.) |
-| `oh-my-sin.json` | **Zentrales Team Register** — alle A2A Teams klassifiziert | Team-Manager, Config-Dateien, Default-Modelle |
-| `oh-my-openagent.json` | **Subagenten-Modelle** — interne Agenten bei Delegation | explore, librarian, oracle, etc. + Fallback-Ketten |
-| `oh-my-opencode.json` | Identisch mit oh-my-openagent.json (auto-gesynced) | Wird vom OHO Plugin gelesen |
-| `my-sin-team-code.json` | **Team Coding** — Entwickler-Flotte | Zeus, Simone, Frontend, Backend, Fullstack |
-| `my-sin-team-worker.json` | **Team Worker** — autonome Worker | Prolific, Freelancer, Survey |
-| `my-sin-team-infrastructure.json` | **Team Infra** — DevOps-Flotte | Deploy, Monitoring, Security |
+| Datei                             | Zweck                                                         | Inhalt                                              |
+| :-------------------------------- | :------------------------------------------------------------ | :-------------------------------------------------- |
+| `opencode.json`                   | **Haupt-Config** — Provider, Modelle, MCPs, Agenten, Commands | Deine sichtbaren Agenten (SIN-Zeus, Sisyphus, etc.) |
+| `oh-my-sin.json`                  | **Zentrales Team Register** — alle A2A Teams klassifiziert    | Team-Manager, Config-Dateien, Default-Modelle       |
+| `oh-my-openagent.json`            | **Subagenten-Modelle** — interne Agenten bei Delegation       | explore, librarian, oracle, etc. + Fallback-Ketten  |
+| `oh-my-opencode.json`             | Identisch mit oh-my-openagent.json (auto-gesynced)            | Wird vom OHO Plugin gelesen                         |
+| `my-sin-team-code.json`           | **Team Coding** — Entwickler-Flotte                           | Zeus, Simone, Frontend, Backend, Fullstack          |
+| `my-sin-team-worker.json`         | **Team Worker** — autonome Worker                             | Prolific, Freelancer, Survey                        |
+| `my-sin-team-infrastructure.json` | **Team Infra** — DevOps-Flotte                                | Deploy, Monitoring, Security                        |
 
 ### Team-Register Architektur
 
@@ -412,6 +425,7 @@ oh-my-sin.json (Zentrales Register)
 ```
 
 Jede Team-Config definiert:
+
 - **Agenten** mit spezifischen Modellen und Fallback-Ketten
 - **Kategorien** fuer Task-spezifische Modell-Auswahl
 - **Rollen** und Beschreibungen pro Agent
@@ -434,11 +448,13 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 ## Changelog
 
 ### v2.2.2 (2026-04-16)
+
 - **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification
 - **Token-Refresh-Service Safety** — `com.antigravity.Token-Refresh-Service.plist` kept non-autostarting on purpose; no automatic trigger path
 - **Docs Sync** — README + system-directives guide aligned with the current global watcher runtime
 
 ### v2.2.1 (2026-04-14)
+
 - **Box.com Storage** — Replaced deprecated GitLab LogCenter with A2A-SIN-Box-Storage service
 - Updated storage default globally in AGENTS.md (Box Storage Mandate)
 - Added `box_storage.py` compatibility layer, deprecated `gitlab_logcenter.py`
@@ -446,12 +462,14 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 - All agents must migrate to Box Storage API before 2026-05-01
 
 ### v2.2.0 (2026-04-14)
+
 - **Step 3.5 Flash** — explore/librarian nutzen jetzt nvidia-nim/stepfun-ai/step-3.5-flash
 - **PARALLEL-EXPLORATION MANDATE** — 5-10 parallele explores fuer grosse Codebases
 - **Full Fallback Chains** — restored fuer explore/librarian (6 Modelle pro Agent)
 - **Providers aktualisiert** — glm-5.1-fp8, gpt-5.4-mini, qwen-3.5-flash, Lightning AI VM
 
 ### v2.1.0 (2026-04-14)
+
 - Enterprise Visual README overhaul (badges, diagrams, llms.txt)
 - GitLab Storage skill added (infinite storage via auto-rotating repos) - NOW DEPRECATED
 - OCI VM architecture documented
@@ -460,10 +478,12 @@ Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Detail
 - reasoningEffort removed from all Qwen agents (not supported)
 
 ### v2.0.0 (2026-04-12)
+
 - Qwen OAuth plugin fully fixed and integrated
 - Global-Brain DPMA v4 hooks installed
 
 ### v1.0.0 (2026-04-11)
+
 - Initial release
 - 29 Skills, 5 Plugins, 21 Agents, 11 CLI Tools
 

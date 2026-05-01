@@ -46,22 +46,26 @@
 ## Marktanalyse: [Projektname] - [YYYY-MM-DD]
 
 ### Konkurrenz
+
 | Konkurrent | Stärken | Schwächen | Unser Vorteil |
-|------------|---------|-----------|---------------|
-| [Name] | [...] | [...] | [...] |
+| ---------- | ------- | --------- | ------------- |
+| [Name]     | [...]   | [...]     | [...]         |
 
 ### Unsere Position
+
 - Feature-Set: [🥇🥈🥉]
 - Performance: [🥇🥈🥉]
 - UX/UI: [🥇🥈🥉]
 - Innovation: [🥇🥈🥉]
 
 ### Verbesserungspotenzial
+
 1. [Bereich mit höchster Priorität]
 2. [Bereich mit mittlerer Priorität]
 3. [Nice-to-have Verbesserungen]
 
 ### Nächste Schritte
+
 - [ ] [Aktion 1]
 - [ ] [Aktion 2]
 ```

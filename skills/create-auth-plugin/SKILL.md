@@ -10,6 +10,7 @@ Comprehensive skill for building OpenCode authentication plugins that enable `op
 ## Architecture Overview
 
 OpenCode auth plugins are npm-style packages that provide:
+
 1. **Auth hooks** — login flow (OAuth PKCE, Device Flow, API key)
 2. **Config hooks** — register provider + models dynamically
 3. **Loader hooks** — inject credentials into API requests at runtime
@@ -70,11 +71,13 @@ cp -R ~/.config/opencode/local-plugins/opencode-<name>-auth \
 The plugin MUST export an async function that receives input and returns an object with `auth` and `config` properties. Study these working patterns:
 
 **index.ts (re-export file):**
+
 ```typescript
 export { MyProviderAuthPlugin, default } from "./src/index";
 ```
 
 **src/index.ts (main plugin):**
+
 ```typescript
 export const MyProviderAuthPlugin = async (_input: unknown) => {
   return {
@@ -111,6 +114,7 @@ export default MyProviderAuthPlugin;
 ```
 
 **Critical fields:**
+
 - `"module": "index.ts"` — Bun uses this to find the entry point
 - `"type": "module"` — Required for ESM imports
 - Name convention: `opencode-<provider>-auth`
@@ -153,6 +157,7 @@ loader: async (
 Defines login flows shown in `opencode auth login --provider <name>`.
 
 **OAuth PKCE (browser redirect):**
+
 ```typescript
 methods: [{
   type: 'oauth' as const,
@@ -175,6 +180,7 @@ methods: [{
 ```
 
 **Device Flow (code display + polling):**
+
 ```typescript
 methods: [{
   type: 'oauth' as const,
@@ -236,9 +242,24 @@ OpenCode stores auth in `~/.local/share/opencode/auth.json`:
 
 ```json
 {
-  "google": { "type": "oauth", "access": "...", "refresh": "...", "expires": 1234567890 },
-  "qwen-code": { "type": "oauth", "access": "...", "refresh": "...", "expires": 1234567890 },
-  "openrouter": { "type": "oauth", "access": "...", "refresh": "...", "expires": 1234567890 }
+  "google": {
+    "type": "oauth",
+    "access": "...",
+    "refresh": "...",
+    "expires": 1234567890
+  },
+  "qwen-code": {
+    "type": "oauth",
+    "access": "...",
+    "refresh": "...",
+    "expires": 1234567890
+  },
+  "openrouter": {
+    "type": "oauth",
+    "access": "...",
+    "refresh": "...",
+    "expires": 1234567890
+  }
 }
 ```
 
@@ -261,6 +282,7 @@ To enable automatic token swap on rate limit (like Antigravity/Qwen):
 ```
 
 **pool.json format:**
+
 ```json
 {
   "current_index": 0,
@@ -279,6 +301,7 @@ To enable automatic token swap on rate limit (like Antigravity/Qwen):
 ### 2. Swap Script Pattern
 
 The swap script must atomically update BOTH:
+
 - `~/.local/share/opencode/auth.json` → provider entry
 - Provider-specific creds file (if any, e.g., `~/.qwen/oauth_creds.json`)
 
@@ -438,32 +461,32 @@ mkdir -p ~/.open-auth-Token-Refresh-Service/${PROVIDER}
 
 ## Debugging Checklist
 
-| Symptom | Cause | Fix |
-|---------|-------|-----|
-| Plugin loads but auth not available | Using `file://` path instead of npm name | Inject into `~/.cache/opencode/node_modules/` and use npm-style name |
-| `404 Not Found` on npm registry | Plugin not published to npm | Expected warning — cache fallback works if plugin is in node_modules |
-| `Plugin export is not a function` | Wrong export pattern | Must export async function as default, not an object |
-| Provider not found in auth login | Plugin's `config` hook not registering provider | Check `config` hook sets `providers[PROVIDER_ID]` correctly |
-| Token swap doesn't take effect | Not updating auth.json atomically | Use `os.replace()` pattern (atomic on POSIX) |
-| Session restart required after swap | auth.json key doesn't match provider ID | Provider ID in plugin must match key in auth.json |
-| `bun add` fails with 404 | Plugin not on npm | Add `cachedVersion` entry to `~/.cache/opencode/package.json` |
+| Symptom                             | Cause                                           | Fix                                                                  |
+| ----------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------- |
+| Plugin loads but auth not available | Using `file://` path instead of npm name        | Inject into `~/.cache/opencode/node_modules/` and use npm-style name |
+| `404 Not Found` on npm registry     | Plugin not published to npm                     | Expected warning — cache fallback works if plugin is in node_modules |
+| `Plugin export is not a function`   | Wrong export pattern                            | Must export async function as default, not an object                 |
+| Provider not found in auth login    | Plugin's `config` hook not registering provider | Check `config` hook sets `providers[PROVIDER_ID]` correctly          |
+| Token swap doesn't take effect      | Not updating auth.json atomically               | Use `os.replace()` pattern (atomic on POSIX)                         |
+| Session restart required after swap | auth.json key doesn't match provider ID         | Provider ID in plugin must match key in auth.json                    |
+| `bun add` fails with 404            | Plugin not on npm                               | Add `cachedVersion` entry to `~/.cache/opencode/package.json`        |
 
 ## Reference: Working Plugin Locations
 
-| Plugin | Cache Path | Provider ID | Auth Type |
-|--------|-----------|-------------|-----------|
-| Antigravity | `~/.cache/opencode/node_modules/opencode-antigravity-auth/` | `google` | OAuth (Google) |
-| Qwen | `~/.cache/opencode/node_modules/opencode-qwen-proxy/` | `qwen-code` | Device Flow (Enhanced) |
-| OpenRouter | `~/.cache/opencode/node_modules/opencode-openrouter-auth/` | `openrouter` | OAuth PKCE |
+| Plugin      | Cache Path                                                  | Provider ID  | Auth Type              |
+| ----------- | ----------------------------------------------------------- | ------------ | ---------------------- |
+| Antigravity | `~/.cache/opencode/node_modules/opencode-antigravity-auth/` | `google`     | OAuth (Google)         |
+| Qwen        | `~/.cache/opencode/node_modules/opencode-qwen-proxy/`       | `qwen-code`  | Device Flow (Enhanced) |
+| OpenRouter  | `~/.cache/opencode/node_modules/opencode-openrouter-auth/`  | `openrouter` | OAuth PKCE             |
 
 ## Reference: SDK Compatibility
 
-| Provider API Style | `npm` field in config | Notes |
-|--------------------|-----------------------|-------|
-| OpenAI-compatible | `@ai-sdk/openai-compatible` | Most providers (OpenRouter, DeepSeek, Mistral, Together, etc.) |
-| Anthropic-compatible | `@ai-sdk/anthropic` | Direct Anthropic API |
-| Google Generative AI | `@ai-sdk/google` | Gemini models |
-| Custom | `@ai-sdk/openai-compatible` | Set `baseURL` in options |
+| Provider API Style   | `npm` field in config       | Notes                                                          |
+| -------------------- | --------------------------- | -------------------------------------------------------------- |
+| OpenAI-compatible    | `@ai-sdk/openai-compatible` | Most providers (OpenRouter, DeepSeek, Mistral, Together, etc.) |
+| Anthropic-compatible | `@ai-sdk/anthropic`         | Direct Anthropic API                                           |
+| Google Generative AI | `@ai-sdk/google`            | Gemini models                                                  |
+| Custom               | `@ai-sdk/openai-compatible` | Set `baseURL` in options                                       |
 
 ## Anti-Patterns (NEVER DO)
 

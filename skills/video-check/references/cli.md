@@ -1,6 +1,7 @@
 # video-check CLI
 
 ## Requirements
+
 - Node.js 18+
 - `ffmpeg`
 - `NVIDIA_API_KEY`
@@ -18,6 +19,7 @@ Custom prompt:
 ```
 
 ## Notes
+
 - The command samples up to 8 scene-change keyframes.
 - Model: `nvidia/meta/llama-3.2-11b-vision-instruct`
 - Output is intentionally short and structured.

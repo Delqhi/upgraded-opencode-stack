@@ -23,6 +23,7 @@
 ## Message pattern
 
 Every Codex message should include:
+
 1. Intent
 2. Current context references (bundle or delta)
 3. Codex Intervention Block

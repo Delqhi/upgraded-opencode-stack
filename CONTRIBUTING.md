@@ -23,19 +23,23 @@ cd upgraded-opencode-stack
 > After any change to `opencode.json`, you MUST run `sin-sync` to sync across all machines.
 
 ## Code Style
+
 - Shell scripts: Follow shellcheck guidelines
 - Python scripts: PEP 8 compliant
 - JSON configs: Valid JSON with 2-space indentation
 - Add comments explaining complex logic
 
 ## Reporting Bugs
+
 Please use [GitHub Issues](https://github.com/Delqhi/upgraded-opencode-stack/issues) with:
+
 - Clear description
 - Steps to reproduce
 - Expected vs actual behavior
 - Environment details (OS, OpenCode version, etc.)
 
 ## Pull Request Checklist
+
 - [ ] Installer runs without errors (`./install.sh`)
 - [ ] All new files have appropriate comments
 - [ ] Documentation updated if needed

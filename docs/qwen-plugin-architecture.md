@@ -17,6 +17,7 @@
 **Lesson Learned (2026-04-15):** Qwen verwendet **Refresh Token Rotation** — bei jedem erfolgreichen Refresh gibt Qwen einen NEUEN Refresh Token zurück und der ALTE wird sofort ungültig. Wenn ein Python-Skript die Datei überschreibt, während das Plugin den Token gerade rotiert hat, geht der NEUE Token verloren und der ALTE ist bereits gesperrt → **Account ist tot!**
 
 **Regeln:**
+
 1. **NIEMALS** `qwen-auth-accounts.json` mit Python/externen Skripten überschreiben, während OpenCode läuft
 2. **NUR** `/connect` in OpenCode verwenden, um neue Accounts hinzuzufügen
 3. **NUR** manuelle Edits, wenn OpenCode GESTOPPT ist
@@ -31,6 +32,7 @@
 **Lösung:** Nach JEDEM `/connect` MUSS das `email`-Feld manuell in `qwen-auth-accounts.json` gesetzt werden!
 
 **Schritt-für-Schritt:**
+
 1. `/connect` in OpenCode ausführen → neuen Account hinzufügen
 2. OpenCode STOPPEN
 3. `qwen-auth-accounts.json` öffnen
@@ -167,21 +169,24 @@ opencode CLI startet
 ```javascript
 // PATCH V2: Erweiterte Filterung
 function normalizeStorage(storage) {
-    const MAX_CONSECUTIVE_FAILURES = 20;
-    const now = Date.now();
-    const accounts = storage.accounts.filter((account) => {
-        if (!account?.refreshToken) return false;
-        if ((account.health?.consecutiveFailures ?? 0) > MAX_CONSECUTIVE_FAILURES) return false;
-        const hasExpiredToken = !account.accessToken && (!account.expires || account.expires < now);
-        const hasHighFailures = (account.health?.failureCount ?? 0) > 50;
-        if (hasExpiredToken && hasHighFailures) return false;
-        return true;
-    });
-    // ... rest
+  const MAX_CONSECUTIVE_FAILURES = 20;
+  const now = Date.now();
+  const accounts = storage.accounts.filter((account) => {
+    if (!account?.refreshToken) return false;
+    if ((account.health?.consecutiveFailures ?? 0) > MAX_CONSECUTIVE_FAILURES)
+      return false;
+    const hasExpiredToken =
+      !account.accessToken && (!account.expires || account.expires < now);
+    const hasHighFailures = (account.health?.failureCount ?? 0) > 50;
+    if (hasExpiredToken && hasHighFailures) return false;
+    return true;
+  });
+  // ... rest
 }
 ```
 
 **Warum V2 statt V1:**
+
 - V1 filterte nur `consecutiveFailures > 20` — aber Accounts mit `consecutiveFailures=0` und totem Refresh Token wurden nicht gefiltert
 - V2 filtert zusätzlich: Accounts ohne AccessToken UND mit >50 totalen Fehlern → die sind mit Sicherheit tot (expired refresh token)
 - Grace Period: Ein Account ohne AccessToken aber mit wenigen Fehlern bekommt eine Chance (vielleicht war es nur ein temporärer Netzwerkfehler)
@@ -197,23 +202,27 @@ function normalizeStorage(storage) {
 ### `saveAccounts(storage)` — Atomic Write
 
 **Ablauf:**
+
 1. File-Lock via `proper-lockfile` (Stale: 10s, 5 Retries)
 2. Existierende Datei laden via `loadAccounts()`
 3. Merge: `mergeAccounts(existing, storage)`
 4. Atomic Write: `.tmp` → `rename()` → `chmod(0o600)`
 
 **WICHTIG:** `saveAccounts()` ruft IMMER `mergeAccounts()` auf! Das bedeutet:
+
 - Selbst wenn wir die JSON-Datei manuell bereinigen, wird beim nächsten `saveAccounts()` der existierende State gelesen und gemerged
 - **ABER:** Da `normalizeStorage()` am Ende aufgerufen wird, werden tote Accounts nach dem Merge automatisch herausgefiltert (nach unserem Patch)
 
 ### `selectAccount(storage, strategy, now, options)` — Account-Auswahl
 
 **Strategien:**
+
 - `"hybrid"` (Default): Kombiniert Health-Score und Token-Verbrauch. Nutzt `selectHybridAccount()` mit `pidOffset` für Multi-Process-Verteilung.
 - `"round-robin"`: Startet beim nächsten Account nach `activeIndex`.
 - `"sequential"`: Nimmt den aktuellen `activeIndex`.
 
 **Hybrid-Algorithmus:** Bewertet jeden Account nach:
+
 1. `healthScore` (Erfolgsrate minus Strafe für consecutive failures)
 2. `tokens` (Token-Verbrauchs-Zähler)
 3. `isRateLimited` (ob rateLimitResetAt in der Zukunft liegt)
@@ -222,16 +231,18 @@ function normalizeStorage(storage) {
 ### Health-Tracking
 
 **Pro Account:**
+
 - `successCount`: Anzahl erfolgreicher API-Calls
 - `failureCount`: Anzahl fehlgeschlagener API-Calls
 - `consecutiveFailures`: Aufeinanderfolgende Fehler (wird bei Erfolg auf 0 zurückgesetzt)
 - `lastSuccess` / `lastFailure`: Timestamps
 
 **Health-Score Berechnung:**
+
 ```javascript
-successRate = successCount / (successCount + failureCount)
-recencyPenalty = min(consecutiveFailures * 0.15, 0.5)
-healthScore = max(0, successRate - recencyPenalty)
+successRate = successCount / (successCount + failureCount);
+recencyPenalty = min(consecutiveFailures * 0.15, 0.5);
+healthScore = max(0, successRate - recencyPenalty);
 ```
 
 ---
@@ -249,6 +260,7 @@ healthScore = max(0, successRate - recencyPenalty)
 > ⚠️ **DER PYTHON-CLEANUP SCRIPT IST NUR NOCH ALS NOTFALL-INTERNET BACKUP NÖTIG!** Mit dem V2 Patch in `normalizeStorage()` werden tote Accounts automatisch nach jedem `saveAccounts()` Aufruf entfernt. Der Patch filtert: (1) kein refreshToken, (2) consecutiveFailures > 20, (3) Zombie-Accounts (expired + failureCount > 50). Manueller Eingriff sollte nur nötig sein wenn der Patch aus Versehen deaktiviert wurde.
 
 **Manuelle Bereinigung (NUR NOCH NOTFALL):**
+
 ```python
 # NUR wenn normalizeStorage() Patch fehlt oder deaktiviert ist!
 import json, os, tempfile, shutil
@@ -290,6 +302,7 @@ shutil.move(tmp.name, p)
 **Ursache:** `description` ist kein gültiges Feld im MCP-Schema, und Command-Array muss einen Interpreter enthalten.
 
 **Lösung:**
+
 ```json
 // FALSCH:
 "command": ["/Users/jeremy/.local/bin/opensin-neural-bus-mcp"],
@@ -308,15 +321,16 @@ shutil.move(tmp.name, p)
 
 **Relevante Tabellen:**
 
-| Tabelle | Zweck |
-|---------|-------|
-| `account` | Speichert Email, URL, access_token, refresh_token, token_expiry |
-| `account_state` | Referenziert aktiven Account (active_account_id) |
-| `control_account` | Ähnlich wie account, aber mit `active`-Flag |
+| Tabelle           | Zweck                                                           |
+| ----------------- | --------------------------------------------------------------- |
+| `account`         | Speichert Email, URL, access_token, refresh_token, token_expiry |
+| `account_state`   | Referenziert aktiven Account (active_account_id)                |
+| `control_account` | Ähnlich wie account, aber mit `active`-Flag                     |
 
 **WICHTIG:** Die Qwen-Plugin-Accounts werden **NICHT** in `opencode.db` gespeichert! Sie liegen ausschließlich in `qwen-auth-accounts.json`. Die DB-Tabellen sind für andere Provider (Google/Antigravity, OpenAI etc.).
 
 **Verifizierung:**
+
 ```sql
 SELECT DISTINCT url FROM account;  -- Zeigt keine qwen.ai URLs
 SELECT COUNT(*) FROM account WHERE url LIKE '%qwen%';  -- = 0

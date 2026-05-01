@@ -1,9 +1,11 @@
 # Context Bundle Spec
 
 Bundle root:
+
 - `<project>/.opencode-context/bundles/<bundle_id>/`
 
 Required files:
+
 - `00_manifest.json`
 - `01_repo_tree.txt`
 - `02_file_inventory.jsonl`
@@ -22,30 +24,36 @@ Required files:
 - `30_fulltext/`
 
 Profile model:
+
 - `--profile auto|biometrics|generic` (default `auto`)
 - Profile detection and canonical stack are derived from files in the current project directory.
 - Never reference canonical docs from an external BIOMETRICS repo path.
 
 Coverage rules:
+
 - Every project source file from canonical scan (`git ls-files -co --exclude-standard` when available) must appear in `02_file_inventory.jsonl`.
 - Text/code files must have fulltext artifacts.
 - Binary files must include metadata (`size`, `sha256`, `mime`, classification).
 
 No-duplication rules:
+
 - Synthesis artifacts (`03`, `10_*`, `15`, `20`) may contain structured references only.
 - No copied canonical text blocks longer than 3 consecutive lines.
 - `22_no_duplication_audit.json` must report `status: ok`.
 
 Failure gate:
+
 - Missing required file, missing inventory entry, missing canonical structure, no-dup violation, or redaction violation => hard fail.
 
 Manifest required fields:
+
 - `profile`
 - `canonical_index_path`
 - `canonical_read_order_path`
 - `no_duplication_audit_path`
 
 Delta root:
+
 - `<project>/.opencode-context/delta/<timestamp>/`
 - Includes:
   - `00_delta_manifest.json`

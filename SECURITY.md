@@ -2,10 +2,10 @@
 
 ## Supported Versions
 
-| Version | Supported |
-|:---|:---|
-| main (latest) | ✅ |
-| < main | ❌ |
+| Version       | Supported |
+| :------------ | :-------- |
+| main (latest) | ✅        |
+| < main        | ❌        |
 
 ## Reporting a Vulnerability
 
@@ -22,6 +22,7 @@ If you discover a security vulnerability, please:
 We will respond within 48 hours and work with you to resolve the issue.
 
 ## Security Best Practices
+
 - **NEVER** commit auth files (`auth.json`, `token.json`, `antigravity-accounts.json`)
 - **NEVER** commit API keys or secrets
 - Use environment variables for configuration
@@ -30,6 +31,7 @@ We will respond within 48 hours and work with you to resolve the issue.
 - The `sin-sync` script automatically excludes auth files from synchronization
 
 ## Excluded from Sync (Never Transmitted)
+
 - `auth.json`, `token.json` — API tokens
 - `antigravity-accounts.json` — OAuth accounts
 - `telegram_config.json` — Telegram bot config

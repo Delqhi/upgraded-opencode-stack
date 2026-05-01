@@ -7,7 +7,7 @@ Every error and its corresponding solution MUST NOT simply be noted in the proje
 1. **Absolute Path Logic:**
    - For project-specific issues: Create the ticket in `[PROJECT-ROOT]/troubleshooting/ts-ticket-[XX].md`
    - For infrastructure/workspace issues (OpenCode, Docker, Guides, Blueprint): Create the ticket in `/Users/jeremy/dev/sin-code/troubleshooting/ts-ticket-[XX].md`
-   - *Note:* If the directory `troubleshooting/` does not exist, it MUST be created at the root level
+   - _Note:_ If the directory `troubleshooting/` does not exist, it MUST be created at the root level
 
 2. **Ticket Naming:** Files MUST be named `ts-ticket-[XX].md` (e.g., `ts-ticket-01.md`), incrementing for each new ticket in that specific directory
 

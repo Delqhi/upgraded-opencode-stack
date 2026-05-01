@@ -3,6 +3,7 @@
 This file contains the command catalog for the bundled video generation CLI. Keep `SKILL.md` overview-first; put verbose CLI details here.
 
 ## What this CLI does
+
 - `create`: create a new video job (async)
 - `create-and-poll`: create a job, poll until complete, optionally download
 - `poll`: wait for an existing job to finish
@@ -16,6 +17,7 @@ This file contains the command catalog for the bundled video generation CLI. Kee
 Real API calls require **network access** + `OPENAI_API_KEY`. `--dry-run` does not.
 
 ## Quick start (works from any repo)
+
 Set a stable path to the skill CLI (default `OPENCODE_HOME` is `~/.config/opencode`):
 
 ```
@@ -125,12 +127,14 @@ uv run --with openai python "$SORA_CLI" download --id video_abc123 --variant spr
 ```
 
 ## Guardrails (important)
+
 - Use `python "$SORA_CLI" ...` (or equivalent full path) for all video work.
 - For API calls, prefer `uv run --with openai ...` to avoid missing SDK errors.
 - Do **not** create one-off runners unless the user explicitly asks.
 - **Never modify** `scripts/sora.py` unless the user asks.
 
 ## Defaults (unless overridden by flags)
+
 - Model: `sora-2`
 - Size: `1280x720`
 - Seconds: `4` (API expects a string enum: "4", "8", "12")
@@ -138,16 +142,19 @@ uv run --with openai python "$SORA_CLI" download --id video_abc123 --variant spr
 - Poll interval: `10` seconds
 
 ## JSON output (`--json-out`)
+
 - For `create`, `status`, `list`, `delete`, `poll`, and `remix`, `--json-out` writes the JSON response to a file.
 - For `create-and-poll`, `--json-out` writes a bundle: `{ "create": ..., "final": ... }`.
 - If the path has no extension, `.json` is added automatically.
 - In `--dry-run`, `--json-out` writes the request preview instead of a response.
 
 ## Input reference images
+
 - Must be jpg/png/webp; they should match the target size.
 - Provide the path with `--input-reference`.
 
 ## Optional deps
+
 Prefer `uv run --with ...` for an out-of-the-box run without changing the current project env; otherwise install into your active env:
 
 ```
@@ -155,17 +162,21 @@ uv pip install openai
 ```
 
 ## JSONL schema for `create-batch`
+
 Each line is a JSON object (or a raw prompt string). Required key: `prompt`.
 
 Top-level override keys:
+
 - `model`, `size`, `seconds`
 - `input_reference` (path)
 - `out` (optional output filename for the job JSON)
 
 Prompt augmentation keys (top-level or under `fields`):
+
 - `use_case`, `scene`, `subject`, `action`, `camera`, `style`, `lighting`, `palette`, `audio`, `dialogue`, `text`, `timing`, `constraints`, `negative`
 
 Notes:
+
 - `fields` merges into the prompt augmentation inputs.
 - Top-level keys override CLI defaults.
 - `seconds` must be one of: "4", "8", "12".
@@ -230,18 +241,21 @@ rm -f tmp/sora/prompts.jsonl
 ```
 
 Notes:
+
 - `create-batch` writes one JSON response per job under `--out-dir`.
 - Output names default to `NNN-<prompt-slug>.json`.
 - Use `--concurrency` to control parallelism (default `3`). Higher concurrency can hit rate limits.
 - Treat the JSONL file as temporary: write it under `tmp/` and delete it after the run (do not commit it). If `rm` is blocked in your sandbox, skip cleanup or truncate the file.
 
 ## CLI notes
+
 - Supported sizes depend on model (see `references/video-api.md`).
 - Seconds are limited to 4, 8, or 12.
 - Download URLs expire after about 1 hour; copy assets to your own storage.
 - In CI/sandboxes where long-running commands time out, prefer `create` + `poll` (or add `--timeout`).
 
 ## See also
+
 - API parameter quick reference: `references/video-api.md`
 - Prompt structure and examples: `references/prompting.md`
 - Sample prompts: `references/sample-prompts.md`

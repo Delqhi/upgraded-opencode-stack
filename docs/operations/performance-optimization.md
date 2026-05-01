@@ -2,12 +2,12 @@
 
 ## Model Selection Strategy
 
-| Task Type | Model | Avg Response |
-|:---|:---|:---|
-| Quick lookup | `nvidia-nim/stepfun-ai/step-3.5-flash` | ~0.5s |
-| Code generation | `google/antigravity-claude-sonnet-4-6` | ~2-5s |
-| Architecture | `google/antigravity-claude-opus-4-6-thinking` | ~10-30s |
-| Research | `google/antigravity-gemini-3.1-pro` | ~3-8s |
+| Task Type       | Model                                         | Avg Response |
+| :-------------- | :-------------------------------------------- | :----------- |
+| Quick lookup    | `nvidia-nim/stepfun-ai/step-3.5-flash`        | ~0.5s        |
+| Code generation | `google/antigravity-claude-sonnet-4-6`        | ~2-5s        |
+| Architecture    | `google/antigravity-claude-opus-4-6-thinking` | ~10-30s      |
+| Research        | `google/antigravity-gemini-3.1-pro`           | ~3-8s        |
 
 ## Parallel Exploration
 

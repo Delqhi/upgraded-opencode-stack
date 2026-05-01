@@ -1,4 +1,4 @@
-# 🤖 Qwen Code OAuth Plugin for OpenCode 
+# 🤖 Qwen Code OAuth Plugin for OpenCode
 
 > **改进版** - 在 [opencode-qwencode-auth](https://github.com/gustavodiasdev/opencode-qwencode-auth) 基础上添加了请求节流、429 处理、请求头对齐等增强功能
 
@@ -7,6 +7,7 @@
 ---
 
 ## ✨ 在您的 OpenCode 上使用 Qwen 最新最强的模型 Qwen3.5 Plus!
+
 ![alt text](726a626d29d2c09e13e97c1a974e89eb.jpg)
 ![alt text](4f5d83ebb1d715f68fa839bf856dd7b3.jpg)
 
@@ -56,12 +57,14 @@ opencode auth login
 ## ✨ 核心特性
 
 ### 基础功能
+
 - 🔐 **OAuth Device Flow** - 基于 RFC 8628 的标准认证流程
 - 🆓 **1000 次/天免费** - 无需 API Key，无需信用卡
 - 🔄 **自动 Token 刷新** - 过期前自动续期
 - 🔗 **凭证共享** - 与 Qwen Code CLI 共享 `~/.qwen/oauth_creds.json`
 
 ### 改进功能（本版本独有）
+
 - ⏱️ **请求节流** - 控制 1 秒/次，避免触发 60 次/分钟限制
 - 📡 **429 自动重试** - 遇到限流自动等待后重试
 - 🎲 **请求抖动** - 0.5-1.5s 随机延迟，避免固定模式
@@ -73,10 +76,10 @@ opencode auth login
 
 > **重要**：Qwen OAuth 仅支持 2 个模型，与 qwen-code CLI 完全对齐。
 
-| 模型 | 上下文 | 最大输出 | 说明 |
-|------|--------|---------|------|
-| `coder-model` | 1M tokens | 64K tokens | 代码模型（默认，推荐） |
-| `vision-model` | 128K tokens | 32K tokens | 视觉模型 |
+| 模型           | 上下文      | 最大输出   | 说明                   |
+| -------------- | ----------- | ---------- | ---------------------- |
+| `coder-model`  | 1M tokens   | 64K tokens | 代码模型（默认，推荐） |
+| `vision-model` | 128K tokens | 32K tokens | 视觉模型               |
 
 ### 使用示例
 
@@ -89,15 +92,14 @@ opencode --provider qwen-code --model vision-model
 ```
 
 > **注意**：![alt text](image.png)
-**根据qwen code描述,coder-model 模型就是最新发布的qwen 3.5 plus**
-
+> **根据qwen code描述,coder-model 模型就是最新发布的qwen 3.5 plus**
 
 ---
 
 ## 📊 使用限制
 
-| 计划 | 速率限制 | 每日限制 |
-|------|---------|---------|
+| 计划         | 速率限制   | 每日限制   |
+| ------------ | ---------- | ---------- |
 | Free (OAuth) | 60 次/分钟 | 1000 次/天 |
 
 > 限制于北京时间次日 0 点重置。如需更高限制，可使用 [DashScope API](https://dashscope.aliyun.com)。
@@ -145,11 +147,11 @@ opencode --provider qwen-code --model vision-model
 
 ### 插件的三个角色
 
-| 角色 | 函数 | 作用 |
-|------|------|------|
-| **认证提供者** | `loader` | 返回配置（apiKey + baseURL + fetch） |
-| **请求拦截器** | `fetch` | 拦截所有请求，添加 Headers + 节流 |
-| **OAuth 入口** | `methods` | 处理用户登录，获取 access token |
+| 角色           | 函数      | 作用                                 |
+| -------------- | --------- | ------------------------------------ |
+| **认证提供者** | `loader`  | 返回配置（apiKey + baseURL + fetch） |
+| **请求拦截器** | `fetch`   | 拦截所有请求，添加 Headers + 节流    |
+| **OAuth 入口** | `methods` | 处理用户登录，获取 access token      |
 
 ---
 
@@ -169,11 +171,11 @@ class RequestQueue {
   async enqueue<T>(fn: () => Promise<T>): Promise<T> {
     const elapsed = Date.now() - this.lastRequestTime;
     const waitTime = Math.max(0, this.MIN_INTERVAL - elapsed);
-    
+
     if (waitTime > 0) {
-      await new Promise(resolve => setTimeout(resolve, waitTime));
+      await new Promise((resolve) => setTimeout(resolve, waitTime));
     }
-    
+
     this.lastRequestTime = Date.now();
     return fn();
   }
@@ -211,10 +213,10 @@ private getJitter(): number {
 **解决**：模拟 qwen-code CLI 的 Headers。
 
 ```typescript
-headers.set('User-Agent', `QwenCode/0.10.3 (${platform}; ${arch})`);
-headers.set('X-DashScope-CacheControl', 'enable');
-headers.set('X-DashScope-UserAgent', `QwenCode/0.10.3 (${platform}; ${arch})`);
-headers.set('X-DashScope-AuthType', 'qwen-oauth');
+headers.set("User-Agent", `QwenCode/0.10.3 (${platform}; ${arch})`);
+headers.set("X-DashScope-CacheControl", "enable");
+headers.set("X-DashScope-UserAgent", `QwenCode/0.10.3 (${platform}; ${arch})`);
+headers.set("X-DashScope-AuthType", "qwen-oauth");
 ```
 
 **效果**：从 Headers 看，请求与 qwen-code CLI 无法区分。
@@ -229,7 +231,7 @@ headers.set('X-DashScope-AuthType', 'qwen-oauth');
 
 ```typescript
 if (response.status === 429) {
-  const retryAfter = response.headers.get('Retry-After') || '60';
+  const retryAfter = response.headers.get("Retry-After") || "60";
   await sleep(parseInt(retryAfter) * 1000);
   return fetch(input, { headers }); // 重试
 }
@@ -241,13 +243,13 @@ if (response.status === 429) {
 
 ## ✨ 改进功能
 
-| 功能 | 说明 |
-|------|------|
-| ⏱️ 请求节流 | 1 秒间隔 + 0.5-1.5s 随机抖动，避免触发 60 次/分钟限制 |
-| 📡 429 自动重试 | 遇到限流自动等待后重试 |
-| 🏷️ 请求头对齐 | User-Agent、X-DashScope-* 与 qwen-code CLI 完全一致 |
-| 💾 Token 缓存 | 5 分钟内不重复刷新，减少额外请求 |
-| 🎯 模型精简 | 仅支持 2 个模型（coder-model、vision-model），与 qwen-code CLI 对齐 |
+| 功能            | 说明                                                                |
+| --------------- | ------------------------------------------------------------------- |
+| ⏱️ 请求节流     | 1 秒间隔 + 0.5-1.5s 随机抖动，避免触发 60 次/分钟限制               |
+| 📡 429 自动重试 | 遇到限流自动等待后重试                                              |
+| 🏷️ 请求头对齐   | User-Agent、X-DashScope-\* 与 qwen-code CLI 完全一致                |
+| 💾 Token 缓存   | 5 分钟内不重复刷新，减少额外请求                                    |
+| 🎯 模型精简     | 仅支持 2 个模型（coder-model、vision-model），与 qwen-code CLI 对齐 |
 
 ---
 
@@ -273,6 +275,7 @@ opencode auth login
 ### 插件不显示
 
 在 `opencode auth login` 中：
+
 1. 选择 **"Other"**
 2. 输入 `qwen-code`
 
@@ -358,6 +361,7 @@ npm run build
 ```
 
 > 将 `/path/to/OpenCode-Qwen-Proxy` 替换为实际的绝对路径，例如：
+>
 > - Linux/Mac: `file:/home/username/OpenCode-Qwen-Proxy`
 > - Windows: `file:C:/Users/username/OpenCode-Qwen-Proxy`
 
@@ -384,11 +388,11 @@ npm run dev
 
 ### 构建命令说明
 
-| 命令 | 说明 |
-|------|------|
-| `npm run build` | 构建生产版本到 `dist/` 目录 |
-| `npm run dev` | 开发模式，监听文件变化自动重新构建 |
-| `npm run typecheck` | TypeScript 类型检查 |
+| 命令                | 说明                               |
+| ------------------- | ---------------------------------- |
+| `npm run build`     | 构建生产版本到 `dist/` 目录        |
+| `npm run dev`       | 开发模式，监听文件变化自动重新构建 |
+| `npm run typecheck` | TypeScript 类型检查                |
 
 ---
 
@@ -427,6 +431,7 @@ cat ~/.qwen/oauth_creds.json
 **Q：遇到问题怎么办？**
 
 > A：
+>
 > 1. 确认 `~/.config/opencode/opencode.jsonc` 中已添加 `"plugin": ["opencode-qwen-proxy"]`
 > 2. 运行 `npm run typecheck` 检查代码是否有语法错误
 > 3. 查看控制台输出是否有错误信息
@@ -458,7 +463,6 @@ opencode-qwen-proxy/
 - [qwen-code](https://github.com/QwenLM/qwen-code) - 官方 Qwen Code CLI
 - [OpenCode](https://opencode.ai) - AI 编程助手 CLI
 - [opencode-antigravity-auth](https://github.com/NoeFabris/opencode-antigravity-auth) - Google OAuth 参考实现
-
 
 ---
 

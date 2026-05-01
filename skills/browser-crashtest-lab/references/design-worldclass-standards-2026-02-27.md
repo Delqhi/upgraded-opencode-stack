@@ -59,6 +59,7 @@
 - Premium Aesthetic Coherence: 100
 
 Grade bands:
+
 - A+: >=960
 - A: >=920
 - B: >=860
@@ -67,6 +68,7 @@ Grade bands:
 - F: <700
 
 Hard-fail conditions:
+
 - Any P0 finding.
 - Overall score below configured minimum threshold.
 - Missing required model judge output in strict mode.

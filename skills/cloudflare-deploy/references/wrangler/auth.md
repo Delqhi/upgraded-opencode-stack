@@ -38,21 +38,21 @@ export CLOUDFLARE_API_TOKEN="your-token-here"
 
 ### Minimal Permissions by Task
 
-| Task | Template / Permissions |
-|------|------------------------|
-| Deploy Workers/Pages | "Edit Cloudflare Workers" template |
-| Read-only access | "Read All Resources" template |
-| Custom scope | Account:Read + Workers Scripts:Edit + specific resources |
+| Task                 | Template / Permissions                                   |
+| -------------------- | -------------------------------------------------------- |
+| Deploy Workers/Pages | "Edit Cloudflare Workers" template                       |
+| Read-only access     | "Read All Resources" template                            |
+| Custom scope         | Account:Read + Workers Scripts:Edit + specific resources |
 
 ## Troubleshooting
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| "Not logged in" | No credentials | `wrangler login` or set `CLOUDFLARE_API_TOKEN` |
-| "Authentication error" | Invalid/expired token | Regenerate token in dashboard |
-| "Missing account" | Wrong account selected | `wrangler whoami` to check, add `account_id` to wrangler.jsonc |
-| Token works locally, fails CI | Token scoped to wrong account | Verify account ID matches in both places |
-| "Insufficient permissions" | Token lacks required scope | Create new token with correct permissions |
+| Error                         | Cause                         | Fix                                                            |
+| ----------------------------- | ----------------------------- | -------------------------------------------------------------- |
+| "Not logged in"               | No credentials                | `wrangler login` or set `CLOUDFLARE_API_TOKEN`                 |
+| "Authentication error"        | Invalid/expired token         | Regenerate token in dashboard                                  |
+| "Missing account"             | Wrong account selected        | `wrangler whoami` to check, add `account_id` to wrangler.jsonc |
+| Token works locally, fails CI | Token scoped to wrong account | Verify account ID matches in both places                       |
+| "Insufficient permissions"    | Token lacks required scope    | Create new token with correct permissions                      |
 
 ## Verifying Authentication
 
@@ -61,6 +61,7 @@ npx wrangler whoami
 ```
 
 Output shows:
+
 - Email (if OAuth login)
 - Account ID and name
 - Token scopes (if API token)

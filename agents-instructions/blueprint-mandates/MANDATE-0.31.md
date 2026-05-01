@@ -20,11 +20,11 @@
 
 **DATEI-BESCHREIBUNGEN:**
 
-| Datei | Inhalt | Pflichtfelder |
-|-------|--------|---------------|
-| **readme.md** | Überblick, MCP-Art, Links zu Repos/Docs | MCP-Typ, Quellen, wichtige Links |
-| **guide.md** | Detaillierte Nutzungsanleitung | Beispiele, Best Practices, Use-Cases |
-| **install.md** | Schritt-für-Schritt Installation | Voraussetzungen, Config-Beispiele, Troubleshooting |
+| Datei          | Inhalt                                  | Pflichtfelder                                      |
+| -------------- | --------------------------------------- | -------------------------------------------------- |
+| **readme.md**  | Überblick, MCP-Art, Links zu Repos/Docs | MCP-Typ, Quellen, wichtige Links                   |
+| **guide.md**   | Detaillierte Nutzungsanleitung          | Beispiele, Best Practices, Use-Cases               |
+| **install.md** | Schritt-für-Schritt Installation        | Voraussetzungen, Config-Beispiele, Troubleshooting |
 
 **BEISPIEL (canva-mcp):**
 
@@ -72,6 +72,7 @@
 ```
 
 **REGELN:**
+
 - ✅ Jeder MCP-Server MUSS in ALL-MCP dokumentiert werden
 - ✅ 3 Dateien sind PFLICHT (readme.md, guide.md, install.md)
 - ✅ Updates am MCP → SOFORT Dokumentation aktualisieren

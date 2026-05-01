@@ -3,6 +3,7 @@
 ## 🎯 Purpose
 
 Screen recording + AI vision analysis via **google-colab-ai**. Every agent can:
+
 - Record screen
 - Capture screenshots
 - Get AI analysis through Colab's free Gemini models
@@ -19,6 +20,7 @@ Screen recording + AI vision analysis via **google-colab-ai**. Every agent can:
 ## 📋 Usage
 
 ### Quick Start
+
 ```bash
 # Check status
 look-screen --status
@@ -36,6 +38,7 @@ look-screen --stop
 ```
 
 ### In Code (Any Agent)
+
 ```python
 import subprocess
 
@@ -51,6 +54,7 @@ analysis = result.stdout
 ```
 
 ### In Colab (google-colab-ai)
+
 ```python
 from google.colab import ai
 
@@ -72,12 +76,12 @@ response = ai.generate_text(
 
 ## 📁 Files
 
-| File | Purpose |
-|------|---------|
-| `~/.open-auth-Token-Refresh-Service/tools/look_screen.py` | CLI main |
-| `~/.open-auth-Token-Refresh-Service/tools/vision_colab_setup.py` | Setup wizard |
-| `~/.open-auth-Token-Refresh-Service/tools/vision-colab/colab_vision_hub_v2.ipynb` | Colab notebook |
-| `~/.config/opencode/vision-colab-{1,2}.url` | Colab instance URLs |
+| File                                                                              | Purpose             |
+| --------------------------------------------------------------------------------- | ------------------- |
+| `~/.open-auth-Token-Refresh-Service/tools/look_screen.py`                         | CLI main            |
+| `~/.open-auth-Token-Refresh-Service/tools/vision_colab_setup.py`                  | Setup wizard        |
+| `~/.open-auth-Token-Refresh-Service/tools/vision-colab/colab_vision_hub_v2.ipynb` | Colab notebook      |
+| `~/.config/opencode/vision-colab-{1,2}.url`                                       | Colab instance URLs |
 
 ## 🔗 Resources
 

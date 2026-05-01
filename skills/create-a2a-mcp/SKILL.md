@@ -9,11 +9,11 @@ Scaffold a complete, production-ready MCP (Model Context Protocol) server surfac
 
 ## When to Use
 
-| Scenario | How |
-|----------|-----|
-| Building a new A2A agent | `/create-a2a` calls this skill automatically after base scaffold |
-| Adding MCP to an existing agent | Call this skill directly on the agent root |
-| Creating a standalone MCP server | Call this skill with a target directory |
+| Scenario                         | How                                                              |
+| -------------------------------- | ---------------------------------------------------------------- |
+| Building a new A2A agent         | `/create-a2a` calls this skill automatically after base scaffold |
+| Adding MCP to an existing agent  | Call this skill directly on the agent root                       |
+| Creating a standalone MCP server | Call this skill with a target directory                          |
 
 ## What Gets Scaffolded
 
@@ -26,29 +26,30 @@ Scaffold a complete, production-ready MCP (Model Context Protocol) server surfac
 ```
 
 Plus optionally:
+
 - Global registration in `~/.config/opencode/opencode.json`
 - Bin wrapper at `/Users/jeremy/dev/SIN-Solver/bin/sin-<slug>`
 
 ## SSOT Paths
 
-| Asset | Path |
-|-------|------|
-| Template MCP server | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/src/mcp-server.ts` |
-| Template mcp-config | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/mcp-config.json` |
+| Asset                  | Path                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Template MCP server    | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/src/mcp-server.ts`         |
+| Template mcp-config    | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/mcp-config.json`           |
 | Template client config | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/clients/opencode-mcp.json` |
-| Template CLI | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/src/cli.ts` |
-| Global opencode config | `/Users/jeremy/.config/opencode/opencode.json` |
-| SIN-Solver bin dir | `/Users/jeremy/dev/SIN-Solver/bin/` |
-| Shared lib | `scripts/_mcp-lib.mjs` (this skill) |
+| Template CLI           | `/Users/jeremy/dev/SIN-Solver/a2a/template-repo/A2A-SIN-Agent-Template/src/cli.ts`                |
+| Global opencode config | `/Users/jeremy/.config/opencode/opencode.json`                                                    |
+| SIN-Solver bin dir     | `/Users/jeremy/dev/SIN-Solver/bin/`                                                               |
+| Shared lib             | `scripts/_mcp-lib.mjs` (this skill)                                                               |
 
 ## Built-in Scripts
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `scripts/_mcp-lib.mjs` | Shared helpers (arg parsing, slug normalization, file I/O) | Imported by other scripts |
-| `scripts/mcp-scaffold.mjs` | Generate all MCP files from tool definitions | `node mcp-scaffold.mjs --agent-root <path> --slug <name> --tools '<json>'` |
-| `scripts/mcp-register-global.mjs` | Register MCP in global opencode.json | `node mcp-register-global.mjs --slug <name> --agent-root <path> [--bin-wrapper]` |
-| `scripts/mcp-verify.mjs` | Validate MCP setup completeness | `node mcp-verify.mjs --agent-root <path> --slug <name>` |
+| Script                            | Purpose                                                    | Usage                                                                            |
+| --------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `scripts/_mcp-lib.mjs`            | Shared helpers (arg parsing, slug normalization, file I/O) | Imported by other scripts                                                        |
+| `scripts/mcp-scaffold.mjs`        | Generate all MCP files from tool definitions               | `node mcp-scaffold.mjs --agent-root <path> --slug <name> --tools '<json>'`       |
+| `scripts/mcp-register-global.mjs` | Register MCP in global opencode.json                       | `node mcp-register-global.mjs --slug <name> --agent-root <path> [--bin-wrapper]` |
+| `scripts/mcp-verify.mjs`          | Validate MCP setup completeness                            | `node mcp-verify.mjs --agent-root <path> --slug <name>`                          |
 
 ## Workflow
 
@@ -56,15 +57,15 @@ Plus optionally:
 
 Collect from user or from `/create-a2a` handoff:
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `agent-root` | ✅ | Absolute path to agent/project root |
-| `slug` | ✅ | MCP slug (e.g. `sin-research`, `sin-server`) |
-| `namespace` | ❌ | Tool namespace prefix (defaults to slug with `-` → `_`) |
-| `tools` | ❌ | JSON array of tool definitions (see format below) |
-| `register-global` | ❌ | Register in opencode.json (default: true) |
-| `bin-wrapper` | ❌ | Create bin wrapper in SIN-Solver/bin/ (default: false) |
-| `env-vars` | ❌ | JSON object of environment variables for MCP config |
+| Parameter         | Required | Description                                             |
+| ----------------- | -------- | ------------------------------------------------------- |
+| `agent-root`      | ✅       | Absolute path to agent/project root                     |
+| `slug`            | ✅       | MCP slug (e.g. `sin-research`, `sin-server`)            |
+| `namespace`       | ❌       | Tool namespace prefix (defaults to slug with `-` → `_`) |
+| `tools`           | ❌       | JSON array of tool definitions (see format below)       |
+| `register-global` | ❌       | Register in opencode.json (default: true)               |
+| `bin-wrapper`     | ❌       | Create bin wrapper in SIN-Solver/bin/ (default: false)  |
+| `env-vars`        | ❌       | JSON object of environment variables for MCP config     |
 
 ### Step 1 — Run Scaffold
 
@@ -77,6 +78,7 @@ node $SCRIPTS/mcp-scaffold.mjs \
 ```
 
 This generates:
+
 - `src/mcp-server.ts` — Full MCP server with all tools registered via `McpServer.registerTool()`
 - `mcp-config.json` — Local MCP config
 - `clients/opencode-mcp.json` — OpenCode client config
@@ -127,6 +129,7 @@ Each tool in the `--tools` JSON array:
 ```
 
 **Type mapping:**
+
 - `string` → `z.string()` (required)
 - `string?` → `z.string().optional()` (optional)
 - `number` → `z.number()` (required)
@@ -165,6 +168,7 @@ The `/create-a2a` SKILL.md should include this step after base scaffold:
 
 ```markdown
 ### MCP Surface Generation
+
 After scaffolding the base agent, invoke skill `create-a2a-mcp` to generate the MCP server surface.
 Pass the agent-root, slug, and domain-specific tool definitions.
 ```
@@ -174,17 +178,18 @@ Pass the agent-root, slug, and domain-specific tool definitions.
 ### Production Pattern (McpServer.registerTool — PREFERRED)
 
 ```typescript
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 
-const server = new McpServer({ name: 'sin-myagent', version: '0.1.0' });
+const server = new McpServer({ name: "sin-myagent", version: "0.1.0" });
 
-server.registerTool('sin_myagent_help',
-  { description: 'Describe available actions.' },
+server.registerTool(
+  "sin_myagent_help",
+  { description: "Describe available actions." },
   async () => ({
-    content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
-  })
+    content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+  }),
 );
 
 const transport = new StdioServerTransport();
@@ -193,11 +198,11 @@ await server.connect(transport);
 
 ### Transport Modes
 
-| Mode | When | Config |
-|------|------|--------|
-| **stdio** | Local agents, opencode CLI | Default. Always use for A2A agents. |
-| **streamable-http** | Remote/cloud agents | Only if agent runs on remote VM |
-| **SSE** | Legacy | DEPRECATED. Never use for new agents. |
+| Mode                | When                       | Config                                |
+| ------------------- | -------------------------- | ------------------------------------- |
+| **stdio**           | Local agents, opencode CLI | Default. Always use for A2A agents.   |
+| **streamable-http** | Remote/cloud agents        | Only if agent runs on remote VM       |
+| **SSE**             | Legacy                     | DEPRECATED. Never use for new agents. |
 
 ## Anti-Patterns
 

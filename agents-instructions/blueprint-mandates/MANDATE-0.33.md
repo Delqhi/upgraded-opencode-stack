@@ -21,6 +21,7 @@ Docker Container (HTTP API) ──► MCP Wrapper (stdio) ──► opencode.jso
 ```
 
 **Warum funktioniert "remote" nicht?**
+
 - OpenCode erwartet stdio Kommunikation (stdin/stdout)
 - Docker Container sind HTTP Services
 - Kein nativer HTTP-Support in OpenCode MCP
@@ -64,50 +65,58 @@ Docker Container (HTTP API) ──► MCP Wrapper (stdio) ──► opencode.jso
 #!/usr/bin/env node
 // mcp-wrappers/[container-name]-mcp-wrapper.js
 
-const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
-const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
-const axios = require('axios');
+const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
+const {
+  StdioServerTransport,
+} = require("@modelcontextprotocol/sdk/server/stdio.js");
+const axios = require("axios");
 
-const API_URL = process.env.API_URL || 'http://localhost:PORT';
+const API_URL = process.env.API_URL || "http://localhost:PORT";
 const API_KEY = process.env.API_KEY;
 
 const server = new Server(
-  { name: 'container-mcp', version: '1.0.0' },
-  { capabilities: { tools: {} } }
+  { name: "container-mcp", version: "1.0.0" },
+  { capabilities: { tools: {} } },
 );
 
 // Tool: Example Action
 async function exampleAction(param) {
-  const response = await axios.post(`${API_URL}/api/action`, 
+  const response = await axios.post(
+    `${API_URL}/api/action`,
     { param },
-    { headers: { 'Authorization': `Bearer ${API_KEY}` } }
+    { headers: { Authorization: `Bearer ${API_KEY}` } },
   );
   return response.data;
 }
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: [{
-    name: 'example_action',
-    description: 'Does something useful',
-    inputSchema: {
-      type: 'object',
-      properties: { param: { type: 'string' } },
-      required: ['param']
-    }
-  }]
+  tools: [
+    {
+      name: "example_action",
+      description: "Does something useful",
+      inputSchema: {
+        type: "object",
+        properties: { param: { type: "string" } },
+        required: ["param"],
+      },
+    },
+  ],
 }));
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
   try {
     switch (name) {
-      case 'example_action':
+      case "example_action":
         return { toolResult: await exampleAction(args.param) };
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
   } catch (error) {
-    return { content: [{ type: 'text', text: `Error: ${error.message}` }], isError: true };
+    return {
+      content: [{ type: "text", text: `Error: ${error.message}` }],
+      isError: true,
+    };
   }
 });
 
@@ -124,7 +133,10 @@ server.connect(transport).catch(console.error);
   "mcp": {
     "my-container-mcp": {
       "type": "local",
-      "command": ["node", "/Users/jeremy/dev/SIN-Solver/mcp-wrappers/my-container-mcp-wrapper.js"],
+      "command": [
+        "node",
+        "/Users/jeremy/dev/SIN-Solver/mcp-wrappers/my-container-mcp-wrapper.js"
+      ],
       "enabled": true,
       "environment": {
         "API_URL": "https://my-container.delqhi.com",
@@ -159,12 +171,12 @@ SIN-Solver/
 
 #### 🚨 WICHTIGE REGELN
 
-| ❌ VERBOTEN | ✅ PFLICHT |
-|-------------|-----------|
-| Docker Container als `type: "remote"` in opencode.json | Wrapper als `type: "local"` (stdio) |
-| Direkte HTTP URLs in opencode.json MCP config | Wrapper Script dazwischen |
-| Hartkodierte IPs (172.20.0.x) | Service Names verwenden |
-| Alles in eine docker-compose.yml | Jeder Container = eigene docker-compose.yml |
+| ❌ VERBOTEN                                            | ✅ PFLICHT                                  |
+| ------------------------------------------------------ | ------------------------------------------- |
+| Docker Container als `type: "remote"` in opencode.json | Wrapper als `type: "local"` (stdio)         |
+| Direkte HTTP URLs in opencode.json MCP config          | Wrapper Script dazwischen                   |
+| Hartkodierte IPs (172.20.0.x)                          | Service Names verwenden                     |
+| Alles in eine docker-compose.yml                       | Jeder Container = eigene docker-compose.yml |
 
 ---
 
@@ -195,13 +207,15 @@ SIN-Solver/
 
 ```javascript
 // plane-mcp-wrapper.js
-const PLANE_API_URL = process.env.PLANE_API_URL || 'https://plane.delqhi.com';
+const PLANE_API_URL = process.env.PLANE_API_URL || "https://plane.delqhi.com";
 
-// captcha-mcp-wrapper.js  
-const CAPTCHA_API_URL = process.env.CAPTCHA_API_URL || 'https://captcha.delqhi.com';
+// captcha-mcp-wrapper.js
+const CAPTCHA_API_URL =
+  process.env.CAPTCHA_API_URL || "https://captcha.delqhi.com";
 
 // survey-mcp-wrapper.js
-const SURVEY_API_URL = process.env.SURVEY_API_URL || 'https://survey.delqhi.com';
+const SURVEY_API_URL =
+  process.env.SURVEY_API_URL || "https://survey.delqhi.com";
 ```
 
 ---
@@ -242,12 +256,14 @@ const SURVEY_API_URL = process.env.SURVEY_API_URL || 'https://survey.delqhi.com'
 #### 🎯 ZUSAMMENFASSUNG
 
 **MERKE:**
+
 - Docker Container ≠ MCP Server
 - Docker Container = HTTP API
 - MCP Server = stdio Prozess
 - Wrapper = Brücke zwischen beiden
 
 **ALLE** Docker-Container in diesem Projekt MÜSSEN:
+
 1. Modular sein (eigene docker-compose.yml)
 2. Einen MCP Wrapper haben (für OpenCode Integration)
 3. Eine delqhi.com URL haben (via Cloudflare)

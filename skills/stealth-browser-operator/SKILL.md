@@ -47,12 +47,14 @@ python3 ~/.config/opencode/tools/browser-recorder.py \
 ```
 
 **Parameter:**
+
 - `--url`: Die Ziel-Webseite
 - `--task`: Natürlichsprachige Beschreibung was der Agent tun soll
 - `--output-dir`: Verzeichnis für das .mp4-Video
 - `--profile`: Chrome-Profil-Name (Default, Geschäftlich, etc.)
 
 **Das Skript:**
+
 - Startet Chrome mit echtem Profil (eingeloggte Sessions)
 - Zeichnet ALLE Aktionen als .mp4 auf (save_recording_path)
 - Navigiert zur URL und führt die beschriebene Aufgabe aus
@@ -79,6 +81,7 @@ python3 ~/.config/opencode/tools/tts-generator.py \
 ```
 
 **Verfügbare edge-tts Stimmen (Deutsch):**
+
 - `de-DE-KatjaNeural` — Weiblich, natürlich (EMPFOHLEN)
 - `de-DE-ConradNeural` — Männlich
 - `de-DE-AmalaNeural` — Weiblich, warm
@@ -111,6 +114,7 @@ python3 ~/.config/opencode/tools/video-processor.py \
 ```
 
 **FFmpeg Complex Filter:**
+
 ```
 -logo (overlay=main_w-overlay_w-10:10) +
 -text (drawtext=text='...':x=(w-text_w)/2:y=h-th-10) +
@@ -135,21 +139,25 @@ python3 ~/.config/opencode/tools/master-operator.py \
 ## Wichtige Regeln
 
 ### Vision-Gate (PRIORITY -7.0)
+
 - NACH jeder Browser-Aktion MUSS ein Screenshot gemacht werden
 - Der Screenshot MUSS durch ein Vision-Modell geprüft werden
 - NUR bei PROCEED darf die nächste Aktion erfolgen
 
 ### DevTools-First (PRIORITY -1.0)
+
 - CSS-Selektoren NIEMALS raten
 - IMMER via DevTools/CDP verifizieren
 - `document.querySelector()` in Console ausführen
 
 ### Technologie-Souveränität (PRIORITY -2.0)
+
 - NUR browser-use + Chrome Profil
 - KEIN Playwright, Puppeteer, Selenium, Camoufox
 - Chrome-basiert, kein WebDriver
 
 ### Bun-Only (PRIORITY -1.5)
+
 - Installation: `bun add browser-use`
 - KEIN `npm install`
 
@@ -172,6 +180,7 @@ recordings/<DATUM_UHRZEIT>/
 ## Troubleshooting
 
 ### "browser-use not found"
+
 ```bash
 bun add browser-use
 # oder
@@ -179,6 +188,7 @@ pip3 install browser-use[video]
 ```
 
 ### "edge-tts nicht installiert"
+
 ```bash
 bun add edge-tts
 # oder
@@ -186,16 +196,19 @@ pip3 install edge-tts
 ```
 
 ### "ffmpeg nicht gefunden"
+
 ```bash
 brew install ffmpeg
 ```
 
 ### Video zu groß
+
 ```bash
 # Komprimieren
 ffmpeg -i final.mp4 -vcodec libx264 -crf 28 compressed.mp4
 ```
 
 ## Verwandte Skills
+
 - [browser-automation](/best-practices/browser-automation) — Best Practices
 - [video-tutorial-operator](../video-tutorial-operator/SKILL.md) — Master-Skill für Tutorials

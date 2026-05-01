@@ -14,15 +14,20 @@ var AGENT_MODEL_REQUIREMENTS = {
       { model: "gpt-5.5", providers: ["openai"] },
       { model: "minimax-m2.5", providers: ["opencode-go"] },
       { model: "grok-fast", providers: ["xai"] }, // ❌ UNERWÜNSCHT
-      { model: "claude-haiku", providers: ["anthropic"] } // ❌ UNERWÜNSCHT
-    ]
+      { model: "claude-haiku", providers: ["anthropic"] }, // ❌ UNERWÜNSCHT
+    ],
   },
-  librarian: { fallbackChain: [ /* enthält minimax, grok, haiku */ ] },
+  librarian: {
+    fallbackChain: [
+      /* enthält minimax, grok, haiku */
+    ],
+  },
   // ... weitere Agents
-}
+};
 ```
 
 Diese Chains werden aktiviert, wenn:
+
 1. Unser primäres Modell aus `oh-my-openagent.json` fehlschlägt (rate-limit, 404)
 2. Alle unsere konfigurierten `fallback_models` fehlschlagen
 3. → Dann wird die hartkodierte Kette durchlaufen
@@ -56,7 +61,7 @@ Für jeden Agenten haben wir 4-5 unserer eigenen Fallback-Modelle definiert:
         "google/antigravity-claude-sonnet-4-6",
         "qwen/coder-model"
       ]
-    },
+    }
     // ... usw.
   }
 }
@@ -81,6 +86,7 @@ var CATEGORY_MODEL_REQUIREMENTS = {}; // Keine hartkodierten Kategoriefallbacks
 ```
 
 Die `resolveModelPipeline()` Funktion prüft dann nur noch:
+
 1. `intent.userModel` (unser primäres Modell)
 2. `intent.userFallbackModels` (unsere Fallback-Liste)
 3. `policy.systemDefaultModel` (globaler Default aus opencode.json)
@@ -135,6 +141,7 @@ Dadurch wird der geforkte Plugin anstelle des npm-basierten `oh-my-openagent` ge
 ## Verifikationsplan
 
 ### Test 1: Agent-Model-Auflösung prüfen
+
 ```bash
 # Auf OCI VM (wo alle Provider verfügbar sind)
 opencode run "Write a Python hello world" --agent explore --format json 2>&1 | tee /tmp/explore.log
@@ -143,9 +150,11 @@ opencode run "Write a Python hello world" --agent explore --format json 2>&1 | t
 ```
 
 ### Test 2: Fallback-Kette durchspielen
+
 Manuell den primären Model temporär als unavailable markieren (z.B. Provider deaktivieren) und beobachten, ob der erste Eintrag aus unserer `fallback_models`-Liste gewählt wird.
 
 ### Test 3: Kompletter End-to-End Swarm
+
 `omoc-plan-swarm` aufrufen und verifizieren, dass alle beteiligten Agents aus unserer Whitelist stammen.
 
 ---
@@ -153,6 +162,7 @@ Manuell den primären Model temporär als unavailable markieren (z.B. Provider d
 ## Commits & Dateien
 
 ### Neu/Geändert
+
 - `~/.config/opencode/oh-my-openagent.json` (exhaustive fallbacks, bereits committed in upgraded-opencode-stack@2c1f28a)
 - `~/.config/opencode/local-plugins/oh-my-opencode-sin/` (Fork)
   - `package.json` (Name geändert)

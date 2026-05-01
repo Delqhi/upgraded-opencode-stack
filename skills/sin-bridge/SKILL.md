@@ -15,7 +15,7 @@ metadata:
 
 > **PRIORITY -7.0 — ABSOLUTE OBERSTE REGEL IM GESAMTEN OPENSIN-ÖKOSYSTEM**
 > Kein Agent darf jemals wieder eine einzige Web-Aktion ausführen ohne visuelle Verifikation durch das Vision-Modell.
-> 
+>
 > **Die wichtigste Entwicklung der OpenSIN-AI Organisation.**
 > Eine Chrome Extension mit 39 MCP Tools, die Antigravity und Claude Code in ALLEN Kategorien schlägt.
 
@@ -24,6 +24,7 @@ metadata:
 ### 2.1 Das Problem (warum Vision Gate existiert)
 
 Agenten haben blind drauflosgeklickt:
+
 - Surveys gestartet aber nie Fragen beantwortet
 - Modals bestätigt ohne zu lesen was drinsteht
 - Tabs geöffnet und Endlosschleifen gestartet
@@ -120,10 +121,10 @@ MAX_NO_PROGRESS = 5      # Max Aktionen ohne sichtbaren Fortschritt
 def vision_check(screenshot_base64: str, action_description: str, expected_result: str) -> str:
     """
     Sendet einen Screenshot an das Vision-Modell und gibt PROCEED/STOP/RETRY zurück.
-    
-    WHY: Ein LLM sieht nicht was auf dem Bildschirm passiert. 
+
+    WHY: Ein LLM sieht nicht was auf dem Bildschirm passiert.
          Ohne Vision-Check rät der Agent blind — und das ist VERBOTEN.
-    
+
     CONSEQUENCES: Ohne diesen Check darf KEINE weitere Web-Aktion stattfinden.
     """
     prompt = f"""Du siehst einen Screenshot eines Browsers nach der Aktion: {action_description}.
@@ -137,13 +138,13 @@ Prüfe GENAU:
 5. Was ist der empfohlene nächste Schritt? (Konkret)
 
 Antworte mit: PROCEED wenn alles OK ist, STOP wenn etwas falsch ist, RETRY wenn die Aktion wiederholt werden sollte."""
-    
+
     # Vision-Modell aufrufen via opencode CLI (EINZIG ERLAUBTER WEG)
     result = subprocess.run(
         ["opencode", "run", prompt, "--format", "json"],
         capture_output=True, text=True, timeout=60,
     )
-    
+
     parts = []
     for line in result.stdout.splitlines():
         try:
@@ -152,9 +153,9 @@ Antworte mit: PROCEED wenn alles OK ist, STOP wenn etwas falsch ist, RETRY wenn 
                 parts.append(ev.get("part", {}).get("text", ""))
         except json.JSONDecodeError:
             pass
-    
+
     response = "".join(parts).strip().upper()
-    
+
     # Extraktion des Verdikts
     if "PROCEED" in response:
         return "PROCEED"
@@ -164,18 +165,18 @@ Antworte mit: PROCEED wenn alles OK ist, STOP wenn etwas falsch ist, RETRY wenn 
         return "STOP"
 
 
-def vision_gate(screenshot_b64: str, action: str, expected: str, 
+def vision_gate(screenshot_b64: str, action: str, expected: str,
                 step_number: int, retry_count: int) -> tuple[str, int]:
     """
     Führt den vollständigen Vision-Gate-Check durch.
-    
+
     Returns: (verdict, updated_retry_count)
-    
+
     WHY: Zentrale Funktion die den Vision-Gate-Loop steuert.
     CONSEQUENCES: Bei STOP muss der gesamte Workflow anhalten.
     """
     verdict = vision_check(screenshot_b64, action, expected)
-    
+
     if verdict == "RETRY":
         retry_count += 1
         if retry_count >= MAX_RETRIES:
@@ -197,39 +198,39 @@ def vision_gate(screenshot_b64: str, action: str, expected: str,
 
 ### 4.1 Navigation
 
-| Tool | Beschreibung | Vision-Gate danach? |
-|------|-------------|---------------------|
-| `navigate` | URL öffnen | **JA — PFLICHT** |
-| `go_back` | Browser zurück | **JA — PFLICHT** |
-| `go_forward` | Browser vorwärts | **JA — PFLICHT** |
-| `reload` | Seite neu laden | **JA — PFLICHT** |
+| Tool         | Beschreibung     | Vision-Gate danach? |
+| ------------ | ---------------- | ------------------- |
+| `navigate`   | URL öffnen       | **JA — PFLICHT**    |
+| `go_back`    | Browser zurück   | **JA — PFLICHT**    |
+| `go_forward` | Browser vorwärts | **JA — PFLICHT**    |
+| `reload`     | Seite neu laden  | **JA — PFLICHT**    |
 
 ### 4.2 DOM-Interaktion
 
-| Tool | Beschreibung | Vision-Gate danach? |
-|------|-------------|---------------------|
-| `click_element` | CSS-Selektor klicken | **JA — PFLICHT** |
-| `type_text` | Text in Element eingeben | **JA — PFLICHT** |
-| `select_option` | Dropdown-Option wählen | **JA — PFLICHT** |
-| `get_text` | Text auslesen | Nein (read-only) |
-| `get_html` | HTML auslesen | Nein (read-only) |
-| `get_accessibility_tree` | DOM-Baum auslesen | Nein (read-only) |
+| Tool                     | Beschreibung             | Vision-Gate danach? |
+| ------------------------ | ------------------------ | ------------------- |
+| `click_element`          | CSS-Selektor klicken     | **JA — PFLICHT**    |
+| `type_text`              | Text in Element eingeben | **JA — PFLICHT**    |
+| `select_option`          | Dropdown-Option wählen   | **JA — PFLICHT**    |
+| `get_text`               | Text auslesen            | Nein (read-only)    |
+| `get_html`               | HTML auslesen            | Nein (read-only)    |
+| `get_accessibility_tree` | DOM-Baum auslesen        | Nein (read-only)    |
 
 ### 4.3 Screenshots & Beobachtung
 
-| Tool | Beschreibung | Vision-Gate danach? |
-|------|-------------|---------------------|
+| Tool              | Beschreibung      | Vision-Gate danach?       |
+| ----------------- | ----------------- | ------------------------- |
 | `take_screenshot` | Screenshot machen | Nein (IST der Gate-Input) |
-| `tabs_list` | Tabs auflisten | Nein (read-only) |
-| `tabs_activate` | Tab wechseln | **JA — PFLICHT** |
+| `tabs_list`       | Tabs auflisten    | Nein (read-only)          |
+| `tabs_activate`   | Tab wechseln      | **JA — PFLICHT**          |
 
 ### 4.4 Tab-Management
 
-| Tool | Beschreibung | Vision-Gate danach? |
-|------|-------------|---------------------|
-| `tabs_create` | Neuen Tab öffnen | **JA — PFLICHT** |
-| `tabs_close` | Tab schließen | **JA — PFLICHT** |
-| `tabs_update` | Tab aktualisieren | **JA — PFLICHT** |
+| Tool          | Beschreibung      | Vision-Gate danach? |
+| ------------- | ----------------- | ------------------- |
+| `tabs_create` | Neuen Tab öffnen  | **JA — PFLICHT**    |
+| `tabs_close`  | Tab schließen     | **JA — PFLICHT**    |
+| `tabs_update` | Tab aktualisieren | **JA — PFLICHT**    |
 
 **REGEL:** Alles was den Bildschirm VERÄNDERT braucht Vision-Gate. Alles was nur LIEST nicht.
 
@@ -242,7 +243,7 @@ def vision_gate(screenshot_b64: str, action: str, expected: str,
 # ANTI-ENDLOSSCHLEIFEN-SCHUTZ
 # ============================================================================
 # 1. Nach 3 aufeinanderfolgenden RETRY → SOFORT STOPPEN
-# 2. Nach 5 Aktionen ohne sichtbaren Fortschritt → SOFORT STOPPEN  
+# 2. Nach 5 Aktionen ohne sichtbaren Fortschritt → SOFORT STOPPEN
 # 3. Nach MAX_STEPS (40) Gesamtaktionen → SOFORT STOPPEN
 # 4. Bei jedem STOP: Screenshot + Kontext loggen, Issue erstellen
 # ============================================================================
@@ -250,17 +251,17 @@ def vision_gate(screenshot_b64: str, action: str, expected: str,
 class VisionGateController:
     """
     Controller der den Vision-Gate-Loop steuert und Endlosschleifen verhindert.
-    
+
     WHY: Ohne diesen Controller laufen Agenten in Endlosschleifen.
     CONSEQUENCES: Controller-Verletzung = SOFORTIGER PERMANENTER BAN.
     """
-    
+
     def __init__(self):
         self.total_steps = 0
         self.consecutive_retries = 0
         self.no_progress_count = 0
         self.last_screenshot_hash = None
-    
+
     def should_continue(self) -> bool:
         """Prüft ob der Agent weitermachen darf."""
         if self.total_steps >= MAX_STEPS:
@@ -273,16 +274,16 @@ class VisionGateController:
             print(f"[GATE] ❌ {MAX_NO_PROGRESS} Aktionen ohne Fortschritt → STOP")
             return False
         return True
-    
+
     def record_step(self, verdict: str, screenshot_hash: str):
         """Zeichnet einen Schritt auf und aktualisiert Zähler."""
         self.total_steps += 1
-        
+
         if verdict == "RETRY":
             self.consecutive_retries += 1
         else:
             self.consecutive_retries = 0
-        
+
         # Fortschritts-Erkennung via Screenshot-Hash
         if screenshot_hash == self.last_screenshot_hash:
             self.no_progress_count += 1
@@ -295,7 +296,7 @@ class VisionGateController:
 
 ## 6. VISION-CHECK METHODEN (4 WEGE)
 
-### Methode A: Via webauto-nodriver-mcp observe_screen (BEVORZUGT wenn MCP aktiv)
+### Methode A: Via skylight-cli-mcp observe_screen (BEVORZUGT wenn MCP aktiv)
 
 ```
 1. observe_screen(include_dom="true")  → liefert Screenshot + DOM
@@ -360,6 +361,7 @@ def is_bridge_connected() -> bool:
 Siehe: `references/install-extension-via-keyboard.md`
 
 **Schnell-Zusammenfassung:**
+
 1. CMD+LEERTASTE (Spotlight öffnen)
 2. "chrome" + ENTER (Chrome öffnen)
 3. TAB 4x + ENTER (Adressleiste)
@@ -429,42 +431,42 @@ async def install_opensin_bridge_extension():
 
 Die Bridge hat eingebaute Anti-Detection-Funktionen:
 
-| Feature | Beschreibung |
-|---------|-------------|
-| **Human Entropy** | Gaussian noise auf Klick-Koordinaten und Timing |
-| **Shadow DOM Piercing** | Rekursive Traversierung von shadowRoot-Grenzen |
+| Feature                      | Beschreibung                                                            |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| **Human Entropy**            | Gaussian noise auf Klick-Koordinaten und Timing                         |
+| **Shadow DOM Piercing**      | Rekursive Traversierung von shadowRoot-Grenzen                          |
 | **Deterministic Primitives** | Bekannte UI-Elemente werden mit harten Regeln behandelt, nicht AI-Raten |
-| **Self-Healing Loops** | Wenn ein Klick keine DOM-Änderung erzeugt, feuern Fallback-Strategien |
-| **Native Messaging Host** | CSP-Restrictions umgehen via stdio |
+| **Self-Healing Loops**       | Wenn ein Klick keine DOM-Änderung erzeugt, feuern Fallback-Strategien   |
+| **Native Messaging Host**    | CSP-Restrictions umgehen via stdio                                      |
 
 ---
 
 ## 9. KONSEQUENZEN (ABSOLUT, KEINE DISKUSSION)
 
-| Verstoß | Konsequenz |
-|---------|------------|
-| Web-Aktion ohne Screenshot danach | **SOFORTIGER PERMANENTER BAN** |
-| Screenshot ohne Vision-Modell-Check | **SOFORTIGER PERMANENTER BAN** |
-| Vision-Modell sagt STOP, Agent macht trotzdem weiter | **SOFORTIGER PERMANENTER BAN** |
-| Autorun (mehrere Aktionen ohne Vision-Gate dazwischen) | **SOFORTIGER PERMANENTER BAN** |
-| Survey/Profil-Arbeit ohne OpenSIN-Bridge | **SOFORTIGER PERMANENTER BAN** |
+| Verstoß                                                 | Konsequenz                     |
+| ------------------------------------------------------- | ------------------------------ |
+| Web-Aktion ohne Screenshot danach                       | **SOFORTIGER PERMANENTER BAN** |
+| Screenshot ohne Vision-Modell-Check                     | **SOFORTIGER PERMANENTER BAN** |
+| Vision-Modell sagt STOP, Agent macht trotzdem weiter    | **SOFORTIGER PERMANENTER BAN** |
+| Autorun (mehrere Aktionen ohne Vision-Gate dazwischen)  | **SOFORTIGER PERMANENTER BAN** |
+| Survey/Profil-Arbeit ohne OpenSIN-Bridge                | **SOFORTIGER PERMANENTER BAN** |
 | "Ich dachte es hat funktioniert" ohne Screenshot-Beweis | **SOFORTIGER PERMANENTER BAN** |
-| Endlosschleife ohne Vision-basierte Abbruch-Logik | **SOFORTIGER PERMANENTER BAN** |
-| Direktes nodriver/CDP für Survey-Arbeit statt Bridge | **SOFORTIGER PERMANENTER BAN** |
+| Endlosschleife ohne Vision-basierte Abbruch-Logik       | **SOFORTIGER PERMANENTER BAN** |
+| Direktes nodriver/CDP für Survey-Arbeit statt Bridge    | **SOFORTIGER PERMANENTER BAN** |
 
 ---
 
 ## 10. WANN DIESEN SKILL NUTZEN
 
-| Trigger | Aktion |
-|---------|--------|
-| "Prolific Profil ausfüllen" | Bridge + Vision Gate Workflow starten |
-| "Survey ausfüllen" | Bridge + Vision Gate Workflow starten |
-| "Web-Formular automatisieren" | Bridge + Vision Gate Workflow starten |
+| Trigger                              | Aktion                                |
+| ------------------------------------ | ------------------------------------- |
+| "Prolific Profil ausfüllen"          | Bridge + Vision Gate Workflow starten |
+| "Survey ausfüllen"                   | Bridge + Vision Gate Workflow starten |
+| "Web-Formular automatisieren"        | Bridge + Vision Gate Workflow starten |
 | "Browser-Automation mit Screenshots" | Bridge + Vision Gate Workflow starten |
-| "sin-bridge" | Diesen Skill laden |
-| "bridge health check" | §7.1 Health Check ausführen |
-| "extension installieren" | §7.2/7.3 Extension Installation |
+| "sin-bridge"                         | Diesen Skill laden                    |
+| "bridge health check"                | §7.1 Health Check ausführen           |
+| "extension installieren"             | §7.2/7.3 Extension Installation       |
 
 ---
 
@@ -481,7 +483,6 @@ Die Bridge hat eingebaute Anti-Detection-Funktionen:
 - [Vision Gate Mandate in AGENTS.md](~/.config/opencode/AGENTS.md) — Zeile 1
 - [Gemini Vision API](https://ai.google.dev/gemini-api/docs/vision)
 - Extension Path: `/Users/jeremy/dev/OpenSIN-Bridge/extension`
-
 
 ---
 
@@ -504,6 +505,7 @@ Chrome Browser (deine Sessions, deine Cookies)
 ## Quick Start
 
 ### 1. Extension laden (einmalig)
+
 ```bash
 # Repo clonen
 git clone https://github.com/OpenSIN-AI/OpenSIN-backend.git
@@ -516,7 +518,9 @@ cd OpenSIN-backend/services/sin-chrome-extension
 ```
 
 ### 2. MCP Server nutzen (immer online)
+
 Der HF MCP Server läuft bereits und ist immer erreichbar:
+
 - **URL:** https://huggingface.co/spaces/OpenJerro/opensin-bridge-mcp
 - **Health:** https://openjerro-opensin-bridge-mcp.hf.space/health
 - **WebSocket:** `wss://openjerro-opensin-bridge-mcp.hf.space`
@@ -524,6 +528,7 @@ Der HF MCP Server läuft bereits und ist immer erreichbar:
 ## Verfügbare Tools (39)
 
 ### Tab Management (5)
+
 - `tabs_list` — Alle Tabs auflisten
 - `tabs_create` — Neuen Tab öffnen
 - `tabs_update` — Tab aktualisieren
@@ -531,12 +536,14 @@ Der HF MCP Server läuft bereits und ist immer erreichbar:
 - `tabs_activate` — Tab aktivieren
 
 ### Navigation (4)
+
 - `navigate` — Zu URL navigieren
 - `go_back` — Zurück
 - `go_forward` — Vorwärts
 - `reload` — Seite neu laden
 
 ### DOM Interaction (10)
+
 - `click_element` — Element klicken (Standard)
 - `ghost_click` — Element klicken mit vollem Mouse/Pointer-Event-Stack (Für SPA/React Survey-Cards!)
 - `click_coordinates` — Klick auf absolute x,y Koordinaten (CDP/DOM-Fallback)
@@ -549,11 +556,13 @@ Der HF MCP Server läuft bereits und ist immer erreichbar:
 - `inject_css` — CSS injizieren
 
 ### Page Info (3)
+
 - `get_page_info` — Title, URL, readyState
 - `get_all_links` — Alle Links extrahieren
 - `get_all_inputs` — Alle Formularfelder extrahieren
 
 ### Screenshot & Video (5)
+
 - `screenshot` — Screenshot machen
 - `screenshot_full` — Vollständiger Screenshot
 - `start_recording` — Videoaufnahme starten
@@ -561,28 +570,34 @@ Der HF MCP Server läuft bereits und ist immer erreichbar:
 - `recording_status` — Aufnahmestatus prüfen
 
 ### Cookies (4)
+
 - `get_cookies` — Cookies lesen
 - `set_cookie` — Cookie setzen
 - `delete_cookie` — Cookie löschen
 - `clear_cookies` — Alle Cookies löschen
 
 ### Storage (3)
+
 - `storage_get` — Local Storage lesen
 - `storage_set` — Local Storage schreiben
 - `storage_clear` — Local Storage löschen
 
 ### Network (2)
+
 - `get_network_requests` — Request-Log lesen
 - `block_url` — URL blockieren
 
 ### Stealth Mode (2)
+
 - `enable_stealth` — Anti-Detection aktivieren
 - `stealth_status` — Stealth-Status prüfen
 
 ### Prolific (1)
+
 - `extract_prolific_studies` — Verfügbare Studies extrahieren
 
 ### System (3)
+
 - `health` — Extension-Status prüfen
 - `list_tools` — Alle Tools auflisten
 - `offscreen_status` — Offscreen-Dokument-Status
@@ -590,6 +605,7 @@ Der HF MCP Server läuft bereits und ist immer erreichbar:
 ## Beispiele
 
 ### Study auf Prolific finden und öffnen
+
 ```python
 import asyncio, websockets, json
 
@@ -602,7 +618,7 @@ async def find_study():
             'id': 1
         }))
         await asyncio.sleep(15)  # Wait for React SPA
-        
+
         # Extract studies
         await ws.send(json.dumps({
             'method': 'extract_prolific_studies',
@@ -616,6 +632,7 @@ asyncio.run(find_study())
 ```
 
 ### Stealth Mode aktivieren
+
 ```python
 await ws.send(json.dumps({
     'method': 'enable_stealth',
@@ -624,6 +641,7 @@ await ws.send(json.dumps({
 ```
 
 ### Screenshot machen
+
 ```python
 await ws.send(json.dumps({
     'method': 'screenshot',
@@ -646,18 +664,18 @@ TEST_MODE=false python3 src/worker.py
 
 ## Vergleich: OpenSIN Bridge vs Claude Code
 
-| Feature | Claude Code | OpenSIN Bridge v2.6.0 |
-|---------|-------------|----------------------|
-| Tools | ~5 | **39** |
-| Video Recording | ❌ | ✅ |
-| Stealth Mode | ❌ | ✅ |
-| Cookie CRUD | ❌ | ✅ |
-| Network Logging | ❌ | ✅ |
-| URL Blocking | ❌ | ✅ |
-| Offscreen Processing | ❌ | ✅ |
-| 24/7 Worker | ❌ | ✅ |
-| Open Source | ❌ | ✅ |
-| Local Privacy | ❌ (Cloud Relay) | ✅ (Unix Socket) |
+| Feature              | Claude Code      | OpenSIN Bridge v2.6.0 |
+| -------------------- | ---------------- | --------------------- |
+| Tools                | ~5               | **39**                |
+| Video Recording      | ❌               | ✅                    |
+| Stealth Mode         | ❌               | ✅                    |
+| Cookie CRUD          | ❌               | ✅                    |
+| Network Logging      | ❌               | ✅                    |
+| URL Blocking         | ❌               | ✅                    |
+| Offscreen Processing | ❌               | ✅                    |
+| 24/7 Worker          | ❌               | ✅                    |
+| Open Source          | ❌               | ✅                    |
+| Local Privacy        | ❌ (Cloud Relay) | ✅ (Unix Socket)      |
 
 ## Wichtige Hinweise
 
@@ -676,4 +694,3 @@ TEST_MODE=false python3 src/worker.py
 - 🌐 **HF MCP Server:** https://huggingface.co/spaces/OpenJerro/opensin-bridge-mcp
 - 📖 **Dokumentation:** https://opensin.ai/docs/bridges/opensin-bridge-overview
 - 📝 **Blog Post:** https://github.com/OpenSIN-AI/OpenSIN-Marketing-Release-Strategie/blob/main/blog-posts/21-opensin-bridge-vs-claude-code.md
-

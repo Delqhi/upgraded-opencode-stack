@@ -46,33 +46,40 @@
 # [Projektname] - AGENTS.md
 
 ## Projekt-Übersicht
+
 - Tech Stack: [React, Node.js, etc.]
 - Architektur: [Monolith/Microservices]
 - Datenbank: [PostgreSQL, MongoDB]
 
 ## Konventionen
+
 - Naming: [camelCase, PascalCase]
 - Folder Structure: [src/components, src/utils]
 - State Management: [Redux, Zustand]
 
 ## API-Standards
+
 - Base URL: [http://localhost:3000/api]
 - Auth: [JWT, OAuth]
 - Versioning: [v1, v2]
 
 ## Spezielle Regeln
+
 - [Projektspezifische Anweisungen]
 - [Besondere Vorsichtsmaßnahmen]
 - [Performance-Optimierungen]
 
 ## Troubleshooting
+
 - [Bekannte Probleme und Lösungen]
 
 ## Letzte Änderung: [YYYY-MM-DD]
+
 - [Was wurde zuletzt geändert]
 ```
 
 **INTEGRITÄTS-CHECK (VOR JEDER ANTWORT):**
+
 - [ ] Habe ich die lokale AGENTS.md gelesen?
 - [ ] Sind meine Antworten konform mit den lokalen Konventionen?
 - [ ] Muss ich die AGENTS.md aktualisieren?

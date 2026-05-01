@@ -1,6 +1,7 @@
 # Security — 7-Layer Hardening
 
 Every agent MUST implement:
+
 1. `.githooks/pre-commit` — Secret detection
 2. `.githooks/pre-push` — Commit message leak detection
 3. `.secrets.baseline` — detect-secrets

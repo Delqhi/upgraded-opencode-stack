@@ -9,15 +9,18 @@
 ## 🎨 Design Principles
 
 ### 1. Mobile-First Approach
+
 - Design für Mobile zuerst, dann Tablet, dann Desktop
 - Breakpoints: 640px (sm), 768px (md), 1024px (lg), 1280px (xl)
 
 ### 2. Consistent Spacing
+
 - Base unit: 4px
 - Scale: 4, 8, 12, 16, 24, 32, 48, 64, 96
 - Use Tailwind spacing utilities
 
 ### 3. Typography Scale
+
 - Headings: font-bold, tracking-tight
 - Body: font-normal, leading-relaxed
 - Small: font-medium, text-sm
@@ -27,6 +30,7 @@
 ## 🧩 Component Guidelines
 
 ### Buttons
+
 ```tsx
 // Primary Button
 <Button variant="default" size="default">
@@ -45,12 +49,14 @@
 ```
 
 ### Forms
+
 - Always use labels
 - Show validation errors inline
 - Use appropriate input types
 - Add helpful placeholder text
 
 ### Cards
+
 - Consistent padding: p-6
 - Subtle shadow: shadow-sm
 - Rounded corners: rounded-lg
@@ -61,6 +67,7 @@
 ## 🎯 Best Practices
 
 ### DO
+
 - ✅ Use Tailwind CSS for styling
 - ✅ Follow shadcn/ui component patterns
 - ✅ Maintain consistent spacing
@@ -69,6 +76,7 @@
 - ✅ Test on multiple screen sizes
 
 ### DON'T
+
 - ❌ Hardcode colors (use CSS variables)
 - ❌ Use inline styles
 - ❌ Skip accessibility attributes
@@ -85,4 +93,4 @@
 
 ---
 
-*This is a context module for the Context-Router system.*
+_This is a context module for the Context-Router system._

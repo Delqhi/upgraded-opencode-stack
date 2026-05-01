@@ -5,27 +5,37 @@
 ## Pattern A: McpServer.registerTool() — PRODUCTION (PREFERRED)
 
 ```typescript
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 
-const server = new McpServer({ name: 'sin-myagent', version: '0.1.0' });
+const server = new McpServer({ name: "sin-myagent", version: "0.1.0" });
 
 // Simple tool (no params)
-server.registerTool('sin_myagent_help',
-  { description: 'Describe available actions.' },
+server.registerTool(
+  "sin_myagent_help",
+  { description: "Describe available actions." },
   async () => ({
-    content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
-  })
+    content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+  }),
 );
 
 // Tool with params
-server.registerTool('sin_myagent_do_thing',
-  { description: 'Do a thing.', inputSchema: { input: z.string(), confirm: z.boolean().optional() } },
+server.registerTool(
+  "sin_myagent_do_thing",
+  {
+    description: "Do a thing.",
+    inputSchema: { input: z.string(), confirm: z.boolean().optional() },
+  },
   async (args) => {
-    const result = await executeAction({ action: 'myagent.do_thing', ...args }, agentConfig);
-    return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
-  }
+    const result = await executeAction(
+      { action: "myagent.do_thing", ...args },
+      agentConfig,
+    );
+    return {
+      content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+    };
+  },
 );
 
 const transport = new StdioServerTransport();
@@ -53,6 +63,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ## mcp-config.json Patterns
 
 ### Minimal (dist-relative)
+
 ```json
 {
   "mcpServers": {
@@ -65,6 +76,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ```
 
 ### With environment variables
+
 ```json
 {
   "mcpServers": {
@@ -81,6 +93,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ```
 
 ### Bin wrapper style
+
 ```json
 {
   "mcpServers": {
@@ -95,6 +108,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ## opencode.json Registration
 
 ### With absolute node path
+
 ```json
 "sin-myagent": {
   "type": "local",
@@ -104,6 +118,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ```
 
 ### With bin wrapper
+
 ```json
 "sin-myagent": {
   "type": "local",
@@ -113,6 +128,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ```
 
 ### With environment
+
 ```json
 "sin-myagent": {
   "type": "local",
@@ -125,6 +141,7 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => { ... });
 ## CLI Contract (src/cli.ts)
 
 Every agent CLI MUST support:
+
 ```
 serve-a2a    — Start A2A HTTP server
 serve-mcp    — Start MCP stdio server
@@ -134,25 +151,25 @@ run-action   — Execute a single action
 
 ## Transport Selection
 
-| Transport | Use Case | Notes |
-|-----------|----------|-------|
-| stdio | Local agents via opencode | Default. Always use. |
-| streamable-http | Remote/cloud agents | POST + SSE notifications |
-| SSE | Legacy only | DEPRECATED — never use for new agents |
+| Transport       | Use Case                  | Notes                                 |
+| --------------- | ------------------------- | ------------------------------------- |
+| stdio           | Local agents via opencode | Default. Always use.                  |
+| streamable-http | Remote/cloud agents       | POST + SSE notifications              |
+| SSE             | Legacy only               | DEPRECATED — never use for new agents |
 
 ## Existing SIN MCPs (as of 2026-03-24)
 
-| Slug | Agent | Registration |
-|------|-------|-------------|
-| sin-google-apps | A2A-SIN-Google-Apps | bin wrapper |
-| sin-server | A2A-SIN-Server | bin wrapper |
-| sin-cloudflare | A2A-SIN-Cloudflare | bin wrapper |
+| Slug                | Agent                   | Registration   |
+| ------------------- | ----------------------- | -------------- |
+| sin-google-apps     | A2A-SIN-Google-Apps     | bin wrapper    |
+| sin-server          | A2A-SIN-Server          | bin wrapper    |
+| sin-cloudflare      | A2A-SIN-Cloudflare      | bin wrapper    |
 | sin-passwordmanager | A2A-SIN-Passwordmanager | node dist path |
-| sin-research | A2A-SIN-Research | bin wrapper |
-| sin-team-worker | A2A-SIN-Team-Worker | bin wrapper |
-| sin-tiktok | A2A-SIN-TikTok | bin wrapper |
-| sin-tiktok-shop | A2A-SIN-TikTok-Shop | bin wrapper |
-| sin-terminal | A2A-SIN-Terminal | bin wrapper |
-| sin-authenticator | A2A-SIN-Authenticator | bin wrapper |
-| sin-github-issues | A2A-SIN-GitHub-Issues | bin wrapper |
-| sin-oraclecloud-mcp | A2A-SIN-OracleCloud | bin wrapper |
+| sin-research        | A2A-SIN-Research        | bin wrapper    |
+| sin-team-worker     | A2A-SIN-Team-Worker     | bin wrapper    |
+| sin-tiktok          | A2A-SIN-TikTok          | bin wrapper    |
+| sin-tiktok-shop     | A2A-SIN-TikTok-Shop     | bin wrapper    |
+| sin-terminal        | A2A-SIN-Terminal        | bin wrapper    |
+| sin-authenticator   | A2A-SIN-Authenticator   | bin wrapper    |
+| sin-github-issues   | A2A-SIN-GitHub-Issues   | bin wrapper    |
+| sin-oraclecloud-mcp | A2A-SIN-OracleCloud     | bin wrapper    |
