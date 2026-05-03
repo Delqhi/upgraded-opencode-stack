@@ -1,0 +1,33 @@
+site_name: OpenCode infra-opencode-stack
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+    - scheme: slate
+      primary: indigo
+
+nav:
+  - Home: index.md
+  - Rules:
+    - Overview: rules/README.md
+    - Core:
+      - Vision Gate: rules/core/vision-gate.md
+      - Anti-Loops: rules/core/anti-loops.md
+    - Design: rules/design/design-routing.md
+    - LLM: rules/llm/llm-calls.md
+    - Browser:
+      - Chrome: rules/browser/chrome-session.md
+      - Automation: rules/browser/browser-automation.md
+  - Configuration:
+    - Models: configuration/models.md
+  - Tools:
+    - look_at: tools/look_at.md
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+
+plugins:
+  - search

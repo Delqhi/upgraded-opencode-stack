@@ -1,0 +1,560 @@
+{
+  "version": "1.0.0",
+  "description": "Health check configuration for all A2A agents",
+  "check_interval_seconds": 60,
+  "alert_threshold": 3,
+  "agents": {
+    "A2A-SIN-Simone-MCP": {
+      "team": "team-code",
+      "manager": "A2A-SIN-Zeus",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Frontend": {
+      "team": "team-code",
+      "manager": "A2A-SIN-Zeus",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Backend": {
+      "team": "team-code",
+      "manager": "A2A-SIN-Zeus",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Fullstack": {
+      "team": "team-code",
+      "manager": "A2A-SIN-Zeus",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Worker-Prolific": {
+      "team": "team-worker",
+      "manager": "A2A-SIN-Team-Worker",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Worker-Freelancer": {
+      "team": "team-worker",
+      "manager": "A2A-SIN-Team-Worker",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Worker-Survey": {
+      "team": "team-worker",
+      "manager": "A2A-SIN-Team-Worker",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Deploy": {
+      "team": "team-infrastructure",
+      "manager": "A2A-SIN-Team-Infrastructure",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Monitoring": {
+      "team": "team-infrastructure",
+      "manager": "A2A-SIN-Team-Infrastructure",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Security": {
+      "team": "team-infrastructure",
+      "manager": "A2A-SIN-Team-Infrastructure",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Google-Docs": {
+      "team": "team-workspace-apps",
+      "manager": "A2A-SIN-Google-Apps",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Google-Sheets": {
+      "team": "team-workspace-apps",
+      "manager": "A2A-SIN-Google-Apps",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Google-Drive": {
+      "team": "team-workspace-apps",
+      "manager": "A2A-SIN-Google-Apps",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Shortcuts": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-macOS": {
+      "team": "team-apple-apps",
+      "manager": "A2A-SIN-Apple-Apps",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Mail": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Notes": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Calendar-Contacts": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Reminders": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Photos-Files": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-FaceTime": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Notifications": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Mobile": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-Safari-WebKit": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-DeviceControl": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Apple-SystemSettings": {
+      "team": "team-apple",
+      "manager": "A2A-SIN-Apple",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Instagram": {
+      "team": "team-social",
+      "manager": "A2A-SIN-Social",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Medium": {
+      "team": "team-social",
+      "manager": "A2A-SIN-Social",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-YouTube": {
+      "team": "team-social",
+      "manager": "A2A-SIN-Social",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-TikTok": {
+      "team": "team-social",
+      "manager": "A2A-SIN-Social",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-X-Twitter": {
+      "team": "team-social",
+      "manager": "A2A-SIN-Social",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-WhatsApp": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Teams": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-WeChat": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-LINE": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Nostr": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Zoom": {
+      "team": "team-messaging",
+      "manager": "A2A-SIN-Messaging",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-StackOverflow": {
+      "team": "team-forum",
+      "manager": "A2A-SIN-Forum",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Quora": {
+      "team": "team-forum",
+      "manager": "A2A-SIN-Forum",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Patents": {
+      "team": "team-legal",
+      "manager": "A2A-SIN-Legal",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Tax": {
+      "team": "team-legal",
+      "manager": "A2A-SIN-Legal",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-TikTok-Shop": {
+      "team": "team-commerce",
+      "manager": "A2A-SIN-Commerce",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Opal": {
+      "team": "team-workspace",
+      "manager": "A2A-SIN-Google",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Research": {
+      "team": "team-research",
+      "manager": "A2A-SIN-Research",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Security-Recon": {
+      "team": "team-coding-cybersec",
+      "manager": "A2A-SIN-Code-CyberSec",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    },
+    "A2A-SIN-Security-Fuzz": {
+      "team": "team-coding-cybersec",
+      "manager": "A2A-SIN-Code-CyberSec",
+      "endpoints": {
+        "health": "/health",
+        "card": "/.well-known/agent-card.json",
+        "a2a": "/a2a/v1"
+      },
+      "check_interval_seconds": 60,
+      "alert_threshold": 3,
+      "status": "unknown"
+    }
+  }
+}
