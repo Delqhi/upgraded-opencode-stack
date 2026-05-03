@@ -1,0 +1,2118 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>System Directives — Konfiguration & Brain Sync Enforcer - OpenCode infra-opencode-stack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-directives-konfiguration-brain-sync-enforcer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="OpenCode infra-opencode-stack" class="md-header__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenCode infra-opencode-stack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System Directives — Konfiguration &amp; Brain Sync Enforcer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OpenCode infra-opencode-stack" class="md-nav__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenCode infra-opencode-stack
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/core/vision-gate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Gate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/core/anti-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anti-Loops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/design/design-routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/llm/llm-calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Browser
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Browser
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/browser/chrome-session/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chrome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rules/browser/browser-automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/look_at/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    look_at
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-was-sind-system-directives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Was sind System Directives?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Was sind System Directives?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eingebaute-directive-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eingebaute Directive Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technische-architektur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technische Architektur
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-directive-watcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. System Directive Watcher
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. System Directive Watcher">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dateilocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dateilocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starten" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starten
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daemon-setup-terminaliterm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daemon Setup (Terminal/iTerm2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launchagent-auto-start-beim-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LaunchAgent (Auto-Start beim Login)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-installierte-pfade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global Installierte Pfade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-refresh-service-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token-Refresh-Service Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#konfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Konfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-brain-sync-enforcer-extended-enforcement-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Brain Sync Enforcer &amp; Extended Enforcement Checks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Brain Sync Enforcer &amp; Extended Enforcement Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ubersicht-der-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Übersicht der Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-brain-check-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Brain Check (A)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-code-check-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Code Check (B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-documentation-check-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Documentation Check (C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-organization-project-management-check-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Organization &amp; Project Management Check (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-integration-in-oh-my-opencode-plugin-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Integration in Oh-My-Opencode (Plugin Hook)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Integration in Oh-My-Opencode (Plugin Hook)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hook-registrierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook-Registrierung
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hook-erstellung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook-Erstellung
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deaktivierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deaktivierung
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-standalone-betrieb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Standalone Betrieb
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-system-directive-watcher-neue-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. System Directive Watcher — Neue Checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-agent-anleitung-so-bestehst-du-die-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Agent-Anleitung: So bestehst du die Checks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Agent-Anleitung: So bestehst du die Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brain-check-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brain Check (A)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-check-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Check (B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-check-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Check (C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organization-check-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organization Check (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dateien-ubersicht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Dateien-Übersicht
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-erweiterung-eigene-checks-hinzufugen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Erweiterung: Eigene Checks hinzufügen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Erweiterung: Eigene Checks hinzufügen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-checks-map-erweitern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CHECKS Map erweitern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-in-watcher-eintragen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. In Watcher eintragen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-hook-option-anpassen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Hook-Option anpassen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#als-eigenstandiger-prozess" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Als eigenständiger Prozess
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-workflow-vollstandiger-brain-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Workflow: Vollständiger Brain Sync
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Workflow: Vollständiger Brain Sync">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global-brain-pcpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global Brain (.pcpm/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-brain-agentsmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Brain (AGENTS.md)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkliste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checkliste
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-erweiterung-eigene-directive-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Erweiterung: Eigene Directive Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Erweiterung: Eigene Directive Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#im-watcher-einfach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Im Watcher (einfach)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#im-plugin-komplett" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Im Plugin (komplett)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-dateien-ubersicht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Dateien-Übersicht
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-agentsmd-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. AGENTS.md Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-directives-konfiguration-brain-sync-enforcer">System Directives — Konfiguration &amp; Brain Sync Enforcer</h1>
+<blockquote>
+<p><strong>EINFÜHRUNG:</strong> System Directives sind <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - TYPE]</code> Nachrichten die vom Oh-My-Opencode Plugin automatisch in Sessions injiziert werden. Dieser Guide zeigt wie man sie erweitert, überwacht und den neuen <strong>Brain Sync Enforcer</strong> nutzt.</p>
+</blockquote>
+<hr />
+<h2 id="1-was-sind-system-directives">1. Was sind System Directives?</h2>
+<p>System Directives sind spezielle System-Nachrichten die vom <code>oh-my-opencode-sin</code> Plugin erzeugt werden. Sie haben das Format:</p>
+<div class="highlight"><pre><span></span><code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - TYPE]
+Nachrichtentext...
+</code></pre></div>
+<h3 id="eingebaute-directive-types">Eingebaute Directive Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Wann ausgelöst</th>
+<th>Quelle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TODO CONTINUATION</code></td>
+<td>Agent wird idle, Todos sind offen</td>
+<td><code>todo-continuation-enforcer</code> Hook</td>
+</tr>
+<tr>
+<td><code>RALPH LOOP</code></td>
+<td>Ralph Loop Fortsetzung</td>
+<td><code>ralph-loop</code> Hook</td>
+</tr>
+<tr>
+<td><code>BOULDER CONTINUATION</code></td>
+<td>Boulder-Plan mit offenen Tasks</td>
+<td><code>boulder-continuation</code> Hook</td>
+</tr>
+<tr>
+<td><code>DELEGATION REQUIRED</code></td>
+<td>Aufgabe muss delegiert werden</td>
+<td><code>sisyphus-junior-notepad</code> Hook</td>
+</tr>
+<tr>
+<td><code>SINGLE TASK ONLY</code></td>
+<td>Nur eine Aufgabe bearbeiten</td>
+<td><code>sisyphus-junior-notepad</code> Hook</td>
+</tr>
+<tr>
+<td><code>WORK STOP BRAIN CHECK</code></td>
+<td>Arbeit stoppen, Brain-/Todo-State final prüfen</td>
+<td><code>brain-sync-enforcer</code> Hook</td>
+</tr>
+<tr>
+<td><code>COMPACTION CONTEXT</code></td>
+<td>Nach Context-Kompaktierung</td>
+<td><code>context-window-monitor</code> Hook</td>
+</tr>
+<tr>
+<td><code>CONTEXT WINDOW MONITOR</code></td>
+<td>Context-Fenster &gt; 70% voll</td>
+<td><code>context-window-monitor</code> Hook</td>
+</tr>
+<tr>
+<td><code>PROMETHEUS READ-ONLY</code></td>
+<td>Prometheus Planner Modus</td>
+<td><code>start-work</code> Hook</td>
+</tr>
+</tbody>
+</table>
+<h3 id="technische-architektur">Technische Architektur</h3>
+<div class="highlight"><pre><span></span><code>session.idle Event
+  → todo-continuation-enforcer Handler
+    → prüft Todos via ctx.client.session.todo()
+      → inkomplete Todos? → 2s Countdown Toast
+        → injectContinuation()
+          → ctx.client.session.promptAsync()
+            → &quot;[SYSTEM DIRECTIVE: OH-MY-OPENCODE - TODO CONTINUATION]&quot;
+              + Todo-Liste im Prompt
+</code></pre></div>
+<p>Die Directive-Funktionen liegen im gebündelten Plugin:</p>
+<ul>
+<li><strong>Source:</strong> <code>local-plugins/oh-my-opencode-sin/dist/index.js</code></li>
+<li><strong>Key Function:</strong> <code>createSystemDirective(type)</code> → <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - ${type}]</code></li>
+<li><strong>Directive Types:</strong> <code>SystemDirectiveTypes</code> Konstante</li>
+</ul>
+<hr />
+<h2 id="2-system-directive-watcher">2. System Directive Watcher</h2>
+<p>Der <strong>System Directive Watcher</strong> ist ein eigenständiger Background-Prozess der Session-Nachrichten scannt und bei erkannten Directives automatisch Todos erstellt.</p>
+<h3 id="dateilocation">Dateilocation</h3>
+<div class="highlight"><pre><span></span><code>~/.config/opencode/scripts/system-directive-watcher.js
+</code></pre></div>
+<h3 id="starten">Starten</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Vordergrund (einmalig):</span>
+bun<span class="w"> </span>run<span class="w"> </span>~/.config/opencode/scripts/system-directive-watcher.js
+
+<span class="c1"># Als Daemon (persistent im Hintergrund):</span>
+bun<span class="w"> </span>run<span class="w"> </span>~/.config/opencode/scripts/system-directive-watcher.js<span class="w"> </span>--daemon
+
+<span class="c1"># Mit Log-File Tailing (statt Polling):</span>
+bun<span class="w"> </span>run<span class="w"> </span>~/.config/opencode/scripts/system-directive-watcher.js<span class="w"> </span>--log<span class="o">=</span>/tmp/oh-my-opencode.log
+
+<span class="c1"># Custom Poll-Interval (in ms):</span>
+bun<span class="w"> </span>run<span class="w"> </span>~/.config/opencode/scripts/system-directive-watcher.js<span class="w"> </span>--interval<span class="o">=</span><span class="m">5000</span>
+</code></pre></div>
+<h3 id="daemon-setup-terminaliterm2">Daemon Setup (Terminal/iTerm2)</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Daemon starten im Hintergrund:</span>
+bash<span class="w"> </span>/Users/jeremy/.config/opencode/scripts/launch-watcher.sh
+
+<span class="c1"># Status pruefen:</span>
+cat<span class="w"> </span>/tmp/opensin-directive-watcher.pid<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;RUNNING&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;NOT_RUNNING&quot;</span>
+cat<span class="w"> </span>/tmp/opencode-directive-watcher.out
+
+<span class="c1"># Daemon stoppen:</span>
+<span class="nb">kill</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span>/tmp/opensin-directive-watcher.pid<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</code></pre></div>
+<h3 id="launchagent-auto-start-beim-login">LaunchAgent (Auto-Start beim Login)</h3>
+<p>LaunchAgent plist location:</p>
+<div class="highlight"><pre><span></span><code>~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
+</code></pre></div>
+<p>Plist Inhalt:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;string&gt;</span>org.opencode.system-directive-watcher<span class="nt">&lt;/string&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;array&gt;</span>
+<span class="w">    </span><span class="nt">&lt;string&gt;</span>/Users/jeremy/.config/opencode/scripts/launch-watcher.sh<span class="nt">&lt;/string&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/array&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;true/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>KeepAlive<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;false/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>StandardErrorPath<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;string&gt;</span>/tmp/opencode-directive-watcher.err<span class="nt">&lt;/string&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>StandardOutPath<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;string&gt;</span>/tmp/opencode-directive-watcher.out<span class="nt">&lt;/string&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>EnvironmentVariables<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;dict&gt;</span>
+<span class="w">    </span><span class="nt">&lt;key&gt;</span>PATH<span class="nt">&lt;/key&gt;</span>
+<span class="w">    </span><span class="nt">&lt;string&gt;</span>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin<span class="nt">&lt;/string&gt;</span>
+<span class="w">    </span><span class="nt">&lt;key&gt;</span>HOME<span class="nt">&lt;/key&gt;</span>
+<span class="w">    </span><span class="nt">&lt;string&gt;</span>/Users/jeremy<span class="nt">&lt;/string&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/dict&gt;</span>
+<span class="w">  </span><span class="nt">&lt;key&gt;</span>Nice<span class="nt">&lt;/key&gt;</span>
+<span class="w">  </span><span class="nt">&lt;integer&gt;</span>10<span class="nt">&lt;/integer&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># LaunchAgent laden (kanonischer Weg):</span>
+launchctl<span class="w"> </span>bootstrap<span class="w"> </span>gui/<span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span>~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist
+
+<span class="c1"># Alternative: Direkt über den Wrapper starten:</span>
+bash<span class="w"> </span>/Users/jeremy/.config/opencode/scripts/launch-watcher.sh
+</code></pre></div>
+<h3 id="global-installierte-pfade">Global Installierte Pfade</h3>
+<p>Der Watcher ist global installiert fuer JEDES Projekt:</p>
+<div class="highlight"><pre><span></span><code>~/.config/opencode/scripts/system-directive-watcher.js  ← Haupt-Watcher
+~/.config/opencode/scripts/launch-watcher.sh            ← Launch-Helper Script
+~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist  ← Auto-Start
+</code></pre></div>
+<h3 id="token-refresh-service-safety">Token-Refresh-Service Safety</h3>
+<p>Der Antigravity-Token-Refresh-Service bleibt absichtlich manuell/aufrufgesteuert:</p>
+<ul>
+<li><code>~/Library/LaunchAgents/com.antigravity.Token-Refresh-Service.plist</code></li>
+<li><code>RunAtLoad=false</code></li>
+<li><code>KeepAlive=false</code></li>
+</ul>
+<p>Er darf <strong>nicht</strong> vom Watcher oder irgendeinem Auto-Start-Pfad getriggert werden.</p>
+<h3 id="konfiguration">Konfiguration</h3>
+<p>Die <code>DIRECTIVE_ACTIONS</code> Map im Script definiert welche Todos pro Directive erstellt werden:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">DIRECTIVE_ACTIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;TODO CONTINUATION&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Global Brain aktualisieren (.pcpm/ sync)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Local Brain aktualisieren (project context)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Todo-Liste pruefen und aktualisieren&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;WORK STOP BRAIN CHECK&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Brain Sync final prüfen&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Todo-Status vor Stopp validieren&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;BRAIN SYNC ENFORCER&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Brain Sync: Global Brain + Local Brain&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="c1">// ... weitere Types</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Neue Directive Types einfach als neuen Key hinzufügen.</p>
+<h3 id="state-management">State Management</h3>
+<ul>
+<li>State-File: <code>/tmp/opensin-directive-watcher-state.json</code></li>
+<li>Speichert bereits verarbeitete Directives (keine Duplikate)</li>
+<li>Max 100 Einträge (automatisches Rotieren)</li>
+</ul>
+<hr />
+<h2 id="3-brain-sync-enforcer-extended-enforcement-checks">3. Brain Sync Enforcer &amp; Extended Enforcement Checks</h2>
+<p><strong>Oh-My-Opencode Plugin</strong> bietet einen <code>brain-sync-enforcer</code> Hook der vier kritische Checks durchsetzt:</p>
+<h3 id="31-ubersicht-der-checks">3.1 Übersicht der Checks</h3>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Directive Type</th>
+<th>Erfolgs-Phrase</th>
+<th>Priorität</th>
+<th>Wann ausgelöst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A) Brain Check</strong></td>
+<td><code>BRAIN SYNC ENFORCER</code></td>
+<td><code>Brains updated</code></td>
+<td>HIGH</td>
+<td>Agent idle, vor Stopp</td>
+</tr>
+<tr>
+<td><strong>B) Code Check</strong></td>
+<td><code>CODE CHECK</code></td>
+<td><code>Repositories updated</code></td>
+<td>HIGH</td>
+<td>Nach Code-Arbeit</td>
+</tr>
+<tr>
+<td><strong>C) Documentation Check</strong></td>
+<td><code>DOCUMENTATION CHECK</code></td>
+<td><code>Docs updated</code></td>
+<td>HIGH</td>
+<td>Vor Abschluss</td>
+</tr>
+<tr>
+<td><strong>D) Organization Check</strong></td>
+<td><code>ORGANIZATION CHECK</code></td>
+<td><code>Org updated</code></td>
+<td>HIGH</td>
+<td>GitHub Hygiene</td>
+</tr>
+</tbody>
+</table>
+<p>Alle Checks arbeiten mit demselben Mechanismus:</p>
+<ol>
+<li>Directive wird per <code>session.promptAsync()</code> injiziert</li>
+<li>Agent MUSS mit exakter Erfolgs-Phrase antworten</li>
+<li>Bei fehlender Antwort: Re-Injection alle 10s (max 5 Retries)</li>
+<li>Erst nach Bestätigung: Arbeit freigegeben</li>
+</ol>
+<h3 id="32-brain-check-a">3.2 Brain Check (A)</h3>
+<p><strong>Directive:</strong> <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - BRAIN SYNC ENFORCER]</code></p>
+<p><strong>Prüft:</strong></p>
+<ul>
+<li>Global Brain (<code>.pcpm/</code> + Hive Mind sync)</li>
+<li>Local Brain (<code>AGENTS.md</code> + Project-Pläne)</li>
+</ul>
+<p><strong>Antwort:</strong> <code>Brains updated</code></p>
+<p><strong>Patterns:</strong></p>
+<div class="highlight"><pre><span></span><code>/brains?\s+updated?/i
+/brain\s+sync\s+(done|complete|finished|ok)/i
+/ja.*brain/i
+/yes.*brain/i
+/global.*local.*brain/i
+/pcpm.*sync/i
+/hive\s+mind\s+updated?/i
+</code></pre></div>
+<hr />
+<h3 id="33-code-check-b">3.3 Code Check (B)</h3>
+<p><strong>Directive:</strong> <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - CODE CHECK]</code></p>
+<p><strong>Prüft:</strong></p>
+<ol>
+<li>Repositories aktualisiert</li>
+<li>Alle Changes committed, gepusht, in <code>main</code> gemerged</li>
+<li>Priority Lists &amp; Issues aktualisiert/erstellt</li>
+</ol>
+<p><strong>Antwort:</strong> <code>Repositories updated</code></p>
+<p><strong>Patterns:</strong></p>
+<div class="highlight"><pre><span></span><code>/repositories?\s+updated/i
+/repo.*updated/i
+/all.*(commit|push|merge|main).*done/i
+/code.*complete/i
+</code></pre></div>
+<hr />
+<h3 id="34-documentation-check-c">3.4 Documentation Check (C)</h3>
+<p><strong>Directive:</strong> <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - DOCUMENTATION CHECK]</code></p>
+<p><strong>Prüft:</strong></p>
+<ul>
+<li>README.md Updates</li>
+<li>API Documentation Changes</li>
+<li>Architecture Decision Records (ADRs)</li>
+<li>User Guides &amp; Inline Comments</li>
+<li>Changelog Einträge</li>
+</ul>
+<p><strong>Antwort:</strong> <code>Docs updated</code></p>
+<p><strong>Patterns:</strong></p>
+<div class="highlight"><pre><span></span><code>/docs?\s+updated/i
+/documentation.*complete/i
+/readme.*update/i
+/all.*docs.*done/i
+</code></pre></div>
+<hr />
+<h3 id="35-organization-project-management-check-d">3.5 Organization &amp; Project Management Check (D)</h3>
+<p><strong>Directive:</strong> <code>[SYSTEM DIRECTIVE: OH-MY-OPENCODE - ORGANIZATION CHECK]</code></p>
+<p><strong>Prüft Enterprise-GitHub-Hygiene:</strong></p>
+<ol>
+<li><strong>Issue &amp; PR Management:</strong> Issues korrekt gelabelt, Milestones zugewiesen, PRs mit Issues verlinkt (z.B. "Resolves #ID"), PR-Beschreibungen vollständig</li>
+<li><strong>Traceability:</strong> Commits, PR-Diskussionen, Review-Kommentare enthalten Issue-ID Querverweise</li>
+<li><strong>Backlog &amp; Technical Debt:</strong> Edge-Cases, Bugs, Tech-D Debt als GitHub Issues mit Priorität erfasst</li>
+<li><strong>Stakeholder Alignment:</strong> Kommentare auf Issues/PRs, @mentions, Changelogs aktualisiert</li>
+<li><strong>Compliance &amp; Documentation:</strong> Architektur-Entscheidungen in PR-Kommentaren, Issues oder Docs festgehalten</li>
+</ol>
+<p><strong>Antwort:</strong> <code>Org updated</code></p>
+<p><strong>Patterns:</strong></p>
+<div class="highlight"><pre><span></span><code>/org\s+updated/i
+/organization.*complete/i
+/github.*hygiene.*done/i
+/all.*issues?.*label/i
+/all.*prs?.*complete/i
+/project.*management.*done/i
+</code></pre></div>
+<hr />
+<h2 id="4-integration-in-oh-my-opencode-plugin-hook">4. Integration in Oh-My-Opencode (Plugin Hook)</h2>
+<h3 id="hook-registrierung">Hook-Registrierung</h3>
+<p>In <code>local-plugins/oh-my-opencode-sin/src/hooks/index.ts</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createBrainSyncEnforcer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./brain-sync-enforcer&quot;</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="hook-erstellung">Hook-Erstellung</h3>
+<p>In <code>local-plugins/oh-my-opencode-sin/src/create-hooks.ts</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">brainSyncEnforcer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">isHookEnabled</span><span class="p">(</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">?</span><span class="w"> </span><span class="nx">safeHook</span><span class="p">(</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">      </span><span class="nx">createBrainSyncEnforcer</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">retryIntervalMs</span><span class="o">:</span><span class="w"> </span><span class="kt">10000</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">maxRetries</span><span class="o">:</span><span class="w"> </span><span class="kt">5</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">enabledChecks</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;brain&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;code&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;docs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;org&quot;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Alle 4 Checks</span>
+<span class="w">      </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Optionen:</strong></p>
+<ul>
+<li><code>retryIntervalMs</code>: Re-Injection Intervall (default: 10000ms)</li>
+<li><code>maxRetries</code>: Maximale Versuche (default: 5)</li>
+<li><code>enabledChecks</code>: Array der aktiven Checks (<code>["brain"]</code> für nur Brain Check)</li>
+</ul>
+<h3 id="deaktivierung">Deaktivierung</h3>
+<p>In <code>~/.config/opencode/oh-my-openagent.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;disabled_hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5-standalone-betrieb">5. Standalone Betrieb</h2>
+<p>Falls keine Plugin-Integration möglich:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Einfacher Test</span>
+bun<span class="w"> </span>run<span class="w"> </span>scripts/brain-sync-enforcer.js<span class="w"> </span>--session<span class="o">=</span>ses_abc123
+</code></pre></div>
+<p>Der Script nutzt dieselbe Logik wie der Hook, aber ohne OpenCode Context.</p>
+<hr />
+<h2 id="6-system-directive-watcher-neue-checks">6. System Directive Watcher — Neue Checks</h2>
+<p>Der Watcher (<code>scripts/system-directive-watcher.js</code>) erstellt automatisch Todos für alle 4 Checks:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">DIRECTIVE_ACTIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;BRAIN SYNC ENFORCER&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Brain Sync: Global Brain + Local Brain&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;CODE CHECK&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Code-Check: Repositories updated + pushed + merged&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Issues/Priorities aktualisiert&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;DOCUMENTATION CHECK&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Dokumentation reviewen: README, ADRs, Changelog&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Fehlende Docs erstellen&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;ORGANIZATION CHECK&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;GitHub-Hygiene: Issues labeln, PRs verlinken&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Traceability: Commit-Messages mit Issue-ID&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Backlog/Technical Debt als Issues erfassen&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Stakeholder-Kommentare/@mentions pruefen&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="c1">// ... bestehende Types</span>
+<span class="p">};</span>
+</code></pre></div>
+<hr />
+<h2 id="7-agent-anleitung-so-bestehst-du-die-checks">7. Agent-Anleitung: So bestehst du die Checks</h2>
+<h3 id="brain-check-a">Brain Check (A)</h3>
+<ol>
+<li><code>node global-brain/src/cli.js sync</code> (Global Brain)</li>
+<li><code>AGENTS.md</code> aktualisieren (Local Brain)</li>
+<li>Antwort: <code>Brains updated</code></li>
+</ol>
+<h3 id="code-check-b">Code Check (B)</h3>
+<p>1.Repo(s) updaten, committen, pushen 2. PR erstellen, in <code>main</code> mergen 3. Priority Lists &amp; Issues anpassen 4. Antwort: <code>Repositories updated</code></p>
+<h3 id="documentation-check-c">Documentation Check (C)</h3>
+<p>1.README/API-Docs/ADRs überprüfen
+2.Fehlende Docs erstellen/updaten 3. Changelog ergänzen 4. Antwort: <code>Docs updated</code></p>
+<h3 id="organization-check-d">Organization Check (D)</h3>
+<p>1.Issues labeln &amp; Milestones zuweisen
+2.PRs mit Issues verlinken ("Resolves #123")
+3.Commit-Messages mit Issue-ID
+4.Backlog/Tech-Debt als Issues erfassen
+5.Stakeholder @mentions setzen
+6.Antwort: <code>Org updated</code></p>
+<p><strong>WICHTIG:</strong> Genau diese Phrase verwenden — keine Abwandlungen!</p>
+<hr />
+<h2 id="8-troubleshooting">8. Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Check wird nicht ausgelöst</td>
+<td>Hook-Aktivierung prüfen: <code>isHookEnabled("brain-sync-enforcer")</code></td>
+</tr>
+<tr>
+<td>Agent antwortet mit falscher Phrase</td>
+<td>Retry-Loop → nach 5 Versuchen Eskalation</td>
+</tr>
+<tr>
+<td>Zuviele Retries</td>
+<td><code>maxRetries</code> erhöhen oder Issue melden</td>
+</tr>
+<tr>
+<td>Nur bestimmte Checks aktivieren</td>
+<td><code>enabledChecks: ["brain", "code"]</code> im Hook</td>
+</tr>
+<tr>
+<td>State-Problem</td>
+<td>State-File löschen: <code>rm /tmp/opensin-brain-sync-state.json</code></td>
+</tr>
+<tr>
+<td>Watcher erkennt keine Directives</td>
+<td>Session-Verzeichnis prüfen: <code>~/.local/share/opencode/messages/</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-dateien-ubersicht">9. Dateien-Übersicht</h2>
+<table>
+<thead>
+<tr>
+<th>Datei</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/brain-sync-enforcer.js</code></td>
+<td>Hook + Standalone Script (4 Checks)</td>
+</tr>
+<tr>
+<td><code>scripts/system-directive-watcher.js</code></td>
+<td>Background Watcher für alle Directives</td>
+</tr>
+<tr>
+<td><code>docs/operations/system-directives-guide.md</code></td>
+<td>Diese Dokumentation</td>
+</tr>
+<tr>
+<td><code>/tmp/opensin-brain-sync-state.json</code></td>
+<td>Check-Status pro Session</td>
+</tr>
+<tr>
+<td><code>/tmp/opensin-directive-watcher-state.json</code></td>
+<td>Watcher-State (processed Directives)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-erweiterung-eigene-checks-hinzufugen">10. Erweiterung: Eigene Checks hinzufügen</h2>
+<h3 id="1-checks-map-erweitern">1. CHECKS Map erweitern</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// In brain-sync-enforcer.js</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">CHECKS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// ... bestehende Checks</span>
+
+<span class="w">  </span><span class="nx">myCustomCheck</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">directiveType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;MY CUSTOM CHECK&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">prompt</span><span class="o">:</span><span class="w"> </span><span class="sb">`[SYSTEM DIRECTIVE: OH-MY-OPENCODE - MY CUSTOM CHECK]</span>
+
+<span class="sb">Prüfe ob...`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">confirmationPatterns</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="sr">/my\s+custom\s+confirmed/i</span><span class="p">,</span>
+<span class="w">      </span><span class="sr">/custom\s+check\s+done/i</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nx">successPhrase</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Custom check done&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="2-in-watcher-eintragen">2. In Watcher eintragen</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// In system-directive-watcher.js</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">DIRECTIVE_ACTIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;MY CUSTOM CHECK&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Custom Check Todo 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">};</span>
+</code></pre></div>
+<h3 id="3-hook-option-anpassen">3. Hook-Option anpassen</h3>
+<div class="highlight"><pre><span></span><code><span class="nx">createBrainSyncEnforcer</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">enabledChecks</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;brain&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;code&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;docs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;org&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;myCustomCheck&quot;</span><span class="p">],</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Für native Integration als Hook im Plugin:</p>
+<div class="highlight"><pre><span></span><code>local-plugins/oh-my-opencode-sin/
+└── src/
+    └── hooks/
+        └── brain-sync-enforcer/
+            ├── index.ts          # Hook registration
+            ├── handler.ts        # Event handling
+            ├── constants.ts      # Directive text, patterns
+            └── session-state.ts  # Per-session tracking
+</code></pre></div>
+<p><strong>Hook-Registrierung</strong> in <code>src/hooks/index.ts</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createBrainSyncEnforcer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./brain-sync-enforcer&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Einbinden</strong> in <code>src/create-hooks.ts</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">brainSyncEnforcer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">isHookEnabled</span><span class="p">(</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="o">?</span><span class="w"> </span><span class="nx">safeHook</span><span class="p">(</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">      </span><span class="nx">createBrainSyncEnforcer</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">retryIntervalMs</span><span class="o">:</span><span class="w"> </span><span class="kt">10000</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">maxRetries</span><span class="o">:</span><span class="w"> </span><span class="kt">5</span><span class="p">,</span>
+<span class="w">      </span><span class="p">}),</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Deaktivieren</strong> via <code>oh-my-openagent.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;disabled_hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="als-eigenstandiger-prozess">Als eigenständiger Prozess</h3>
+<p>Falls keine Plugin-Integration gewünscht:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Parallel zum opencode-Prozess starten:</span>
+bun<span class="w"> </span>run<span class="w"> </span>scripts/brain-sync-enforcer.js<span class="w"> </span>--session<span class="o">=</span>ses_abc123
+
+<span class="c1"># Der Prozess:</span>
+<span class="c1"># 1. Überwacht die Session auf session.idle Events</span>
+<span class="c1"># 2. Injiziert BRAIN SYNC ENFORCER bei idle</span>
+<span class="c1"># 3. Prüft Agent-Antworten auf Bestätigung</span>
+<span class="c1"># 4. Re-injiziert bei keiner Antwort (alle 10s)</span>
+</code></pre></div>
+<hr />
+<h2 id="4-workflow-vollstandiger-brain-sync">4. Workflow: Vollständiger Brain Sync</h2>
+<h3 id="global-brain-pcpm">Global Brain (.pcpm/)</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Global Brain setup (einmalig pro Projekt):</span>
+node<span class="w"> </span>/Users/jeremy/dev/global-brain/src/cli.js<span class="w"> </span>setup-hooks<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project-root<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agents-directive
+
+<span class="c1"># Brain sync manuell anstoßen:</span>
+node<span class="w"> </span>/Users/jeremy/dev/global-brain/src/cli.js<span class="w"> </span>sync<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span><span class="k">)</span>
+</code></pre></div>
+<h3 id="local-brain-agentsmd">Local Brain (AGENTS.md)</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Deep initialization:</span>
+/init-deep
+
+<span class="c1"># Manuelle AGENTS.md Aktualisierung:</span>
+<span class="c1"># - Projekt-Zusammenfassung aktualisieren</span>
+<span class="c1"># - Neue Architektur-Entscheidungen dokumentieren</span>
+<span class="c1"># - Offene TODOs eintragen</span>
+</code></pre></div>
+<h3 id="checkliste">Checkliste</h3>
+<ul>
+<li>[ ] <code>.pcpm/</code> Verzeichnis existiert und ist aktuell</li>
+<li>[ ] <code>AGENTS.md</code> enthält neuesten Projektstand</li>
+<li>[ ] Alle Architektur-Entscheidungen dokumentiert</li>
+<li>[ ] Offene Todos in <code>.sisyphus/plans/</code> erfasst</li>
+<li>[ ] Antwort: "Brains updated"</li>
+</ul>
+<hr />
+<h2 id="5-erweiterung-eigene-directive-types">5. Erweiterung: Eigene Directive Types</h2>
+<h3 id="im-watcher-einfach">Im Watcher (einfach)</h3>
+<p>Neuen Key in <code>DIRECTIVE_ACTIONS</code> einfügen:</p>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;BRAIN SYNC ENFORCER&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nx">content</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Brain Sync durchfuehren&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">priority</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="p">],</span>
+</code></pre></div>
+<h3 id="im-plugin-komplett">Im Plugin (komplett)</h3>
+<p>Für echte Plugin-Integration mit Prompt-Injection:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// constants.ts</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">HOOK_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;brain-sync-enforcer&quot;</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">BRAIN_SYNC_PROMPT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`[SYSTEM DIRECTIVE: OH-MY-OPENCODE - BRAIN SYNC ENFORCER]</span>
+<span class="sb">...`</span><span class="p">;</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">CONFIRMATION_PATTERNS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="sr">/brains?\s+updated?/i</span><span class="p">,</span><span class="w"> </span><span class="p">...];</span>
+
+<span class="c1">// handler.ts</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">createBrainSyncEnforcer</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">event</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="kr">type</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;session.idle&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">sessionID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">properties</span><span class="o">?</span><span class="p">.</span><span class="nx">sessionID</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">sessionID</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">todos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">todo</span><span class="p">({</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">sessionID</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">hasIncompleteTodos</span><span class="p">(</span><span class="nx">todos</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">promptAsync</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">sessionID</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">parts</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="kt">BRAIN_SYNC_PROMPT</span><span class="w"> </span><span class="p">}]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">handler</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="6-troubleshooting">6. Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Watcher erkennt keine Directives</td>
+<td>Session-Verzeichnis prüfen: <code>~/.local/share/opencode/messages/</code></td>
+</tr>
+<tr>
+<td>Directives werden doppelt verarbeitet</td>
+<td>State-File löschen: <code>rm /tmp/opensin-directive-watcher-state.json</code></td>
+</tr>
+<tr>
+<td>Daemon startet nicht</td>
+<td>PID-File prüfen: <code>rm /tmp/opensin-directive-watcher.pid</code></td>
+</tr>
+<tr>
+<td>Brain Sync Enforcer nicht aktiv</td>
+<td>Hook-Name in <code>disabled_hooks</code> prüfen</td>
+</tr>
+<tr>
+<td>Agent antwortet nicht auf Brain Sync</td>
+<td>Retry-Interval erhöhen (<code>--interval=15000</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-dateien-ubersicht">7. Dateien-Übersicht</h2>
+<table>
+<thead>
+<tr>
+<th>Datei</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/system-directive-watcher.js</code></td>
+<td>Background Watcher für alle Directive Types</td>
+</tr>
+<tr>
+<td><code>scripts/brain-sync-enforcer.js</code></td>
+<td>Brain Sync Enforcer (eigenständig)</td>
+</tr>
+<tr>
+<td><code>local-plugins/oh-my-opencode-sin/dist/index.js</code></td>
+<td>Oh-My-Opencode Plugin (Source der Directives)</td>
+</tr>
+<tr>
+<td><code>/tmp/opensin-directive-watcher-state.json</code></td>
+<td>Watcher State (processed Directives)</td>
+</tr>
+<tr>
+<td><code>/tmp/opensin-brain-sync-state.json</code></td>
+<td>Brain Sync State (Session-Tracking)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-agentsmd-integration">8. AGENTS.md Integration</h2>
+<p>Damit Agenten den Brain Sync Enforcer richtig verstehen, folgende Sektion in die projektspezifische <code>AGENTS.md</code> aufnehmen:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># 🚨 BRAIN SYNC ENFORCER (PRIORITY -7.5) 🚨</span>
+
+Wenn du eine <span class="sb">`[SYSTEM DIRECTIVE: OH-MY-OPENCODE - BRAIN SYNC ENFORCER]`</span> Nachricht erhältst:
+
+<span class="k">1.</span> PRÜFE sofort ob Global Brain (.pcpm/) und Local Brain (AGENTS.md) aktuell sind
+<span class="k">2.</span> Falls NEIN: Führe den Brain Sync SOFORT durch
+<span class="k">3.</span> Antworte NUR mit: &quot;Brains updated&quot;
+<span class="k">4.</span> Du darfst NICHT weiterarbeiten oder stoppen ohne diese Bestätigung
+
+Brain Sync Checklist:
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`.pcpm/`</span> Verzeichnis aktuell? → <span class="sb">`node global-brain/src/cli.js sync`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`AGENTS.md`</span> aktuell? → Projektstand dokumentieren
+<span class="k">-</span><span class="w"> </span>Antwort: &quot;Brains updated&quot;
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

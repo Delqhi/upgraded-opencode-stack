@@ -1,0 +1,1692 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>OCI VM Architecture — Oracle Cloud Infrastructure Always Free - OpenCode infra-opencode-stack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#oci-vm-architecture-oracle-cloud-infrastructure-always-free" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenCode infra-opencode-stack" class="md-header__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenCode infra-opencode-stack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OCI VM Architecture — Oracle Cloud Infrastructure Always Free
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenCode infra-opencode-stack" class="md-nav__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenCode infra-opencode-stack
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/core/vision-gate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Gate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/core/anti-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anti-Loops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/design/design-routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/llm/llm-calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Browser
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Browser
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/browser/chrome-session/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chrome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/browser/browser-automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/look_at/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    look_at
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Hardware &amp; Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🐳 Docker Services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🐳 Docker Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supabase-stack-optsin-supabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supabase Stack (/opt/sin-supabase/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n8n-optn8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        n8n (/opt/n8n/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opensin-neural-bus-homeubuntuopensin-neural-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenSIN Neural Bus (/home/ubuntu/OpenSIN-Neural-Bus/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sin-room13-optsin-room13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sin-room13 (/opt/sin-room13/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        llm-tunnel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#systemd-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ Systemd Services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 GitHub Actions Runners
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💾 Storage Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💾 Storage Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-storage-oci-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Storage (OCI VM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gitlab-storage-infinite-via-gitlab-storage-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitLab Storage (Infinite, via /gitlab-storage skill)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Network Ports
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-github-repos-opensin-ai-org" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗂️ Related GitHub Repos (OpenSIN-AI org)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintenance-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Maintenance Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Known Issues &amp; Fixes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bug-oci-001-oci-vm-disk-full-prevention-2026-04-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 BUG-OCI-001: OCI VM Disk Full Prevention (2026-04-16)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚨 BUG-OCI-001: OCI VM Disk Full Prevention (2026-04-16)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-layer-protection-stack-fully-deployed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-Layer Protection Stack (fully deployed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-verification-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Verification Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="oci-vm-architecture-oracle-cloud-infrastructure-always-free">OCI VM Architecture — Oracle Cloud Infrastructure Always Free</h1>
+<blockquote>
+<p><strong>HOST:</strong> <code>ubuntu@92.5.60.87</code>
+<strong>SHAPE:</strong> VM.Standard.A1.Flex (4 OCPU, 24 GB RAM, 193 GB boot volume)
+<strong>TIER:</strong> Oracle Cloud Always Free (never expires)</p>
+</blockquote>
+<hr />
+<h2 id="hardware-limits">📊 Hardware &amp; Limits</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Value</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU</strong></td>
+<td>4 OCPU (Ampere A1, ARM64)</td>
+<td>4 OCPU free</td>
+</tr>
+<tr>
+<td><strong>RAM</strong></td>
+<td>24 GB</td>
+<td>24 GB free</td>
+</tr>
+<tr>
+<td><strong>Boot Volume</strong></td>
+<td>193 GB ext4</td>
+<td>200 GB free (total block storage)</td>
+</tr>
+<tr>
+<td><strong>Network</strong></td>
+<td>40 Gbps max</td>
+<td>10 TB/month outbound free</td>
+</tr>
+<tr>
+<td><strong>Public IP</strong></td>
+<td>92.5.60.87</td>
+<td>1 ephemeral + 1 reserved free</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="docker-services">🐳 Docker Services</h2>
+<h3 id="supabase-stack-optsin-supabase">Supabase Stack (<code>/opt/sin-supabase/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>supabase-db</code></td>
+<td>5432 (internal)</td>
+<td>PostgreSQL 15</td>
+</tr>
+<tr>
+<td><code>supabase-kong</code></td>
+<td>8006, 8444</td>
+<td>API Gateway</td>
+</tr>
+<tr>
+<td><code>supabase-auth</code></td>
+<td>—</td>
+<td>GoTrue (authentication)</td>
+</tr>
+<tr>
+<td><code>supabase-rest</code></td>
+<td>3000 (internal)</td>
+<td>PostgREST</td>
+</tr>
+<tr>
+<td><code>supabase-studio</code></td>
+<td>3004</td>
+<td>Admin UI</td>
+</tr>
+<tr>
+<td><code>supabase-storage</code></td>
+<td>5000 (internal)</td>
+<td>Storage API</td>
+</tr>
+<tr>
+<td><code>supabase-meta</code></td>
+<td>8080 (internal)</td>
+<td>Postgres Meta</td>
+</tr>
+<tr>
+<td><code>supabase-pooler</code></td>
+<td>6543, 5434</td>
+<td>Supavisor (connection pooling)</td>
+</tr>
+<tr>
+<td><code>supabase-analytics</code></td>
+<td>4000</td>
+<td>Logflare</td>
+</tr>
+<tr>
+<td><code>supabase-vector</code></td>
+<td>—</td>
+<td>Vector monitoring</td>
+</tr>
+<tr>
+<td><code>supabase-imgproxy</code></td>
+<td>8080 (internal)</td>
+<td>Image proxy</td>
+</tr>
+<tr>
+<td><code>supabase-edge-functions</code></td>
+<td>—</td>
+<td>Deno edge runtime</td>
+</tr>
+<tr>
+<td><code>realtime-dev</code></td>
+<td>—</td>
+<td>Realtime subscriptions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="n8n-optn8n">n8n (<code>/opt/n8n/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n8n-n8n-1</code></td>
+<td>5678</td>
+<td>Workflow automation engine</td>
+</tr>
+</tbody>
+</table>
+<h3 id="opensin-neural-bus-homeubuntuopensin-neural-bus">OpenSIN Neural Bus (<code>/home/ubuntu/OpenSIN-Neural-Bus/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opensin-neural-bus-pgvector-1</code></td>
+<td>5435</td>
+<td>PgVector database</td>
+</tr>
+<tr>
+<td><code>opensin-neural-bus-nats-1</code></td>
+<td>4222, 8222</td>
+<td>NATS message broker</td>
+</tr>
+<tr>
+<td><code>opensin-neural-bus-redis-1</code></td>
+<td>6380</td>
+<td>Redis cache</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sin-room13-optsin-room13">sin-room13 (<code>/opt/sin-room13/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Port</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sin-room13</code></td>
+<td>8014</td>
+<td>Task ingestion coordinator</td>
+</tr>
+<tr>
+<td><code>room-04-redis-cache</code></td>
+<td>6379 (internal)</td>
+<td>Redis cache for Room13</td>
+</tr>
+</tbody>
+</table>
+<h3 id="llm-tunnel">llm-tunnel</h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>llm-tunnel</code></td>
+<td>Cloudflare cloudflared tunnel for LLM access</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="systemd-services">⚙️ Systemd Services</h2>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sin-server.service</code></td>
+<td>A2A Server runtime</td>
+<td><code>/opt/sin-control-plane/.../cli.js serve-a2a</code></td>
+</tr>
+<tr>
+<td><code>sin-supabase.service</code></td>
+<td>Supabase metadata plane</td>
+<td><code>/opt/sin-control-plane/.../cli.js serve-a2a</code></td>
+</tr>
+<tr>
+<td><code>runner-cleanup.timer</code></td>
+<td>Hourly .so file cleanup</td>
+<td><code>/usr/local/bin/cleanup-runner-libs.sh</code></td>
+</tr>
+<tr>
+<td><code>tmp-clean</code> (cron)</td>
+<td>Daily /tmp cleanup</td>
+<td><code>find /tmp -mtime +7 -delete</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="github-actions-runners">🔄 GitHub Actions Runners</h2>
+<table>
+<thead>
+<tr>
+<th>Runner</th>
+<th>Location</th>
+<th>Org</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oci-a1flex-arm64</code></td>
+<td><code>/home/ubuntu/actions-runner/</code></td>
+<td>OpenSIN-AI</td>
+<td>Active</td>
+</tr>
+<tr>
+<td><code>oci-a1flex-arm64-2</code></td>
+<td><code>/home/ubuntu/oci-a1flex-arm64-2/</code></td>
+<td>OpenSIN-AI</td>
+<td>Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Known Issue (FIXED):</strong> .NET runners extract <code>.so</code> files to <code>/tmp/</code> and never clean them up.</p>
+<ul>
+<li><strong>Fix:</strong> <code>DOTNET_BUNDLE_EXTRACT_BASE_DIR=/tmp/dotnet-libs</code> in <code>.env</code></li>
+<li><strong>Cleanup:</strong> Hourly systemd timer removes stale files</li>
+</ul>
+<hr />
+<h2 id="storage-architecture">💾 Storage Architecture</h2>
+<h3 id="local-storage-oci-vm">Local Storage (OCI VM)</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Size</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/opt/sin-supabase/volumes/db/data</code></td>
+<td>~225 MB</td>
+<td>PostgreSQL data</td>
+</tr>
+<tr>
+<td><code>/opt/OpenSIN-Code/.git/</code></td>
+<td>~363 MB</td>
+<td>Git objects</td>
+</tr>
+<tr>
+<td><code>/var/lib/docker/volumes/</code></td>
+<td>~135 MB</td>
+<td>Docker volumes</td>
+</tr>
+<tr>
+<td><code>/home/ubuntu/.local/lib/python3.12/site-packages/oci</code></td>
+<td>~440 MB</td>
+<td>OCI SDK</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gitlab-storage-infinite-via-gitlab-storage-skill">GitLab Storage (Infinite, via <code>/gitlab-storage</code> skill)</h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Repo Prefix</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oci-vm</code></td>
+<td><code>oci-vm-storage-</code></td>
+<td>Docker images, DB dumps, system backups</td>
+</tr>
+<tr>
+<td><code>sin-solver</code></td>
+<td><code>sin-solver-logcenter-</code></td>
+<td>Logs, videos, screenshots, reports</td>
+</tr>
+<tr>
+<td><code>sin-backend</code></td>
+<td><code>sin-backend-storage-</code></td>
+<td>Backend files, DB dumps</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rotation:</strong> Auto-creates new repos at 9 GB per volume (10 GB free limit - 1 GB safety).</p>
+<hr />
+<h2 id="network-ports">🌐 Network Ports</h2>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Service</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5678</td>
+<td>n8n Web UI</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>8006</td>
+<td>Supabase Kong HTTP</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>8444</td>
+<td>Supabase Kong HTTPS</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>3004</td>
+<td>Supabase Studio</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>4000</td>
+<td>Supabase Analytics</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>8014</td>
+<td>sin-room13</td>
+<td>Public</td>
+</tr>
+<tr>
+<td>6543</td>
+<td>Supabase Pooler (PgBouncer)</td>
+<td>Internal</td>
+</tr>
+<tr>
+<td>5434</td>
+<td>Supabase Pooler (Postgres)</td>
+<td>Internal</td>
+</tr>
+<tr>
+<td>5435</td>
+<td>PgVector</td>
+<td>Internal</td>
+</tr>
+<tr>
+<td>4222</td>
+<td>NATS</td>
+<td>Internal</td>
+</tr>
+<tr>
+<td>6380</td>
+<td>Redis</td>
+<td>Internal</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="related-github-repos-opensin-ai-org">🗂️ Related GitHub Repos (OpenSIN-AI org)</h2>
+<p>OCI VM components are spread across multiple repos:</p>
+<table>
+<thead>
+<tr>
+<th>Repo</th>
+<th>Purpose</th>
+<th>OCI VM Component</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/OpenSIN-backend"><code>OpenSIN-AI/OpenSIN-backend</code></a></td>
+<td>Backend + A2A fleet control plane</td>
+<td>sin-server, sin-supabase services</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus"><code>OpenSIN-AI/OpenSIN-Neural-Bus</code></a></td>
+<td>Event-Driven Nervous System</td>
+<td>pgvector + NATS + Redis stack</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/Team-SIN-Infrastructure"><code>OpenSIN-AI/Team-SIN-Infrastructure</code></a></td>
+<td>Infrastructure team</td>
+<td>VM management, deployment</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/Infra-SIN-Dev-Setup"><code>OpenSIN-AI/Infra-SIN-Dev-Setup</code></a></td>
+<td>Dev Environment Setup</td>
+<td>Initial VM provisioning</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/sin-github-action"><code>OpenSIN-AI/sin-github-action</code></a></td>
+<td>Self-hosted CI/CD</td>
+<td>GitHub Actions Runners</td>
+</tr>
+<tr>
+<td><a href="https://github.com/OpenSIN-AI/Core-SIN-Control-Plane"><code>OpenSIN-AI/Core-SIN-Control-Plane</code></a></td>
+<td>Doctor/Preflight/Eval</td>
+<td>Health checks, preflight</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Delqhi/upgraded-opencode-stack"><code>Delqhi/upgraded-opencode-stack</code></a></td>
+<td>OpenCode Stack (local)</td>
+<td>Skills, plugins, configs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="maintenance-commands">🔧 Maintenance Commands</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check disk usage (live)</span>
+df<span class="w"> </span>-h<span class="w"> </span>/
+
+<span class="c1"># All 6 coder agents healthy?</span>
+curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7860/health<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7861/health<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7862/health<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7863/health<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7864/health<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:7865/health
+
+<span class="c1"># All 5 protection timers active?</span>
+systemctl<span class="w"> </span>list-timers<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;runner-cleanup|oci-space-guardian|oci-emergency-disk-guard|oci-log-rotation|oci-disk-self-test&quot;</span>
+
+<span class="c1"># Check Docker services</span>
+sudo<span class="w"> </span>docker<span class="w"> </span>ps<span class="w"> </span>--format<span class="w"> </span><span class="s1">&#39;table {{.Names}}\t{{.Status}}&#39;</span>
+
+<span class="c1"># Restart a service</span>
+<span class="nb">cd</span><span class="w"> </span>/opt/n8n<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>sin-server
+
+<span class="c1"># Run manual .so cleanup (Python glob, not regex)</span>
+sudo<span class="w"> </span>/usr/local/bin/cleanup-runner-libs.sh
+
+<span class="c1"># Run space guardian manually</span>
+sudo<span class="w"> </span>/usr/local/bin/oci-space-guardian.sh
+
+<span class="c1"># Check emergency guard last-stop reason</span>
+cat<span class="w"> </span>/var/lib/oci-emergency-disk-guard/last-stop.txt<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;No emergency stop recorded&quot;</span>
+
+<span class="c1"># Check self-test last result</span>
+sudo<span class="w"> </span>/usr/local/bin/oci-disk-self-test.sh
+
+<span class="c1"># See recent journald entries for an agent</span>
+sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>a2a-sin-code-backend<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>--no-pager
+</code></pre></div>
+<hr />
+<h2 id="known-issues-fixes">⚠️ Known Issues &amp; Fixes</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Status</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/tmp</code> fills with .so files (179 GB) — BUG-OCI-001</td>
+<td>✅ Fixed</td>
+<td>5-layer protection stack (see below)</td>
+</tr>
+<tr>
+<td>Docker containers crash on disk full</td>
+<td>✅ Fixed</td>
+<td><code>oci-space-guardian.timer</code> prunes Docker at ≥80%</td>
+</tr>
+<tr>
+<td><code>haus-netzwerk</code> network missing</td>
+<td>✅ Fixed</td>
+<td>Created with <code>--subnet=172.20.0.0/16</code></td>
+</tr>
+<tr>
+<td>rsyslog holds deleted file handles</td>
+<td>✅ Fixed</td>
+<td><code>sudo systemctl restart rsyslog</code></td>
+</tr>
+<tr>
+<td>Runner.Li holds 2TB memfd files</td>
+<td>✅ Fixed</td>
+<td><code>sudo kill</code> on stale processes</td>
+</tr>
+<tr>
+<td>Agent <code>/health</code> returns 404 (Gradio shadowing)</td>
+<td>✅ Fixed</td>
+<td>FastAPI routes registered before Gradio mount</td>
+</tr>
+<tr>
+<td><code>is_healthy()</code> leaks .so files per call</td>
+<td>✅ Fixed</td>
+<td>Changed to <code>shutil.which("opencode")</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="bug-oci-001-oci-vm-disk-full-prevention-2026-04-16">🚨 BUG-OCI-001: OCI VM Disk Full Prevention (2026-04-16)</h2>
+<blockquote>
+<p><strong>Incident Date:</strong> 2026-04-16 — OCI VM <code>92.5.60.87</code> went 100% disk full. All 6 coder agents died.
+<strong>Root Cause:</strong> <code>is_healthy()</code> called <code>subprocess.run(["opencode", "--version"])</code> which leaked ~4.4 MB <code>.so</code> files per call into <code>/tmp/</code>. Python's <code>glob.glob(r"/tmp/.*.so")</code> was a <strong>broken regex</strong> (<code>.</code> not escaped, so nothing matched).</p>
+</blockquote>
+<h3 id="5-layer-protection-stack-fully-deployed">5-Layer Protection Stack (fully deployed)</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Timer</th>
+<th>Script</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Runner Cleanup</strong></td>
+<td>every 5 min</td>
+<td><code>cleanup-runner-libs.sh</code></td>
+<td>Python glob clean <code>/tmp/.*.so</code> &gt;10min</td>
+</tr>
+<tr>
+<td><strong>2. Space Guardian</strong></td>
+<td>every 1 hour</td>
+<td><code>oci-space-guardian.sh</code></td>
+<td>Prune caches+Docker at ≥80%, escalate at ≥85%</td>
+</tr>
+<tr>
+<td><strong>3. Emergency Guard</strong></td>
+<td>every 5 min</td>
+<td><code>oci-emergency-disk-guard.sh</code></td>
+<td>Auto-stop all 6 agents if disk stays ≥85%</td>
+</tr>
+<tr>
+<td><strong>4. Log Rotation</strong></td>
+<td>daily</td>
+<td><code>oci-log-rotation.sh</code></td>
+<td>journald 200MB max, syslog vacuum</td>
+</tr>
+<tr>
+<td><strong>5. Self-Test</strong></td>
+<td>daily 03:00</td>
+<td><code>oci-disk-self-test.sh</code></td>
+<td>27-point verification — alerts if any check fails</td>
+</tr>
+</tbody>
+</table>
+<p><strong>systemd drop-ins</strong> on all 6 agents (<code>/etc/systemd/system/a2a-sin-code-*.service.d/hardening.conf</code>):</p>
+<ul>
+<li><code>StartLimitIntervalSec=300</code>, <code>StartLimitBurst=3</code> — crash storm brake</li>
+<li><code>Restart=on-failure</code>, <code>RestartSec=30</code></li>
+<li><code>ExecStartPre=-/usr/local/bin/cleanup-runner-libs.sh</code></li>
+</ul>
+<h3 id="quick-verification-commands">Quick Verification Commands</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Disk + agents + timers in one shot</span>
+df<span class="w"> </span>-h<span class="w"> </span>/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>systemctl<span class="w"> </span>is-active<span class="w"> </span>a2a-sin-code-*<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>systemctl<span class="w"> </span>list-timers<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>oci
+
+<span class="c1"># Run 27-point self-test</span>
+sudo<span class="w"> </span>/usr/local/bin/oci-disk-self-test.sh
+
+<span class="c1"># Emergency: stop all 6 agents</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>a2a-sin-code-backend<span class="w"> </span>a2a-sin-code-command<span class="w"> </span>a2a-sin-code-frontend<span class="w"> </span>a2a-sin-code-fullstack<span class="w"> </span>a2a-sin-code-plugin<span class="w"> </span>a2a-sin-code-tool
+
+<span class="c1"># Emergency: restart all 6 agents</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>a2a-sin-code-backend<span class="w"> </span>a2a-sin-code-command<span class="w"> </span>a2a-sin-code-frontend<span class="w"> </span>a2a-sin-code-fullstack<span class="w"> </span>a2a-sin-code-plugin<span class="w"> </span>a2a-sin-code-tool
+</code></pre></div>
+<p><strong>Source-controlled at:</strong> <a href="https://github.com/OpenSIN-AI/Infra-SIN-Dev-Setup"><code>OpenSIN-AI/Infra-SIN-Dev-Setup</code></a> — <code>scripts/</code> + <code>systemd/</code></p>
+<hr />
+<p><em>Last updated: 2026-04-17 — BUG-OCI-001 hardening stack integrated</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

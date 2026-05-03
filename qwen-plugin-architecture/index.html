@@ -1,0 +1,1557 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>opencode-qwen-auth Plugin — Architektur & Troubleshooting - OpenCode infra-opencode-stack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#opencode-qwen-auth-plugin-architektur-troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenCode infra-opencode-stack" class="md-header__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenCode infra-opencode-stack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              opencode-qwen-auth Plugin — Architektur &amp; Troubleshooting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenCode infra-opencode-stack" class="md-nav__button md-logo" aria-label="OpenCode infra-opencode-stack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenCode infra-opencode-stack
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/core/vision-gate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Gate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/core/anti-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anti-Loops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/design/design-routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/llm/llm-calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Browser
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Browser
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/browser/chrome-session/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chrome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/browser/browser-automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/look_at/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    look_at
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ubersicht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Übersicht
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kritische-regel-niemals-qwen-auth-accountsjson-mit-python-uberschreiben" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 KRITISCHE REGEL: NIEMALS qwen-auth-accounts.json MIT PYTHON ÜBERSCHREIBEN!
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kritische-regel-email-feld-nach-connect-setzen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 KRITISCHE REGEL: EMAIL-FELD NACH /CONNECT SETZEN!
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refresh-token-rotation-wie-qwen-oauth-wirklich-funktioniert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 REFRESH TOKEN ROTATION — WIE QWEN OAUTH WIRKLICH FUNKTIONIERT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issue-plugin-verliert-rotated-refresh-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 KNOWN ISSUE: PLUGIN VERLIERT ROTATED REFRESH TOKENS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architektur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architektur
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architektur">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dateistruktur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dateistruktur
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datenfluss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datenfluss
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kernfunktionen-in-accountjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 Kernfunktionen in account.js
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔑 Kernfunktionen in account.js">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalizestoragestorage-der-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalizeStorage(storage) — Der Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mergeaccountsexisting-incoming-der-merge-algorithmus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mergeAccounts(existing, incoming) — Der Merge-Algorithmus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saveaccountsstorage-atomic-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        saveAccounts(storage) — Atomic Write
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selectaccountstorage-strategy-now-options-account-auswahl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        selectAccount(storage, strategy, now, options) — Account-Auswahl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health-Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bekannte-probleme-losungen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Bekannte Probleme &amp; Lösungen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ Bekannte Probleme &amp; Lösungen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-1-tote-accounts-sammeln-sich-endlos-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 1: Tote Accounts sammeln sich endlos an
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-2-config-uberschreibung-durch-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 2: Config-Überschreibung durch Plugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-3-opencodejson-schema-fehler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 3: opencode.json Schema-Fehler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problem-4-mcp-schema-fehler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem 4: MCP Schema-Fehler
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opencode-datenbank-opencodedb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 OpenCode Datenbank (opencode.db)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wartungs-skripte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Wartungs-Skripte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Wartungs-Skripte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qwen_account_monitorpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        qwen_account_monitor.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qwen-healer-bash-inline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qwen Healer (Bash inline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quarantane-datei" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 Quarantäne-Datei
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provider-konfiguration-in-opencodejson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗺️ Provider-Konfiguration in opencode.json
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grundregeln-fur-die-arbeit-mit-diesem-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 Grundregeln für die Arbeit mit diesem Plugin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#account-diagnostik-schnell-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 Account-Diagnostik (Schnell-Check)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="opencode-qwen-auth-plugin-architektur-troubleshooting">opencode-qwen-auth Plugin — Architektur &amp; Troubleshooting</h1>
+<h2 id="ubersicht">Übersicht</h2>
+<p><code>opencode-qwen-auth</code> ist das Multi-Account Auth-Plugin für den Qwen-Provider in OpenCode. Es verwaltet Token-Rotation, Health-Tracking und automatische Account-Auswahl via Hybrid-Strategie.</p>
+<p><strong>Version:</strong> 0.3.4<br />
+<strong>Installationspfad (Source):</strong> <code>/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/</code><br />
+<strong>Installationspfad (Runtime):</strong> <code>/Users/jeremy/.config/opencode/local-plugins/opencode-qwen-auth/</code><br />
+<strong>Konfigurationsdatei:</strong> <code>/Users/jeremy/.config/opencode/qwen-auth-accounts.json</code><br />
+<strong>Datenbank (OpenCode Core):</strong> <code>/Users/jeremy/.local/share/opencode/opencode.db</code> (Tabellen: <code>account</code>, <code>account_state</code>, <code>control_account</code>)</p>
+<hr />
+<h2 id="kritische-regel-niemals-qwen-auth-accountsjson-mit-python-uberschreiben">🚨 KRITISCHE REGEL: NIEMALS qwen-auth-accounts.json MIT PYTHON ÜBERSCHREIBEN!</h2>
+<p><strong>Lesson Learned (2026-04-15):</strong> Qwen verwendet <strong>Refresh Token Rotation</strong> — bei jedem erfolgreichen Refresh gibt Qwen einen NEUEN Refresh Token zurück und der ALTE wird sofort ungültig. Wenn ein Python-Skript die Datei überschreibt, während das Plugin den Token gerade rotiert hat, geht der NEUE Token verloren und der ALTE ist bereits gesperrt → <strong>Account ist tot!</strong></p>
+<p><strong>Regeln:</strong></p>
+<ol>
+<li><strong>NIEMALS</strong> <code>qwen-auth-accounts.json</code> mit Python/externen Skripten überschreiben, während OpenCode läuft</li>
+<li><strong>NUR</strong> <code>/connect</code> in OpenCode verwenden, um neue Accounts hinzuzufügen</li>
+<li><strong>NUR</strong> manuelle Edits, wenn OpenCode GESTOPPT ist</li>
+<li>Nach jedem <code>/connect</code> SOFORT das <code>email</code>-Feld setzen (siehe unten)</li>
+</ol>
+<hr />
+<h2 id="kritische-regel-email-feld-nach-connect-setzen">🚨 KRITISCHE REGEL: EMAIL-FELD NACH /CONNECT SETZEN!</h2>
+<p><strong>Problem:</strong> Das Plugin hat KEIN <code>email</code>-Feld im Account-Schema. Wenn mehrere Accounts mit verschiedenen Google-Emails existieren, kann man sie nicht unterscheiden. Rate-Limits pro Account funktionieren zwar (über accountIndex), aber man weiß nicht, welcher Account zu welcher Email gehört.</p>
+<p><strong>Lösung:</strong> Nach JEDEM <code>/connect</code> MUSS das <code>email</code>-Feld manuell in <code>qwen-auth-accounts.json</code> gesetzt werden!</p>
+<p><strong>Schritt-für-Schritt:</strong></p>
+<ol>
+<li><code>/connect</code> in OpenCode ausführen → neuen Account hinzufügen</li>
+<li>OpenCode STOPPEN</li>
+<li><code>qwen-auth-accounts.json</code> öffnen</li>
+<li>Beim NEUEN Account (letzter in der Liste) das Feld <code>"email"</code> hinzufügen:
+   <div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;refreshToken&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;accessToken&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kundenservice@zukunftsorientierte-energie.info&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="err">...</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>Datei speichern</li>
+<li>OpenCode neu starten</li>
+</ol>
+<p><strong>WICHTIG:</strong> Das <code>email</code>-Feld wird vom Spread-Operator (<code>...current, ...account</code>) in <code>mergeAccounts()</code> und <code>updateAccount()</code> automatisch erhalten — es geht also NICHT verloren bei Plugin-Schreibvorgängen. ABER: Bei Refresh-Token-Rotation erstellt <code>ensureStorage()</code> einen NEUEN Account ohne Email → dann muss die Email neu gesetzt werden.</p>
+<p><strong>Bekannte Google-Accounts für Qwen:</strong>
+| Email | Zweck | Chrome-Profil |
+|-------|-------|---------------|
+| <code>zukunftsorientierte.energie@gmail.com</code> | Privat | Default |
+| <code>info@zukunftsorientierte-energie.de</code> | Workspace/Business | Geschäftlich |
+| <code>kundenservice@zukunftsorientierte-energie.info</code> | Kundenservice | Default |
+| <code>Token-Refresh-Service-1774475475@zukunftsorientierte-energie.de</code> | Primary Token-Refresh-Service | Default |</p>
+<hr />
+<h2 id="refresh-token-rotation-wie-qwen-oauth-wirklich-funktioniert">🚨 REFRESH TOKEN ROTATION — WIE QWEN OAUTH WIRKLICH FUNKTIONIERT</h2>
+<p><strong>Qwen OAuth Flow (Device Flow RFC 8628):</strong></p>
+<ol>
+<li><strong>Device Code anfordern:</strong> <code>POST https://chat.qwen.ai/api/v1/oauth2/device/code</code></li>
+<li>Client-ID: <code>f0304373b74a44d2b584a3fb70ca9e56</code></li>
+<li>PKCE: Code Challenge + Verifier</li>
+<li>
+<p>Response: <code>device_code</code>, <code>user_code</code>, <code>verification_uri</code>, <code>expires_in=900</code> (15 Min)</p>
+</li>
+<li>
+<p><strong>Benutzer autorisieren:</strong> Browser öffnet <code>https://chat.qwen.ai/authorize?user_code=XXX</code></p>
+</li>
+<li>User klickt "Bestätigen" mit seinem Google-Account</li>
+<li>
+<p>Erfolgsmeldung: "Authentifizierung erfolgreich"</p>
+</li>
+<li>
+<p><strong>Token abholen:</strong> <code>POST https://chat.qwen.ai/api/v1/oauth2/token</code></p>
+</li>
+<li><code>grant_type=urn:ietf:params:oauth:grant-type:device_code</code></li>
+<li><code>code_verifier=</code> (PKCE-Verifier vom Schritt 1)</li>
+<li>
+<p>Response: <code>access_token</code> (86 chars), <code>refresh_token</code> (86 chars), <code>expires_in=21600</code> (6 Std)</p>
+</li>
+<li>
+<p><strong>Token Refresh:</strong> <code>POST https://chat.qwen.ai/api/v1/oauth2/token</code></p>
+</li>
+<li><code>grant_type=refresh_token</code></li>
+<li>⚠️ <strong>ROTATION:</strong> Qwen gibt einen NEUEN <code>refresh_token</code> zurück und der ALTE wird sofort ungültig!</li>
+<li>
+<p>Neue <code>expires_in=21600</code> (6 Std)</p>
+</li>
+<li>
+<p><strong>API-Call:</strong> <code>POST https://portal.qwen.ai/v1/chat/completions</code></p>
+</li>
+<li><code>Authorization: Bearer {access_token}</code></li>
+<li>Model: <code>qwen3-coder-plus</code></li>
+</ol>
+<p><strong>Endpoints:</strong>
+| Zweck | URL |
+|-------|-----|
+| Device Code | <code>https://chat.qwen.ai/api/v1/oauth2/device/code</code> |
+| Token (alle) | <code>https://chat.qwen.ai/api/v1/oauth2/token</code> |
+| Autorisierung | <code>https://chat.qwen.ai/authorize</code> |
+| Chat API | <code>https://portal.qwen.ai/v1/chat/completions</code> |
+| ~~Passport~~ | <code>passport.qwen.ai</code> ❌ <strong>EXISTIERT NICHT</strong> (NXDOMAIN) |</p>
+<p><strong>Quota:</strong> Jeder Qwen-Account hat ~1000 Requests/Tag kostenlos. Bei Überschreitung: <code>insufficient_quota</code> Fehler.</p>
+<hr />
+<h2 id="known-issue-plugin-verliert-rotated-refresh-tokens">🚨 KNOWN ISSUE: PLUGIN VERLIERT ROTATED REFRESH TOKENS</h2>
+<p><strong>Was passiert:</strong> Wenn das Plugin einen Token erfolgreich refreshed, bekommt es einen NEUEN <code>refresh_token</code> vom Server. Das Plugin speichert den neuen Token via <code>updateAccount()</code> + <code>saveAccounts()</code>. ABER: Wenn währenddessen ein anderer Prozess (Python-Skript, anderes opencode-Fenster) die Datei überschreibt, geht der neue Token verloren → der alte ist bereits gesperrt → Account ist tot.</p>
+<p><strong>Workaround:</strong> Nach <code>/connect</code> IMMER OpenCode neu starten und die Accounts in Ruhe lassen. Keine externen Skripte auf die Datei loslassen!</p>
+<hr />
+<h2 id="architektur">Architektur</h2>
+<h3 id="dateistruktur">Dateistruktur</h3>
+<div class="highlight"><pre><span></span><code>opencode-qwen-auth/
+├── dist/
+│   ├── index.js                    # Plugin Entry Point
+│   └── src/
+│       ├── plugin.js               # Main Plugin Logic
+│       ├── plugin/
+│       │   ├── account.js          # 🔑 Kern-Datei: Account-Storage &amp; Rotation
+│       │   ├── auth.js              # Auth-Flow
+│       │   ├── rotation.js          # Hybrid-Rotation-Algorithmus
+│       │   ├── token.js             # Token-Management
+│       │   ├── logger.js            # Logging
+│       │   ├── types.js             # TypeScript Types
+│       │   └── config/              # Plugin-Konfiguration
+│       │       ├── index.js
+│       │       ├── schema.js
+│       │       └── loader.js
+│       ├── qwen/
+│       │   └── oauth.js             # Qwen OAuth Flow
+│       ├── cli/
+│       │   └── install.js           # CLI Install Helper
+│       └── transform/               # Request/Response Transformation
+│           ├── index.js
+│           ├── request.js
+│           ├── response.js
+│           └── sse.js
+├── package.json
+├── README.md
+└── LICENSE
+</code></pre></div>
+<h3 id="datenfluss">Datenfluss</h3>
+<div class="highlight"><pre><span></span><code>opencode CLI startet
+  → Plugin lädt qwen-auth-accounts.json via loadAccounts()
+  → normalizeStorage() filtert ungültige Accounts
+  → Bei API-Call: selectAccount() wählt besten Account (Hybrid-Strategie)
+  → Bei Erfolg: recordSuccess() → consecutiveFailures = 0
+  → Bei Fehlschlag: recordFailure() → consecutiveFailures + 1
+  → Bei Rate-Limit: markRateLimited() → rateLimitResetAt gesetzt
+  → Bei Save: saveAccounts() → mergeAccounts() + normalizeStorage() → atomic write
+</code></pre></div>
+<hr />
+<h2 id="kernfunktionen-in-accountjs">🔑 Kernfunktionen in account.js</h2>
+<h3 id="normalizestoragestorage-der-filter"><code>normalizeStorage(storage)</code> — Der Filter</h3>
+<p><strong>Was es tut:</strong> Filtert die Account-Liste und setzt activeIndex auf einen gültigen Wert.</p>
+<p><strong>PATCH V2 (2026-04-15):</strong> Erweiterte Filter-Logik die drei Bedingungen prüft:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// PATCH V2: Erweiterte Filterung</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">normalizeStorage</span><span class="p">(</span><span class="nx">storage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">MAX_CONSECUTIVE_FAILURES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">storage</span><span class="p">.</span><span class="nx">accounts</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">account</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">account</span><span class="o">?</span><span class="p">.</span><span class="nx">refreshToken</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="nx">account</span><span class="p">.</span><span class="nx">health</span><span class="o">?</span><span class="p">.</span><span class="nx">consecutiveFailures</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">MAX_CONSECUTIVE_FAILURES</span><span class="p">)</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">hasExpiredToken</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="o">!</span><span class="nx">account</span><span class="p">.</span><span class="nx">accessToken</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">account</span><span class="p">.</span><span class="nx">expires</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">account</span><span class="p">.</span><span class="nx">expires</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">now</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">hasHighFailures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">account</span><span class="p">.</span><span class="nx">health</span><span class="o">?</span><span class="p">.</span><span class="nx">failureCount</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">50</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hasExpiredToken</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">hasHighFailures</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="w">  </span><span class="c1">// ... rest</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Warum V2 statt V1:</strong></p>
+<ul>
+<li>V1 filterte nur <code>consecutiveFailures &gt; 20</code> — aber Accounts mit <code>consecutiveFailures=0</code> und totem Refresh Token wurden nicht gefiltert</li>
+<li>V2 filtert zusätzlich: Accounts ohne AccessToken UND mit &gt;50 totalen Fehlern → die sind mit Sicherheit tot (expired refresh token)</li>
+<li>Grace Period: Ein Account ohne AccessToken aber mit wenigen Fehlern bekommt eine Chance (vielleicht war es nur ein temporärer Netzwerkfehler)</li>
+</ul>
+<h3 id="mergeaccountsexisting-incoming-der-merge-algorithmus"><code>mergeAccounts(existing, incoming)</code> — Der Merge-Algorithmus</h3>
+<p><strong>Was es tut:</strong> Merged zwei Account-Listen anhand des <code>refreshToken</code> als Schlüssel.</p>
+<p><strong>Kritisch:</strong> Diese Funktion <strong>fügt nur hinzu oder aktualisiert</strong> — sie <strong>löscht niemals</strong> Accounts! Wenn ein Account in der existierenden Liste ist, bleibt er für immer.</p>
+<p><strong>Daher:</strong> Der <code>normalizeStorage()</code>-Patch ist die EINZIGE Möglichkeit, tote Accounts automatisch zu entfernen.</p>
+<h3 id="saveaccountsstorage-atomic-write"><code>saveAccounts(storage)</code> — Atomic Write</h3>
+<p><strong>Ablauf:</strong></p>
+<ol>
+<li>File-Lock via <code>proper-lockfile</code> (Stale: 10s, 5 Retries)</li>
+<li>Existierende Datei laden via <code>loadAccounts()</code></li>
+<li>Merge: <code>mergeAccounts(existing, storage)</code></li>
+<li>Atomic Write: <code>.tmp</code> → <code>rename()</code> → <code>chmod(0o600)</code></li>
+</ol>
+<p><strong>WICHTIG:</strong> <code>saveAccounts()</code> ruft IMMER <code>mergeAccounts()</code> auf! Das bedeutet:</p>
+<ul>
+<li>Selbst wenn wir die JSON-Datei manuell bereinigen, wird beim nächsten <code>saveAccounts()</code> der existierende State gelesen und gemerged</li>
+<li><strong>ABER:</strong> Da <code>normalizeStorage()</code> am Ende aufgerufen wird, werden tote Accounts nach dem Merge automatisch herausgefiltert (nach unserem Patch)</li>
+</ul>
+<h3 id="selectaccountstorage-strategy-now-options-account-auswahl"><code>selectAccount(storage, strategy, now, options)</code> — Account-Auswahl</h3>
+<p><strong>Strategien:</strong></p>
+<ul>
+<li><code>"hybrid"</code> (Default): Kombiniert Health-Score und Token-Verbrauch. Nutzt <code>selectHybridAccount()</code> mit <code>pidOffset</code> für Multi-Process-Verteilung.</li>
+<li><code>"round-robin"</code>: Startet beim nächsten Account nach <code>activeIndex</code>.</li>
+<li><code>"sequential"</code>: Nimmt den aktuellen <code>activeIndex</code>.</li>
+</ul>
+<p><strong>Hybrid-Algorithmus:</strong> Bewertet jeden Account nach:</p>
+<ol>
+<li><code>healthScore</code> (Erfolgsrate minus Strafe für consecutive failures)</li>
+<li><code>tokens</code> (Token-Verbrauchs-Zähler)</li>
+<li><code>isRateLimited</code> (ob rateLimitResetAt in der Zukunft liegt)</li>
+<li><code>pidOffset</code> (Multi-Process-Rotation via PID)</li>
+</ol>
+<h3 id="health-tracking">Health-Tracking</h3>
+<p><strong>Pro Account:</strong></p>
+<ul>
+<li><code>successCount</code>: Anzahl erfolgreicher API-Calls</li>
+<li><code>failureCount</code>: Anzahl fehlgeschlagener API-Calls</li>
+<li><code>consecutiveFailures</code>: Aufeinanderfolgende Fehler (wird bei Erfolg auf 0 zurückgesetzt)</li>
+<li><code>lastSuccess</code> / <code>lastFailure</code>: Timestamps</li>
+</ul>
+<p><strong>Health-Score Berechnung:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nx">successRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">successCount</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="nx">successCount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">failureCount</span><span class="p">);</span>
+<span class="nx">recencyPenalty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">min</span><span class="p">(</span><span class="nx">consecutiveFailures</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
+<span class="nx">healthScore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">max</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">successRate</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">recencyPenalty</span><span class="p">);</span>
+</code></pre></div>
+<hr />
+<h2 id="bekannte-probleme-losungen">⚠️ Bekannte Probleme &amp; Lösungen</h2>
+<h3 id="problem-1-tote-accounts-sammeln-sich-endlos-an">Problem 1: Tote Accounts sammeln sich endlos an</h3>
+<p><strong>Symptom:</strong> <code>qwen-auth-accounts.json</code> hat 50+ Accounts, davon &gt;20 mit <code>consecutiveFailures &gt; 100</code>.</p>
+<p><strong>Ursache:</strong> <code>mergeAccounts()</code> löscht nie. <code>normalizeStorage()</code> filterte ursprünglich nicht nach Health.</p>
+<p><strong>Lösung:</strong> Patch in <code>normalizeStorage()</code> (siehe oben). Account mit <code>consecutiveFailures &gt; 20</code> werden automatisch entfernt.</p>
+<blockquote>
+<p>⚠️ <strong>DER PYTHON-CLEANUP SCRIPT IST NUR NOCH ALS NOTFALL-INTERNET BACKUP NÖTIG!</strong> Mit dem V2 Patch in <code>normalizeStorage()</code> werden tote Accounts automatisch nach jedem <code>saveAccounts()</code> Aufruf entfernt. Der Patch filtert: (1) kein refreshToken, (2) consecutiveFailures &gt; 20, (3) Zombie-Accounts (expired + failureCount &gt; 50). Manueller Eingriff sollte nur nötig sein wenn der Patch aus Versehen deaktiviert wurde.</p>
+</blockquote>
+<p><strong>Manuelle Bereinigung (NUR NOCH NOTFALL):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># NUR wenn normalizeStorage() Patch fehlt oder deaktiviert ist!</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">tempfile</span><span class="o">,</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;/Users/jeremy/.config/opencode/qwen-auth-accounts.json&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="c1"># Filter: cf&lt;=20 UND NICHT (expired + fc&gt;50)</span>
+<span class="n">now</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">good</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;accounts&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;health&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;consecutiveFailures&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">20</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;accessToken&#39;</span><span class="p">)</span>
+                     <span class="ow">and</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;expires&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">now</span>
+                     <span class="ow">and</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;health&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;failureCount&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">))]</span>
+<span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">good</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">good</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;health&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;successCount&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">good</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;health&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;consecutiveFailures&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="nb">dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s1">&#39;version&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;accounts&#39;</span><span class="p">:</span><span class="n">good</span><span class="p">,</span><span class="s1">&#39;activeIndex&#39;</span><span class="p">:</span><span class="n">best</span><span class="p">},</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="problem-2-config-uberschreibung-durch-plugin">Problem 2: Config-Überschreibung durch Plugin</h3>
+<p><strong>Symptom:</strong> Manuelle Änderungen an <code>qwen-auth-accounts.json</code> werden nach dem nächsten <code>opencode</code>-Aufruf überschrieben.</p>
+<p><strong>Ursache:</strong> <code>saveAccounts()</code> ruft <code>mergeAccounts()</code> auf, welches den alten State mit dem neuen merged.</p>
+<p><strong>Lösung:</strong> Der <code>normalizeStorage()</code>-Patch stellt sicher, dass tote Accounts nach jedem Save automatisch entfernt werden.</p>
+<h3 id="problem-3-opencodejson-schema-fehler">Problem 3: <code>opencode.json</code> Schema-Fehler</h3>
+<p><strong>Symptom:</strong> <code>Error: Configuration is invalid — Unrecognized key: "hooks"</code></p>
+<p><strong>Ursache:</strong> <code>hooks</code> ist KEIN gültiges Feld im OpenCode-Config-Schema. Es wird nicht unterstützt.</p>
+<p><strong>Lösung:</strong> <code>hooks</code> NIE in <code>opencode.json</code> eintragen. PCPM-Hooks werden projekt-lokal verwaltet (<code>.opencode/pcpm-config.json</code>), nicht in der globalen Config.</p>
+<h3 id="problem-4-mcp-schema-fehler">Problem 4: MCP Schema-Fehler</h3>
+<p><strong>Symptom:</strong> <code>Error: Invalid input mcp.sin-neural-bus</code></p>
+<p><strong>Ursache:</strong> <code>description</code> ist kein gültiges Feld im MCP-Schema, und Command-Array muss einen Interpreter enthalten.</p>
+<p><strong>Lösung:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// FALSCH:</span>
+<span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/Users/jeremy/.local/bin/opensin-neural-bus-mcp&quot;</span><span class="p">],</span>
+<span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="w">  </span><span class="c1">// ← NICHT ERLAUBT</span>
+
+<span class="c1">// RICHTIG:</span>
+<span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;/Users/jeremy/.local/bin/opensin-neural-bus-mcp&quot;</span><span class="p">]</span>
+<span class="c1">// Kein &quot;description&quot;-Feld!</span>
+</code></pre></div>
+<hr />
+<h2 id="opencode-datenbank-opencodedb">📊 OpenCode Datenbank (opencode.db)</h2>
+<p><strong>Pfad:</strong> <code>/Users/jeremy/.local/share/opencode/opencode.db</code> (SQLite)</p>
+<p><strong>Relevante Tabellen:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tabelle</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>account</code></td>
+<td>Speichert Email, URL, access_token, refresh_token, token_expiry</td>
+</tr>
+<tr>
+<td><code>account_state</code></td>
+<td>Referenziert aktiven Account (active_account_id)</td>
+</tr>
+<tr>
+<td><code>control_account</code></td>
+<td>Ähnlich wie account, aber mit <code>active</code>-Flag</td>
+</tr>
+</tbody>
+</table>
+<p><strong>WICHTIG:</strong> Die Qwen-Plugin-Accounts werden <strong>NICHT</strong> in <code>opencode.db</code> gespeichert! Sie liegen ausschließlich in <code>qwen-auth-accounts.json</code>. Die DB-Tabellen sind für andere Provider (Google/Antigravity, OpenAI etc.).</p>
+<p><strong>Verifizierung:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">account</span><span class="p">;</span><span class="w">  </span><span class="c1">-- Zeigt keine qwen.ai URLs</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">account</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%qwen%&#39;</span><span class="p">;</span><span class="w">  </span><span class="c1">-- = 0</span>
+</code></pre></div>
+<hr />
+<h2 id="wartungs-skripte">🔧 Wartungs-Skripte</h2>
+<h3 id="qwen_account_monitorpy">qwen_account_monitor.py</h3>
+<p><strong>Pfad:</strong> <code>/Users/jeremy/dev/OpenSIN-documentation/scripts/qwen_account_monitor.py</code></p>
+<p><strong>Funktion:</strong> Überwacht Account-Health, entfernt automatisch Accounts mit cons&gt;20, rotiert zu gesündestem Account.</p>
+<h3 id="qwen-healer-bash-inline">Qwen Healer (Bash inline)</h3>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import json, os, tempfile, shutil</span>
+<span class="s2">p = &#39;/Users/jeremy/.config/opencode/qwen-auth-accounts.json&#39;</span>
+<span class="s2">d = json.load(open(p))</span>
+<span class="s2">good = [a for a in d[&#39;accounts&#39;] if a.get(&#39;health&#39;,{}).get(&#39;consecutiveFailures&#39;,0) &lt;= 20]</span>
+<span class="s2">best = max(range(len(good)), key=lambda i: good[i].get(&#39;health&#39;,{}).get(&#39;successCount&#39;,0) if good[i].get(&#39;health&#39;,{}).get(&#39;consecutiveFailures&#39;,0)==0 else -1)</span>
+<span class="s2">with tempfile.NamedTemporaryFile(&#39;w&#39;,delete=False,dir=os.path.dirname(p)) as tmp:</span>
+<span class="s2">    json.dump({&#39;version&#39;:1,&#39;accounts&#39;:good,&#39;activeIndex&#39;:best}, tmp, indent=2)</span>
+<span class="s2">    shutil.move(tmp.name, p)</span>
+<span class="s2">print(f&#39;HEALED: {len(good)} accounts, activeIndex={best}&#39;)</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="quarantane-datei">📋 Quarantäne-Datei</h2>
+<p><strong>Pfad:</strong> <code>/Users/jeremy/.config/opencode/qwen-auth-accounts.quarantined.json</code></p>
+<p>Enthält alle entfernten Accounts (mit &gt;20 consecutive failures). Kann bei Bedarf manuell wiederhergestellt werden, indem Accounts zurück in die Hauptdatei kopiert werden.</p>
+<hr />
+<h2 id="provider-konfiguration-in-opencodejson">🗺️ Provider-Konfiguration in opencode.json</h2>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;qwen&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;npm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@ai-sdk/openai-compatible&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Qwen Code&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;baseURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://portal.qwen.ai/v1&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;coder-model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Qwen 3.6 Plus&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1048576</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">65536</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;modalities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;vision-model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Qwen 3.6 Vision Plus&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">131072</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32768</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;attachment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;modalities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;image&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>WICHTIG:</strong> Kein <code>apiKey</code> im Provider! Das Plugin (<code>opencode-qwen-auth</code>) injiziert den Token automatisch via Request-Transformation (<code>transform/request.js</code>).</p>
+<hr />
+<h2 id="grundregeln-fur-die-arbeit-mit-diesem-plugin">🚨 Grundregeln für die Arbeit mit diesem Plugin</h2>
+<ol>
+<li><strong>NIEMALS</strong> <code>qwen-auth-accounts.json</code> mit Python/externen Skripten überschreiben, während OpenCode läuft (Refresh Token Rotation!)</li>
+<li><strong>NIEMALS</strong> <code>hooks</code> in <code>opencode.json</code> eintragen (wird nicht unterstützt)</li>
+<li><strong>NIEMALS</strong> <code>description</code> in MCP-Einträgen verwenden (ungültiges Schema-Feld)</li>
+<li><strong>IMMER</strong> den <code>normalizeStorage()</code>-Patch beibehalten bei Plugin-Updates</li>
+<li><strong>IMMER</strong> nach Plugin-Updates die dist/account.js prüfen, ob der Patch noch existiert</li>
+<li><strong>IMMER</strong> <code>node</code> als Interpreter in MCP-Commands angeben</li>
+<li><strong>IMMER</strong> nach <code>/connect</code> das <code>email</code>-Feld manuell setzen (siehe oben)</li>
+<li><strong>IMMER</strong> nach <code>/connect</code> OpenCode neu starten</li>
+<li><strong>NIEMALS</strong> mehrere Prozesse gleichzeitig auf <code>qwen-auth-accounts.json</code> zugreifen lassen</li>
+<li><strong>BEI QUOTA-EXCEEDED:</strong> Einfach den nächsten Account über <code>/connect</code> hinzufügen (andere Email) → Plugin rotiert automatisch</li>
+</ol>
+<hr />
+<h2 id="account-diagnostik-schnell-check">📊 Account-Diagnostik (Schnell-Check)</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Alle Accounts mit Status anzeigen</span>
+python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import json</span>
+<span class="s2">with open(&#39;/Users/jeremy/.config/opencode/qwen-auth-accounts.json&#39;) as f:</span>
+<span class="s2">    d = json.load(f)</span>
+<span class="s2">for i, a in enumerate(d.get(&#39;accounts&#39;,[])):</span>
+<span class="s2">    h = a.get(&#39;health&#39;,{})</span>
+<span class="s2">    email = a.get(&#39;email&#39;, &#39;⚠️ KEINE EMAIL&#39;)</span>
+<span class="s2">    cf = h.get(&#39;consecutiveFailures&#39;, 0)</span>
+<span class="s2">    print(f&#39;  [{i}] email={email} | cf={cf} | sc={h.get(\&quot;successCount\&quot;,0)} | AT_len={len(a.get(\&quot;accessToken\&quot;,\&quot;\&quot;))}&#39;)</span>
+<span class="s2">print(f&#39;Gesamt: {len(d.get(\&quot;accounts\&quot;,[]))} Accounts&#39;)</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Refresh Token Test (VORSICHT: rotiert den Token!)</span>
+curl<span class="w"> </span>-sS<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;https://chat.qwen.ai/api/v1/oauth2/token&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;client_id=f0304373b74a44d2b584a3fb70ca9e56&amp;grant_type=refresh_token&amp;refresh_token=HIER_DEN_RT_EINSETZEN&quot;</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
