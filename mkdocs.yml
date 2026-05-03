@@ -1,11 +1,26 @@
 site_name: OpenCode infra-opencode-stack
+site_description: SOTA Agent Swarm Infrastructure - Rules, Configuration, and Tools
+site_url: https://opensincode.github.io/infra-opencode-stack
+
+repo_name: OpenSIN-Code/infra-opencode-stack
+repo_url: https://github.com/OpenSIN-Code/infra-opencode-stack
+edit_uri: edit/main/docs/
+
 theme:
   name: material
   palette:
     - scheme: default
       primary: indigo
+      accent: indigo
     - scheme: slate
       primary: indigo
+      accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - search.highlight
 
 nav:
   - Home: index.md
@@ -17,17 +32,24 @@ nav:
     - Design: rules/design/design-routing.md
     - LLM: rules/llm/llm-calls.md
     - Browser:
-      - Chrome: rules/browser/chrome-session.md
-      - Automation: rules/browser/browser-automation.md
+      - Chrome Session: rules/browser/chrome-session.md
+      - Browser Automation: rules/browser/browser-automation.md
   - Configuration:
     - Models: configuration/models.md
   - Tools:
     - look_at: tools/look_at.md
+  - Migration: MIGRATION.md
+  - Epic #58: EPIC_58_CHECKLIST.md
 
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
   - admonition
+  - codehilite
+  - toc:
+      permalink: true
 
 plugins:
   - search
+  - minify:
+      minify_html: true

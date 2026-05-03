@@ -1437,3 +1437,27 @@ Die Tabellen `account` und `control_account` in der SQLite-Datenbank enthalten K
 ## Vollständige Dokumentation
 
 Siehe: `/Users/jeremy/dev/upgraded-opencode-stack/docs/qwen-plugin-architecture.md`
+
+---
+
+# 📚 DOCUMENTATION MIGRATION (2026-05-03)
+
+## Status: ✅ COMPLETE
+
+The rules in this file have been migrated to a modular documentation structure under `docs/`.
+
+### New Structure
+
+| Topic | New Location |
+|-------|--------------|
+| Vision Gate Loop | [`docs/rules/core/vision-gate.md`](./docs/rules/core/vision-gate.md) |
+| Design Routing | [`docs/rules/design/design-routing.md`](./docs/rules/design/design-routing.md) |
+| LLM Call Rules | [`docs/rules/llm/llm-calls.md`](./docs/rules/llm/llm-calls.md) |
+| Chrome Session | [`docs/rules/browser/chrome-session.md`](./docs/rules/browser/chrome-session.md) |
+| Browser Automation | [`docs/rules/browser/browser-automation.md`](./docs/rules/browser/browser-automation.md) |
+| Model Configuration | [`docs/configuration/models.md`](./docs/configuration/models.md) |
+| Tool Documentation | [`docs/tools/look_at.md`](./docs/tools/look_at.md) |
+
+### Migration Guide
+
+See [`docs/MIGRATION.md`](./docs/MIGRATION.md) for complete migration instructions.
