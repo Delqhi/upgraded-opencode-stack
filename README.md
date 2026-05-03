@@ -176,3 +176,44 @@ SIN-Zeus (Fleet Commander)
 | `nvidia/nvidia/nemotron-3-nano-omni` | multimedia_looker | NVIDIA |
 | `groq/whisper-large-v3` | audio_agent | Groq |
 | **Simone-MCP (MCP 2.0)** | **Alle 22 Agenten** | **AST-Level Operations** |
+
+---
+
+## Tools
+
+OpenCode provides various tools for different tasks:
+
+- [`look_at`](./docs/tools/look_at.md) - Extract basic information from media files (PDFs, images, diagrams)
+
+For full tool documentation, see the [Tools Reference](./docs/tools/README.md).
+
+---
+
+## Documentation
+
+The monolithic `AGENTS.md` has been migrated to a modular documentation structure:
+
+### Quick Links
+
+| Category | Path | Description |
+|----------|------|-------------|
+| **Rules** | [`docs/rules/`](./docs/rules/README.md) | All operational rules |
+| **Core** | [`docs/rules/core/`](./docs/rules/core/README.md) | Vision Gate, Anti-Loops |
+| **Design** | [`docs/rules/design/`](./docs/rules/design/design-routing.md) | Design task routing |
+| **LLM** | [`docs/rules/llm/`](./docs/rules/llm/llm-calls.md) | LLM call rules |
+| **Browser** | [`docs/rules/browser/`](./docs/rules/browser/chrome-session.md) | Chrome & automation |
+| **Configuration** | [`docs/configuration/`](./docs/configuration/README.md) | Models & plugins |
+| **Migration** | [`docs/MIGRATION.md`](./docs/MIGRATION.md) | AGENTS.md → modular docs |
+
+### MkDocs
+
+This repo has full MkDocs support. Run:
+
+```bash
+pip install mkdocs mkdocs-material
+mkdocs serve
+```
+
+For full documentation site, see [mkdocs.yml](./mkdocs.yml).
+
+---
