@@ -61,7 +61,7 @@ look_at(
 ## Technical Details
 
 - **Implementation**: Uses multimodal model analysis via the registered `multimodal-looker` model
-- **Model**: Uses the agent's configured vision-capable model (typically `google/antigravity-gemini-3-flash`)
+- **Model**: Uses the agent's configured vision-capable model (nvidia/nvidia/nemotron-3-nano-omni)
 - **Output**: Returns clean text content extracted from the file
 - **Performance**: Optimized for quick analysis rather than precise extraction
 
