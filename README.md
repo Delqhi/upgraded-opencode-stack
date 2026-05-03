@@ -216,4 +216,4 @@ mkdocs serve
 
 For full documentation site, see [mkdocs.yml](./mkdocs.yml).
 
----
+---RecursiveMAS integration - see plan: https://github.com/OpenSIN-AI/OpenSIN-overview/blob/main/docs/03_ops/recursive-mas-integration.md
