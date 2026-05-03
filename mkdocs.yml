@@ -1,33 +1,86 @@
-site_name: OpenCode infra-opencode-stack
+site_name: OpenSIN Documentation
+site_description: Free, MIT-licensed coding agent stack — built to beat paid systems while staying free for end users.
+site_url: https://opensin-ai.github.io/Infra-SIN-OpenCode-Stack/
+repo_url: https://github.com/OpenSIN-AI/Infra-SIN-OpenCode-Stack
+repo_name: OpenSIN-AI/Infra-SIN-OpenCode-Stack
+edit_uri: edit/main/docs/
+
 theme:
   name: material
   palette:
-    - scheme: default
-      primary: indigo
-    - scheme: slate
-      primary: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
 
 nav:
   - Home: index.md
-  - Rules:
-    - Overview: rules/README.md
-    - Core:
-      - Vision Gate: rules/core/vision-gate.md
-      - Anti-Loops: rules/core/anti-loops.md
-    - Design: rules/design/design-routing.md
-    - LLM: rules/llm/llm-calls.md
-    - Browser:
-      - Chrome: rules/browser/chrome-session.md
-      - Automation: rules/browser/browser-automation.md
-  - Configuration:
-    - Models: configuration/models.md
-  - Tools:
-    - look_at: tools/look_at.md
+  - Quickstart: quickstart.md
+  - Architecture: architecture.md
+  - Components:
+    - Overview: components/index.md
+    - Code-Swarm: components/code-swarm.md
+    - OpenSIN-Code CLI: components/opensin-code.md
+    - Simone-MCP: components/simone-mcp.md
+    - Kubernetes-SOTA: components/kubernetes.md
+  - Compare: compare.md
+  - Benchmarks: benchmarks.md
+  - Sponsor: sponsor.md
+  - Legacy:
+    - Rules: rules/README.md
+    - Configuration: configuration/README.md
+    - Tools: tools/README.md
 
 markdown_extensions:
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
   - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
 
 plugins:
   - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/OpenSIN-Code
+    - icon: fontawesome/brands/github
+      link: https://github.com/OpenSIN-AI
+  generator: false
+
+copyright: >
+  Copyright &copy; 2026 OpenSIN — MIT License.
+  Free, forever.
