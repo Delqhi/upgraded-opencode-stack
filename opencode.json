@@ -3,6 +3,7 @@
   "plugin": [
     "opencode-openrouter-auth",
     "opencode-qwen-auth",
+    "/Users/jeremy/.config/opencode/vendor/opencode-antigravity-auth-1.6.5-beta.0",
     "/Users/jeremy/.config/opencode/local-plugins/oh-my-opencode-sin"
   ],
   "provider": {
