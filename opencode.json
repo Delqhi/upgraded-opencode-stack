@@ -12,7 +12,7 @@
       "name": "NVIDIA NIM",
       "options": {
         "baseURL": "https://integrate.api.nvidia.com/v1",
-        "apiKey": "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"
+        "apiKey": "{env:NVIDIA_API_KEY}"
       },
       "models": {
         "glm-5.1": {
