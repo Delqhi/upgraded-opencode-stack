@@ -684,10 +684,10 @@ Du darfst die Aufgabe nicht abbrechen oder nach manueller Hilfe fragen. Du musst
 
 **LESEN UND MERKEN!**
 
-| Profil           | Email                                 | WANN NUTZEN                                         | Doku                                                                              |
-| ---------------- | ------------------------------------- | --------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **Geschäftlich** | info@zukunftsorientierte-energie.de   | ✅ Admin Console, Domain-Wide Delegation, Workspace | [Doku](./dev/docs/chrome/admin-profiles/info@zukunftsorientierte-energie.de/)     |
-| **Default**      | zukunftsorientierte.energie@gmail.com | ❌ NUR privat - NIEMALS für Admin!                  | [Doku](./dev/docs/chrome/private-profiles/Credentials (ENTFERNT – siehe profiles/) |
+| Profil           | Email                                 | WANN NUTZEN                                         | Doku                                                                          |
+| ---------------- | ------------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Geschäftlich** | info@zukunftsorientierte-energie.de   | ✅ Admin Console, Domain-Wide Delegation, Workspace | [Doku](./dev/docs/chrome/admin-profiles/info@zukunftsorientierte-energie.de/) |
+| **Default**      | zukunftsorientierte.energie@gmail.com | ❌ NUR privat - NIEMALS für Admin!                  | [Doku](./dev/docs/chrome/private-profiles/Credentials (ENTFERNT)              |
 
 **WENN DU ADMIN CONSOLE BRAUCHST: IMMER "Geschäftlich" PROFIL!**
 
@@ -1118,12 +1118,11 @@ browser = await uc.start(
 | `antigravity-gemini-3.1-pro`           | Gemini 3.1 Pro           |
 | `antigravity-gemini-3-flash`           | Gemini 3 Flash           |
 
-| Model ID              | Name         |
-| --------------------- | ------------ |
-| `openai/gpt-5.2`      | GPT-5.2      |
-| `openai/gpt-5.5`      | GPT-5.5      |
-| `openai/gpt-5.5-fast` | GPT-5.5 Fast |
-| `openai/gpt-5.5-pro`  | GPT-5.5 Pro  |
+| Model ID                    | Name               |
+| --------------------------- | ------------------ |
+| `openai/gpt-5.2`            | GPT-5.2            |
+| `openai/gpt-5.2-codex`      | GPT-5.2 Codex      |
+| `openai/gpt-5.2-codex-mini` | GPT-5.2 Codex Mini |
 
 #### NVIDIA NIM
 
@@ -1208,7 +1207,7 @@ Format-Vorlage:
 
 - When creating new `SIN-Solver` A2A agents, treat code, docs, agent card, dashboard/workforce registry, landing linkage, and OpenCode/MCP wiring as one deployment unit.
 - Do not stop after code generation. A new A2A agent must also have:
-  - `agent.json`, `A2A-CARD.md`, `AGENTS.md`, `mcp-config.json`, `clients/opencode-mcp.json`
+  - `agent.json`, `A2A-CARD.md`, `AGENTS.md`, `mcp-config.json`, `clients/opencode-mcp.json`, `clients/codex-config.toml`
   - `.well-known/agent-card.json`, `.well-known/agent.json`, `.well-known/oauth-client.json`
   - repo `.opencode/opencode.json` MCP entry
   - global OpenCode MCP/config entry if the agent should be available globally
@@ -1437,27 +1436,3 @@ Die Tabellen `account` und `control_account` in der SQLite-Datenbank enthalten K
 ## Vollständige Dokumentation
 
 Siehe: `/Users/jeremy/dev/upgraded-opencode-stack/docs/qwen-plugin-architecture.md`
-
----
-
-# 📚 DOCUMENTATION MIGRATION (2026-05-03)
-
-## Status: ✅ COMPLETE
-
-The rules in this file have been migrated to a modular documentation structure under `docs/`.
-
-### New Structure
-
-| Topic | New Location |
-|-------|--------------|
-| Vision Gate Loop | [`docs/rules/core/vision-gate.md`](./docs/rules/core/vision-gate.md) |
-| Design Routing | [`docs/rules/design/design-routing.md`](./docs/rules/design/design-routing.md) |
-| LLM Call Rules | [`docs/rules/llm/llm-calls.md`](./docs/rules/llm/llm-calls.md) |
-| Chrome Session | [`docs/rules/browser/chrome-session.md`](./docs/rules/browser/chrome-session.md) |
-| Browser Automation | [`docs/rules/browser/browser-automation.md`](./docs/rules/browser/browser-automation.md) |
-| Model Configuration | [`docs/configuration/models.md`](./docs/configuration/models.md) |
-| Tool Documentation | [`docs/tools/look_at.md`](./docs/tools/look_at.md) |
-
-### Migration Guide
-
-See [`docs/MIGRATION.md`](./docs/MIGRATION.md) for complete migration instructions.

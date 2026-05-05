@@ -125,7 +125,7 @@
       "status": "unknown"
     },
     "A2A-SIN-Google-Docs": {
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
       "endpoints": {
         "health": "/health",
@@ -137,7 +137,7 @@
       "status": "unknown"
     },
     "A2A-SIN-Google-Sheets": {
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
       "endpoints": {
         "health": "/health",
@@ -149,7 +149,7 @@
       "status": "unknown"
     },
     "A2A-SIN-Google-Drive": {
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
       "endpoints": {
         "health": "/health",
@@ -509,7 +509,7 @@
       "status": "unknown"
     },
     "A2A-SIN-Opal": {
-      "team": "team-workspace",
+      "team": "team-google",
       "manager": "A2A-SIN-Google",
       "endpoints": {
         "health": "/health",

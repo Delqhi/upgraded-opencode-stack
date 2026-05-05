@@ -8,6 +8,7 @@ Führe folgende Schritte aus:
 ```
 
 2. Wenn NICHT läuft, starte SOFORT:
+
    ```bash
 
    ```

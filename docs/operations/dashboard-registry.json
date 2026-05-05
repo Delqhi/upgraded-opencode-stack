@@ -6,11 +6,11 @@
       "name": "Team Coding",
       "manager": "A2A-SIN-Zeus",
       "description": "Elite-Coder-Flotte fuer Implementation, Testing, Deployment",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
+        "openai/gpt-5.4",
         "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-gemini-3.1-pro"
       ],
       "members": [
         "A2A-SIN-Simone-MCP",
@@ -24,11 +24,11 @@
       "name": "Team Worker",
       "manager": "A2A-SIN-Team-Worker",
       "description": "Autonome Worker fuer Surveys, Freelancing, Monetarisierung",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
+        "openai/gpt-5.4",
         "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "nvidia-nim/stepfun-ai/step-3.5-flash"
       ],
       "members": [
         "A2A-SIN-Worker-Prolific",
@@ -43,9 +43,9 @@
       "description": "DevOps-Flotte fuer Deployment, CI/CD, Monitoring, Infrastructure",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
+        "google/antigravity-claude-sonnet-4-6",
         "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-gemini-3.1-pro"
       ],
       "members": [
         "A2A-SIN-Deploy",
@@ -54,15 +54,15 @@
       ],
       "config": {}
     },
-    "team-workspace-apps": {
-      "name": "Team Workspace Apps",
+    "team-google-apps": {
+      "name": "Team Google Apps",
       "manager": "A2A-SIN-Google-Apps",
-      "description": "Workspace Integration — Docs, Sheets, Drive, Gmail",
-      "primaryModel": "openai/gpt-5.4",
+      "description": "Google Workspace Integration — Docs, Sheets, Drive, Gmail",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
+        "openai/gpt-5.4",
         "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-claude-sonnet-4-6"
       ],
       "members": [
         "A2A-SIN-Google-Docs",
@@ -77,9 +77,8 @@
       "description": "Apple Ecosystem — macOS Automation, iOS, Shortcuts",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-gemini-3-flash",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-Apple-Shortcuts",
@@ -93,9 +92,8 @@
       "description": "macOS/iOS Automation — Mail, Notes, Calendar, FaceTime, Safari, etc.",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-gemini-3-flash",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-Apple-Mail",
@@ -117,11 +115,10 @@
       "name": "Team Social",
       "manager": "A2A-SIN-Social",
       "description": "Social Media Automation — TikTok, Instagram, X, LinkedIn, Facebook, YouTube",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
       ],
       "members": [
         "A2A-SIN-Instagram",
@@ -136,11 +133,10 @@
       "name": "Team Messaging",
       "manager": "A2A-SIN-Messaging",
       "description": "Messaging Integration — WhatsApp, Telegram, Signal, Discord, iMessage",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-WhatsApp",
@@ -156,11 +152,10 @@
       "name": "Team Forum",
       "manager": "A2A-SIN-Forum",
       "description": "Forum Automation — Reddit, HackerNews, StackOverflow, Quora, DevTo",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-StackOverflow",
@@ -172,11 +167,10 @@
       "name": "Team Legal",
       "manager": "A2A-SIN-Legal",
       "description": "Legal Automation — ClaimWriter, Patents, Damages, Compliance, Contract",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-Patents",
@@ -188,11 +182,10 @@
       "name": "Team Commerce",
       "manager": "A2A-SIN-Commerce",
       "description": "Commerce Automation — Shop-Finance, Shop-Logistic, TikTok-Shop, Stripe",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
       ],
       "members": [
         "A2A-SIN-TikTok-Shop"
@@ -203,24 +196,22 @@
       "name": "Team Community",
       "manager": "A2A-SIN-Community",
       "description": "Community Management — Discord, WhatsApp, Telegram, YouTube Community",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "qwen/coder-model"
       ],
       "members": [],
       "config": {}
     },
-    "team-workspace": {
-      "name": "Team Workspace",
+    "team-google": {
+      "name": "Team Google",
       "manager": "A2A-SIN-Google",
-      "description": "Workspace — Apps, Chat, Opal",
-      "primaryModel": "openai/gpt-5.4",
+      "description": "Google Workspace — Google-Apps, Google-Chat, Opal",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "qwen/coder-model"
       ],
       "members": [
         "A2A-SIN-Opal"
@@ -233,9 +224,8 @@
       "description": "Microsoft 365 — Teams, Outlook, OneDrive, Excel, Word, PowerPoint",
       "primaryModel": "openai/gpt-5.4",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-claude-sonnet-4-6",
+        "qwen/coder-model"
       ],
       "members": [],
       "config": {}
@@ -244,11 +234,10 @@
       "name": "Team Research",
       "manager": "A2A-SIN-Research",
       "description": "Deep Research Agent",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-claude-opus-4-6-thinking"
       ],
       "members": [
         "A2A-SIN-Research"
@@ -259,11 +248,10 @@
       "name": "Team Media ComfyUI",
       "manager": "A2A-SIN-Media-ComfyUI",
       "description": "Media Generation — ImageGen, VideoGen, ComfyUI Workflows",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
       ],
       "members": [],
       "config": {}
@@ -272,11 +260,10 @@
       "name": "Team Media Music",
       "manager": "A2A-SIN-Media-Music",
       "description": "Music Production — Beats, Producer, Singer, Songwriter, Videogen",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-claude-sonnet-4-6"
       ],
       "members": [],
       "config": {}
@@ -285,11 +272,10 @@
       "name": "Team Coding CyberSec",
       "manager": "A2A-SIN-Code-CyberSec",
       "description": "Security Specialists — BugBounty, Cloudflare, 16x Security-Spezialisten",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro"
       ],
       "members": [
         "A2A-SIN-Security-Recon",
@@ -301,11 +287,10 @@
       "name": "Team Coding Frontend",
       "manager": "A2A-SIN-Code-Frontend",
       "description": "Frontend Specialists — Accessibility, App-Shell, Commerce-UI, Design-Systems",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "google/antigravity-claude-sonnet-4-6",
+        "openai/gpt-5.4"
       ],
       "members": [],
       "config": {}
@@ -314,11 +299,10 @@
       "name": "Team Coding Backend",
       "manager": "A2A-SIN-Code-Backend",
       "description": "Backend Specialists — Server, OracleCloud, Passwordmanager",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "fallbackModels": [
-        "qwen/coder-model",
-        "modal/glm-5.1-fp8",
-        "nvidia-nim/qwen-3.5-397b"
+        "openai/gpt-5.4",
+        "google/antigravity-gemini-3.1-pro"
       ],
       "members": [],
       "config": {}
@@ -329,49 +313,49 @@
       "name": "A2A-SIN-Simone-MCP",
       "team": "team-code",
       "manager": "A2A-SIN-Zeus",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Frontend",
       "team": "team-code",
       "manager": "A2A-SIN-Zeus",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Backend",
       "team": "team-code",
       "manager": "A2A-SIN-Zeus",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Fullstack",
       "team": "team-code",
       "manager": "A2A-SIN-Zeus",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Worker-Prolific",
       "team": "team-worker",
       "manager": "A2A-SIN-Team-Worker",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Worker-Freelancer",
       "team": "team-worker",
       "manager": "A2A-SIN-Team-Worker",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Worker-Survey",
       "team": "team-worker",
       "manager": "A2A-SIN-Team-Worker",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
@@ -397,23 +381,23 @@
     },
     {
       "name": "A2A-SIN-Google-Docs",
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Google-Sheets",
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Google-Drive",
-      "team": "team-workspace-apps",
+      "team": "team-google-apps",
       "manager": "A2A-SIN-Google-Apps",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
@@ -518,140 +502,140 @@
       "name": "A2A-SIN-Instagram",
       "team": "team-social",
       "manager": "A2A-SIN-Social",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Medium",
       "team": "team-social",
       "manager": "A2A-SIN-Social",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-YouTube",
       "team": "team-social",
       "manager": "A2A-SIN-Social",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-TikTok",
       "team": "team-social",
       "manager": "A2A-SIN-Social",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-X-Twitter",
       "team": "team-social",
       "manager": "A2A-SIN-Social",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-WhatsApp",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Teams",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-WeChat",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-LINE",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Nostr",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Zoom",
       "team": "team-messaging",
       "manager": "A2A-SIN-Messaging",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-StackOverflow",
       "team": "team-forum",
       "manager": "A2A-SIN-Forum",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Quora",
       "team": "team-forum",
       "manager": "A2A-SIN-Forum",
-      "primaryModel": "openai/gpt-5.4-mini",
+      "primaryModel": "google/antigravity-gemini-3-flash",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Patents",
       "team": "team-legal",
       "manager": "A2A-SIN-Legal",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Tax",
       "team": "team-legal",
       "manager": "A2A-SIN-Legal",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-TikTok-Shop",
       "team": "team-commerce",
       "manager": "A2A-SIN-Commerce",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Opal",
-      "team": "team-workspace",
+      "team": "team-google",
       "manager": "A2A-SIN-Google",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Research",
       "team": "team-research",
       "manager": "A2A-SIN-Research",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-gemini-3.1-pro",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Security-Recon",
       "team": "team-coding-cybersec",
       "manager": "A2A-SIN-Code-CyberSec",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     },
     {
       "name": "A2A-SIN-Security-Fuzz",
       "team": "team-coding-cybersec",
       "manager": "A2A-SIN-Code-CyberSec",
-      "primaryModel": "openai/gpt-5.4",
+      "primaryModel": "google/antigravity-claude-sonnet-4-6",
       "status": "active"
     }
   ],

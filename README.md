@@ -1,219 +1,517 @@
-# Code-Swarm: SOTA Agent Swarm Architecture
+<a name="readme-top"></a>
 
-> **KEIN tmux! KEINE Worktrees! KEIN Background-Dispatch!**
-> Subagent-Delegation erfolgt NUR via opencode-native oh-my-opencode Sub-Sessions.
+# Upgraded OpenCode Stack
 
-## 🤖 Main Agents
+<p align="center">
+  <a href="https://github.com/Delqhi/upgraded-opencode-stack/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+  <a href="https://github.com/Delqhi/upgraded-opencode-stack/stargazers">
+    <img src="https://img.shields.io/github/stars/Delqhi/upgraded-opencode-stack?style=social" alt="Stars" />
+  </a>
+  <a href="https://github.com/Delqhi/upgraded-opencode-stack/network/members">
+    <img src="https://img.shields.io/github/forks/Delqhi/upgraded-opencode-stack?style=social" alt="Forks" />
+  </a>
+  <a href="https://github.com/Delqhi/upgraded-opencode-stack/last-commit">
+    <img src="https://img.shields.io/github/last-commit/Delqhi/upgraded-opencode-stack" alt="Last Commit" />
+  </a>
+  <a href="https://www.python.org/downloads/">
+    <img src="https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white" alt="Python" />
+  </a>
+  <a href="https://github.com/modelcontextprotocol">
+    <img src="https://img.shields.io/badge/MCP-2.0-068A0A?logo=mcp" alt="MCP" />
+  </a>
+</p>
 
-### SIN-Zeus — Supreme Fleet Commander
-| Property | Value |
-|----------|-------|
-| Model | `fireworks-ai/minimax-m2.7` |
-| Role | Fleet Commander |
-| Mode | Primary |
-| Reasoning | xhigh |
+<p align="center">
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#architecture">Architecture</a> ·
+  <a href="#skills">Skills</a> ·
+  <a href="#commands">Commands</a> ·
+  <a href="#providers">Providers</a> ·
+  <a href="#deploy">Deploy</a> ·
+  <a href="#contributing">Contributing</a>
+</p>
 
-**Capabilities:**
-- github-orchestration
-- fleet-dispatch
-- multi-agent-coordination
-- planning
-- research
-
-**Hard Rules:**
-- NEVER_IDLE_FLEET
-- NEVER_DIRECT_CODING
-- GITHUB_IS_SOURCE_OF_TRUTH
-- MIN_2_PARALLEL_TOOLS
-
-### SIN-Solo — Direct Single-Agent Executor (formerly Sin-Executor-Solo)
-| Property | Value |
-|----------|-------|
-| Model | `vercel/deepseek-v4-pro` |
-| Role | Direct Executor |
-| Mode | Primary |
-
-**Capabilities:**
-- direct-coding
-- single-agent-execution
-- no-delegation
-- minimal-invasive-changes
-
-**Hard Rules:**
-- WORK_ALONE
-- MINIMAL_CHANGES
-- NO_GOVERNANCE_EDITS
-- VALIDATE_IMMEDIATELY
-
-### Coder-SIN-Qwen
-| Property | Value |
-|----------|-------|
-| Model | `vercel/deepseek-v4-flash` |
-| Role | Alternative Coder |
-
-### Stealth-Orchestrator
-| Property | Value |
-|----------|-------|
-| Model | `vercel/deepseek-v4-flash` |
-| Role | Browser Automation |
-
----
-
-## Simone-MCP Integration
-
-**Source**: https://github.com/Delqhi/Simone-MCP
-
-Every Code-Swarm agent uses **Simone-MCP** for AST-level code operations via MCP 2.0 protocol.
-
-### Simone-MCP Tools
-
-| Tool | Type | Description |
-|:---|:---|:---|
-| `code.find_symbol` | Read | Locate symbol definitions across workspace |
-| `code.find_references` | Read | Find textual references to a symbol |
-| `code.replace_symbol_body` | Write | Replace the body of a Python function |
-| `code.insert_after_symbol` | Write | Insert text immediately after a symbol block |
-| `code.project_overview` | Read | Summarize workspace footprint and file types |
-
-### Deployment
-
-**Local Development:**
-```python
-from simone_mcp.client import SimoneClient
-from simone_mcp.bridge import SwarmSimoneBridge
-
-bridge = SwarmSimoneBridge(local=True)
-await bridge.analyze_code("MyClass")
-```
-
-**Production (OCI VM):**
-```
-ubuntu@92.5.60.87:8234
-```
-
----
-
-## SOTA Implementation
-
-### P0 - Production Critical
-- [x] **Data Persistence**: PostgreSQL schema + Redis cache + S3 storage + pgvector
-- [x] **Monitoring**: Prometheus metrics + OpenTelemetry tracing + Health checks
-- [x] **Security**: OAuth2/JWT auth + RBAC permissions + bcrypt
-- [x] **Testing**: Unit tests + Integration tests + Load tests (Locust)
-
-### P1 - High Value
-- [x] **API Gateway**: FastAPI REST + OpenAPI/Swagger + Rate limiting
-- [x] **Kubernetes**: Helm chart + HPA auto-scaling + Istio
-- [x] **WebSockets**: Real-time agent status + Live task updates
-- [x] **CLI**: Rich output + Progress bars + Typer
-- [x] **Documentation**: MkDocs + Swagger
-
-### P2 - Optimization
-- [x] **Self-Improvement**: RLHF feedback loops + Bayesian optimization
+<p align="center">
+  <em>Clone. Install. Run. Dein komplettes OpenCode-Setup — auf jedem Mac identisch.</em>
+</p>
 
 ---
 
 ## Quick Start
 
-```bash
-# Clone and install
-gh repo clone OpenSIN-Code/Code-Swarm
-cd Code-Swarm
-pip install -r requirements.txt
+<table>
+<tr>
+<td width="33%" align="center">
+<strong>1. Clone</strong><br/><br/>
+<code>git clone Delqhi/upgraded-opencode-stack</code><br/><br/>
+<img src="https://img.shields.io/badge/10s-Blue?style=flat" />
+</td>
+<td width="33%" align="center">
+<strong>2. Install</strong><br/><br/>
+<code>./install.sh</code><br/><br/>
+<img src="https://img.shields.io/badge/2min-Blue?style=flat" />
+</td>
+<td width="33%" align="center">
+<strong>3. Run</strong><br/><br/>
+<code>opencode run "hello"</code><br/><br/>
+<img src="https://img.shields.io/badge/Go!-Green?style=flat" />
+</td>
+</tr>
+</table>
 
-# Copy configs to opencode
-cp configs/opencode.json ~/.config/opencode/opencode.json
-cp configs/oh-my-opencode.json ~/.config/opencode/oh-my-opencode.json
+> [!TIP]
+> Danach `.env` mit deinen API Keys befuellen — fertig. Exakt dasselbe Setup wie auf deinem Haupt-Mac.
 
-# Run tests
-pytest tests/unit/
+---
 
-# Start API server
-uvicorn api.main:app --reload
+## Using Qwen Provider
 
-# CLI commands
-python -m cli.main status
+Qwen OAuth (via `opencode-qwen-auth` plugin) provides free daily quota (~1000 requests) and multi-account rotation.
+
+### Quick Setup (for members)
+
+1. **Ensure plugin is installed** (the installer does this automatically):
+
+   ```bash
+   opencode providers list | grep qwen
+   # Should show: qwen (oauth) with 0 credentials initially
+   ```
+
+2. **Add your Qwen account**:
+
+   ```bash
+   opencode /connect
+   ```
+
+   - Select **Provider:** `qwen`
+   - Select **Method:** `Qwen OAuth`
+   - Follow device flow: open https://chat.qwen.ai/ ... enter device code
+   - Complete authorization
+
+3. **Verify account added**:
+
+   ```bash
+   opencode providers list | grep qwen -A5
+   # Should show: X credentials
+   ```
+
+4. **Select Qwen model**:
+
+   ```
+   /model qwen/coder-model
+   ```
+
+5. **Start coding** — plugin automatically rotates accounts on rate limits/quota exhaustion.
+
+### Managing Multiple Accounts
+
+Add more accounts by repeating `/connect`. The plugin supports:
+
+- **Hybrid rotation** (default): Smart selection based on health scores, token bucket, and LRU freshness
+- **Round-robin**: `qwen.json: {"rotation_strategy": "round-robin"}`
+- **Sequential**: Uses one account until rate limited, then switches
+
+**Configuration file** (`.opencode/qwen.json` or `~/.config/opencode/qwen.json`):
+
+```json
+{
+  "rotation_strategy": "hybrid",
+  "proactive_refresh": true,
+  "max_rate_limit_wait_seconds": 300,
+  "quiet_mode": true
+}
 ```
+
+### Troubleshooting
+
+**"Qwen not responding" / empty responses:**
+
+- Check quota exhaustion: `insufficient_quota` means free tier depleted (resets at UTC midnight)
+- Plugin now correctly treats quota errors as failures (BUG-QWEN-003 fixed)
+- If you added a new account via `/connect` but it's not visible to the plugin, run:
+  ```bash
+  python3 /Users/jeremy/dev/docs/opencode/sync-qwen-credentials.py --verbose
+  ```
+
+**View active account:**
+
+```bash
+cat ~/.config/opencode/qwen-auth-accounts.json | grep email
+```
+
+**Reset plugin state:**
+
+```bash
+rm ~/.config/opencode/qwen-auth-accounts.json
+# Then re-add accounts via /connect
+```
+
+For full documentation, see the plugin README:  
+`/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/README.md`
+
+---
+
+## Features
+
+| Capability                   | Description                                                               | Status |
+| :--------------------------- | :------------------------------------------------------------------------ | :----: |
+| **Global-Brain (DPMA v4)**   | Multi-Project Memory — Agenten vergessen nie wieder was sie gelernt haben |   ✅   |
+| **Local-Brain / GraphRAG**   | Projekt-basiertes Plan-Gedächtnis mit Auto-Invalidation                   |   ✅   |
+| **OMOC Swarm**               | 5-Agenten-Schwarm (Atlas, Hephaestus, Metis, Momus, Prometheus)           |   ✅   |
+| **SIN-Zeus Fleet Commander** | GitHub Projects, Issues, Branches + Hermes Dispatch                       |   ✅   |
+| **44 Skills**                | A2A Agent Builder, Deploy, Debug, Browser Automation, Image/Video Gen     |   ✅   |
+| **4 Plugins**                | Antigravity OAuth, Qwen OAuth, OpenRouter Proxy, OMO Framework            |   ✅   |
+| **27 MCP Servers**           | sin-telegrambot, sin-google-apps, sin-terminal, skylight-cli, ...         |   ✅   |
+| **12 Custom Commands**       | Swarm orchestration, Terminal orchestration, Zeus bootstrap               |   ✅   |
+| **5 Provider**               | Google Antigravity, OpenAI, OpenRouter, Qwen, Modal (GLM-5.1)             |   ✅   |
+| **sin-sync Fleet Sync**      | Mac → OCI VM → HF VM — identische Configs überall                         |   ✅   |
+| **System Directive Watcher** | LaunchAgent-Wrapper + stale-PID Guard für dauerhaften Auto-Start          |   ✅   |
+| **Box.com Storage**          | Unlimited cloud storage via A2A-SIN-Box-Storage (10GB free + auto-scale)  |   ✅   |
+
+<details>
+<summary>Full Tool Surface — Alle Komponenten im Detail</summary>
+
+### Skills (44)
+
+`anonymous`, `awesome-opensin-design`, `browser-crashtest-lab`, `check-my-dev-in-web`, `check-plan-done`, `cloudflare-deploy`, `create-a2a`, `create-a2a-mcp`, `create-a2a-sin-agent`, `create-a2a-sin-coder`, `create-a2a-team`, `create-auth-plugin`, `create-flow`, `create-github-account`, `create-github-app`, `create-telegrambot`, `doc`, `enterprise-deep-debug`, `enterprise-parallel-exploration`, `gen-image`, `gen-thumb`, `gen-thumbnail`, `gen-veo`, `gitlab-storage`, `imagegen`, `new-google-login`, `nvidia-3d-forge`, `nvidia-video-forge`, `omoc-plan-swarm`, `opencode-subagent-delegation`, `pdf`, `plan`, `preview`, `self-healer`, `seo-import`, `sin-bridge`, `sin-vision-colab`, `sora`, `sovereign-repo-governance`, `sovereign-research`, `thumbnail-optimizer`, `undelete-login-google`, `vercel-deploy`, `visual-repo`
+
+### Plugins (4)
+
+`opencode-antigravity-auth` (Token Rotation), `oh-my-opencode` (Framework), `opencode-qwen-auth` (Qwen OAuth), `opencode-openrouter-auth` (OpenRouter Proxy)
+
+### MCP Servers (27)
+
+`sin-document-forge`, `sin-telegrambot`, `tavily`, `canva`, `context7`, `chrome-devtools`, `linear`, `singularity`, `sin-google-apps`, `sin-server`, `sin-cloudflare`, `sin-passwordmanager`, `sin-research`, `sin-team-worker`, `sin-tiktok`, `sin-tiktok-shop`, `sin-terminal`, `skylight-cli`, `sin-authenticator`, `sin-github-issues`, `sin-oraclecloud-mcp`, `n8n-workflow-builder`, `sin-google-docs`, `sin-summary`, `sin-paragraph`, `simone-mcp`, `firecrawl`
+
+</details>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
 ## Architecture
 
-```
-SIN-Zeus (Fleet Commander)
-├── hermes (Dispatcher) → Fireworks AI + Simone-MCP
-├── prometheus (System Planner) → Fireworks AI + Simone-MCP
-├── zeus (Validation Superlayer) → Fireworks AI
-├── atlas (Backend Engineer) → Fireworks AI + Simone-MCP
-├── SIN-Solo (Direct Executor) → Vercel DeepSeek V4 Pro
-├── multimedia_looker (Vision) → NVIDIA Nemotron 3 Nano Omni
-└── LangGraph Pipeline (StateGraph + Simone-MCP + Feedback Loops)
-```
+```mermaid
+flowchart TB
+    subgraph Clients["Clients"]
+        OC[OpenCode CLI]
+        AG[A2A Agents]
+        SK[Custom Skills]
+    end
 
----
+    subgraph Transport["Transport Layer"]
+        STD[MCP stdio]
+        HTTP[HTTP/MCP]
+    end
 
-## GitHub Issues
+    subgraph Core["Core Stack"]
+        CFG[opencode.json]
+        PLG[5 Plugins]
+        AGT[21 Agents]
+    end
 
-| # | Status | Description |
-|---|--------|-------------|
-| #15 | ✅ Epic | Simone-MCP Full Integration |
-| #16 | 🔧 TODO | Deploy Simone-MCP on OCI VM |
-| #17 | 🔗 TODO | Configure endpoint |
-| #18 | 🧠 TODO | LangGraph integration |
-| #19 | 💾 TODO | Hybrid memory |
-| #20 | ⚙️ TODO | opencode.json MCP config |
-| #21 | ✅ Epic | SIN-Zeus & SIN-Solo Fusion |
+    subgraph Storage["Storage"]
+        BO[Box.com Storage]
+        DP[DPMA v4 Brain]
+    end
 
----
+    subgraph Fleet["Fleet"]
+        MAC[Mac]
+        OCI[OCI VM]
+        HF[HF VMs]
+    end
 
-## Model Hierarchy
+    OC --> STD
+    AG --> HTTP
+    SK --> STD
+    STD --> CFG
+    HTTP --> CFG
+    CFG --> PLG
+    CFG --> AGT
+    PLG --> BO
+    AGT --> DP
+    CFG --> SYNC[sin-sync]
+    SYNC --> MAC
+    SYNC --> OCI
+    SYNC --> HF
 
-| Modell | Agenten | Provider |
-|--------|---------|----------|
-| `fireworks-ai/minimax-m2.7` | SIN-Zeus, coder-sin-swarm, hermes, prometheus, zeus, atlas, hephaestus | Fireworks AI |
-| `vercel/deepseek-v4-flash` | Coder-SIN-Qwen, Stealth-Orchestrator, 10 Subagenten | Vercel |
-| `vercel/deepseek-v4-pro` | SIN-Solo | Vercel |
-| `nvidia/nvidia/nemotron-3-nano-omni` | multimedia_looker | NVIDIA |
-| `groq/whisper-large-v3` | audio_agent | Groq |
-| **Simone-MCP (MCP 2.0)** | **Alle 22 Agenten** | **AST-Level Operations** |
+    classDef clientClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef transportClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef coreClass fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    classDef storageClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef fleetClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 
----
-
-## Tools
-
-OpenCode provides various tools for different tasks:
-
-- [`look_at`](./docs/tools/look_at.md) - Extract basic information from media files (PDFs, images, diagrams)
-
-For full tool documentation, see the [Tools Reference](./docs/tools/README.md).
-
----
-
-## Documentation
-
-The monolithic `AGENTS.md` has been migrated to a modular documentation structure:
-
-### Quick Links
-
-| Category | Path | Description |
-|----------|------|-------------|
-| **Rules** | [`docs/rules/`](./docs/rules/README.md) | All operational rules |
-| **Core** | [`docs/rules/core/`](./docs/rules/core/README.md) | Vision Gate, Anti-Loops |
-| **Design** | [`docs/rules/design/`](./docs/rules/design/design-routing.md) | Design task routing |
-| **LLM** | [`docs/rules/llm/`](./docs/rules/llm/llm-calls.md) | LLM call rules |
-| **Browser** | [`docs/rules/browser/`](./docs/rules/browser/chrome-session.md) | Chrome & automation |
-| **Configuration** | [`docs/configuration/`](./docs/configuration/README.md) | Models & plugins |
-| **Migration** | [`docs/MIGRATION.md`](./docs/MIGRATION.md) | AGENTS.md → modular docs |
-
-### MkDocs
-
-This repo has full MkDocs support. Run:
-
-```bash
-pip install mkdocs mkdocs-material
-mkdocs serve
+    class OC,AG,SK clientClass
+    class STD,HTTP transportClass
+    class CFG,PLG,AGT coreClass
+    class GL,DP storageClass
+    class MAC,OCI,HF fleetClass
 ```
 
-For full documentation site, see [mkdocs.yml](./mkdocs.yml).
+For detailed architecture documentation see [docs/oci-vm-architecture.md](docs/oci-vm-architecture.md), [FIXES_2026-04-11.md](FIXES_2026-04-11.md), and [docs/operations/system-directives-guide.md](docs/operations/system-directives-guide.md) (System Directives & Brain Sync Enforcer).
 
----RecursiveMAS integration - see plan: https://github.com/OpenSIN-AI/OpenSIN-overview/blob/main/docs/03_ops/recursive-mas-integration.md
+> [!IMPORTANT]
+> Der Canonical Watcher-Stack läuft über `~/.config/opencode/scripts/launch-watcher.sh` und `~/Library/LaunchAgents/org.opencode.system-directive-watcher.plist`.
+> Der Antigravity-Token-Refresh-Service bleibt absichtlich **nicht** auto-startend (`RunAtLoad=false`, `KeepAlive=false`).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Skills
+
+| Skill                       | Zweck                                       |
+| --------------------------- | ------------------------------------------- |
+| `create-a2a`                | A2A Agent erstellen                         |
+| `create-a2a-mcp`            | A2A MCP Server erstellen                    |
+| `create-a2a-sin-coder`      | A2A Coder Agent bootstrappen                |
+| `create-a2a-team`           | SIN A2A Team Manager erstellen              |
+| `create-auth-plugin`        | OpenCode Auth Plugin bauen                  |
+| `create-flow`               | Interaktiver Flow Builder (SIN-InkogniFlow) |
+| `new-google-login`          | Robustes Google-Login via Chrome-CDP        |
+| `create-telegrambot`        | Telegram Bot erstellen/deployen             |
+| `cloudflare-deploy`         | Cloudflare Deployment                       |
+| `vercel-deploy`             | Vercel Deployment                           |
+| `sin-bridge`                | OpenSIN Bridge Chrome Extension             |
+| `enterprise-deep-debug`     | Enterprise Debugging                        |
+| `sovereign-repo-governance` | Repo Governance                             |
+| `anonymous`                 | Browser Automation (skylight-cli-mcp)       |
+| `imagegen`                  | Bild-Generierung via Gemini                 |
+| `nvidia-video-forge`        | Video-Generierung via NVIDIA                |
+
+_Vollständige Liste: 44 Skills verfügbar_
+
+---
+
+## Commands
+
+| Command                    | Zweck                                     |
+| -------------------------- | ----------------------------------------- |
+| `omoc-jam`                 | Collaborative Swarm Jam                   |
+| `omoc-max`                 | OMOC MAX best-of-n                        |
+| `omoc-status`              | Swarm Members anzeigen                    |
+| `sin-terminal-orchestrate` | SIN-Terminal — parallele Sessions steuern |
+| `sin-zeus-bootstrap`       | GitHub Project + Issue Pool aus Zeus Plan |
+
+<details>
+<summary>Alle 13 Commands</summary>
+
+| Command                             | Zweck                                     |
+| ----------------------------------- | ----------------------------------------- |
+| `omoc-swarm-create`                 | Swarm erstellen/registrieren              |
+| `omoc-swarm-discover`               | Swarm aus Session-Titeln entdecken        |
+| `omoc-jam`                          | Collaborative Swarm Jam                   |
+| `omoc-max`                          | OMOC MAX best-of-n                        |
+| `omoc-status`                       | Swarm Members anzeigen                    |
+| `omoc-autostart`                    | Auto-bind Swarm + JAM Guidance            |
+| `sin-terminal-orchestrate`          | SIN-Terminal — parallele Sessions steuern |
+| `sin-terminal-orchestrate-status`   | Terminal Orchestration Status             |
+| `sin-terminal-orchestrate-delegate` | Follow-up Prompt delegieren               |
+| `sin-terminal-orchestrate-stop`     | Alle Sessions stoppen                     |
+| `sin-zeus-bootstrap`                | GitHub Project + Issue Pool aus Zeus Plan |
+| `sin-zeus-hermes`                   | Hermes Dispatch Payloads generieren       |
+| `sin-zeus-status`                   | Zeus Control-Plane Status                 |
+
+</details>
+
+---
+
+## Providers
+
+| Provider                 | Modelle                                                                                                                             |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **google** (Antigravity) | `antigravity-claude-sonnet-4-6`, `antigravity-claude-opus-4-6-thinking`, `antigravity-gemini-3.1-pro`, `antigravity-gemini-3-flash` |
+| **openai**               | `gpt-5.4`, `gpt-5.4-mini` via OCI Proxy (92.5.60.87:4100)                                                                           |
+| **openrouter**           | Qwen 3.6 Plus, DeepSeek V3/R1, Gemini 2.5 Flash, Llama 4 Maverick, Phi-4 (free)                                                     |
+| **qwen**                 | `qwen/coder-model` — Qwen 3.6 Plus (OAuth, 2000/day free)                                                                           |
+| **modal**                | `glm-5.1-fp8` — GLM 5.1 FP8 (via OCI Token Pool)                                                                                    |
+
+---
+
+## Deploy
+
+| Methode          | Kommando       | Zweck                                 |
+| :--------------- | :------------- | :------------------------------------ |
+| **Local**        | `./install.sh` | Mac Setup — 1:1 Kopie des Setups      |
+| **OCI VM**       | `sin-sync`     | Config Sync Mac → OCI VM (92.5.60.87) |
+| **HF VM**        | `sin-sync`     | Config Sync Mac → HF Spaces           |
+| **Lightning AI** | `sin-sync`     | Config Sync Mac → Lightning AI VM     |
+
+> [!IMPORTANT]
+> `sin-sync` muss nach JEDER Aenderung an `opencode.json` ausgefuehrt werden. Auth-Dateien werden automatisch ausgeschlossen.
+
+<details>
+<summary>Environment Variables</summary>
+
+| Variable             | Purpose            | Required |
+| :------------------- | :----------------- | :------: |
+| `NVIDIA_API_KEY`     | NVIDIA NIM         |    ✅    |
+| `GOOGLE_API_KEY`     | Gemini Direct API  |    ✅    |
+| `OPENROUTER_API_KEY` | OpenRouter         |    ✅    |
+| `OPENAI_API_KEY`     | OpenAI (via Proxy) |    ✅    |
+| `TELEGRAM_BOT_TOKEN` | sin-telegrambot    |          |
+| `N8N_BASE_URL`       | n8n URL            |          |
+| `N8N_API_KEY`        | n8n API Key        |          |
+| `OCI_VM_HOST`        | OCI VM Host        |          |
+| `OCI_VM_USER`        | OCI VM User        |          |
+| `SUPABASE_URL`       | Supabase           |          |
+| `SUPABASE_KEY`       | Supabase Key       |          |
+
+</details>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Repo Struktur
+
+```
+upgraded-opencode-stack/
+├── install.sh              # Haupt-Installer
+├── opencode.json           # OpenCode Config (Provider, Modelle, MCPs, Agenten)
+├── AGENTS.md               # Globale Agent-Regeln (inkl. PARALLEL-EXPLORATION MANDATE)
+│
+├── oh-my-sin.json          # 🆕 Zentrales A2A Team Register (alle Teams + Manager)
+├── oh-my-openagent.json    # Subagenten-Modell-Konfiguration (explore, librarian, etc.)
+├── oh-my-opencode.json     # Identisch mit oh-my-openagent.json (gesynced)
+├── my-sin-team-code.json   # 🆕 Team Coding Agenten + Modelle
+├── my-sin-team-worker.json # 🆕 Team Worker Agenten + Modelle
+├── my-sin-team-infrastructure.json # 🆕 Team Infra Agenten + Modelle
+│
+├── .env.example            # API Key Template
+├── llms.txt                # AI Discoverability
+├── llms-full.txt           # Full Context for AI Agents
+├── CONTRIBUTING.md         # How to contribute
+├── SECURITY.md             # Security policy
+├── SUPPORT.md              # Where to get help
+├── bin/                    # 11 CLI Tools
+├── skills/ # 44 Skills
+├── plugins/                # 5+ Plugins (lokal)
+├── agents/                 # Agent-Definitionen
+├── commands/               # 13 Custom Commands
+├── scripts/                # 17 Scripts
+├── docs/                   # OCI VM Architecture + Fixes
+├── hooks/                  # Git Hooks
+├── templates/              # JSON Schemas
+└── vendor/                 # Vendored Dependencies
+```
+
+---
+
+## Agenten-Konfigurationsdateien
+
+Dieses Repo verwaltet **7 Konfigurationsdateien** fuer die gesamte A2A-Flotte:
+
+| Datei                             | Zweck                                                         | Inhalt                                              |
+| :-------------------------------- | :------------------------------------------------------------ | :-------------------------------------------------- |
+| `opencode.json`                   | **Haupt-Config** — Provider, Modelle, MCPs, Agenten, Commands | Deine sichtbaren Agenten (SIN-Zeus, Sisyphus, etc.) |
+| `oh-my-sin.json`                  | **Zentrales Team Register** — alle A2A Teams klassifiziert    | Team-Manager, Config-Dateien, Default-Modelle       |
+| `oh-my-openagent.json`            | **Subagenten-Modelle** — interne Agenten bei Delegation       | explore, librarian, oracle, etc. + Fallback-Ketten  |
+| `oh-my-opencode.json`             | Identisch mit oh-my-openagent.json (auto-gesynced)            | Wird vom OHO Plugin gelesen                         |
+| `my-sin-team-code.json`           | **Team Coding** — Entwickler-Flotte                           | Zeus, Simone, Frontend, Backend, Fullstack          |
+| `my-sin-team-worker.json`         | **Team Worker** — autonome Worker                             | Prolific, Freelancer, Survey                        |
+| `my-sin-team-infrastructure.json` | **Team Infra** — DevOps-Flotte                                | Deploy, Monitoring, Security                        |
+
+### Team-Register Architektur
+
+```
+oh-my-sin.json (Zentrales Register)
+    ├── team-code → my-sin-team-code.json
+    ├── team-worker → my-sin-team-worker.json
+    └── team-infrastructure → my-sin-team-infrastructure.json
+```
+
+Jede Team-Config definiert:
+
+- **Agenten** mit spezifischen Modellen und Fallback-Ketten
+- **Kategorien** fuer Task-spezifische Modell-Auswahl
+- **Rollen** und Beschreibungen pro Agent
+
+### PARALLEL-EXPLORATION MANDATE
+
+Bei grossen Codebases (100k+ Zeilen) MUESSEN Agenten **5-10 parallele explore + 5-10 librarian-Agenten** starten:
+
+```
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find APIs", ...)
+task(subagent_type="explore", run_in_background=true, load_skills=[], description="Find Services", ...)
+task(subagent_type="librarian", run_in_background=true, load_skills=[], description="Framework Docs", ...)
+// ... 9 weitere parallele Agenten
+```
+
+Siehe `AGENTS.md` → `PARALLEL-EXPLORATION MANDATE (PRIORITY -4.5)` fuer Details.
+
+---
+
+## Changelog
+
+### v2.2.2 (2026-04-16)
+
+- **System Directive Watcher** — canonical LaunchAgent now uses `launch-watcher.sh` with stale-PID command-line verification
+- **Token-Refresh-Service Safety** — `com.antigravity.Token-Refresh-Service.plist` kept non-autostarting on purpose; no automatic trigger path
+- **Docs Sync** — README + system-directives guide aligned with the current global watcher runtime
+
+### v2.2.1 (2026-04-14)
+
+- **Box.com Storage** — Replaced deprecated GitLab LogCenter with A2A-SIN-Box-Storage service
+- Updated storage default globally in AGENTS.md (Box Storage Mandate)
+- Added `box_storage.py` compatibility layer, deprecated `gitlab_logcenter.py`
+- Updated Infra-SIN-Docker-Empire: `room-09-box-storage` added, `room-07-gitlab-storage` removed
+- All agents must migrate to Box Storage API before 2026-05-01
+
+### v2.2.0 (2026-04-14)
+
+- **Step 3.5 Flash** — explore/librarian nutzen jetzt nvidia-nim/stepfun-ai/step-3.5-flash
+- **PARALLEL-EXPLORATION MANDATE** — 5-10 parallele explores fuer grosse Codebases
+- **Full Fallback Chains** — restored fuer explore/librarian (6 Modelle pro Agent)
+- **Providers aktualisiert** — glm-5.1-fp8, gpt-5.4-mini, qwen-3.5-flash, Lightning AI VM
+
+### v2.1.0 (2026-04-14)
+
+- Enterprise Visual README overhaul (badges, diagrams, llms.txt)
+- GitLab Storage skill added (infinite storage via auto-rotating repos) - NOW DEPRECATED
+- OCI VM architecture documented
+- .so temp file leak root cause fixed + systemd timer added
+- Vision model removed from Qwen config (no longer supported)
+- reasoningEffort removed from all Qwen agents (not supported)
+
+### v2.0.0 (2026-04-12)
+
+- Qwen OAuth plugin fully fixed and integrated
+- Global-Brain DPMA v4 hooks installed
+
+### v1.0.0 (2026-04-11)
+
+- Initial release
+- 29 Skills, 5 Plugins, 21 Agents, 11 CLI Tools
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run `./install.sh` to verify
+5. Commit (`git commit -m 'Add amazing feature'`)
+6. Push (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+> [!NOTE]
+> Nach jeder Aenderung an `opencode.json` MUSS `sin-sync` ausgefuehrt werden.
+
+---
+
+## License
+
+MIT. See [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  <sub>Built by <a href="https://github.com/OpenSIN-AI">OpenSIN-AI Fleet</a></sub>
+</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

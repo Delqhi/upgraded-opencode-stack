@@ -796,6 +796,5 @@
       "/Users/jeremy/.config/opencode/skills"
     ]
   },
-  "permission": "allow",
-  "model": "qwen/coder-model"
+  "permission": "allow"
 }

@@ -1,1 +1,5 @@
-# CODE_OF_CONDUCT.md
+# Code of Conduct
+
+## Unser Versprechen
+
+Wir als Mitglieder verpflichten uns...

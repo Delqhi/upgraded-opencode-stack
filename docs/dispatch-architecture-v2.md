@@ -11,7 +11,7 @@ var AGENT_MODEL_REQUIREMENTS = {
   explore: {
     fallbackChain: [
       { model: "gpt-5.4", providers: ["openai"] },
-      { model: "gpt-5.5", providers: ["openai"] },
+      { model: "gpt-5.3-codex", providers: ["openai"] },
       { model: "minimax-m2.5", providers: ["opencode-go"] },
       { model: "grok-fast", providers: ["xai"] }, // ❌ UNERWÜNSCHT
       { model: "claude-haiku", providers: ["anthropic"] }, // ❌ UNERWÜNSCHT
