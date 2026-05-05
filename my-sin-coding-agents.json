@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/Delqhi/upgraded-opencode-stack/blob/main/schemas/team-config.schema.json",
+  "$schema": "https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/schemas/team-config.schema.json",
   "team_id": "team-coding-agents",
   "name": "Team Coding Agents (6 dedicated repos)",
   "description": "6 dedicated A2A Coder Agents with individual GitHub repos — split from monolithic OpenSIN-Code for isolated deployments, independent versioning, and crash-storm protection. Established after BUG-OCI-001 (OCI VM disk-full incident, 2026-04-16).",

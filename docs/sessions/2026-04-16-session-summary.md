@@ -159,7 +159,7 @@ Dokumentation verbessern, falsche Zahlen in README-Files korrigieren, Chrome Pas
 
 ## Repos die geändert wurden
 
-- `Delqhi/upgraded-opencode-stack` (Haupt-Config Repo)
+- `OpenSIN-Code/Infra-SIN-OpenCode-Stack` (Haupt-Config Repo)
 - `OpenSIN-AI/Infra-SIN-Dev-Setup` (Dokumentation)
 - `Delqhi/global-brain` (Persistentes Gedächtnis)
 - `OpenSIN-AI/website-opensin.ai` (NUR gelesen nach Revert!)

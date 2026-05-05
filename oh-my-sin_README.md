@@ -1,10 +1,10 @@
 # oh-my-sin.json — Zentrales A2A Team Register
 
 <p align="center">
-<a href="https://github.com/Delqhi/upgraded-opencode-stack/blob/main/LICENSE">
+<a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/LICENSE">
 <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
 </a>
-<a href="https://github.com/Delqhi/upgraded-opencode-stack">
+<a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack">
 <img src="https://img.shields.io/badge/upgraded--opencode--stack-2.2.1-7B3FE4?style=for-the-badge" alt="Version" />
 </a>
 <a href="https://opensin.ai">
@@ -645,9 +645,9 @@ for model in [teams[team]["primary_model"]] + teams[team]["fallback_models"]:
 
 | Datei                                                                                    | Beschreibung                         |
 | :--------------------------------------------------------------------------------------- | :----------------------------------- |
-| [`upgraded-opencode-stack/README.md`](https://github.com/Delqhi/upgraded-opencode-stack) | Hauptrepository mit allen A2A Agents |
-| [`my-sin-team-*.json`](https://github.com/Delqhi/upgraded-opencode-stack)                | Individuelle Team-Konfigurationen    |
-| [`oh-my-openagent.json`](https://github.com/Delqhi/upgraded-opencode-stack)              | Subagenten-Modell-Konfiguration      |
+| [`upgraded-opencode-stack/README.md`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack) | Hauptrepository mit allen A2A Agents |
+| [`my-sin-team-*.json`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack)                | Individuelle Team-Konfigurationen    |
+| [`oh-my-openagent.json`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack)              | Subagenten-Modell-Konfiguration      |
 
 ---
 

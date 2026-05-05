@@ -15,7 +15,7 @@ Thank you for your interest! Here's how to contribute:
 ## Development Setup
 
 ```bash
-git clone https://github.com/Delqhi/upgraded-opencode-stack.git
+git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
 cd upgraded-opencode-stack
 ```
 
@@ -31,7 +31,7 @@ cd upgraded-opencode-stack
 
 ## Reporting Bugs
 
-Please use [GitHub Issues](https://github.com/Delqhi/upgraded-opencode-stack/issues) with:
+Please use [GitHub Issues](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/issues) with:
 
 - Clear description
 - Steps to reproduce

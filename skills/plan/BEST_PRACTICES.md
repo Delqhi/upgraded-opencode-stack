@@ -81,7 +81,7 @@ Located at `~/.config/opencode/skills/plan/templates/`:
 - **Accounts**: 24 accounts with automated failover
 - **Health**: Success/failure tracking, consecutive failure detection
 - **Plugin**: `~/.config/opencode/local-plugins/opencode-qwen-auth/`
-- **Source**: `Delqhi/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/`
+- **Source**: `OpenSIN-Code/Infra-SIN-OpenCode-Stack/local-plugins/opencode-qwen-auth/`
 
 ---
 

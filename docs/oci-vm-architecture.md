@@ -145,7 +145,7 @@ OCI VM components are spread across multiple repos:
 | [`OpenSIN-AI/Infra-SIN-Dev-Setup`](https://github.com/OpenSIN-AI/Infra-SIN-Dev-Setup)         | Dev Environment Setup             | Initial VM provisioning           |
 | [`OpenSIN-AI/sin-github-action`](https://github.com/OpenSIN-AI/sin-github-action)             | Self-hosted CI/CD                 | GitHub Actions Runners            |
 | [`OpenSIN-AI/Core-SIN-Control-Plane`](https://github.com/OpenSIN-AI/Core-SIN-Control-Plane)   | Doctor/Preflight/Eval             | Health checks, preflight          |
-| [`Delqhi/upgraded-opencode-stack`](https://github.com/Delqhi/upgraded-opencode-stack)         | OpenCode Stack (local)            | Skills, plugins, configs          |
+| [`OpenSIN-Code/Infra-SIN-OpenCode-Stack`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack)         | OpenCode Stack (local)            | Skills, plugins, configs          |
 
 ---
 

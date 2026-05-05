@@ -3,18 +3,18 @@
 > 1:1 Kopie deines kompletten custom OpenCode CLI Setups — klonen, installieren, fertig.
 
 ## Documentation
-- [README](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/README.md) - Quick start, features, architecture
-- [OCI VM Architecture](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/docs/oci-vm-architecture.md) - Detailed system design
-- [Fixes Log](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/FIXES_2026-04-11.md) - Bug fixes and RCA
-- [Contributing](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/CONTRIBUTING.md) - How to contribute
-- [Security](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/SECURITY.md) - Security policy
-- [Support](https://github.com/Delqhi/upgraded-opencode-stack/blob/main/SUPPORT.md) - Where to get help
+- [README](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/README.md) - Quick start, features, architecture
+- [OCI VM Architecture](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/docs/oci-vm-architecture.md) - Detailed system design
+- [Fixes Log](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/FIXES_2026-04-11.md) - Bug fixes and RCA
+- [Contributing](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/CONTRIBUTING.md) - How to contribute
+- [Security](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/SECURITY.md) - Security policy
+- [Support](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/SUPPORT.md) - Where to get help
 
 ## Key Information
 - License: MIT
 - Language: Python 3.12+, Node.js, Bash
 - Framework: OpenCode CLI with custom plugins
 - Protocol: MCP 2.0
-- Repo: https://github.com/Delqhi/upgraded-opencode-stack
+- Repo: https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack
 - Fleet Sync: sin-sync (Mac → OCI VM → HF VM)
 - Storage: GitLab auto-rotating repos (10GB free each)

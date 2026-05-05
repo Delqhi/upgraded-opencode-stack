@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-1. Clone: `git clone https://github.com/Delqhi/upgraded-opencode-stack.git`
+1. Clone: `git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git`
 2. Install: `./install.sh`
 3. Create agent: `/create-a2a-sin-agent`
 

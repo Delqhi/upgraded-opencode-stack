@@ -3,17 +3,17 @@
 # Upgraded OpenCode Stack
 
 <p align="center">
-  <a href="https://github.com/Delqhi/upgraded-opencode-stack/blob/main/LICENSE">
+  <a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
-  <a href="https://github.com/Delqhi/upgraded-opencode-stack/stargazers">
-    <img src="https://img.shields.io/github/stars/Delqhi/upgraded-opencode-stack?style=social" alt="Stars" />
+  <a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/stargazers">
+    <img src="https://img.shields.io/github/stars/OpenSIN-Code/Infra-SIN-OpenCode-Stack?style=social" alt="Stars" />
   </a>
-  <a href="https://github.com/Delqhi/upgraded-opencode-stack/network/members">
-    <img src="https://img.shields.io/github/forks/Delqhi/upgraded-opencode-stack?style=social" alt="Forks" />
+  <a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/network/members">
+    <img src="https://img.shields.io/github/forks/OpenSIN-Code/Infra-SIN-OpenCode-Stack?style=social" alt="Forks" />
   </a>
-  <a href="https://github.com/Delqhi/upgraded-opencode-stack/last-commit">
-    <img src="https://img.shields.io/github/last-commit/Delqhi/upgraded-opencode-stack" alt="Last Commit" />
+  <a href="https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/last-commit">
+    <img src="https://img.shields.io/github/last-commit/OpenSIN-Code/Infra-SIN-OpenCode-Stack" alt="Last Commit" />
   </a>
   <a href="https://www.python.org/downloads/">
     <img src="https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white" alt="Python" />
@@ -46,7 +46,7 @@
 <tr>
 <td width="33%" align="center">
 <strong>1. Clone</strong><br/><br/>
-<code>git clone Delqhi/upgraded-opencode-stack</code><br/><br/>
+<code>git clone OpenSIN-Code/Infra-SIN-OpenCode-Stack</code><br/><br/>
 <img src="https://img.shields.io/badge/10s-Blue?style=flat" />
 </td>
 <td width="33%" align="center">

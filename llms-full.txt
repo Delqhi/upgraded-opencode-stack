@@ -24,7 +24,7 @@ Every agent in this setup is connected to the Global-Brain (DPMA v4), which prov
 
 ## Quick Start
 ```bash
-git clone https://github.com/Delqhi/upgraded-opencode-stack.git
+git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
 cd upgraded-opencode-stack
 ./install.sh
 ```
@@ -45,7 +45,7 @@ cd upgraded-opencode-stack
 See .env.example for all environment variables.
 
 ## Links
-- GitHub: https://github.com/Delqhi/upgraded-opencode-stack
-- Documentation: https://github.com/Delqhi/upgraded-opencode-stack/blob/main/docs/
-- Issues: https://github.com/Delqhi/upgraded-opencode-stack/issues
-- License: https://github.com/Delqhi/upgraded-opencode-stack/blob/main/LICENSE
+- GitHub: https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack
+- Documentation: https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/docs/
+- Issues: https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/issues
+- License: https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack/blob/main/LICENSE

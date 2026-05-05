@@ -5,7 +5,7 @@ Complete custom enhancement stack for OpenCode CLI. Clone this repo, run install
 ## Quick Start
 
 ```bash
-git clone https://github.com/Delqhi/upgraded-opencode-stack.git
+git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
 cd upgraded-opencode-stack
 ./install.sh
 ```
