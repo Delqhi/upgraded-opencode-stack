@@ -25,7 +25,7 @@ Every agent in this setup is connected to the Global-Brain (DPMA v4), which prov
 ## Quick Start
 ```bash
 git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
-cd upgraded-opencode-stack
+cd Infra-SIN-OpenCode-Stack
 ./install.sh
 ```
 

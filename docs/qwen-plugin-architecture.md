@@ -5,7 +5,7 @@
 `opencode-qwen-auth` ist das Multi-Account Auth-Plugin für den Qwen-Provider in OpenCode. Es verwaltet Token-Rotation, Health-Tracking und automatische Account-Auswahl via Hybrid-Strategie.
 
 **Version:** 0.3.4  
-**Installationspfad (Source):** `/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/`  
+**Installationspfad (Source):** `/Users/jeremy/dev/Infra-SIN-OpenCode-Stack/local-plugins/opencode-qwen-auth/`  
 **Installationspfad (Runtime):** `/Users/jeremy/.config/opencode/local-plugins/opencode-qwen-auth/`  
 **Konfigurationsdatei:** `/Users/jeremy/.config/opencode/qwen-auth-accounts.json`  
 **Datenbank (OpenCode Core):** `/Users/jeremy/.local/share/opencode/opencode.db` (Tabellen: `account`, `account_state`, `control_account`)

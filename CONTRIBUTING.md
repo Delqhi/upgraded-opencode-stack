@@ -16,7 +16,7 @@ Thank you for your interest! Here's how to contribute:
 
 ```bash
 git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
-cd upgraded-opencode-stack
+cd Infra-SIN-OpenCode-Stack
 ```
 
 > [!IMPORTANT]

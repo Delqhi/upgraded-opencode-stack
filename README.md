@@ -150,7 +150,7 @@ rm ~/.config/opencode/qwen-auth-accounts.json
 ```
 
 For full documentation, see the plugin README:  
-`/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/README.md`
+`/Users/jeremy/dev/Infra-SIN-OpenCode-Stack/local-plugins/opencode-qwen-auth/README.md`
 
 ---
 
@@ -369,7 +369,7 @@ _Vollständige Liste: 44 Skills verfügbar_
 ## Repo Struktur
 
 ```
-upgraded-opencode-stack/
+Infra-SIN-OpenCode-Stack/
 ├── install.sh              # Haupt-Installer
 ├── opencode.json           # OpenCode Config (Provider, Modelle, MCPs, Agenten)
 ├── AGENTS.md               # Globale Agent-Regeln (inkl. PARALLEL-EXPLORATION MANDATE)

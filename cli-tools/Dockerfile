@@ -41,7 +41,7 @@ RUN git clone https://github.com/anomalyco/opencode.git /tmp/opencode && \
     rm -rf /tmp/opencode
 
 # Clone upgraded-opencode-stack repo
-RUN git clone https://github.com/Delqhi/upgraded-opencode-stack.git /opt/upgraded-opencode-stack
+RUN git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git /opt/Infra-SIN-OpenCode-Stack
 
 # Set environment
 ENV PATH="/root/.bun/bin:/usr/local/bin:$PATH"

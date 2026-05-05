@@ -66,7 +66,7 @@ Fast, safe flow construction for browser, GUI, and terminal work.
 - `sin-flow status` — inspect promotion state
 - `sin-flow brain` — rebuild the brain from evidence
 - `sin-flow archive` — bundle evidence for review/handoff
-- `sin-flow guard --repo <path>` — fail when a repo contains divergent `create-flow` runtime files outside the canonical SIN-InkogniFlow / upgraded-opencode-stack layouts
+- `sin-flow guard --repo <path>` — fail when a repo contains divergent `create-flow` runtime files outside the canonical SIN-InkogniFlow / Infra-SIN-OpenCode-Stack layouts
 
 ### Anti-Bot & High-Speed Features
 

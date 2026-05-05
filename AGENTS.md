@@ -1378,7 +1378,7 @@ Wir sind Hacker. Wir sind Umgeher. Wenn ein offizieller Weg (API, OAuth, Scopes,
 ## Architektur-Übersicht: opencode-qwen-auth
 
 **Plugin:** `opencode-qwen-auth@0.3.4`  
-**Source:** `/Users/jeremy/dev/upgraded-opencode-stack/local-plugins/opencode-qwen-auth/`  
+**Source:** `/Users/jeremy/dev/Infra-SIN-OpenCode-Stack/local-plugins/opencode-qwen-auth/`  
 **Runtime:** `/Users/jeremy/.config/opencode/local-plugins/opencode-qwen-auth/`  
 **Account-Storage:** `/Users/jeremy/.config/opencode/qwen-auth-accounts.json`  
 **OpenCode DB:** `/Users/jeremy/.local/share/opencode/opencode.db` (Tabellen: `account`, `account_state`, `control_account` — ABER Qwen-Accounts liegen NICHT hier!)
@@ -1435,4 +1435,4 @@ Die Tabellen `account` und `control_account` in der SQLite-Datenbank enthalten K
 
 ## Vollständige Dokumentation
 
-Siehe: `/Users/jeremy/dev/upgraded-opencode-stack/docs/qwen-plugin-architecture.md`
+Siehe: `/Users/jeremy/dev/Infra-SIN-OpenCode-Stack/docs/qwen-plugin-architecture.md`

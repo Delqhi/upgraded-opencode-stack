@@ -21,7 +21,7 @@ RUNTIME_FILE_NAMES = {
 
 CANONICAL_LAYOUTS = {
     "SIN-InkogniFlow": {Path("opencode/skills/create-flow")},
-    "upgraded-opencode-stack": {Path("skills/create-flow")},
+    "Infra-SIN-OpenCode-Stack": {Path("skills/create-flow")},
 }
 
 SKIP_PARTS = {

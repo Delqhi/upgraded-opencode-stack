@@ -1,7 +1,7 @@
 # Governance Contract Templates
 
 > **Canonical templates for sovereign repo governance across the OpenSIN fleet.**
-> Version: 2026.04.17 | Issue: upgraded-opencode-stack#26
+> Version: 2026.04.17 | Issue: Infra-SIN-OpenCode-Stack#26
 
 ## Overview
 

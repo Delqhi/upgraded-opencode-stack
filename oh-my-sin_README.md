@@ -645,7 +645,7 @@ for model in [teams[team]["primary_model"]] + teams[team]["fallback_models"]:
 
 | Datei                                                                                    | Beschreibung                         |
 | :--------------------------------------------------------------------------------------- | :----------------------------------- |
-| [`upgraded-opencode-stack/README.md`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack) | Hauptrepository mit allen A2A Agents |
+| [`Infra-SIN-OpenCode-Stack/README.md`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack) | Hauptrepository mit allen A2A Agents |
 | [`my-sin-team-*.json`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack)                | Individuelle Team-Konfigurationen    |
 | [`oh-my-openagent.json`](https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack)              | Subagenten-Modell-Konfiguration      |
 

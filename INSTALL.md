@@ -6,7 +6,7 @@ Complete custom enhancement stack for OpenCode CLI. Clone this repo, run install
 
 ```bash
 git clone https://github.com/OpenSIN-Code/Infra-SIN-OpenCode-Stack.git
-cd upgraded-opencode-stack
+cd Infra-SIN-OpenCode-Stack
 ./install.sh
 ```
 
@@ -36,7 +36,7 @@ cd upgraded-opencode-stack
 ## Directory Structure
 
 ```
-upgraded-opencode-stack/
+Infra-SIN-OpenCode-Stack/
 ├── install.sh              # Main installer
 ├── opencode.json           # OpenCode configuration (sanitized)
 ├── AGENTS.md               # Global agent rules
