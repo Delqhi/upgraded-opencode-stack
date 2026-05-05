@@ -1,574 +1,298 @@
 {
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "_version": "3.0.0",
+  "_updated": "2026-05-05",
+  "_changelog": "Model-optimiert: 5x minimax→deepseek (spart ~$860/mo). Apollo entfernt (Duplikat). Fallback-Ketten auf qwen-3.5-397b. Kategorien von 8→4 reduziert (SOTA Best Practice). Agenten nach Anwendungsbereich gruppiert.",
+
+  "model_fallback": true,
+  "default_fallback": "nvidia-nim/qwen-3.5-397b",
+
+  "disabled_skills": [
+    "playwright",
+    "dev-browser"
+  ],
+
   "agents": {
+
+    "━━━ ORCHESTRATION & CONTROL — Task-Verteilung, Swarm, Validation ━━━": {},
+
     "hermes": {
       "role": "Dispatcher/Executor",
-      "model": "fireworks-ai/minimax-m2.7",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "langgraph",
-        "opencode",
-        "docker"
-      ],
+      "area": "orchestration",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["langgraph", "opencode", "docker", "simone-mcp"],
       "output_format": "json",
-      "benchmarks": [
-        "agentic_workflows",
-        "swe_bench_pro",
-        "terminal_bench_2.0"
-      ],
-      "responsibilities": [
-        "Task-Verteilung",
-        "Workflow-Orchestrierung",
-        "Ergebnis-Konsolidierung"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 1000,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
+      "benchmarks": ["agentic_workflows", "swe_bench_pro", "terminal_bench_2.0"],
+      "responsibilities": ["Task-Verteilung", "Workflow-Orchestrierung", "Ergebnis-Konsolidierung"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 1000, "temperature": 0.7, "top_p": 0.9 }
     },
-    "prometheus": {
-      "role": "System Planner",
-      "model": "fireworks-ai/minimax-m2.7",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "langgraph",
-        "opencode"
-      ],
-      "output_format": "yaml",
-      "benchmarks": [
-        "swe_bench_pro",
-        "agentic_workflows"
-      ],
-      "responsibilities": [
-        "Architektur-Design",
-        "Lang-horizontale Planung",
-        "Feedback-Loop-Design"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.6,
-        "top_p": 0.95
-      }
-    },
-    "zeus": {
-      "role": "Validation Superlayer",
-      "model": "fireworks-ai/minimax-m2.7",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "opencode",
-        "security-tools"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "swe_bench_pro",
-        "agentic_workflows"
-      ],
-      "responsibilities": [
-        "Kritische Review",
-        "Security-Audits",
-        "Future-proofing"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.5,
-        "top_p": 0.9
-      }
-    },
-    "atlas": {
-      "role": "Backend Engineer",
-      "model": "fireworks-ai/minimax-m2.7",
-      "fallback_model": "vercel/deepseek/deepseek-v4-flash",
-      "tools": [
-        "docker",
-        "pytest",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "swe_bench_mini",
-        "humaneval_x",
-        "swe_bench_pro"
-      ],
-      "responsibilities": [
-        "Backend-Entwicklung",
-        "API-Design",
-        "Datenbank-Schema"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "iris": {
-      "role": "Frontend Engineer",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "selenium",
-        "playwright",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "miniwob",
-        "agentic_workflows"
-      ],
-      "responsibilities": [
-        "Frontend-Entwicklung",
-        "UI/UX-Implementierung",
-        "Interaktive Tests"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "janus": {
-      "role": "API Architect",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "postman",
-        "pytest",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "swe_bench_mini",
-        "humaneval_x",
-        "swe_bench_pro"
-      ],
-      "responsibilities": [
-        "API-Design",
-        "Integration",
-        "Testing"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "hades": {
-      "role": "Database Architect",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "docker",
-        "sqlalchemy",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "swe_bench_mini",
-        "sql_benchmarks"
-      ],
-      "responsibilities": [
-        "Datenbank-Design",
-        "Migration",
-        "Optimierung"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "asclepius": {
-      "role": "QA / Testing",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "pytest",
-        "selenium",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "swe_bench_mini",
-        "humaneval_x",
-        "swe_bench_pro"
-      ],
-      "responsibilities": [
-        "Automatisierte Tests",
-        "Edge Cases",
-        "Code-Qualit\u00e4t"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "athena": {
-      "role": "Strategic Researcher",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "webauto",
-        "google_search",
-        "opencode",
-        "vector-db"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "marktanalyse",
-        "trends"
-      ],
-      "responsibilities": [
-        "High-Level Research",
-        "Marktanalyse",
-        "Trend-Identifikation"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "argus": {
-      "role": "Multi-Source Researcher",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "webauto",
-        "google_search",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "web_recherche",
-        "foren",
-        "social_media"
-      ],
-      "responsibilities": [
-        "Web-Recherche",
-        "Foren & Social Media",
-        "Quellen-Sammlung"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "daedalus": {
-      "role": "Technical Researcher",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "ast-grep",
-        "lsp",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "code_review",
-        "architektur_review"
-      ],
-      "responsibilities": [
-        "Code-Analyse",
-        "Architektur-Reviews",
-        "Technische Dokumentation"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "hermes_scout": {
-      "role": "Fast Retriever",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "nvidia-nim/glm-5.1",
-      "tools": [
-        "webauto",
-        "api-calls",
-        "opencode"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "retrieval",
-        "api_integration"
-      ],
-      "responsibilities": [
-        "Schnelle Datenabfragen",
-        "API-Integration",
-        "Retrieval"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "multimedia_looker": {
-      "role": "Vision/GUI Looker",
-      "model": "nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
-      "fallback_model": "mistral/pixtral-large-latest",
-      "tools": [
-        "opencode-vision",
-        "selenium",
-        "docker",
-        "vision-gate"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "vision_gui_grounding",
-        "screen_spot",
-        "mmmu_pro"
-      ],
-      "responsibilities": [
-        "Screenshots analysieren",
-        "GUI-Elemente erkennen",
-        "Vision-Tasks"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "audio_agent": {
-      "role": "Audio TTS/SST",
-      "model": "groq/whisper-large-v3",
-      "fallback_model": "nvidia-nim/whisper-large-v3",
-      "tools": [
-        "whisper",
-        "coqui-tts",
-        "ffmpeg"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "audio_transcription",
-        "tts_quality"
-      ],
-      "responsibilities": [
-        "Sprache-zu-Text",
-        "Text-zu-Sprache",
-        "Audio-Analyse"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": false,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "aegis": {
-      "role": "Build Specialist",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "opencode",
-        "docker",
-        "build-tools"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "build_speed",
-        "compilation"
-      ],
-      "responsibilities": [
-        "Build-Optimierung",
-        "Kompilierung",
-        "CI/CD Integration"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
-    "apollo": {
-      "role": "Build Specialist",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "opencode",
-        "docker",
-        "build-tools"
-      ],
-      "output_format": "json",
-      "benchmarks": [
-        "build_speed",
-        "compilation"
-      ],
-      "responsibilities": [
-        "Build-Optimierung",
-        "Kompilierung",
-        "CI/CD Integration"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
-    },
+
     "omoc": {
       "role": "Swarm Orchestrator",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "langgraph",
-        "opencode",
-        "swarm-tools"
-      ],
+      "area": "orchestration",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["langgraph", "opencode", "swarm-tools"],
       "output_format": "json",
-      "benchmarks": [
-        "swarm_coordination",
-        "parallel_execution"
-      ],
-      "responsibilities": [
-        "Swarm-Orchestrierung",
-        "Multi-Agent Koordination",
-        "Parallel Execution"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 1000,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
+      "benchmarks": ["swarm_coordination", "parallel_execution"],
+      "responsibilities": ["Swarm-Orchestrierung", "Multi-Agent Koordination", "Parallel Execution"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 1000, "temperature": 0.7, "top_p": 0.9 }
     },
+
+    "zeus": {
+      "role": "Validation Superlayer",
+      "area": "orchestration",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["opencode", "security-tools"],
+      "output_format": "json",
+      "benchmarks": ["swe_bench_pro", "agentic_workflows"],
+      "responsibilities": ["Kritische Review", "Security-Audits", "Future-proofing"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.5, "top_p": 0.9 }
+    },
+
+    "━━━ PLANNING & STRATEGY — Architektur, Pläne, Kritik ━━━": {},
+
+    "prometheus": {
+      "role": "System Planner",
+      "area": "planning",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["langgraph", "opencode"],
+      "output_format": "yaml",
+      "benchmarks": ["swe_bench_pro", "agentic_workflows"],
+      "responsibilities": ["Architektur-Design", "Lang-horizontale Planung", "Feedback-Loop-Design"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.6, "top_p": 0.95 }
+    },
+
     "metis": {
       "role": "Plan Consultant",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "opencode",
-        "langgraph"
-      ],
+      "area": "planning",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["opencode", "langgraph"],
       "output_format": "json",
-      "benchmarks": [
-        "planning_quality",
-        "strategic_thinking"
-      ],
-      "responsibilities": [
-        "Planungs-Beratung",
-        "Strategische Empfehlungen",
-        "Roadmap-Erstellung"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.6,
-        "top_p": 0.9
-      }
+      "benchmarks": ["planning_quality", "strategic_thinking"],
+      "responsibilities": ["Planungs-Beratung", "Strategische Empfehlungen", "Roadmap-Erstellung"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.6, "top_p": 0.9 }
     },
+
     "momus": {
       "role": "Plan Critic",
-      "model": "vercel/deepseek/deepseek-v4-flash",
-      "fallback_model": "fireworks-ai/minimax-m2.7",
-      "tools": [
-        "opencode",
-        "langgraph"
-      ],
+      "area": "planning",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["opencode", "langgraph"],
       "output_format": "json",
-      "benchmarks": [
-        "critical_analysis",
-        "error_detection"
-      ],
-      "responsibilities": [
-        "Plan-Kritik",
-        "Schwachstellen-Analyse",
-        "Verbesserungs-Vorschl\u00e4ge"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.5,
-        "top_p": 0.9
-      }
+      "benchmarks": ["critical_analysis", "error_detection"],
+      "responsibilities": ["Plan-Kritik", "Schwachstellen-Analyse", "Verbesserungs-Vorschläge"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.5, "top_p": 0.9 }
     },
+
+    "━━━ CODING & DEVELOPMENT — Backend, Frontend, API, DB, Deep Code ━━━": {},
+
+    "atlas": {
+      "role": "Backend Engineer",
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["docker", "simone-mcp", "pytest", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["swe_bench_mini", "humaneval_x", "swe_bench_pro"],
+      "responsibilities": ["Backend-Entwicklung", "API-Design", "Datenbank-Schema"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "iris": {
+      "role": "Frontend Engineer",
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["selenium", "playwright", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["miniwob", "agentic_workflows"],
+      "responsibilities": ["Frontend-Entwicklung", "UI/UX-Implementierung", "Interaktive Tests"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "janus": {
+      "role": "API Architect",
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["postman", "pytest", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["swe_bench_mini", "humaneval_x", "swe_bench_pro"],
+      "responsibilities": ["API-Design", "Integration", "Testing"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "hades": {
+      "role": "Database Architect",
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["docker", "simone-mcp", "sqlalchemy", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["swe_bench_mini", "sql_benchmarks"],
+      "responsibilities": ["Datenbank-Design", "Migration", "Optimierung"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
     "hephaestus": {
       "role": "Deep Agent",
-      "model": "fireworks-ai/minimax-m2.7",
-      "fallback_model": "vercel/deepseek/deepseek-v4-pro",
-      "tools": [
-        "opencode",
-        "debugging-tools"
-      ],
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["opencode", "debugging-tools"],
       "output_format": "json",
-      "benchmarks": [
-        "deep_analysis",
-        "complex_debugging"
-      ],
-      "responsibilities": [
-        "Tiefgehende Analyse",
-        "Komplexes Debugging",
-        "Deep Search"
-      ],
-      "model_config": {
-        "context_window": "1M",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
+      "benchmarks": ["deep_analysis", "complex_debugging"],
+      "responsibilities": ["Tiefgehende Analyse", "Komplexes Debugging", "Deep Search"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
     },
+
     "sin-solo": {
       "role": "Single-Agent Coder",
-      "model": "vercel/deepseek-v4-pro",
+      "area": "coding",
+      "model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_model": "vercel/deepseek/deepseek-v4-flash",
-      "tools": [
-        "opencode",
-        "docker",
-        "build-tools"
-      ],
+      "tools": ["opencode", "docker", "simone-mcp", "build-tools"],
       "output_format": "json",
-      "benchmarks": [
-        "single_task_execution",
-        "code_quality"
-      ],
-      "responsibilities": [
-        "Direct Code Execution",
-        "Single-File Changes",
-        "Deterministic Tasks"
-      ],
-      "model_config": {
-        "context_window": "128K",
-        "thinking_mode": true,
-        "tool_calls": 500,
-        "temperature": 0.7,
-        "top_p": 0.9
-      }
+      "benchmarks": ["single_task_execution", "code_quality"],
+      "responsibilities": ["Direct Code Execution", "Single-File Changes", "Deterministic Tasks"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "━━━ RESEARCH — Strategisch, Multi-Source, Technical, Fast Retrieval ━━━": {},
+
+    "athena": {
+      "role": "Strategic Researcher",
+      "area": "research",
+      "model": "mistral/mistral-small-latest",
+      "fallback_model": "qwen/coder-model",
+      "tools": ["webauto", "google_search", "opencode", "vector-db"],
+      "output_format": "json",
+      "benchmarks": ["marktanalyse", "trends"],
+      "responsibilities": ["High-Level Research", "Marktanalyse", "Trend-Identifikation"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "argus": {
+      "role": "Multi-Source Researcher",
+      "area": "research",
+      "model": "mistral/mistral-small-latest",
+      "fallback_model": "qwen/coder-model",
+      "tools": ["webauto", "google_search", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["web_recherche", "foren", "social_media"],
+      "responsibilities": ["Web-Recherche", "Foren & Social Media", "Quellen-Sammlung"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "daedalus": {
+      "role": "Technical Researcher",
+      "area": "research",
+      "model": "mistral/mistral-small-latest",
+      "fallback_model": "qwen/coder-model",
+      "tools": ["ast-grep", "lsp", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["code_review", "architektur_review"],
+      "responsibilities": ["Code-Analyse", "Architektur-Reviews", "Technische Dokumentation"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "hermes_scout": {
+      "role": "Fast Retriever",
+      "area": "research",
+      "model": "mistral/mistral-small-latest",
+      "fallback_model": "qwen/coder-model",
+      "tools": ["webauto", "api-calls", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["retrieval", "api_integration"],
+      "responsibilities": ["Schnelle Datenabfragen", "API-Integration", "Retrieval"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "━━━ QA & INFRA — Testing, Build, CI/CD ━━━": {},
+
+    "asclepius": {
+      "role": "QA / Testing",
+      "area": "qa",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["pytest", "selenium", "opencode"],
+      "output_format": "json",
+      "benchmarks": ["swe_bench_mini", "humaneval_x", "swe_bench_pro"],
+      "responsibilities": ["Automatisierte Tests", "Edge Cases", "Code-Qualität"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "aegis": {
+      "role": "Build Specialist",
+      "area": "infra",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_model": "nvidia-nim/qwen-3.5-397b",
+      "tools": ["opencode", "docker", "simone-mcp", "build-tools"],
+      "output_format": "json",
+      "benchmarks": ["build_speed", "compilation"],
+      "responsibilities": ["Build-Optimierung", "Kompilierung", "CI/CD Integration"],
+      "model_config": { "context_window": "128K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "━━━ MEDIA — Vision, GUI, Audio ━━━": {},
+
+    "multimedia_looker": {
+      "role": "Vision/GUI Looker",
+      "area": "media",
+      "model": "nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "fallback_model": "mistral/pixtral-large-latest",
+      "tools": ["opencode-vision", "selenium", "docker", "simone-mcp", "vision-gate"],
+      "output_format": "json",
+      "benchmarks": ["vision_gui_grounding", "screen_spot", "mmmu_pro"],
+      "responsibilities": ["Screenshots analysieren", "GUI-Elemente erkennen", "Vision-Tasks"],
+      "model_config": { "context_window": "256K", "thinking_mode": true, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    },
+
+    "audio_agent": {
+      "role": "Audio TTS/STT",
+      "area": "media",
+      "model": "groq/whisper-large-v3",
+      "fallback_model": "nvidia-nim/whisper-large-v3",
+      "tools": ["whisper", "coqui-tts", "ffmpeg"],
+      "output_format": "json",
+      "benchmarks": ["audio_transcription", "tts_quality"],
+      "responsibilities": ["Sprache-zu-Text", "Text-zu-Sprache", "Audio-Analyse"],
+      "model_config": { "context_window": "128K", "thinking_mode": false, "tool_calls": 500, "temperature": 0.7, "top_p": 0.9 }
+    }
+  },
+
+  "categories": {
+    "_note": "Von 8→4 reduziert (SOTA Best Practice 2026: 3-5 Kategorien optimal)",
+    "_strategy": "Complexity-basiertes Routing (nicht Domain-basiert)",
+
+    "fast": {
+      "description": "Schnelle Antworten, einfache Tasks, Structured/Deterministic",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_models": ["mistral/mistral-small-latest", "qwen/coder-model"]
+    },
+
+    "deep": {
+      "description": "Komplexe Analysen, Reasoning, Strategic Thinking (merged quick+deep+ultrabrain)",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_models": ["vercel/deepseek/deepseek-v4-flash", "mistral/mistral-small-latest"]
+    },
+
+    "creative": {
+      "description": "Design, UI/UX, Content, Visual (merged artistry+visual-engineering+writing)",
+      "model": "vercel/deepseek/deepseek-v4-pro",
+      "fallback_models": ["vercel/deepseek/deepseek-v4-flash", "nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"]
+    },
+
+    "default": {
+      "description": "Catch-all für unklassifizierte Tasks (merged unspecified-low+unspecified-high)",
+      "model": "vercel/deepseek/deepseek-v4-flash",
+      "fallback_models": ["vercel/deepseek/deepseek-v4-pro", "mistral/mistral-small-latest"]
     }
   }
 }
