@@ -1,8 +1,8 @@
 // ╔══════════════════════════════════════════════════════════╗
-// ║ OH-MY-SIN.json — ZENTRALES A2A TEAM REGISTER ║
+// ║ OH-MY-SIN.json — ZENTRALES A2A TEAM REGISTER           ║
 // ╠══════════════════════════════════════════════════════════╣
-// ║ Alle 18 A2A Teams klassifiziert mit Modellen + Configs ║
-// ║ Stand: 2026-04-17 — 6 dedizierte Coder-Repos (BUG-OCI-001) ║
+// ║ Alle 21 A2A Teams klassifiziert mit Modellen + Configs ║
+// ║ Stand: 2026-05-05 — Code-Swarm Models, Gefixte URLs    ║
 // ╚══════════════════════════════════════════════════════════╝
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
@@ -20,7 +20,6 @@
       ],
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "qwen/coder-model",
         "vercel/deepseek/deepseek-v4-flash"
       ]
@@ -54,14 +53,13 @@
       ],
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "qwen/coder-model",
         "vercel/deepseek/deepseek-v4-flash"
       ]
     },
     "team-google-apps": {
       "name": "Team Google Apps",
-      "description": "Google Workspace Integration \u2014 Docs, Sheets, Drive, Gmail",
+      "description": "Google Workspace Integration — Docs, Sheets, Drive, Gmail",
       "manager": "A2A-SIN-Google-Apps",
       "config_file": "my-sin-team-google-apps.json",
       "members": [
@@ -78,7 +76,7 @@
     },
     "team-apple-apps": {
       "name": "Team Apple Apps",
-      "description": "Apple Ecosystem \u2014 macOS Automation, iOS, Shortcuts",
+      "description": "Apple Ecosystem — macOS Automation, iOS, Shortcuts",
       "manager": "A2A-SIN-Apple-Apps",
       "config_file": "my-sin-team-apple-apps.json",
       "members": [
@@ -93,7 +91,7 @@
     },
     "team-apple": {
       "name": "Team Apple",
-      "description": "macOS/iOS Automation \u2014 Mail, Notes, Calendar, FaceTime, Safari, etc.",
+      "description": "macOS/iOS Automation — Mail, Notes, Calendar, FaceTime, Safari, etc.",
       "manager": "A2A-SIN-Apple",
       "config_file": "my-sin-apple.json",
       "members": [
@@ -118,7 +116,7 @@
     },
     "team-social": {
       "name": "Team Social",
-      "description": "Social Media Automation \u2014 TikTok, Instagram, X, LinkedIn, Facebook, YouTube",
+      "description": "Social Media Automation — TikTok, Instagram, X, LinkedIn, Facebook, YouTube",
       "manager": "A2A-SIN-Social",
       "config_file": "my-sin-social.json",
       "members": [
@@ -136,7 +134,7 @@
     },
     "team-messaging": {
       "name": "Team Messaging",
-      "description": "Messaging Integration \u2014 WhatsApp, Telegram, Signal, Discord, iMessage",
+      "description": "Messaging Integration — WhatsApp, Telegram, Signal, Discord, iMessage",
       "manager": "A2A-SIN-Messaging",
       "config_file": "my-sin-messaging.json",
       "members": [
@@ -155,7 +153,7 @@
     },
     "team-forum": {
       "name": "Team Forum",
-      "description": "Forum Automation \u2014 Reddit, HackerNews, StackOverflow, Quora, DevTo",
+      "description": "Forum Automation — Reddit, HackerNews, StackOverflow, Quora, DevTo",
       "manager": "A2A-SIN-Forum",
       "config_file": "my-sin-forum.json",
       "members": [
@@ -170,7 +168,7 @@
     },
     "team-legal": {
       "name": "Team Legal",
-      "description": "Legal Automation \u2014 ClaimWriter, Patents, Damages, Compliance, Contract",
+      "description": "Legal Automation — ClaimWriter, Patents, Damages, Compliance, Contract",
       "manager": "A2A-SIN-Legal",
       "config_file": "my-sin-legal.json",
       "members": [
@@ -185,7 +183,7 @@
     },
     "team-commerce": {
       "name": "Team Commerce",
-      "description": "Commerce Automation \u2014 Shop-Finance, Shop-Logistic, TikTok-Shop, Stripe",
+      "description": "Commerce Automation — Shop-Finance, Shop-Logistic, TikTok-Shop, Stripe",
       "manager": "A2A-SIN-Commerce",
       "config_file": "my-sin-commerce.json",
       "members": [
@@ -199,7 +197,7 @@
     },
     "team-community": {
       "name": "Team Community",
-      "description": "Community Management \u2014 Discord, WhatsApp, Telegram, YouTube Community",
+      "description": "Community Management — Discord, WhatsApp, Telegram, YouTube Community",
       "manager": "A2A-SIN-Community",
       "config_file": "my-sin-community.json",
       "members": [],
@@ -211,7 +209,7 @@
     },
     "team-google": {
       "name": "Team Google",
-      "description": "Google Workspace \u2014 Google-Apps, Google-Chat, Opal",
+      "description": "Google Workspace — Google-Apps, Google-Chat, Opal",
       "manager": "A2A-SIN-Google",
       "config_file": "my-sin-google.json",
       "members": [
@@ -225,13 +223,12 @@
     },
     "team-microsoft": {
       "name": "Team Microsoft",
-      "description": "Microsoft 365 \u2014 Teams, Outlook, OneDrive, Excel, Word, PowerPoint",
+      "description": "Microsoft 365 — Teams, Outlook, OneDrive, Excel, Word, PowerPoint",
       "manager": "A2A-SIN-Microsoft",
       "config_file": "my-sin-microsoft.json",
       "members": [],
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "qwen/coder-model"
       ]
     },
@@ -251,7 +248,7 @@
     },
     "team-media-comfyui": {
       "name": "Team Media ComfyUI",
-      "description": "Media Generation \u2014 ImageGen, VideoGen, ComfyUI Workflows",
+      "description": "Media Generation — ImageGen, VideoGen, ComfyUI Workflows",
       "manager": "A2A-SIN-Media-ComfyUI",
       "config_file": "my-sin-media-comfyui.json",
       "members": [],
@@ -263,7 +260,7 @@
     },
     "team-media-music": {
       "name": "Team Media Music",
-      "description": "Music Production \u2014 Beats, Producer, Singer, Songwriter, Videogen",
+      "description": "Music Production — Beats, Producer, Singer, Songwriter, Videogen",
       "manager": "A2A-SIN-Media-Music",
       "config_file": "my-sin-media-music.json",
       "members": [],
@@ -275,7 +272,7 @@
     },
     "team-coding-cybersec": {
       "name": "Team Coding CyberSec",
-      "description": "Security Specialists \u2014 BugBounty, Cloudflare, 16x Security-Spezialisten",
+      "description": "Security Specialists — BugBounty, Cloudflare, 16x Security-Spezialisten",
       "manager": "A2A-SIN-Code-CyberSec",
       "config_file": "my-sin-coding-cybersec.json",
       "members": [
@@ -284,13 +281,12 @@
       ],
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "vercel/deepseek/deepseek-v4-flash"
       ]
     },
     "team-coding-frontend": {
       "name": "Team Coding Frontend",
-      "description": "Frontend Specialists \u2014 Accessibility, App-Shell, Commerce-UI, Design-Systems",
+      "description": "Frontend Specialists — Accessibility, App-Shell, Commerce-UI, Design-Systems",
       "manager": "A2A-SIN-Code-Frontend",
       "config_file": "my-sin-coding-frontend.json",
       "members": [],
@@ -302,19 +298,18 @@
     },
     "team-coding-backend": {
       "name": "Team Coding Backend",
-      "description": "Backend Specialists \u2014 Server, OracleCloud, Passwordmanager",
+      "description": "Backend Specialists — Server, OracleCloud, Passwordmanager",
       "manager": "A2A-SIN-Code-Backend",
       "config_file": "my-sin-coding-backend.json",
       "members": [],
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "vercel/deepseek/deepseek-v4-flash"
       ]
     },
     "team-coding-agents": {
       "name": "Team Coding Agents (6 dedicated repos)",
-      "description": "6 dedicated A2A Coder Agents with individual GitHub repos \u2014 split from monolithic OpenSIN-Code for isolated deployments, independent versioning, and crash-storm protection. Established after BUG-OCI-001 (OCI VM disk-full incident, 2026-04-16).",
+      "description": "6 dedicated A2A Coder Agents with individual GitHub repos — split from monolithic OpenSIN-Code for isolated deployments, independent versioning, and crash-storm protection. Established after BUG-OCI-001 (OCI VM disk-full incident, 2026-04-16).",
       "manager": "A2A-SIN-Zeus",
       "config_file": "my-sin-coding-agents.json",
       "members": [
@@ -327,39 +322,38 @@
       ],
       "agent_repos": {
         "A2A-SIN-Code-Backend": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Backend",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Backend",
           "port": 7863,
-          "purpose": "Backend specialists \u2014 Server, OracleCloud, APIs"
+          "purpose": "Backend specialists — Server, OracleCloud, APIs"
         },
         "A2A-SIN-Code-Command": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Command",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Command",
           "port": 7861,
-          "purpose": "Command/CLI agents \u2014 shell, automation, scripting"
+          "purpose": "Command/CLI agents — shell, automation, scripting"
         },
         "A2A-SIN-Code-Frontend": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Frontend",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Frontend",
           "port": 7865,
-          "purpose": "Frontend specialists \u2014 UI/UX, React, CSS"
+          "purpose": "Frontend specialists — UI/UX, React, CSS"
         },
         "A2A-SIN-Code-Fullstack": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Fullstack",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Fullstack",
           "port": 7864,
           "purpose": "Fullstack specialists \u0000 end-to-end implementations"
         },
         "A2A-SIN-Code-Plugin": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Plugin",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Plugin",
           "port": 7860,
-          "purpose": "Plugin developers \u2014 MCPs, integrations, auth"
+          "purpose": "Plugin developers — MCPs, integrations, auth"
         },
         "A2A-SIN-Code-Tool": {
-          "github": "https://github.com/OpenSIN-AI/A2A-SIN-Code-Tool",
+          "github": "https://github.com/OpenSIN-Code/A2A-SIN-Code-Tool",
           "port": 7862,
-          "purpose": "Tool builders \u2014 CLI utilities, external integrations"
+          "purpose": "Tool builders — CLI utilities, external integrations"
         }
       },
       "primary_model": "vercel/deepseek/deepseek-v4-pro",
       "fallback_models": [
-        "vercel/deepseek/deepseek-v4-pro",
         "vercel/deepseek/deepseek-v4-flash",
         "qwen/coder-model"
       ]
@@ -375,5 +369,6 @@
       "vercel/deepseek/deepseek-v4-pro",
       "mistral/mistral-small-latest"
     ]
-  }
+  },
+  "_header_count": "21 Teams"
 }
