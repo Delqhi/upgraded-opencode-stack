@@ -1,9 +1,9 @@
 {
-  "aspect_ratio": {"must": "16:9", "pixels": "1920x1080"},
-  "mascot_position": "~40% left side, 3D spherical white character with green mask, holding money fan",
-  "text_layout": "large angled text on right: 'AUTO' (white) + 'PROFIT?' (yellow)",
-  "sub_badge": "dark rounded rectangle with 'AI AGENT MAKES MONEY ALONE' at bottom",
-  "laptop_element": "bottom-right: laptop with green chart and '$$$'",
+  "aspect_ratio": "must be 16:9 (1920x1080)",
+  "mascot_position": "character should occupy ~40% left side",
+  "text_layout": "large angled text on right side (\"AUTO\" white, \"PROFIT?\" yellow)",
+  "sub_badge": "dark rounded rectangle with sub-text at bottom",
+  "laptop_element": "laptop with green chart and \"$$$\" bottom-right",
   "arrow_element": "yellow curved arrow connecting text to laptop",
   "background": "dark with green glow, no logos/watermarks",
   "overall_composition": "professional YouTube thumbnail quality"

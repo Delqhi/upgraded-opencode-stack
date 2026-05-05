@@ -1,26 +1,19 @@
-# Thumbnail Quality Rubric
+# /gen-thumbnail Fixtures & Rubric
 
-This directory contains the fixture and rubric for evaluating `/gen-thumbnail` output.
+This directory contains reference materials and evaluation criteria for the `/gen-thumbnail` skill.
 
-## Files
+## Contents
+- `reference-blog-01.png`: Reference image showcasing the desired style.
+- `rubric.json`: Scoring criteria to objectively evaluate generated thumbnails.
 
-- `reference-blog-01.png` — target composition reference image
-- `rubric.json` — objective scoring criteria
-- This README
+## Evaluation Criteria
+- `aspect_ratio`: must be 16:9 (1920x1080)
+- `mascot_position`: character should occupy ~40% left side
+- `text_layout`: large angled text on right side ("AUTO" white, "PROFIT?" yellow)
+- `sub_badge`: dark rounded rectangle with sub-text at bottom
+- `laptop_element`: laptop with green chart and "$$$" bottom-right
+- `arrow_element`: yellow curved arrow connecting text to laptop
+- `background`: dark with green glow, no logos/watermarks
+- `overall_composition`: professional YouTube thumbnail quality
 
-## Rubric Criteria
-
-The `rubric.json` defines 8 criteria that a generated thumbnail must satisfy:
-
-1. **aspect_ratio**: Must be exactly 16:9 (1920x1080 pixels)
-2. **mascot_position**: Character occupies ~40% of left side; 3D spherical white character with green mask, holding money fan
-3. **text_layout**: Large angled text on right side: "AUTO" (white) + "PROFIT?" (yellow)
-4. **sub_badge**: Dark rounded rectangle with text "AI AGENT MAKES MONEY ALONE" placed at bottom
-5. **laptop_element**: Bottom-right: laptop with green chart and "$$$"
-6. **arrow_element**: Yellow curved arrow connecting text area to laptop
-7. **background**: Dark background with green glow, no logos or watermarks
-8. **overall_composition**: Professional YouTube thumbnail quality
-
-## Usage
-
-When generating thumbnails, programmatically validate each criterion against the output. The reference image serves as the visual benchmark for composition, color, and layout.
+Use `rubric.json` to score generated outputs programmatically or manually.
